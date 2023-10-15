@@ -3,9 +3,14 @@
 	width: 33.3%;
 }
 
+#opennewcommentbutton {
+	margin-bottom: 12px;
+}
+
 #newcommentbody {
-	min-width: 500px;
-	min-height: 250px;
+	width: calc(100% - 8px);
+	margin: 0 auto;
+	min-height: 125px;
 }
 
 @media only screen and (max-width: 750px) {
