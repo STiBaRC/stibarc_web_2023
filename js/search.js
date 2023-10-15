@@ -1,6 +1,7 @@
 window.addEventListener("load", async () => {
 	const query = new URL(location).searchParams.get("q");
 	$("#searchbox").value = query;
+	$("#searchboxMobile").value = query;
 	setLoggedinState(localStorage.sess);
 	const r = await fetch("https://betaapi.stibarc.com/v4/search.sjs", {
 		method: "post",
@@ -27,4 +28,8 @@ window.addEventListener("load", async () => {
 
 	$("#users").appendChild(users);
 	$("#posts").appendChild(posts);
+
+	if (rj.results.users.length == 0 && rj.results.posts.length == 0) {
+		$("#noResults").style.display = "block";
+	}
 });

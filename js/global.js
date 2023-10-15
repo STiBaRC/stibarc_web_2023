@@ -468,6 +468,12 @@ window.addEventListener("load", function() {
 			location.href = `search.html?q=${query}`;
 		}
 	});
+	$("#searchboxMobile").addEventListener("keypress", (e) => {
+		const query = encodeURIComponent($("#searchboxMobile").value);
+		if (e.key == "Enter" && query.trim() != "") {
+			location.href = `search.html?q=${query}`;
+		}
+	});
 });
 
 window.addEventListener("scroll", function() {

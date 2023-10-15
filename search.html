@@ -21,7 +21,7 @@
 			<span class="leftalign">
 				<a href="/" class="flexcontainer"><img src="img/logo.png" id="logo"></a>
 			</span>
-			<span id="searchbar" class="flexcontainer hideOnMobile">
+			<span class="searchbar flexcontainer hideOnMobile">
 				<input type="text" id="searchbox" placeholder="Search">
 			</span>
 			<span class="flexcontainer rightalign">
@@ -45,6 +45,10 @@
 		</span>
 	</header>
 	<main class="flexcontainer flexcolumn">
+		<span class="searchbar flexcontainer showOnMobileFlex">
+			<input type="text" id="searchboxMobile" placeholder="Search">
+		</span>
+		<span id="noResults" style="display: none;"><h3>No results!</h3></span>
 		<span class="verticalspacer"></span>
 		<span id="users"></span>
 		<span id="posts"></span>

@@ -32,7 +32,7 @@ input {
 	border-radius: 6px;
 }
 
-#searchbox {
+.searchbar input {
 	box-sizing: border-box;
 	width: 75%;
 	min-width: 200px;
@@ -50,7 +50,7 @@ input {
 	transition: all 0.25s;
 }
 
-#searchbox:focus {
+.searchbar input:focus {
 	border: 2px solid var(--color4);
 }
 
@@ -64,7 +64,7 @@ input {
 	height: 40px;
 }
 
-#searchbar {
+.searchbar {
 	flex-grow: 1;
 	flex-basis: 0;
 }
@@ -334,7 +334,7 @@ footer {
 	}
 
 	.showOnMobileFlex {
-			display: flex;
+		display: flex;
 	}
 
 	.headerDropdown {
