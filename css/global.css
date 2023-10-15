@@ -27,6 +27,9 @@ a:active {
 
 input {
 	font-family: inherit;
+	padding: 4px 6px;
+	border: 1px solid var(--color8);
+	border-radius: 6px;
 }
 
 #searchbox {
@@ -77,6 +80,10 @@ input {
 
 #searchBtn:hover {
 	background-color: var(--color5);
+}
+
+main {
+	min-height: calc(100vh - 155px);
 }
 
 .flexcontainer {
@@ -327,11 +334,12 @@ footer {
 	}
 
 	.headerDropdown {
-		width: calc(100vw - 16px);
+		width: 100%;
 	}
 
 	#hiddenHeader {
-		width: calc(100vw - 16px);
+		width: calc(100% - 16px);
+		margin: 0 auto;
 	}
 
 	.headerDropdown .menuElement {
