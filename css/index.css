@@ -1,0 +1,71 @@
+.floatingbuttoncontainer {
+	position: sticky;
+	top: 66px;
+	margin-bottom: 16px;
+}
+
+.floatingbutton {
+	background-color: var(--color1);
+	margin: 5px;
+	padding: 5px;
+	height: 30px;
+	border-radius: 20px;
+	width: 100px;
+	cursor: pointer;
+	transition: background-color 0.2s ease-out;
+}
+
+.floatingbutton:hover {
+	background-color: var(--color6);
+}
+
+.floatingbuttonShadow {
+	box-shadow: 0 1px 8px 0 rgba(22, 22, 22, 0.2), 0 1px 4px 0 rgba(22, 22, 22, 0.2);
+}
+
+.floatingplusbuttoncontainer {
+	display: block;
+	bottom: 0;
+	position: sticky;
+	width: 100%;
+}
+
+.floatingplusbutton {
+	position: absolute;
+	bottom: 25px;
+	right: 25px;
+	background-color: var(--color1);
+	box-shadow: 0 1px 8px 0 rgba(22, 22, 22, 0.2), 0 1px 4px 0 rgba(22, 22, 22, 0.2);
+	cursor: pointer;
+	width: 55px;
+	height: 55px;
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	line-height: 0;
+	transition: background-color 0.2s ease-out;
+}
+
+.floatingplusbutton:hover {
+	background-color: var(--color6);
+}
+
+.floatingplusbutton img {
+	max-width: 40px;
+}
+
+.floatingplusbutton span {
+	font-size: 45px;
+	line-height: 51px;
+}
+
+#newpostbody {
+	min-width: 500px;
+	min-height: 250px;
+}
+
+@media only screen and (max-width: 750px) {
+	#newpostbody {
+		min-width: calc(100% - 50px);
+	}
+}

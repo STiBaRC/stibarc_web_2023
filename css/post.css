@@ -1,0 +1,15 @@
+.postattachment {
+	margin-top: 5px;
+	width: 33.3%;
+}
+
+#newcommentbody {
+	min-width: 500px;
+	min-height: 250px;
+}
+
+@media only screen and (max-width: 750px) {
+	.postattachment {
+		width: 100%;
+	}
+}

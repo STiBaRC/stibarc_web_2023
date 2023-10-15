@@ -1,0 +1,31 @@
+:root {
+	--text: black;
+	--background: #98DFF3;
+	--color1: #49B9CA;
+	--color2: #ffffff;
+	--color3: #d7d7d7;
+	--color4: #0e0e0e;
+	--color5: #3ea1b1;
+	--color6: #54cbdd;
+	--color7: #c32222;
+}
+
+/*
+@media (prefers-color-scheme: light) {
+	:root {
+		--text: black;
+		--background: #98DFF3;
+		--color1: #49B9CA;
+		--color2: #ffffff;
+	}
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--text: white;
+		--background: black;
+		--color1: #0e0e0e;
+		--color2: #171717;
+	}
+}
+*/
