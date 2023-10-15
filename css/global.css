@@ -86,6 +86,10 @@ main {
 	min-height: calc(100vh - 155px);
 }
 
+main.flexcontainer {
+	justify-content: flex-start;
+}
+
 .flexcontainer {
 	display: flex;
 	flex-direction: row;
