@@ -44,6 +44,57 @@ window.addEventListener("load", async () => {
 	$("#cancel").addEventListener("click", () => {
 		location.href = `user.html?username=${localStorage.username}`;
 	});
+	$("#changepasswordbutton").addEventListener("click", () => {
+		window.scrollTo(0, 0);
+		$("#changepasswordformcontainer").classList.remove("hidden");
+		$("#overlay").classList.remove("hidden");
+		document.body.classList.add("overflowhidden");
+	});
+	$("#changepasswordcancel").addEventListener("click", () => {
+		$("#changepasswordformcontainer").classList.add("hidden");
+		$("#overlay").classList.add("hidden");
+		document.body.classList.remove("overflowhidden");
+		$("#oldpasswordinput").value = "";
+		$("#newpasswordinput").value = "";
+		$("#newpasswordinput2").value = "";
+		$("#logoutothers").checked = false;
+		$("#changepassworderror").innerText = "";
+		$("#changepassworderrorcontainer").classList.add("hidden");
+	});
+	$("#changepasswordsubmitbutton").addEventListener("click", async () => {
+		if ($("#newpasswordinput").value != $("#newpasswordinput2").value) {
+			$("#changepassworderror").innerText = "Passwords do not match";
+			$("#changepassworderrorcontainer").classList.remove("hidden");
+			return;
+		}
+		const r = await fetch("https://betaapi.stibarc.com/v4/updatepassword.sjs", {
+			method: "post",
+			headers: {
+				"Content-Type": "application/json"
+			},
+			body: JSON.stringify({
+				session: localStorage.sess,
+				oldPassword: $("#oldpasswordinput").value,
+				newPassword: $("#newpasswordinput").value,
+				logoutOthers: $("#logoutothers").checked
+			})
+		});
+		const d = await r.json();
+		if (d.status == "ok") {
+			$("#changepasswordformcontainer").classList.add("hidden");
+			$("#overlay").classList.add("hidden");
+			document.body.classList.remove("overflowhidden");
+			$("#oldpasswordinput").value = "";
+			$("#newpasswordinput").value = "";
+			$("#newpasswordinput2").value = "";
+			$("#logoutothers").checked = false;
+			$("#changepassworderror").innerText = "";
+			$("#changepassworderrorcontainer").classList.add("hidden");
+		} else {
+			$("#changepassworderror").innerText = d.error;
+			$("#changepassworderrorcontainer").classList.remove("hidden");
+		}
+	});
 	setLoggedinState(localStorage.sess);
 	const r = await fetch("https://betaapi.stibarc.com/v4/getprivatedata.sjs", {
 		method: "post",

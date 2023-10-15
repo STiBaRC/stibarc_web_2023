@@ -48,7 +48,7 @@
 		<span class="verticalspacer"></span>
 		<span id="registerform" class="flexcontainer flexcolumn block">
 			<h2>Edit Profile</h2>
-			<img id="userpfp" src="https://betacdn.stibarc.com/pfp/default.png" class="pfpnm">
+			<img id="userpfp" src="https://betacdn.stibarc.com/pfp/default.png" class="pfpnm pointer">
 			<span>&nbsp;</span>
 			<span id="userusername"></span>
 			<span>&nbsp;</span>
@@ -63,6 +63,11 @@
 			<span>&nbsp;</span>
 			<textarea id="bioinput" placeholder="bio"></textarea>
 			<span>Show bio: <input type="checkbox" id="showbio"></span>
+			<span>&nbsp;</span>
+			<span class="flexcontainer">
+				<a id="changepasswordbutton" class="flexcontainer button">Change Password</a>
+				<a id="tfabutton" class="flexcontainer button">Enable 2FA</a>
+			</span>
 			<span>&nbsp;</span>
 			<span class="flexcontainer">
 				<a id="editprofilebutton" class="flexcontainer button">Edit Profile</a>
@@ -129,6 +134,30 @@
 					<a id="registercancel" class="flexcontainer button">Cancel</a>
 				</span>
 				<a id="loginlink" class="flexcontainer button">Login</a>
+			</span>
+		</span>
+		<span id="changepasswordformcontainer" class="hidden flexcontainer flexcolumn formcontainer">
+			<span id="changepasswordform" class="flexcontainer flexcolumn block">
+				<h2>Change Password</h2>
+				<span id="changepassworderrorcontainer" class="flexcontainer flexcolumn hidden">
+					<span id="changepassworderror" class="red"></span>
+					<span>&nbsp;</span>
+				</span>
+				<input type="password" id="oldpasswordinput" placeholder="Old Password" autocomplete="current-password">
+				<span>&nbsp;</span>
+				<input type="password" id="newpasswordinput" placeholder="New Password" autocomplete="new-password">
+				<span>&nbsp;</span>
+				<input type="password" id="newpasswordinput2" placeholder="New Password again" autocomplete="new-password">
+				<span>&nbsp;</span>
+				<span>
+					<input type="checkbox" id="logoutothers">
+					<label for="logoutothers">Logout other devices</label>
+				</span>
+				<span>&nbsp;</span>
+				<span class="flexcontainer">
+					<a id="changepasswordsubmitbutton" class="flexcontainer button">Change Password</a>
+					<a id="changepasswordcancel" class="flexcontainer button">Cancel</a>
+				</span>
 			</span>
 		</span>
 	</span>

@@ -307,6 +307,10 @@ input {
 	display: none;
 }
 
+.pointer {
+	cursor: pointer;
+}
+
 footer {
 	background-color: var(--color6);
 	margin-top: 2.5rem;
