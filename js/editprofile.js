@@ -1,3 +1,5 @@
+let tfaEnabled = false;
+
 window.addEventListener("load", async () => {
 	$("#userusername").innerText = localStorage.username;
 	$("#userpfp").addEventListener("click", () => {
@@ -95,6 +97,111 @@ window.addEventListener("load", async () => {
 			$("#changepassworderrorcontainer").classList.remove("hidden");
 		}
 	});
+	$("#tfabutton").addEventListener("click", async () => {
+		window.scrollTo(0, 0);
+			$("#overlay").classList.remove("hidden");
+			$("#pleaseWait").classList.remove("hidden");
+			document.body.classList.add("overflowhidden");
+		if (tfaEnabled) {
+			$("#disabletfaformcontainer").classList.remove("hidden");
+		} else {
+			window.scrollTo(0, 0);
+			$("#enabletfaformcontainer").classList.remove("hidden");
+			const r = await fetch("https://betaapi.stibarc.com/v4/manage2fa.sjs", {
+				method: "post",
+				headers: {
+					"Content-Type": "application/json"
+				},
+				body: JSON.stringify({
+					session: localStorage.sess,
+					state: "generatetotp"
+				})
+			});
+			const d = await r.json();
+			if (d.status == "ok") {
+				$("#tfakey").innerText = d.totpCode;
+				const totpString = `otpauth://totp/${encodeURIComponent(localStorage.username)}?secret=${encodeURIComponent(d.totpCode)}&issuer=STiBaRC%20Beta`;
+				$("#enabletfaqr").setAttribute("src", `https://chart.googleapis.com/chart?cht=qr&chs=200x200&chl=${encodeURIComponent(totpString)}`);
+				$("#pleaseWait").classList.add("hidden");
+			}
+		}
+	});
+	$("#enabletfasubmitbutton").addEventListener("click", async () => {
+		if ($("#enabletfainput").value == "") return;
+		const r = await fetch("https://betaapi.stibarc.com/v4/manage2fa.sjs", {
+			method: "post",
+			headers: {
+				"Content-Type": "application/json"
+			},
+			body: JSON.stringify({
+				session: localStorage.sess,
+				state: "enabletotp",
+				totpCode: $("#enabletfainput").value
+			})
+		});
+		const d = await r.json();
+		if (d.status == "ok") {
+			$("#enabletfaformcontainer").classList.add("hidden");
+			$("#overlay").classList.add("hidden");
+			document.body.classList.remove("overflowhidden");
+			$("#enabletfaerror").innerText = "";
+			$("#enabletfaerrorcontainer").classList.add("hidden");
+			$("#enabletfaqr").setAttribute("src", "");
+			$("#tfakey").innerText = "";
+			$("#tfacode").value = "";
+			$("#tfabutton").innerText = "Disable 2FA";
+			tfaEnabled = true;
+		} else {
+			$("#enabletfaerror").innerText = d.error;
+			$("#enabletfaerrorcontainer").classList.remove("hidden");
+		}
+	});
+	$("#enabletfacancel").addEventListener("click", () => {
+		$("#enabletfaformcontainer").classList.add("hidden");
+		$("#overlay").classList.add("hidden");
+		document.body.classList.remove("overflowhidden");
+		$("#enabletfaerror").innerText = "";
+		$("#enabletfaerrorcontainer").classList.add("hidden");
+		$("#enabletfaqr").setAttribute("src", "");
+		$("#tfakey").innerText = "";
+		$("#tfacode").value = "";
+	});
+	$("#disabletfasubmitbutton").addEventListener("click", async () => {
+		if ($("#disabletfainput").value == "") return;
+		const r = await fetch("https://betaapi.stibarc.com/v4/manage2fa.sjs", {
+			method: "post",
+			headers: {
+				"Content-Type": "application/json"
+			},
+			body: JSON.stringify({
+				session: localStorage.sess,
+				state: "disabletotp",
+				totpCode: $("#disabletfainput").value
+			})
+		});
+		const d = await r.json();
+		if (d.status == "ok") {
+			$("#disabletfaformcontainer").classList.add("hidden");
+			$("#overlay").classList.add("hidden");
+			document.body.classList.remove("overflowhidden");
+			$("#disabletfaerror").innerText = "";
+			$("#disabletfaerrorcontainer").classList.add("hidden");
+			$("#disabletfainput").value = "";
+			$("#tfabutton").innerText = "Enable 2FA";
+			tfaEnabled = false;
+		} else {
+			$("#disabletfaerror").innerText = d.error;
+			$("#disabletfaerrorcontainer").classList.remove("hidden");
+		}
+	});
+	$("#disabletfacancel").addEventListener("click", () => {
+		$("#disabletfaformcontainer").classList.add("hidden");
+		$("#overlay").classList.add("hidden");
+		document.body.classList.remove("overflowhidden");
+		$("#disabletfaerror").innerText = "";
+		$("#disabletfaerrorcontainer").classList.add("hidden");
+		$("#disabletfainput").value = "";
+	});
 	setLoggedinState(localStorage.sess);
 	const r = await fetch("https://betaapi.stibarc.com/v4/getprivatedata.sjs", {
 		method: "post",
@@ -116,4 +223,6 @@ window.addEventListener("load", async () => {
 	$("#showbday").checked = user.displayBirthday;
 	$("#bioinput").value = user.bio;
 	$("#showbio").checked = user.displayBio;
+	$("#tfabutton").innerText = user.totpEnabled ? "Disable 2FA" : "Enable 2FA";
+	tfaEnabled = user.totpEnabled;
 });

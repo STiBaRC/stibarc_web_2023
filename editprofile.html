@@ -93,7 +93,7 @@
 				<span>&nbsp;</span>
 				<input type="password" id="passwordinput" placeholder="Password" autocomplete="current-password">
 				<span>&nbsp;</span>
-				<span id="2fa" class="hidden flexcontainer flexcolumn">
+				<span id="tfa" class="hidden flexcontainer flexcolumn">
 					<input type="number" id="tfainput" placeholder="2FA Code">
 					<span>&nbsp;</span>
 				</span>
@@ -159,6 +159,40 @@
 					<a id="changepasswordcancel" class="flexcontainer button">Cancel</a>
 				</span>
 			</span>
+		</span>
+		<span id="enabletfaformcontainer" class="hidden flexcontainer flexcolumn formcontainer">
+			<span id="enabletfaform" class="flexcontainer flexcolumn block">
+				<h2>Enable 2FA</h2>
+				<span id="pleaseWait">Please wait while we generate your code...</span>
+				<span id="enabletfaerrorcontainer" class="flexcontainer flexcolumn hidden">
+					<span id="enabletfaerror" class="red"></span>
+					<span>&nbsp;</span>
+				</span>
+				<img id="enabletfaqr" src="">
+				<span>&nbsp;</span>
+				<span id="tfakey"></span>
+				<span>&nbsp;</span>
+				<input type="number" id="enabletfainput" placeholder="2FA Code">
+				<span>&nbsp;</span>
+				<span class="flexcontainer">
+					<a id="enabletfasubmitbutton" class="flexcontainer button">Enable 2FA</a>
+					<a id="enabletfacancel" class="flexcontainer button">Cancel</a>
+				</span>
+			</span>
+		</span>
+	</span>
+	<span id="disabletfaformcontainer" class="hidden flexcontainer flexcolumn formcontainer">
+		<span id="disabletfaform" class="flexcontainer flexcolumn block">
+			<h2>Disable 2FA</h2>
+			<span id="disabletfaerrorcontainer" class="flexcontainer flexcolumn hidden">
+				<span id="disabletfaerror" class="red"></span>
+				<span>&nbsp;</span>
+			</span>
+			<input type="number" id="disabletfainput" placeholder="2FA Code">
+			<span>&nbsp;</span>
+			<span class="flexcontainer">
+				<a id="disabletfasubmitbutton" class="flexcontainer button">Disable 2FA</a>
+				<a id="disabletfacancel" class="flexcontainer button">Cancel</a>
 		</span>
 	</span>
 </body>

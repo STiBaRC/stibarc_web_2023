@@ -285,6 +285,7 @@ async function login() {
 					break;
 				case "totpr":
 					$("#loginerror").innerText = "2FA code required";
+					$("#tfa").classList.remove("hidden");
 					break;
 				case "itotp":
 					$("#loginerror").innerText = "Invalid 2FA code";
@@ -408,6 +409,7 @@ window.addEventListener("load", function() {
 	});
 	$("#menulogin").onclick = function(e) {
 		window.scrollTo(0, 0);
+		$("#tfa").classList.add("hidden");
 		$("#loginformcontainer").classList.remove("hidden");
 		$("#overlay").classList.remove("hidden");
 		document.body.classList.add("overflowhidden");
