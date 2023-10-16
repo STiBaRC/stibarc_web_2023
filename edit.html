@@ -47,7 +47,7 @@
 	</header>
 	<main class="flexcontainer flexcolumn">
 		<span class="verticalspacer"></span>
-		<span id="editform" class="flexcontainer flexcolumn block">
+		<span id="editform" class="flexcontainer flexcolumn block modal">
 			<h2 id="pagetitle">Edit</h2>
 			<input type="text" id="edittitle" placeholder="Post title">
 			<span>&nbsp;</span>
@@ -71,57 +71,61 @@
 	<span id="overlay" class="hidden">
 		<span id="overlaybg"></span>
 		<span id="loginformcontainer" class="hidden flexcontainer flexcolumn formcontainer">
-			<span id="loginform" class="flexcontainer flexcolumn block">
-				<h2>Login</h2>
-				<span id="loginerrorcontainer" class="flexcontainer flexcolumn hidden">
-					<span id="loginerror" class="red"></span>
+			<span id="loginform" class="block modal">
+				<div class="flexcontainer flexcolumn">
+					<h2>Login</h2>
+					<span id="loginerrorcontainer" class="flexcontainer flexcolumn hidden">
+						<span id="loginerror" class="red"></span>
+						<span>&nbsp;</span>
+					</span>
+					<input type="text" id="usernameinput" placeholder="Username" autocomplete="username">
 					<span>&nbsp;</span>
-				</span>
-				<input type="text" id="usernameinput" placeholder="Username" autocomplete="username">
-				<span>&nbsp;</span>
-				<input type="password" id="passwordinput" placeholder="Password" autocomplete="current-password">
-				<span>&nbsp;</span>
-				<span id="tfa" class="hidden flexcontainer flexcolumn">
-					<input type="number" id="tfainput" placeholder="2FA Code">
+					<input type="password" id="passwordinput" placeholder="Password" autocomplete="current-password">
 					<span>&nbsp;</span>
-				</span>
-				<span class="flexcontainer">
-					<a id="loginbutton" class="flexcontainer button">Login</a>
-					<a id="logincancel" class="flexcontainer button">Cancel</a>
-				</span>
-				<a id="registerlink" class="flexcontainer button">Register</a>
+					<span id="tfa" class="hidden flexcontainer flexcolumn">
+						<input type="number" id="tfainput" placeholder="2FA Code">
+						<span>&nbsp;</span>
+					</span>
+					<span class="flexcontainer">
+						<a id="loginbutton" class="flexcontainer button">Login</a>
+						<a id="logincancel" class="flexcontainer button">Cancel</a>
+					</span>
+					<a id="registerlink" class="flexcontainer button">Register</a>
+				</div>
 			</span>
 		</span>
 		<span id="registerformcontainer" class="hidden flexcontainer flexcolumn formcontainer">
-			<span id="registerform" class="flexcontainer flexcolumn block">
-				<h2>Register</h2>
-				<span id="registererrorcontainer" class="flexcontainer flexcolumn hidden">
-					<span id="registererror" class="red"></span>
+			<span id="registerform" class="block modal">
+				<div class="flexcontainer flexcolumn">
+					<h2>Register</h2>
+					<span id="registererrorcontainer" class="flexcontainer flexcolumn hidden">
+						<span id="registererror" class="red"></span>
+						<span>&nbsp;</span>
+					</span>
+					<input type="text" id="usernamerinput" placeholder="Username" autocomplete="username">
 					<span>&nbsp;</span>
-				</span>
-				<input type="text" id="usernamerinput" placeholder="Username" autocomplete="username">
-				<span>&nbsp;</span>
-				<input type="password" id="passwordrinput" placeholder="Password" autocomplete="new-password">
-				<span>&nbsp;</span>
-				<input type="password" id="passwordrinput2" placeholder="Password again" autocomplete="new-password">
-				<h3>Optional</h3>
-				<input type="text" id="nameinput" placeholder="Name" autocomplete="given-name">
-				<span>Show name: <input type="checkbox" id="showname"></span>
-				<span>&nbsp;</span>
-				<input type="email" id="emailinput" placeholder="Email" autocomplete="email">
-				<span>Show email: <input type="checkbox" id="showemail"></span>
-				<span>&nbsp;</span>
-				<input type="date" id="bdayinput" placeholder="Birthday" autocomplete="bday">
-				<span>Show birthday: <input type="checkbox" id="showbday"></span>
-				<span>&nbsp;</span>
-				<textarea id="bioinput" placeholder="Bio"></textarea>
-				<span>Show bio: <input type="checkbox" id="showbio"></span>
-				<span>&nbsp;</span>
-				<span class="flexcontainer">
-					<a id="registerbutton" class="flexcontainer button">Register</a>
-					<a id="registercancel" class="flexcontainer button">Cancel</a>
-				</span>
-				<a id="loginlink" class="flexcontainer button">Login</a>
+					<input type="password" id="passwordrinput" placeholder="Password" autocomplete="new-password">
+					<span>&nbsp;</span>
+					<input type="password" id="passwordrinput2" placeholder="Password again" autocomplete="new-password">
+					<h3>Optional</h3>
+					<input type="text" id="nameinput" placeholder="Name" autocomplete="given-name">
+					<span>Show name: <input type="checkbox" id="showname"></span>
+					<span>&nbsp;</span>
+					<input type="email" id="emailinput" placeholder="Email" autocomplete="email">
+					<span>Show email: <input type="checkbox" id="showemail"></span>
+					<span>&nbsp;</span>
+					<input type="date" id="bdayinput" placeholder="Birthday" autocomplete="bday">
+					<span>Show birthday: <input type="checkbox" id="showbday"></span>
+					<span>&nbsp;</span>
+					<textarea id="bioinput" placeholder="Bio"></textarea>
+					<span>Show bio: <input type="checkbox" id="showbio"></span>
+					<span>&nbsp;</span>
+					<span class="flexcontainer">
+						<a id="registerbutton" class="flexcontainer button">Register</a>
+						<a id="registercancel" class="flexcontainer button">Cancel</a>
+					</span>
+					<a id="loginlink" class="flexcontainer button">Login</a>
+				</div>
 			</span>
 		</span>
 	</span>
