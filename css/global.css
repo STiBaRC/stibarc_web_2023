@@ -25,7 +25,7 @@ a:active {
 	color: var(--text);
 }
 
-input {
+input[type=text], input[type=password], input[type=email], input[type=number], input[type=date], textarea {
 	font-family: inherit;
 	padding: 4px 6px;
 	border: 1px solid var(--color8);
@@ -83,7 +83,8 @@ input {
 }
 
 main {
-	min-height: calc(100vh - 155px);
+	/* 100vh - header height - footer height - footer padding top - footer padding bottom - footer margin top*/
+	min-height: calc(100vh - 60px - 20px - 16px - 16px - 40px);
 }
 
 main.flexcontainer {
