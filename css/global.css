@@ -104,6 +104,18 @@ main.flexcontainer {
 	flex-direction: column;
 }
 
+.flexstart {
+	justify-content: flex-start;
+}
+
+.noflexgrow {
+	flex-grow: 0;
+}
+
+.margintop {
+	margin-top: 14px;
+}
+
 #hiddenHeader {
 	position: fixed;
 	left: 50%;
