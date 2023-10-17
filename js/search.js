@@ -35,4 +35,10 @@ window.addEventListener("load", async () => {
 		$("#noResults").style.display = "block";
 	}
 
+	$("#searchboxMobile").addEventListener("keypress", (e) => {
+		const query = encodeURIComponent($("#searchboxMobile").value);
+		if (e.key == "Enter" && query.trim() != "") {
+			location.href = `search.html?q=${query}`;
+		}
+	});
 });
