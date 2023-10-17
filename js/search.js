@@ -3,6 +3,7 @@ window.addEventListener("load", async () => {
 	$("#searchbox").value = query;
 	$("#searchboxMobile").value = query;
 	setLoggedinState(localStorage.sess);
+
 	const r = await fetch("https://betaapi.stibarc.com/v4/search.sjs", {
 		method: "post",
 		headers: {
@@ -12,12 +13,13 @@ window.addEventListener("load", async () => {
 			query
 		})
 	});
+
 	const rj = await r.json();
 	if (rj.status == "error") return;
 
 	const users = document.createDocumentFragment();
 	const posts = document.createDocumentFragment();
-	
+
 	for (const user of rj.results.users) {
 		users.appendChild(userBlock(user));
 	}
@@ -32,4 +34,5 @@ window.addEventListener("load", async () => {
 	if (rj.results.users.length == 0 && rj.results.posts.length == 0) {
 		$("#noResults").style.display = "block";
 	}
+
 });
