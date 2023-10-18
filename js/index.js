@@ -45,12 +45,8 @@ async function newPost() {
 	if (clicked) return;
 	const title = $("#newposttitle").value;
 	const content = $("#newpostbody").value;
-	if (title.trim() == "") {
-		alert("Title must not be blank!");
-		return;
-	}
-	if (content.trim() == "" && attachmentFiles.length == 0) {
-		alert("Content must not be blank, or you must have an attachment!");
+	if (title.trim() == "" || content.trim() == "") {
+		alert("Title and post body must not be blank!");
 		return;
 	}
 	clicked = true;
