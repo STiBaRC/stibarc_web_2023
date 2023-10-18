@@ -309,6 +309,7 @@ main.flexcontainer {
 .modal {
 	max-height: 90vh;
 	overflow-y: auto;
+	flex-wrap: nowrap;
 }
 
 .verticalspacer {
