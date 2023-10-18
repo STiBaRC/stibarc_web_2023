@@ -45,7 +45,10 @@ async function newPost() {
 	if (clicked) return;
 	const title = $("#newposttitle").value;
 	const content = $("#newpostbody").value;
-	if (title.trim() == "" || content.trim() == "") return;
+	if (title.trim() == "" || content.trim() == "") {
+		alert("Title and post body must not be blank!")
+		return;
+	}
 	clicked = true;
 	for (const file of attachmentFiles) {
 		const response = await fetch("https://betaapi.stibarc.com/v4/uploadfile.sjs", {
