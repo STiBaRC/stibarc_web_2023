@@ -1,5 +1,24 @@
 window.addEventListener("load", async () => {
-	const query = new URL(location).searchParams.get("q");
+	
+	$("#searchboxMobile").addEventListener("change", (e) => {
+		$("#searchbox").value = $("#searchboxMobile").value
+		alert($("#searchbox").value)
+	});
+
+	$("#searchboxMobile").addEventListener("keypress", (e) => {
+		const query = encodeURIComponent($("#searchboxMobile").value);
+		if (e.key == "Enter" && query.trim() != "") {
+			location.href = `search.html?q=${query}`;
+		}
+	});
+
+	const url = new URL(location);
+	let query = null;
+	if (url.searchParams.has('q')) {
+		query = url.searchParams.get("q");
+	} else {
+		console.log("No query!");
+	}
 	$("#searchbox").value = query;
 	$("#searchboxMobile").value = query;
 	setLoggedinState(localStorage.sess);
@@ -15,7 +34,7 @@ window.addEventListener("load", async () => {
 	});
 
 	const rj = await r.json();
-	if (rj.status == "error") return;
+	if (rj.status == "error") console.error(rj);
 
 	const users = document.createDocumentFragment();
 	const posts = document.createDocumentFragment();
@@ -34,11 +53,4 @@ window.addEventListener("load", async () => {
 	if (rj.results.users.length == 0 && rj.results.posts.length == 0) {
 		$("#noResults").style.display = "block";
 	}
-
-	$("#searchboxMobile").addEventListener("keypress", (e) => {
-		const query = encodeURIComponent($("#searchboxMobile").value);
-		if (e.key == "Enter" && query.trim() != "") {
-			location.href = `search.html?q=${query}`;
-		}
-	});
 });
