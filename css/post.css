@@ -1,6 +1,7 @@
 .postattachment {
 	margin-top: 5px;
 	width: 33.3%;
+	cursor: pointer;
 }
 
 #opennewcommentbutton {
