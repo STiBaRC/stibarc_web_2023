@@ -50,7 +50,6 @@ function attachmentblock(attachments) {
 		attachment.setAttribute("src", "./img/jimbomournsyourmisfortune.png");
 		attachment.setAttribute("title", "Error: attachment can not be displayed.")
 	}
-	console.log("from attachment block")
 	return attachment;
 }
 
