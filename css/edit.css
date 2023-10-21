@@ -2,3 +2,9 @@
 	min-width: 500px;
 	min-height: 250px;
 }
+
+@media only screen and (max-width: 750px) {
+	#editbody {
+		min-width: calc(100% - 50px);
+	}
+}
