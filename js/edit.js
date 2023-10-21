@@ -32,6 +32,7 @@ window.addEventListener("load", async () => {
 						break;
 					case "audio":
 						attachmentElement = document.createElement("audio");
+						attachmentElement.setAttribute("controls", true);
 						source.setAttribute("src", objURL);
 						source.setAttribute("type", file.type);
 						attachmentElement.appendChild(source);
@@ -160,6 +161,7 @@ window.addEventListener("load", async () => {
 				attachment.appendChild(source);
 			} else if (audios.indexOf(ext) != -1) {
 				attachment = document.createElement("audio");
+				attachment.setAttribute("controls", true);
 				source.setAttribute("src", post.attachments[i]);
 				attachment.appendChild(source);
 			}

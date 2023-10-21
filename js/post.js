@@ -117,6 +117,7 @@ window.addEventListener("load", async function() {
 						break;
 					case "audio":
 						attachmentElement = document.createElement("audio");
+						attachmentElement.setAttribute("controls", true);
 						source.setAttribute("src", objURL);
 						source.setAttribute("type", file.type);
 						attachmentElement.appendChild(source);
@@ -180,7 +181,7 @@ window.addEventListener("load", async function() {
 	$("#downvoteBtn").innerText = `\u2193 ${post.downvotes}`;
 	if (post.poster.username == localStorage.username) $("#editBtn").classList.remove("hidden");
 
-	if (post.attachments) {
+	if (post.attachments && post.attachments.length > 0 && post.attachments[0] !== null) {
 		for (let i = 0; i < post.attachments.length; i++) {
 			let attachment;
 			const parts = post.attachments[i].split(".");
@@ -195,6 +196,7 @@ window.addEventListener("load", async function() {
 				attachment.appendChild(source);
 			} else if (audios.indexOf(ext) != -1) {
 				attachment = document.createElement("audio");
+				attachment.setAttribute("controls", true);
 				source.setAttribute("src", post.attachments[i]);
 				attachment.appendChild(source);
 			}

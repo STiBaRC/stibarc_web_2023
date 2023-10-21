@@ -75,6 +75,7 @@ function postblock(post) {
 			attachment.appendChild(source);
 		} else if (audios.indexOf(ext) != -1) {
 			attachment = document.createElement("audio");
+			attachment.setAttribute("controls", true);
 			source.setAttribute("src", post.attachments[0]);
 			attachment.appendChild(source);
 		}
@@ -151,6 +152,7 @@ function commentBlock(post, comment, isPostPage) {
 				attachment.appendChild(source);
 			} else if (audios.indexOf(ext) != -1) {
 				attachment = document.createElement("audio");
+				attachment.setAttribute("controls", true);
 				source.setAttribute("src", comment.attachments[i]);
 				attachment.appendChild(source);
 			}
