@@ -61,7 +61,7 @@ function postblock(post) {
 	contentSpan.innerText = post.content;
 	metaSpan.innerText = `\u2191 ${post.upvotes} \u2193 ${post.downvotes} \ud83d\udcac ${post.comments}`;
 
-	if (post.attachments && post.attachments.length > 0) {
+	if (post.attachments && post.attachments.length > 0 && post.attachments[0] !== null) {
 		const parts = post.attachments[0].split(".");
 		const ext = parts[parts.length - 1];
 		const source = document.createElement("source");
