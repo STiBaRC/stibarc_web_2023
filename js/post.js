@@ -183,23 +183,7 @@ window.addEventListener("load", async function() {
 
 	if (post.attachments && post.attachments.length > 0 && post.attachments[0] !== null) {
 		for (let i = 0; i < post.attachments.length; i++) {
-			let attachment;
-			const parts = post.attachments[i].split(".");
-			const ext = parts[parts.length - 1];
-			const source = document.createElement("source");
-			if (images.indexOf(ext) != -1) {
-				attachment = document.createElement("img");
-				attachment.setAttribute("src", post.attachments[i]);
-			} else if (videos.indexOf(ext) != -1) {
-				attachment = document.createElement("video");
-				source.setAttribute("src", post.attachments[i]);
-				attachment.appendChild(source);
-			} else if (audios.indexOf(ext) != -1) {
-				attachment = document.createElement("audio");
-				attachment.setAttribute("controls", true);
-				source.setAttribute("src", post.attachments[i]);
-				attachment.appendChild(source);
-			}
+			const attachment = attachmentblock(post.attachments[i]);
 			attachment.classList.add("postattachment");
 			attachment.addEventListener("click", () => {
 				window.open(post.attachments[i], "_blank");

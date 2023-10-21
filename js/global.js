@@ -26,6 +26,34 @@ async function vote({id, target, vote, commentId}) {
 	return await request.json();
 }
 
+
+function attachmentblock(attachments) {
+	let attachment;
+	const parts = attachments.split(".");
+	const ext = parts[parts.length - 1];
+	const source = document.createElement("source");
+	if (images.indexOf(ext) != -1) {
+		attachment = document.createElement("img");
+		attachment.setAttribute("src", attachments);
+		attachment.setAttribute("loading", "lazy");
+	} else if (videos.indexOf(ext) != -1) {
+		attachment = document.createElement("video");
+		source.setAttribute("src", attachments);
+		attachment.appendChild(source);
+	} else if (audios.indexOf(ext) != -1) {
+		attachment = document.createElement("audio");
+		attachment.setAttribute("controls", true);
+		source.setAttribute("src", attachments);
+		attachment.appendChild(source);
+	} else {
+		attachment = document.createElement("img");
+		attachment.setAttribute("src", "./img/jimbomournsyourmisfortune.png");
+		attachment.setAttribute("title", "Error: attachment can not be displayed.")
+	}
+	console.log("from attachment block")
+	return attachment;
+}
+
 function postblock(post) {
 	const postSpan = document.createElement("span");
 	const title = document.createElement("a");
@@ -38,7 +66,6 @@ function postblock(post) {
 	const contentSpan = document.createElement("span");
 	const hr2 = document.createElement("hr");
 	const metaSpan = document.createElement("span");
-	let attachment;
 
 	postSpan.classList.add("post", "flexcontainer", "flexcolumn");
 	title.classList.add("posttitle", "leftalign", "width100");
@@ -62,23 +89,7 @@ function postblock(post) {
 	metaSpan.innerText = `\u2191 ${post.upvotes} \u2193 ${post.downvotes} \ud83d\udcac ${post.comments}`;
 
 	if (post.attachments && post.attachments.length > 0 && post.attachments[0] !== null) {
-		const parts = post.attachments[0].split(".");
-		const ext = parts[parts.length - 1];
-		const source = document.createElement("source");
-		if (images.indexOf(ext) != -1) {
-			attachment = document.createElement("img");
-			attachment.setAttribute("src", post.attachments[0]);
-			attachment.setAttribute("loading", "lazy");
-		} else if (videos.indexOf(ext) != -1) {
-			attachment = document.createElement("video");
-			source.setAttribute("src", post.attachments[0]);
-			attachment.appendChild(source);
-		} else if (audios.indexOf(ext) != -1) {
-			attachment = document.createElement("audio");
-			attachment.setAttribute("controls", true);
-			source.setAttribute("src", post.attachments[0]);
-			attachment.appendChild(source);
-		}
+		const attachment = attachmentblock(post.attachments[0]);
 		attachment.classList.add("attachmentimage");
 		contentSpan.append(attachment);
 	}
@@ -136,26 +147,9 @@ function commentBlock(post, comment, isPostPage) {
 		metaSpan.innerText = `\u2191 ${comment.upvotes} \u2193 ${comment.downvotes}`;
 	}
 
-	if (comment.attachments) {
+	if (comment.attachments && comment.attachments.length > 0 && comment.attachments[0] !== null) {
 		for (let i = 0; i < comment.attachments.length; i++) {
-			let attachment;
-			const parts = comment.attachments[i].split(".");
-			const ext = parts[parts.length - 1];
-			const source = document.createElement("source");
-			if (images.indexOf(ext) != -1) {
-				attachment = document.createElement("img");
-				attachment.setAttribute("src", comment.attachments[i]);
-				attachment.setAttribute("loading", "lazy");
-			} else if (videos.indexOf(ext) != -1) {
-				attachment = document.createElement("video");
-				source.setAttribute("src", comment.attachments[i]);
-				attachment.appendChild(source);
-			} else if (audios.indexOf(ext) != -1) {
-				attachment = document.createElement("audio");
-				attachment.setAttribute("controls", true);
-				source.setAttribute("src", comment.attachments[i]);
-				attachment.appendChild(source);
-			}
+			let attachment = attachmentblock(comment.attachments[i]);
 			attachment.classList.add("postattachment");
 			attachment.addEventListener("click", () => {
 				window.open(comment.attachments[i], "_blank");
