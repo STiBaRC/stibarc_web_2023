@@ -17,7 +17,7 @@ async function getPosts() {
 	});
 	const requestJSON = await request.json();
 	for (let i in requestJSON.globalPosts) {
-		const post = postblock(requestJSON.globalPosts[i]);
+		const post = postblock(requestJSON.globalPosts[i], /* max length: title, content */ 200, 400);
 		posts.appendChild(post);
 	}
 	if (requestJSON.followedPosts) {

@@ -54,7 +54,8 @@ function attachmentblock(attachments) {
 	return attachment;
 }
 
-function postblock(post) {
+function postblock(post, maxTitleLength, maxContentLength) {
+	const postLink = `/post.html?id=${post.id}`;
 	const postSpan = document.createElement("span");
 	const title = document.createElement("a");
 	const userSpan = document.createElement("span");
@@ -82,10 +83,27 @@ function postblock(post) {
 	hr2.classList.add("width100");
 	metaSpan.classList.add("leftalign", "width100");
 
-	title.innerText = post.title;
+	let titleText = post.title;
+	if(post.title.length > maxTitleLength) {
+		titleText = post.title.substring(0,maxTitleLength);
+		titleText += "...";
+	}
+	title.innerText = titleText;
 	verifiedSpan.innerText = "\u2705";
 	dateSpan.innerText = new Date(post.date).toLocaleString();
-	contentSpan.innerText = post.content;
+	let postContentText = post.content;
+	if(post.content.length > maxContentLength) {
+		postContentText = post.content.substring(0, maxContentLength);
+		postContentText += "...";
+	}
+	contentSpan.innerText = postContentText;
+	if(post.content.length > maxContentLength) {
+		const readMoreLink = document.createElement("a");
+		readMoreLink.setAttribute("href", postLink);
+		readMoreLink.classList.add("readMoreLink");
+		readMoreLink.innerText = "Read more";
+		contentSpan.append(readMoreLink);
+	}
 	metaSpan.innerText = `\u2191 ${post.upvotes} \u2193 ${post.downvotes} \ud83d\udcac ${post.comments}`;
 
 	if (post.attachments && post.attachments.length > 0 && post.attachments[0] !== null) {
@@ -100,7 +118,7 @@ function postblock(post) {
 	postSpan.append(title, userSpan, dateSpan, hr1, contentSpan, hr2, metaSpan);
 
 	postSpan.onclick = function(e) {
-		location.href = `/post.html?id=${post.id}`;
+		location.href = postLink;
 	}
 
 	return postSpan;
