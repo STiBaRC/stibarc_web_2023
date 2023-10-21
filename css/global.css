@@ -25,6 +25,10 @@ a:active {
 	color: var(--text);
 }
 
+/*
+	inputs
+*/
+
 input[type=text], input[type=password], input[type=email], input[type=number], input[type=date], textarea {
 	font-family: inherit;
 	padding: 5px 8px;
@@ -52,6 +56,12 @@ input[type=text], input[type=password], input[type=email], input[type=number], i
 
 .searchbar input:focus {
 	border: 2px solid var(--color4);
+}
+
+.bigtextarea {
+	width: 500px;
+	max-width: calc(100% - 25px);
+	min-height: 250px;
 }
 
 #mainHeader {

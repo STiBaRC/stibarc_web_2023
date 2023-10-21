@@ -58,14 +58,3 @@
 	font-size: 45px;
 	line-height: 51px;
 }
-
-#newpostbody {
-	min-width: 500px;
-	min-height: 250px;
-}
-
-@media only screen and (max-width: 750px) {
-	#newpostbody {
-		min-width: calc(100% - 50px);
-	}
-}
