@@ -88,7 +88,7 @@ window.addEventListener("load", async () => {
 	
 	const posts = document.createDocumentFragment();
 	for (let i in user.posts) {
-		const post = postblock(user.posts[i], /* max length: title, content */ 200, 400);
+		const post = postblock(user.posts[i], 250);
 		posts.appendChild(post);
 	}
 	$("#posts").appendChild(posts);
