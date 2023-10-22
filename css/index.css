@@ -1,3 +1,18 @@
+.postcontent {
+	-webkit-box-orient: vertical;
+    display: -webkit-box;
+	flex-basis: unset;
+	-webkit-line-clamp: 7;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.attachmentimage {
+	display: block;
+	margin-top: 8px;
+}
+
 .floatingbuttoncontainer {
 	position: sticky;
 	top: 66px;

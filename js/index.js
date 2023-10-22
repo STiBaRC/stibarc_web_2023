@@ -17,12 +17,12 @@ async function getPosts() {
 	});
 	const requestJSON = await request.json();
 	for (let i in requestJSON.globalPosts) {
-		const post = postblock(requestJSON.globalPosts[i], /* max length: title, content */ 200, 400);
+		const post = postblock(requestJSON.globalPosts[i], 250);
 		posts.appendChild(post);
 	}
 	if (requestJSON.followedPosts) {
 		for (let i in requestJSON.followedPosts) {
-			const post = postblock(requestJSON.followedPosts[i]);
+			const post = postblock(requestJSON.followedPosts[i], 250);
 			fposts.appendChild(post);
 		}
 	}

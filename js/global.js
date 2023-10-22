@@ -53,7 +53,7 @@ function attachmentblock(attachments) {
 	return attachment;
 }
 
-function postblock(post, maxTitleLength, maxContentLength) {
+function postblock(post, maxTitleLength) {
 	const postLink = `/post.html?id=${post.id}`;
 	const postSpan = document.createElement("span");
 	const title = document.createElement("a");
@@ -91,18 +91,14 @@ function postblock(post, maxTitleLength, maxContentLength) {
 	verifiedSpan.innerText = "\u2705";
 	dateSpan.innerText = new Date(post.date).toLocaleString();
 	let postContentText = post.content;
-	if(post.content.length > maxContentLength) {
-		postContentText = post.content.substring(0, maxContentLength);
-		postContentText += "...";
-	}
 	contentSpan.innerText = postContentText;
-	if(post.content.length > maxContentLength) {
-		const readMoreLink = document.createElement("a");
-		readMoreLink.setAttribute("href", postLink);
-		readMoreLink.classList.add("readMoreLink");
-		readMoreLink.innerText = "Read more";
-		contentSpan.append(readMoreLink);
-	}
+	// if(post.content.length > maxContentLength) {
+	// 	const readMoreLink = document.createElement("a");
+	// 	readMoreLink.setAttribute("href", postLink);
+	// 	readMoreLink.classList.add("readMoreLink");
+	// 	readMoreLink.innerText = "Read more";
+	// 	contentSpan.append(readMoreLink);
+	// }
 	metaSpan.innerText = `\u2191 ${post.upvotes} \u2193 ${post.downvotes} \ud83d\udcac ${post.comments}`;
 
 	if (post.attachments && post.attachments.length > 0 && post.attachments[0] !== null) {
