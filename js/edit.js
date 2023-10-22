@@ -162,22 +162,7 @@ window.addEventListener("load", async () => {
 	} else {
 		$("#editbody").value = comment.content;
 		for (const i in comment.attachments) {
-			let attachment;
-			const parts = comment.attachments[i].split(".");
-			const ext = parts[parts.length - 1];
-			const source = document.createElement("source");
-			if (images.indexOf(ext) != -1) {
-				attachment = document.createElement("img");
-				attachment.setAttribute("src", comment.attachments[i]);
-			} else if (videos.indexOf(ext) != -1) {
-				attachment = document.createElement("video");
-				source.setAttribute("src", comment.attachments[i]);
-				attachment.appendChild(source);
-			} else if (audios.indexOf(ext) != -1) {
-				attachment = document.createElement("audio");
-				source.setAttribute("src", comment.attachments[i]);
-				attachment.appendChild(source);
-			}
+			let attachment = attachmentblock(comment.attachments[i]);
 			attachment.addEventListener("click", () => {
 				comment.attachments.splice(i, 1);
 				attachment.remove();
