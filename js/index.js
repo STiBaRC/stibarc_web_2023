@@ -24,10 +24,12 @@ async function getPosts() {
 		for (let i in requestJSON.followedPosts) {
 			const post = postblock(requestJSON.followedPosts[i], 250);
 			fposts.appendChild(post);
+			
 		}
 	}
 	if (requestJSON.globalPosts.length == 0) {
 		const span = document.createElement("span");
+		span.setAttribute("class", "posts");
 		span.innerText = "There's nothing here ;(";
 		$("#posts").appendChild(span);
 	} else {
@@ -36,6 +38,7 @@ async function getPosts() {
 	}
 	if (localStorage.sess != undefined && requestJSON.followedPosts.length == 0) {
 		const span = document.createElement("span");
+		span.setAttribute("class", "posts");
 		span.innerText = "There's nothing here ;(";
 		$("#followedposts").appendChild(span);
 	}
@@ -170,7 +173,7 @@ window.addEventListener("load", function() {
 		const span = document.createElement("span");
 		span.innerText = "Log in or register to view followed users";
 		$("#followedposts").appendChild(span);
-	}
+	}33
 	setLoggedinState(localStorage.sess);
 	getPosts();
 });

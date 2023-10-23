@@ -253,6 +253,16 @@ main.flexcontainer {
 	margin-bottom: 5px;
 }
 
+.posts .postcontent {
+	-webkit-box-orient: vertical;
+    display: -webkit-box;
+	flex-basis: unset;
+	-webkit-line-clamp: 7;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 .comment {
 	box-sizing: border-box;
 	border-radius: 15px;
@@ -338,6 +348,8 @@ main.flexcontainer {
 }
 
 .attachmentimage {
+	margin-top: 6px;
+	display: block;
 	max-width: 100%;
 	max-height: 200px;
 	width: 150px;
