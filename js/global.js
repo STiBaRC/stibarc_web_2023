@@ -240,7 +240,9 @@ function userBlock(user) {
 	userPronouns.setAttribute("class", "pronouns");
 
 	verifiedSpan.innerText = "\u2705";
-	userPronouns.innerText = `(${user.pronouns})`;
+	if (user.pronouns) {
+		userPronouns.innerText = `(${user.pronouns})`;
+	}
 	
 	userLink.append(userPfp, user.username);
 	userSpan.append(userLink);
