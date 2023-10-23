@@ -64,7 +64,14 @@ window.addEventListener("load", async () => {
 		if (clicked) return;
 		const title = $("#edittitle").value;
 		const content = $("#editbody").value;
-		if ((target == "post" && title.trim() == "") || content.trim() == "") return;
+		if (target == "post" && title.trim() == "" || target == "post" && content.trim() == "") {
+			alert("Title and post body must not be blank!");
+			return;
+		}
+		if (target == "comment" && (comment.attachments.length + newAttachmentFiles.length) == 0 && content.trim() == "") {
+			alert("Comment must not be blank. Have at least one attachment or content.")
+			return;
+		}
 		clicked = true;
 		for (const file of newAttachmentFiles) {
 			const response = await fetch("https://betaapi.stibarc.com/v4/uploadfile.sjs", {
