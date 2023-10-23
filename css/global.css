@@ -215,6 +215,11 @@ main.flexcontainer {
 	margin-right: calc(100vw * 0.01);
 }
 
+.pronouns {
+	margin-left: 4px;
+	opacity: 0.7;
+}
+
 .pfpnm {
 	background-color: var(--color1);
 	width: 110px;
