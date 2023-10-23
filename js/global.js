@@ -2,6 +2,7 @@ const listatehooks = [];
 const images = ["png","jpg","gif","webp","svg"];
 const videos = ["mov","mp4","webm"];
 const audios = ["spx","m3a","m4a","wma","wav","mp3"];
+const maxTitleLength = 250;
 let clicked = false;
 
 function $(qs) {
@@ -53,7 +54,7 @@ function attachmentblock(attachments) {
 	return attachment;
 }
 
-function postblock(post, maxTitleLength) {
+function postblock(post) {
 	const postLink = `/post.html?id=${post.id}`;
 	const postSpan = document.createElement("span");
 	const title = document.createElement("a");

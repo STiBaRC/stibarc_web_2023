@@ -17,12 +17,12 @@ async function getPosts() {
 	});
 	const requestJSON = await request.json();
 	for (let i in requestJSON.globalPosts) {
-		const post = postblock(requestJSON.globalPosts[i], 250);
+		const post = postblock(requestJSON.globalPosts[i]);
 		posts.appendChild(post);
 	}
 	if (requestJSON.followedPosts) {
 		for (let i in requestJSON.followedPosts) {
-			const post = postblock(requestJSON.followedPosts[i], 250);
+			const post = postblock(requestJSON.followedPosts[i]);
 			fposts.appendChild(post);
 			
 		}
