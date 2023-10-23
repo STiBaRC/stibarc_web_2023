@@ -226,6 +226,7 @@ function userBlock(user) {
 	const userLink = document.createElement("a");
 	const userPfp = document.createElement("img");
 	const verifiedSpan = document.createElement("span");
+	const userPronouns = document.createElement("span");
 
 	userSpan.classList.add("post", "flexcontainer", "leftalign", "width100");
 	userLink.setAttribute("href", `/user.html?username=${user.username}`);
@@ -233,12 +234,16 @@ function userBlock(user) {
 	userPfp.classList.add("pfp");
 	userPfp.setAttribute("src", user.pfp);
 	verifiedSpan.setAttribute("title", "Verified");
+	userPronouns.setAttribute("title", "Pronouns");
+	userPronouns.setAttribute("class", "pronouns");
 
 	verifiedSpan.innerText = "\u2705";
+	userPronouns.innerText = `(${user.pronouns})`;
 	
 	userLink.append(userPfp, user.username);
 	userSpan.append(userLink);
 	if (user.verified) userSpan.append(verifiedSpan);
+	userSpan.append(userPronouns);
 
 	userSpan.addEventListener("click", () => {
 		location.href = `/user.html?username=${user.username}`;
