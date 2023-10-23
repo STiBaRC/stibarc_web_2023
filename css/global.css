@@ -218,6 +218,8 @@ main.flexcontainer {
 .pronouns {
 	margin-left: 2px;
 	opacity: 0.75;
+	overflow-x: auto;
+	max-width: 100%;
 }
 
 .pfpnm {
