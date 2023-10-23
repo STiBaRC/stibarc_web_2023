@@ -39,6 +39,7 @@ function attachmentblock(attachments) {
 		attachment.setAttribute("loading", "lazy");
 	} else if (videos.indexOf(ext) != -1) {
 		attachment = document.createElement("video");
+		attachment.setAttribute("controls", true);
 		source.setAttribute("src", attachments);
 		attachment.appendChild(source);
 	} else if (audios.indexOf(ext) != -1) {
