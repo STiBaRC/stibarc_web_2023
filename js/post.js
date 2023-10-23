@@ -175,6 +175,9 @@ window.addEventListener("load", async function() {
 	$("#postpfp").setAttribute("src", post.poster.pfp);
 	$("#postusername").innerText = post.poster.username;
 	if (post.poster.verified) $("#postverified").classList.remove("hidden");
+	if (post.poster.pronouns) {
+		$("#pronouns").innerText = `(${post.poster.pronouns})`;
+	}
 	$("#postdate").innerText = new Date(post.date).toLocaleString();
 	$("#postcontent").innerText = post.content;
 	$("#upvoteBtn").innerText = `\u2191 ${post.upvotes}`;

@@ -31,7 +31,9 @@ window.addEventListener("load", async () => {
 	if (user.verified) $("#userverified").classList.remove("hidden");
 	$("#userpfp").setAttribute("src", user.pfp);
 	$("#name").innerText = `Real name: ${user.name}`;
-	$("#pronouns").innerText = `(${user.pronouns})`;
+	if (user.pronouns) {
+		$("#pronouns").innerText = `(${user.pronouns})`;
+	}
 	$("#email").innerText = `Email: ${user.email}`;
 	if (user.displayBirthday) {
 		const UTCDate = new Date(user.birthday);
