@@ -33,6 +33,8 @@ window.addEventListener("load", async () => {
 				session: localStorage.sess,
 				name: $("#nameinput").value,
 				displayName: $("#showname").checked,
+				pronouns: $("#pronouns").value,
+				displayPronouns: $("#showpronouns").checked,
 				email: $("#emailinput").value,
 				displayEmail: $("#showemail").checked,
 				birthday: $("#bdayinput").value,
@@ -216,6 +218,8 @@ window.addEventListener("load", async () => {
 	$("#userpfp").setAttribute("src", user.pfp);
 	$("#nameinput").value = user.name;
 	$("#showname").checked = user.displayName;
+	$("#pronouns").value = user.pronouns;
+	$("#showpronouns").checked = user.displayPronouns;
 	$("#emailinput").value = user.email;
 	$("#showemail").checked = user.displayEmail;
 	const bday = new Date(user.birthday);

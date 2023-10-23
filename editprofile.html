@@ -25,7 +25,7 @@
 				<input type="search" id="searchbox" placeholder="Search">
 			</span>
 			<span class="flexcontainer rightalign">
-				<span id="searchBtn"><img class="showOnMobileFlex" src="./img/icon/search.svg" alt="Search"></span>
+				<span id="searchBtn" class="showOnMobileFlex"><img src="./img/icon/search.svg" alt="Search"></span>
 				<img src="https://betacdn.stibarc.com/pfp/default.png" id="mypfp" class="headerpfp">
 			</span>
 		</span>
@@ -55,6 +55,15 @@
 			<input type="text" id="nameinput" placeholder="Name" autocomplete="given-name">
 			<span>Show name: <input type="checkbox" id="showname"></span>
 			<span>&nbsp;</span>
+			<input list="commonPronouns" id="pronouns" type="text" placeholder="Pronouns">
+			<datalist id="commonPronouns">
+				<option value="She/Her"></option>
+				<option value="He/Him"></option>
+				<option value="They/Them"></option>
+				<option value="It/Its"></option>
+			</datalist>
+			<span>Show pronouns: <input type="checkbox" id="showpronouns"></span>
+			<span>&nbsp;</span>
 			<input type="email" id="emailinput" placeholder="Email" autocomplete="email">
 			<span>Show email: <input type="checkbox" id="showemail"></span>
 			<span>&nbsp;</span>
@@ -70,7 +79,7 @@
 			</span>
 			<span>&nbsp;</span>
 			<span class="flexcontainer">
-				<a id="editprofilebutton" class="flexcontainer button">Edit Profile</a>
+				<a id="editprofilebutton" class="flexcontainer button">Submit</a>
 				<a id="cancel" class="flexcontainer button">Cancel</a>
 			</span>
 		</span>

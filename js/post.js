@@ -14,8 +14,8 @@ async function newComment() {
 	clicked = true;
 	for (const file of newAttachmentFiles) {
 		const response = await fetch("https://betaapi.stibarc.com/v4/uploadfile.sjs", {
-		method: "post",
-		headers: {
+			method: "post",
+			headers: {
 				"Content-Type": file.type,
 				"X-Session-Key": localStorage.sess,
 				"X-File-Usage": "attachment"
@@ -50,10 +50,10 @@ async function newComment() {
 	location.reload();
 }
 
-window.addEventListener("load", async function() {
+window.addEventListener("load", async function () {
 	$("#upvoteBtn").addEventListener("click", async () => {
 		if (localStorage.sess) {
-			const voteResult = await vote({id, target: "post", vote: "upvote"});
+			const voteResult = await vote({ id, target: "post", vote: "upvote" });
 			$("#upvoteBtn").innerText = `\u2191 ${voteResult.upvotes}`;
 			$("#downvoteBtn").innerText = `\u2193 ${voteResult.downvotes}`;
 		} else {
@@ -65,7 +65,7 @@ window.addEventListener("load", async function() {
 	});
 	$("#downvoteBtn").addEventListener("click", async () => {
 		if (localStorage.sess) {
-			const voteResult = await vote({id, target: "post", vote: "downvote"});
+			const voteResult = await vote({ id, target: "post", vote: "downvote" });
 			$("#upvoteBtn").innerText = `\u2191 ${voteResult.upvotes}`;
 			$("#downvoteBtn").innerText = `\u2193 ${voteResult.downvotes}`;
 		} else {
@@ -87,7 +87,7 @@ window.addEventListener("load", async function() {
 		}
 	});
 	$("#newcommentbutton").addEventListener("click", newComment);
-	$("#newcommentcancel").onclick = function(e) {
+	$("#newcommentcancel").onclick = function (e) {
 		$("#opennewcommentbutton").classList.remove("hidden");
 		$("#newcomment").classList.add("hidden");
 		$("#newcommentbody").value = "";
@@ -97,13 +97,13 @@ window.addEventListener("load", async function() {
 		}
 		newAttachmentBlobURLs = [];
 	}
-	$("#addattachment").onclick = function(e) {
+	$("#addattachment").onclick = function (e) {
 		const attachmentElements = $("#attachments");
 		const fileInput = document.createElement("input");
 		fileInput.setAttribute("type", "file");
 		fileInput.setAttribute("accept", "image/*,audio/*,video/*");
 		fileInput.setAttribute("multiple", "");
-		fileInput.addEventListener("change", async function(e) {
+		fileInput.addEventListener("change", async function (e) {
 			newAttachmentFiles = [...newAttachmentFiles, ...fileInput.files];
 			for (const file of fileInput.files) {
 				const objURL = URL.createObjectURL(file);
@@ -129,7 +129,7 @@ window.addEventListener("load", async function() {
 						attachmentElement.appendChild(source);
 						break;
 				}
-				attachmentElement.onclick = function(e) {
+				attachmentElement.onclick = function (e) {
 					const index = newAttachments.indexOf(file);
 					URL.revokeObjectURL(objURL);
 					newAttachmentFiles.splice(index, 1);
@@ -175,6 +175,9 @@ window.addEventListener("load", async function() {
 	$("#postpfp").setAttribute("src", post.poster.pfp);
 	$("#postusername").innerText = post.poster.username;
 	if (post.poster.verified) $("#postverified").classList.remove("hidden");
+	if (post.poster.pronouns) {
+		$("#pronouns").innerText = `(${post.poster.pronouns})`;
+	}
 	$("#postdate").innerText = new Date(post.date).toLocaleString();
 	$("#postcontent").innerText = post.content;
 	$("#upvoteBtn").innerText = `\u2191 ${post.upvotes}`;
@@ -185,9 +188,13 @@ window.addEventListener("load", async function() {
 		for (let i = 0; i < post.attachments.length; i++) {
 			const attachment = attachmentblock(post.attachments[i]);
 			attachment.classList.add("postattachment");
-			attachment.addEventListener("click", () => {
-				window.open(post.attachments[i], "_blank");
-			});
+			const parts = post.attachments[i].split(".");
+			const ext = parts[parts.length - 1];
+			if (images.indexOf(ext) != -1) {
+				attachment.addEventListener("click", () => {
+					window.open(post.attachments[i], "_blank");
+				});
+			}
 			$("#postcontent").append(attachment);
 		}
 	}

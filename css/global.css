@@ -29,7 +29,12 @@ a:active {
 	inputs
 */
 
-input[type=text], input[type=password], input[type=email], input[type=number], input[type=date], textarea {
+input[type=text],
+input[type=password],
+input[type=email],
+input[type=number],
+input[type=date],
+textarea {
 	font-family: inherit;
 	padding: 5px 8px;
 	border: 1px solid var(--color8);
@@ -215,6 +220,13 @@ main.flexcontainer {
 	margin-right: calc(100vw * 0.01);
 }
 
+.pronouns {
+	margin-left: 2px;
+	opacity: 0.75;
+	overflow-x: auto;
+	max-width: 100%;
+}
+
 .pfpnm {
 	background-color: var(--color1);
 	width: 110px;
@@ -244,6 +256,16 @@ main.flexcontainer {
 	font-weight: bold;
 	font-size: 1.5em;
 	margin-bottom: 5px;
+}
+
+.posts .postcontent {
+	-webkit-box-orient: vertical;
+	display: -webkit-box;
+	flex-basis: unset;
+	-webkit-line-clamp: 7;
+	max-width: 100%;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 
 .comment {
@@ -331,6 +353,8 @@ main.flexcontainer {
 }
 
 .attachmentimage {
+	margin-top: 6px;
+	display: block;
 	max-width: 100%;
 	max-height: 200px;
 	width: 150px;

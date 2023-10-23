@@ -1,8 +1,7 @@
 window.addEventListener("load", async () => {
 	
 	$("#searchboxMobile").addEventListener("change", (e) => {
-		$("#searchbox").value = $("#searchboxMobile").value
-		alert($("#searchbox").value)
+		$("#searchbox").value = $("#searchboxMobile").value;
 	});
 
 	$("#searchboxMobile").addEventListener("keypress", (e) => {
@@ -18,6 +17,7 @@ window.addEventListener("load", async () => {
 		query = url.searchParams.get("q");
 	} else {
 		console.log("No query!");
+		return;
 	}
 	$("#searchbox").value = query;
 	$("#searchboxMobile").value = query;

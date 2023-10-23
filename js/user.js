@@ -31,6 +31,9 @@ window.addEventListener("load", async () => {
 	if (user.verified) $("#userverified").classList.remove("hidden");
 	$("#userpfp").setAttribute("src", user.pfp);
 	$("#name").innerText = `Real name: ${user.name}`;
+	if (user.pronouns) {
+		$("#pronouns").innerText = `(${user.pronouns})`;
+	}
 	$("#email").innerText = `Email: ${user.email}`;
 	if (user.displayBirthday) {
 		const UTCDate = new Date(user.birthday);
@@ -88,7 +91,7 @@ window.addEventListener("load", async () => {
 	
 	const posts = document.createDocumentFragment();
 	for (let i in user.posts) {
-		const post = postblock(user.posts[i], /* max length: title, content */ 200, 400);
+		const post = postblock(user.posts[i]);
 		posts.appendChild(post);
 	}
 	$("#posts").appendChild(posts);

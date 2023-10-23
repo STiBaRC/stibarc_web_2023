@@ -2,6 +2,7 @@ const listatehooks = [];
 const images = ["png","jpg","gif","webp","svg"];
 const videos = ["mov","mp4","webm"];
 const audios = ["spx","m3a","m4a","wma","wav","mp3"];
+const maxTitleLength = 250;
 let clicked = false;
 
 function $(qs) {
@@ -38,6 +39,7 @@ function attachmentblock(attachments) {
 		attachment.setAttribute("loading", "lazy");
 	} else if (videos.indexOf(ext) != -1) {
 		attachment = document.createElement("video");
+		attachment.setAttribute("controls", true);
 		source.setAttribute("src", attachments);
 		attachment.appendChild(source);
 	} else if (audios.indexOf(ext) != -1) {
@@ -53,13 +55,14 @@ function attachmentblock(attachments) {
 	return attachment;
 }
 
-function postblock(post, maxTitleLength) {
+function postblock(post) {
 	const postLink = `/post.html?id=${post.id}`;
 	const postSpan = document.createElement("span");
 	const title = document.createElement("a");
 	const userSpan = document.createElement("span");
 	const userLink = document.createElement("a");
 	const userPfp = document.createElement("img");
+	const userPronouns = document.createElement("span");
 	const verifiedSpan = document.createElement("span");
 	const dateSpan = document.createElement("span");
 	const hr1 = document.createElement("hr");
@@ -76,6 +79,8 @@ function postblock(post, maxTitleLength) {
 	userPfp.classList.add("pfp");
 	userPfp.setAttribute("src", post.poster.pfp);
 	verifiedSpan.setAttribute("title", "Verified");
+	userPronouns.setAttribute("title", "Pronouns");
+	userPronouns.setAttribute("class", "pronouns");
 	dateSpan.classList.add("postdate", "leftalign", "width100");
 	hr1.classList.add("width100");
 	contentSpan.classList.add("postcontent", "flexcolumn", "leftalign", "width100");
@@ -89,16 +94,13 @@ function postblock(post, maxTitleLength) {
 	}
 	title.innerText = titleText;
 	verifiedSpan.innerText = "\u2705";
+	if (post.poster.pronouns) {
+		userPronouns.innerText = `(${post.poster.pronouns})`;
+	}
 	dateSpan.innerText = new Date(post.date).toLocaleString();
 	let postContentText = post.content;
 	contentSpan.innerText = postContentText;
-	// if(post.content.length > maxContentLength) {
-	// 	const readMoreLink = document.createElement("a");
-	// 	readMoreLink.setAttribute("href", postLink);
-	// 	readMoreLink.classList.add("readMoreLink");
-	// 	readMoreLink.innerText = "Read more";
-	// 	contentSpan.append(readMoreLink);
-	// }
+
 	metaSpan.innerText = `\u2191 ${post.upvotes} \u2193 ${post.downvotes} \ud83d\udcac ${post.comments}`;
 
 	if (post.attachments && post.attachments.length > 0 && post.attachments[0] !== null) {
@@ -110,6 +112,7 @@ function postblock(post, maxTitleLength) {
 	userLink.append(userPfp, post.poster.username);
 	userSpan.append(userLink);
 	if (post.poster.verified) userSpan.append(verifiedSpan);
+	userSpan.append(userPronouns);
 	postSpan.append(title, userSpan, dateSpan, hr1, contentSpan, hr2, metaSpan);
 
 	postSpan.onclick = function(e) {
@@ -125,6 +128,7 @@ function commentBlock(post, comment, isPostPage) {
 	const userLink = document.createElement("a");
 	const userPfp = document.createElement("img");
 	const verifiedSpan = document.createElement("span");
+	const userPronouns = document.createElement("span");
 	const dateSpan = document.createElement("span");
 	const hr1 = document.createElement("hr");
 	const contentSpan = document.createElement("span");
@@ -141,6 +145,8 @@ function commentBlock(post, comment, isPostPage) {
 	userPfp.classList.add("pfp");
 	userPfp.setAttribute("src", comment.poster.pfp);
 	verifiedSpan.setAttribute("title", "Verified");
+	userPronouns.setAttribute("title", "Pronouns");
+	userPronouns.setAttribute("class", "pronouns");
 	dateSpan.classList.add("postdate", "leftalign", "width100");
 	hr1.classList.add("width100");
 	contentSpan.classList.add("postcontent", "flexcolumn", "leftalign", "width100");
@@ -151,6 +157,9 @@ function commentBlock(post, comment, isPostPage) {
 	editBtn.classList.add("flexcontainer", "button");
 
 	verifiedSpan.innerText = "\u2705";
+	if (comment.poster.pronouns) {
+		userPronouns.innerText = `(${comment.poster.pronouns})`;
+	}
 	dateSpan.innerText = new Date(comment.date).toLocaleString();
 	contentSpan.innerText = comment.content;
 	upvoteBtn.innerText = `\u2191 ${comment.upvotes}`;
@@ -174,6 +183,7 @@ function commentBlock(post, comment, isPostPage) {
 	userLink.append(userPfp, comment.poster.username);
 	userSpan.append(userLink);
 	if (comment.poster.verified) userSpan.append(verifiedSpan);
+	userSpan.append(userPronouns);
 	if (isPostPage) {
 		metaSpan.append(upvoteBtn, downvoteBtn);
 		if (comment.poster.username == localStorage.username) metaSpan.append(editBtn);
@@ -218,6 +228,7 @@ function userBlock(user) {
 	const userLink = document.createElement("a");
 	const userPfp = document.createElement("img");
 	const verifiedSpan = document.createElement("span");
+	const userPronouns = document.createElement("span");
 
 	userSpan.classList.add("post", "flexcontainer", "leftalign", "width100");
 	userLink.setAttribute("href", `/user.html?username=${user.username}`);
@@ -225,12 +236,18 @@ function userBlock(user) {
 	userPfp.classList.add("pfp");
 	userPfp.setAttribute("src", user.pfp);
 	verifiedSpan.setAttribute("title", "Verified");
+	userPronouns.setAttribute("title", "Pronouns");
+	userPronouns.setAttribute("class", "pronouns");
 
 	verifiedSpan.innerText = "\u2705";
+	if (user.pronouns) {
+		userPronouns.innerText = `(${user.pronouns})`;
+	}
 	
 	userLink.append(userPfp, user.username);
 	userSpan.append(userLink);
 	if (user.verified) userSpan.append(verifiedSpan);
+	userSpan.append(userPronouns);
 
 	userSpan.addEventListener("click", () => {
 		location.href = `/user.html?username=${user.username}`;
