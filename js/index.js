@@ -173,7 +173,7 @@ window.addEventListener("load", function() {
 		const span = document.createElement("span");
 		span.innerText = "Log in or register to view followed users";
 		$("#followedposts").appendChild(span);
-	}33
+	}
 	setLoggedinState(localStorage.sess);
 	getPosts();
 });
