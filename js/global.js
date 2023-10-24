@@ -50,7 +50,7 @@ function attachmentblock(attachments) {
 	} else {
 		attachment = document.createElement("img");
 		attachment.setAttribute("src", "./img/jimbomournsyourmisfortune.png");
-		attachment.setAttribute("title", "Error: attachment can not be displayed.")
+		attachment.setAttribute("title", "Error: attachment can not be displayed.");
 	}
 	return attachment;
 }
@@ -94,9 +94,7 @@ function postblock(post) {
 	}
 	title.innerText = titleText;
 	verifiedSpan.innerText = "\u2705";
-	if (post.poster.pronouns) {
-		userPronouns.innerText = `(${post.poster.pronouns})`;
-	}
+	if (post.poster.pronouns) userPronouns.innerText = `(${post.poster.pronouns})`;
 	dateSpan.innerText = new Date(post.date).toLocaleString();
 	let postContentText = post.content;
 	contentSpan.innerText = postContentText;
@@ -157,9 +155,7 @@ function commentBlock(post, comment, isPostPage) {
 	editBtn.classList.add("flexcontainer", "button");
 
 	verifiedSpan.innerText = "\u2705";
-	if (comment.poster.pronouns) {
-		userPronouns.innerText = `(${comment.poster.pronouns})`;
-	}
+	if (comment.poster.pronouns) userPronouns.innerText = `(${comment.poster.pronouns})`;
 	dateSpan.innerText = new Date(comment.date).toLocaleString();
 	contentSpan.innerText = comment.content;
 	upvoteBtn.innerText = `\u2191 ${comment.upvotes}`;
@@ -240,9 +236,7 @@ function userBlock(user) {
 	userPronouns.setAttribute("class", "pronouns");
 
 	verifiedSpan.innerText = "\u2705";
-	if (user.pronouns) {
-		userPronouns.innerText = `(${user.pronouns})`;
-	}
+	if (user.pronouns) userPronouns.innerText = `(${user.pronouns})`;
 	
 	userLink.append(userPfp, user.username);
 	userSpan.append(userLink);
@@ -353,6 +347,8 @@ async function register() {
 	const password2 = $("#passwordrinput2").value;
 	const name = $("#nameinput").value || undefined;
 	const displayName = $("#showname").checked || undefined;
+	const pronouns = $("#pronounsinput").value || undefined;
+	const displayPronouns = $("#showpronouns").checked || undefined;
 	const email = $("#emailinput").value || undefined;
 	const displayEmail = $("#showemail").checked || undefined;
 	const birthday = ($("#bdayinput").value != "") ? new Date($("#bdayinput").value) : undefined;
@@ -385,6 +381,8 @@ async function register() {
 			password,
 			name,
 			displayName,
+			pronouns,
+			displayPronouns,
 			email,
 			displayEmail,
 			birthday,
