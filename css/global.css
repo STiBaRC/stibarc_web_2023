@@ -258,11 +258,12 @@ main.flexcontainer {
 	margin-bottom: 5px;
 }
 
-.posts .postcontent {
+.posts .postcontent span {
 	-webkit-box-orient: vertical;
 	display: -webkit-box;
 	flex-basis: unset;
 	-webkit-line-clamp: 7;
+	word-wrap: break-word;
 	max-width: 100%;
 	overflow: hidden;
 	text-overflow: ellipsis;
