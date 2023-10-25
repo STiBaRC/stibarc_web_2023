@@ -220,6 +220,10 @@ main.flexcontainer {
 	margin-right: calc(100vw * 0.01);
 }
 
+.feedFilter {
+	z-index: 1000;
+}
+
 .pronouns {
 	margin-left: 2px;
 	opacity: 0.75;
