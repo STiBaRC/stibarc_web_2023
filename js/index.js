@@ -94,10 +94,14 @@ window.addEventListener("load", function() {
 	$("#globalBtn").onclick = function() {
 		$("#posts").classList.remove("hidden");
 		$("#followedposts").classList.add("hidden");
+		$("#followedBtn").classList.remove("active");
+		$("#globalBtn").classList.add("active");
 	}
 	$("#followedBtn").onclick = function() {
 		$("#posts").classList.add("hidden");
 		$("#followedposts").classList.remove("hidden");
+		$("#globalBtn").classList.remove("active");
+		$("#followedBtn").classList.add("active");
 	}
 	$("#newpost").onclick = function(e) {
 		if (localStorage.sess) {
