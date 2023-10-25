@@ -67,6 +67,7 @@ function postblock(post) {
 	const dateSpan = document.createElement("span");
 	const hr1 = document.createElement("hr");
 	const contentSpan = document.createElement("span");
+	const contentTextSpan = document.createElement("span");
 	const hr2 = document.createElement("hr");
 	const metaSpan = document.createElement("span");
 
@@ -97,7 +98,8 @@ function postblock(post) {
 	if (post.poster.pronouns) userPronouns.innerText = `(${post.poster.pronouns})`;
 	dateSpan.innerText = new Date(post.date).toLocaleString();
 	let postContentText = post.content;
-	contentSpan.innerText = postContentText;
+	contentTextSpan.innerText = postContentText;
+	contentSpan.append(contentTextSpan);
 
 	metaSpan.innerText = `\u2191 ${post.upvotes} \u2193 ${post.downvotes} \ud83d\udcac ${post.comments}`;
 
