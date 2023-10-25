@@ -11,6 +11,8 @@ window.addEventListener("load", async () => {
 		}
 	});
 
+	setLoggedinState(localStorage.sess);
+
 	const url = new URL(location);
 	let query = null;
 	if (url.searchParams.has('q')) {
@@ -19,9 +21,9 @@ window.addEventListener("load", async () => {
 		console.log("No query!");
 		return;
 	}
+
 	$("#searchbox").value = query;
 	$("#searchboxMobile").value = query;
-	setLoggedinState(localStorage.sess);
 
 	const r = await fetch("https://betaapi.stibarc.com/v4/search.sjs", {
 		method: "post",
