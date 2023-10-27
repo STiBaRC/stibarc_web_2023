@@ -24,6 +24,7 @@ window.addEventListener("load", async () => {
 
 	$("#searchbox").value = query;
 	$("#searchboxMobile").value = query;
+	$("#loader").style.display = "flex";
 
 	const r = await fetch("https://betaapi.stibarc.com/v4/search.sjs", {
 		method: "post",
@@ -37,6 +38,7 @@ window.addEventListener("load", async () => {
 
 	const rj = await r.json();
 	if (rj.status == "error") console.error(rj);
+	$("#loader").style.display = "none";
 
 	const users = document.createDocumentFragment();
 	const posts = document.createDocumentFragment();
