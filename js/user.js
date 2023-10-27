@@ -30,6 +30,7 @@ window.addEventListener("load", async () => {
 	user = requestJSON.user;
 	if (user.verified) $("#userverified").classList.remove("hidden");
 	$("#userpfp").setAttribute("src", user.pfp);
+	$("#userBanner").src = user.banner;
 	$("#name").innerText = `Real name: ${user.name}`;
 	if (user.pronouns) $("#pronouns").innerText = `(${user.pronouns})`;
 	$("#email").innerText = `Email: ${user.email}`;
