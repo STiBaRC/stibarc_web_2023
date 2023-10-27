@@ -47,6 +47,7 @@ textarea {
 }
 
 .searchbar input {
+	font-family: inherit;
 	box-sizing: border-box;
 	width: 75%;
 	min-width: 200px;
