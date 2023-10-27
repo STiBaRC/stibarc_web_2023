@@ -34,7 +34,7 @@ input[type=password],
 input[type=email],
 input[type=number],
 input[type=date],
-input[tyle=search]
+input[tyle=search],
 textarea {
 	font-family: inherit;
 	vertical-align: baseline;
