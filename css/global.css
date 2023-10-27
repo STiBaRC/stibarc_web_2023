@@ -34,11 +34,16 @@ input[type=password],
 input[type=email],
 input[type=number],
 input[type=date],
+input[tyle=search]
 textarea {
 	font-family: inherit;
-	padding: 5px 8px;
-	border: 1px solid var(--color8);
-	border-radius: 6px;
+	vertical-align: baseline;
+    box-sizing: border-box;
+    background-color: var(--color2);
+    border: 2px solid var(--color3);
+    padding: 0.55rem 0.75rem;
+    border-radius: 6px;
+    font-size: 16px;
 }
 
 .searchbar input {
@@ -158,6 +163,28 @@ main.flexcontainer {
 
 .red {
 	color: var(--color7);
+}
+
+.loader {
+	display: flex;
+	border: 5px solid transparent;
+    border-radius: 50%;
+    border-top: 5px solid var(--color2);
+    border-right: 5px solid transparent;
+    border-bottom: 5px solid transparent;
+    width: 25px;
+    height: 25px;
+    margin: auto;
+    animation: spin 0.45s linear infinite;
+}
+
+@keyframes spin {
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
 }
 
 .leftalign {

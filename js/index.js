@@ -16,6 +16,8 @@ async function getPosts() {
 		})
 	});
 	const requestJSON = await request.json();
+	$("#postsLoader").style.display = "none";
+	$("#followedPostsLoader").style.display = "none";
 	for (let i in requestJSON.globalPosts) {
 		const post = postblock(requestJSON.globalPosts[i]);
 		posts.appendChild(post);

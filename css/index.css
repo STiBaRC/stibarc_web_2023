@@ -1,3 +1,7 @@
+#postsLoader, #followedPostsLoader {
+	margin-bottom: 1rem;
+}
+
 .attachmentimage {
 	display: block;
 	margin-top: 8px;
