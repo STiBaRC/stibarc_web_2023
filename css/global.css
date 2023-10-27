@@ -198,8 +198,7 @@ main.flexcontainer {
 } */
 
 .headerDropdown .separator {
-	background-color: var(--color3);
-	height: 1px;
+	border: 1px solid var(--color3);
 	margin: 3px 0;
 }
 
@@ -271,6 +270,15 @@ main.flexcontainer {
 	max-width: 100%;
 	overflow: hidden;
 	text-overflow: ellipsis;
+}
+
+.post hr, .block hr {
+	border: 1px solid var(--color3);
+	margin: 0.65rem 0;
+}
+
+.comment hr {
+	border-color: var(--color2);
 }
 
 .comment {
