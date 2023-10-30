@@ -284,6 +284,8 @@ main.flexcontainer {
 }
 
 .posttitle {
+	display: inline-block;
+	word-wrap: break-word;
 	font-weight: bold;
 	font-size: 1.5em;
 	margin-bottom: 5px;
