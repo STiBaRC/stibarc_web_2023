@@ -89,7 +89,7 @@ async function newPost() {
 		child.click();
 	}
 	attachmentBlobURLs = [];
-	location.href = `post.html?id=${responseJSON.id}`;
+	location.href = `./post.html?id=${responseJSON.id}`;
 }
 
 window.addEventListener("load", function() {

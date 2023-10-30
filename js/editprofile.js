@@ -1,7 +1,41 @@
 let tfaEnabled = false;
 
-window.addEventListener("load", async () => {
+async function updateInfo() {
 	$("#userusername").innerText = localStorage.username;
+	const r = await fetch("https://betaapi.stibarc.com/v4/getprivatedata.sjs", {
+		method: "post",
+		headers: {
+			"Content-Type": "application/json"
+		},
+		body: JSON.stringify({
+			session: localStorage.sess
+		})
+	});
+	const user = (await r.json()).user;
+	$("#userpfp").setAttribute("src", user.pfp);
+	$("#nameinput").value = user.name;
+	$("#showname").checked = user.displayName;
+	$("#pronounsinput").value = user.pronouns;
+	$("#showpronouns").checked = user.displayPronouns;
+	$("#emailinput").value = user.email;
+	$("#showemail").checked = user.displayEmail;
+	const bday = new Date(user.birthday);
+	$("#bdayinput").value = `${bday.getUTCFullYear()}-${(bday.getUTCMonth()+1).toString().padStart(2, "0")}-${bday.getUTCDate()}`;
+	$("#showbday").checked = user.displayBirthday;
+	$("#bioinput").value = user.bio;
+	$("#showbio").checked = user.displayBio;
+	$("#tfabutton").innerText = user.totpEnabled ? "Disable 2FA" : "Enable 2FA";
+	tfaEnabled = user.totpEnabled;
+}
+
+window.addEventListener("load", async () => {
+	listatehooks.push((state) => {
+		if (state) {
+			updateInfo();
+		} else {
+			location.href = "./";
+		}
+	});
 	$("#userpfp").addEventListener("click", () => {
 		const fileInput = document.createElement("input");
 		fileInput.setAttribute("type", "file");
@@ -205,28 +239,4 @@ window.addEventListener("load", async () => {
 		$("#disabletfainput").value = "";
 	});
 	setLoggedinState(localStorage.sess);
-	const r = await fetch("https://betaapi.stibarc.com/v4/getprivatedata.sjs", {
-		method: "post",
-		headers: {
-			"Content-Type": "application/json"
-		},
-		body: JSON.stringify({
-			session: localStorage.sess
-		})
-	});
-	const user = (await r.json()).user;
-	$("#userpfp").setAttribute("src", user.pfp);
-	$("#nameinput").value = user.name;
-	$("#showname").checked = user.displayName;
-	$("#pronounsinput").value = user.pronouns;
-	$("#showpronouns").checked = user.displayPronouns;
-	$("#emailinput").value = user.email;
-	$("#showemail").checked = user.displayEmail;
-	const bday = new Date(user.birthday);
-	$("#bdayinput").value = `${bday.getUTCFullYear()}-${(bday.getUTCMonth()+1).toString().padStart(2, "0")}-${bday.getUTCDate()}`;
-	$("#showbday").checked = user.displayBirthday;
-	$("#bioinput").value = user.bio;
-	$("#showbio").checked = user.displayBio;
-	$("#tfabutton").innerText = user.totpEnabled ? "Disable 2FA" : "Enable 2FA";
-	tfaEnabled = user.totpEnabled;
 });

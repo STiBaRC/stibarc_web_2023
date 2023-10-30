@@ -7,7 +7,7 @@ window.addEventListener("load", async () => {
 	$("#searchboxMobile").addEventListener("keypress", (e) => {
 		const query = encodeURIComponent($("#searchboxMobile").value);
 		if (e.key == "Enter" && query.trim() != "") {
-			location.href = `search.html?q=${query}`;
+			location.href = `./search.html?q=${query}`;
 		}
 	});
 

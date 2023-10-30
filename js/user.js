@@ -20,10 +20,10 @@ window.addEventListener("load", async () => {
 		switch (requestJSON.errorCode) {
 			case "rnu":
 			case "unf":
-				location.href = "404.html";
+				location.href = "/404.html";
 				break;
 			case "ise":
-				location.href = "500.html";
+				location.href = "/500.html";
 		}
 		return;
 	}

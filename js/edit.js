@@ -58,7 +58,7 @@ window.addEventListener("load", async () => {
 		fileInput.click();
 	}
 	$("#cancel").addEventListener("click", () => {
-		location.href = `post.html?id=${id}`;
+		location.href = `./post.html?id=${id}`;
 	});
 	$("#editbutton").addEventListener("click", async () => {
 		if (clicked) return;
@@ -105,7 +105,7 @@ window.addEventListener("load", async () => {
 			})
 		});
 		const rj = await r.json();
-		location.href = `post.html?id=${id}`;
+		location.href = `./post.html?id=${id}`;
 	});
 	$("#deletebutton").addEventListener("click", async () => {
 		if (clicked) return;
@@ -141,16 +141,16 @@ window.addEventListener("load", async () => {
 		switch (rj.errorCode) {
 			case "rni":
 			case "pnfod":
-				location.href = "404.html";
+				location.href = "/404.html";
 				break;
 			case "ise":
-				location.href = "500.html";
+				location.href = "/500.html";
 		}
 		return;
 	}
 	post = rj.post;
 	if (cid) comment = post.comments.filter(comment => comment.id == cid)[0];
-	if (cid && !comment) location.href = `post.html?id=${id}`;
+	if (cid && !comment) location.href = `./post.html?id=${id}`;
 	if (!cid) {
 		$("#edittitle").value = post.title;
 		$("#editbody").value = post.content;

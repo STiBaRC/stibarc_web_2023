@@ -56,7 +56,7 @@ function attachmentblock(attachments) {
 }
 
 function postblock(post) {
-	const postLink = `/post.html?id=${post.id}`;
+	const postLink = `./post.html?id=${post.id}`;
 	const postSpan = document.createElement("span");
 	const title = document.createElement("a");
 	const userSpan = document.createElement("span");
@@ -73,7 +73,7 @@ function postblock(post) {
 
 	postSpan.classList.add("post", "flexcontainer", "flexcolumn");
 	title.classList.add("posttitle", "leftalign", "width100");
-	title.setAttribute("href", `/post.html?id=${post.id}`);
+	title.setAttribute("href", `./post.html?id=${post.id}`);
 	userSpan.classList.add("flexcontainer", "leftalign", "width100");
 	userLink.setAttribute("href", `/user.html?username=${post.poster.username}`);
 	userLink.classList.add("flexcontainer");
@@ -140,7 +140,7 @@ function commentBlock(post, comment, isPostPage) {
 
 	commentSpan.classList.add("comment", "flexcontainer", "flexcolumn");
 	userSpan.classList.add("flexcontainer", "leftalign", "width100");
-	userLink.setAttribute("href", `/user.html?username=${comment.poster.username}`);
+	userLink.setAttribute("href", `./user.html?username=${comment.poster.username}`);
 	userLink.classList.add("flexcontainer");
 	userPfp.classList.add("pfp");
 	userPfp.setAttribute("src", comment.poster.pfp);
@@ -215,7 +215,7 @@ function commentBlock(post, comment, isPostPage) {
 	});
 
 	editBtn.addEventListener("click", () => {
-		location.href = `edit.html?id=${post.id}&cid=${comment.id}`;
+		location.href = `./edit.html?id=${post.id}&cid=${comment.id}`;
 	});
 
 	return commentSpan;
@@ -229,7 +229,7 @@ function userBlock(user) {
 	const userPronouns = document.createElement("span");
 
 	userSpan.classList.add("post", "flexcontainer", "leftalign", "width100");
-	userLink.setAttribute("href", `/user.html?username=${user.username}`);
+	userLink.setAttribute("href", `./user.html?username=${user.username}`);
 	userLink.classList.add("flexcontainer");
 	userPfp.classList.add("pfp");
 	userPfp.setAttribute("src", user.pfp);
@@ -246,7 +246,7 @@ function userBlock(user) {
 	userSpan.append(userPronouns);
 
 	userSpan.addEventListener("click", () => {
-		location.href = `/user.html?username=${user.username}`;
+		location.href = `./user.html?username=${user.username}`;
 	});
 
 	return userSpan;
@@ -257,7 +257,7 @@ function setLoggedinState(state) {
 		$("#mypfp").setAttribute("src", localStorage.pfp);
 		$("#menuprofile").innerText = localStorage.username;
 		$("#menuprofile").addEventListener("click", () => {
-			location.href = `user.html?username=${localStorage.username}`;
+			location.href = `./user.html?username=${localStorage.username}`;
 		});
 	}
 	Array.from(document.getElementsByClassName("loggedin")).forEach(element => {
@@ -281,9 +281,9 @@ function setLoggedinState(state) {
 
 async function login() {
 	if (clicked) return;
-	const username = $("#usernameinput").value;
-	const password = $("#passwordinput").value;
-	const totpCode = $("#tfainput").value;
+	const username = $("#Login-usernameinput").value;
+	const password = $("#Login-passwordinput").value;
+	const totpCode = $("#Login-tfainput").value;
 	if (username.trim() == "" || password.trim() == "") return;
 	clicked = true;
 	const response = await fetch("https://betaapi.stibarc.com/v4/login.sjs", {
@@ -307,7 +307,7 @@ async function login() {
 					break;
 				case "totpr":
 					$("#loginerror").innerText = "2FA code required";
-					$("#tfa").classList.remove("hidden");
+					$("#Login-tfa").classList.remove("hidden");
 					break;
 				case "itotp":
 					$("#loginerror").innerText = "Invalid 2FA code";
@@ -344,19 +344,19 @@ async function logout() {
 
 async function register() {
 	if (clicked) return;
-	const username = $("#usernamerinput").value.trim();
-	const password = $("#passwordrinput").value;
-	const password2 = $("#passwordrinput2").value;
-	const name = $("#nameinput").value || undefined;
-	const displayName = $("#showname").checked || undefined;
-	const pronouns = $("#pronounsinput").value || undefined;
-	const displayPronouns = $("#showpronouns").checked || undefined;
-	const email = $("#emailinput").value || undefined;
-	const displayEmail = $("#showemail").checked || undefined;
-	const birthday = ($("#bdayinput").value != "") ? new Date($("#bdayinput").value) : undefined;
-	const displayBirthday = $("#showbday").checked || undefined;
-	const bio = $("#bioinput").value || undefined;
-	const displayBio = $("#showbio").checked || undefined;
+	const username = $("#Reg-usernameinput").value.trim();
+	const password = $("#Reg-passwordinput").value;
+	const password2 = $("#Reg-passwordinput2").value;
+	const name = $("#Reg-nameinput").value || undefined;
+	const displayName = $("#Reg-showname").checked || undefined;
+	const pronouns = $("#Reg-pronounsinput").value || undefined;
+	const displayPronouns = $("#Reg-showpronouns").checked || undefined;
+	const email = $("#Reg-emailinput").value || undefined;
+	const displayEmail = $("#Reg-showemail").checked || undefined;
+	const birthday = ($("#Reg-bdayinput").value != "") ? new Date($("#Reg-bdayinput").value) : undefined;
+	const displayBirthday = $("#Reg-showbday").checked || undefined;
+	const bio = $("#Reg-bioinput").value || undefined;
+	const displayBio = $("#Reg-showbio").checked || undefined;
 	if (username == "") {
 		$("#registererror").innerText = "Username required";
 		$("#registererrorcontainer").classList.remove("hidden");
@@ -435,7 +435,7 @@ window.addEventListener("load", function() {
 	});
 	$("#menulogin").onclick = function(e) {
 		window.scrollTo(0, 0);
-		$("#tfa").classList.add("hidden");
+		$("#Login-tfa").classList.add("hidden");
 		$("#loginformcontainer").classList.remove("hidden");
 		$("#overlay").classList.remove("hidden");
 		document.body.classList.add("overflowhidden");
@@ -449,8 +449,8 @@ window.addEventListener("load", function() {
 		$("#loginformcontainer").classList.add("hidden");
 		$("#overlay").classList.add("hidden");
 		document.body.classList.remove("overflowhidden");
-		$("#usernameinput").value = "";
-		$("#passwordinput").value = "";
+		$("#Login-usernameinput").value = "";
+		$("#Login-passwordinput").value = "";
 	}
 	$("#loginbutton").onclick = login;
 	$("#menulogout").onclick = logout;
@@ -469,29 +469,31 @@ window.addEventListener("load", function() {
 		$("#registerformcontainer").classList.add("hidden");
 		$("#overlay").classList.add("hidden");
 		document.body.classList.remove("overflowhidden");
-		$("#usernamerinput").value = "";
-		$("#passwordrinput").value = "";
-		$("#passwordrinput2").value = "";
-		$("#nameinput").value = "";
-		$("#showname").checked = false;
-		$("#emailinput").value = "";
-		$("#showemail").checked = false;
-		$("#bdayinput").value = "";
-		$("#showbday").checked = false;
-		$("#bioinput").value = "";
-		$("#showbio").checked = false;
+		$("#Reg-usernameinput").value = "";
+		$("#Reg-passwordinput").value = "";
+		$("#Reg-passwordinput2").value = "";
+		$("#Reg-nameinput").value = "";
+		$("#Reg-showname").checked = false;
+		$("#Reg-pronounsinput").value = "";
+		$("#Reg-showpronouns").checked = false;
+		$("#Reg-emailinput").value = "";
+		$("#Reg-showemail").checked = false;
+		$("#Reg-bdayinput").value = "";
+		$("#Reg-showbday").checked = false;
+		$("#Reg-bioinput").value = "";
+		$("#Reg-showbio").checked = false;
 	}
 	$("#registerbutton").onclick = register;
 	$("#menueditprofile").onclick = function(e) {
 		location.href = "editprofile.html";
 	}
 	$("#searchBtn").addEventListener("click", () => {
-		location.href = "search.html";
+		location.href = "./search.html";
 	});
 	$("#searchbox").addEventListener("keypress", (e) => {
 		const query = encodeURIComponent($("#searchbox").value);
 		if (e.key == "Enter" && query.trim() != "") {
-			location.href = `search.html?q=${query}`;
+			location.href = `./search.html?q=${query}`;
 		}
 	});
 });
