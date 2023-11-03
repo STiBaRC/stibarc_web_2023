@@ -13,6 +13,7 @@ async function updateInfo() {
 	});
 	const user = (await r.json()).user;
 	$("#userpfp").setAttribute("src", user.pfp);
+	if (user.banner !== "https://betacdn.stibarc.com/banner/default.png") $("#userbanner").src = user.banner;
 	$("#nameinput").value = user.name;
 	$("#showname").checked = user.displayName;
 	$("#pronounsinput").value = user.pronouns;
@@ -54,6 +55,27 @@ window.addEventListener("load", async () => {
 			const responseJSON = await response.json();
 			localStorage.pfp = responseJSON.file;
 			$("#userpfp").setAttribute("src", responseJSON.file);
+		});
+		fileInput.click();
+	});
+	$("#userbanner").addEventListener("click", () => {
+		const fileInput = document.createElement("input");
+		fileInput.setAttribute("type", "file");
+		fileInput.setAttribute("accept", "image/*");
+		fileInput.addEventListener("change", async function(e) {
+			if (fileInput.files.length == 0) return;
+			const response = await fetch("https://betaapi.stibarc.com/v4/uploadfile.sjs", {
+			method: "post",
+			headers: {
+					"Content-Type": fileInput.files[0].type,
+					"X-Session-Key": localStorage.sess,
+					"X-File-Usage": "banner"
+				},
+				body: await fileInput.files[0].arrayBuffer()
+			});
+			const responseJSON = await response.json();
+			localStorage.banner = responseJSON.file;
+			$("#userbanner").setAttribute("src", responseJSON.file);
 		});
 		fileInput.click();
 	});
