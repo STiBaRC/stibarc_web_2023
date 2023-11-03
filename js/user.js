@@ -34,6 +34,7 @@ window.addEventListener("load", async () => {
 	$("#userBanner").classList.remove("light");
 	$("#userBanner").style.backgroundImage = `url('${user.banner}')`;
 	$("#userBannerLoader").classList.add("hidden");
+	$("#userBanner").style.cursor = "pointer";
 	$("#userBanner").addEventListener("click", () => {
 		window.open(user.banner, "_blank");
 	});

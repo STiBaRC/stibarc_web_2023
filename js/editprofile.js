@@ -15,6 +15,7 @@ async function updateInfo() {
 	$("#userpfp").setAttribute("src", user.pfp);
 	$("#userBannerLoader").classList.add("hidden");
 	$("#userBanner").style.backgroundImage = `url("${user.banner}")`;
+	$("#userBanner").style.cursor = "pointer";
 	$("#nameinput").value = user.name;
 	$("#showname").checked = user.displayName;
 	$("#pronounsinput").value = user.pronouns;
