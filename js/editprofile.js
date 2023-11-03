@@ -13,7 +13,8 @@ async function updateInfo() {
 	});
 	const user = (await r.json()).user;
 	$("#userpfp").setAttribute("src", user.pfp);
-	if (user.banner !== "https://betacdn.stibarc.com/banner/default.png") $("#userbanner").src = user.banner;
+	$("#userBannerLoader").classList.add("hidden");
+	$("#userBanner").style.backgroundImage = `url("${user.banner}")`;
 	$("#nameinput").value = user.name;
 	$("#showname").checked = user.displayName;
 	$("#pronounsinput").value = user.pronouns;
@@ -37,6 +38,7 @@ window.addEventListener("load", async () => {
 			location.href = "./";
 		}
 	});
+	setLoggedinState(localStorage.sess);
 	$("#userpfp").addEventListener("click", () => {
 		const fileInput = document.createElement("input");
 		fileInput.setAttribute("type", "file");
@@ -58,7 +60,7 @@ window.addEventListener("load", async () => {
 		});
 		fileInput.click();
 	});
-	$("#userbanner").addEventListener("click", () => {
+	$("#userBanner").addEventListener("click", () => {
 		const fileInput = document.createElement("input");
 		fileInput.setAttribute("type", "file");
 		fileInput.setAttribute("accept", "image/*");
@@ -75,7 +77,7 @@ window.addEventListener("load", async () => {
 			});
 			const responseJSON = await response.json();
 			localStorage.banner = responseJSON.file;
-			$("#userbanner").setAttribute("src", responseJSON.file);
+			$("#userBanner").style.backgroundImage = `url("${responseJSON.file}")`;
 		});
 		fileInput.click();
 	});
@@ -260,5 +262,4 @@ window.addEventListener("load", async () => {
 		$("#disabletfaerrorcontainer").classList.add("hidden");
 		$("#disabletfainput").value = "";
 	});
-	setLoggedinState(localStorage.sess);
 });

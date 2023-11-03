@@ -179,6 +179,10 @@ main.flexcontainer {
     animation: spin 0.45s linear infinite;
 }
 
+.loader.dark {
+	border-top: 5px solid var(--color1);
+}
+
 @keyframes spin {
 	0% {
 		transform: rotate(0deg);
@@ -248,16 +252,23 @@ main.flexcontainer {
 }
 
 .profileBanner {
-	display: block;
+	display: flex;
 	position: relative;
 	width: 100%;
-	height: 150px;
+	height: 175px;
 	object-fit: cover;
 	background-color: var(--color1);
 	border-radius: 10px;
 	margin-bottom: 0.75rem;
 	border: none;
 	cursor: pointer;
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center center;
+}
+
+.profileBanner.light {
+	background-color: var(--color2);
 }
 
 .feedFilter {

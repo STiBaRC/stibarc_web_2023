@@ -30,14 +30,14 @@ window.addEventListener("load", async () => {
 	user = requestJSON.user;
 	if (user.verified) $("#userverified").classList.remove("hidden");
 	$("#userpfp").setAttribute("src", user.pfp);
-	if (user.banner == "https://betacdn.stibarc.com/banner/default.png") {
-		$("#userBanner").classList.add("hidden");
-	} else {
-		$("#userBanner").src = user.banner;
-		$("#userBanner").addEventListener("click", () => {
-			window.open(user.banner, "_blank");
-		});
-	}
+	$("#userBannerLoader").classList.remove("dark");
+	$("#userBanner").classList.remove("light");
+	$("#userBanner").style.backgroundImage = `url('${user.banner}')`;
+	$("#userBannerLoader").classList.add("hidden");
+	$("#userBanner").addEventListener("click", () => {
+		window.open(user.banner, "_blank");
+	});
+	if (user.banner == "https://betacdn.stibarc.com/banner/default.png") $("#userBanner").classList.add("hidden");
 	$("#name").innerText = `Real name: ${user.name}`;
 	if (user.pronouns) $("#pronouns").innerText = `(${user.pronouns})`;
 	$("#email").innerText = `Email: ${user.email}`;
