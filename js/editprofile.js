@@ -13,6 +13,7 @@ async function updateInfo() {
 	});
 	const user = (await r.json()).user;
 	$("#userpfp").setAttribute("src", user.pfp);
+	$("#userPfpLoader").classList.remove("loading");
 	$("#userBannerLoader").classList.add("hidden");
 	$("#userBanner").style.backgroundImage = `url("${user.banner}")`;
 	$("#userBanner").classList.add("pointer");
@@ -46,6 +47,7 @@ window.addEventListener("load", async () => {
 		fileInput.setAttribute("accept", "image/*");
 		fileInput.addEventListener("change", async function(e) {
 			if (fileInput.files.length == 0) return;
+			$("#userPfpLoader").classList.add("loading");
 			const response = await fetch("https://betaapi.stibarc.com/v4/uploadfile.sjs", {
 			method: "post",
 			headers: {
@@ -56,6 +58,7 @@ window.addEventListener("load", async () => {
 				body: await fileInput.files[0].arrayBuffer()
 			});
 			const responseJSON = await response.json();
+			$("#userPfpLoader").classList.remove("loading");
 			localStorage.pfp = responseJSON.file;
 			$("#userpfp").setAttribute("src", responseJSON.file);
 		});

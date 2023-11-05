@@ -192,6 +192,25 @@ main.flexcontainer {
 	}
 }
 
+.loading {
+	position: relative;
+}
+
+.loading::before {
+    content: "";
+	display: flex;
+    position: absolute;
+	border: 5px solid transparent;
+    border-radius: 50%;
+    border-top: 5px solid var(--color2);
+    border-right: 5px solid transparent;
+    border-bottom: 5px solid transparent;
+    width: 25px;
+    height: 25px;
+	z-index: 1;
+	animation: spin 0.45s linear infinite;
+}
+
 .leftalign {
 	display: flex;
 	justify-content: left;
