@@ -67,6 +67,7 @@ window.addEventListener("load", async () => {
 		fileInput.setAttribute("accept", "image/*");
 		fileInput.addEventListener("change", async function(e) {
 			if (fileInput.files.length == 0) return;
+			$("#userBannerLoader").classList.remove("hidden");
 			const response = await fetch("https://betaapi.stibarc.com/v4/uploadfile.sjs", {
 			method: "post",
 			headers: {
@@ -77,6 +78,7 @@ window.addEventListener("load", async () => {
 				body: await fileInput.files[0].arrayBuffer()
 			});
 			const responseJSON = await response.json();
+			$("#userBannerLoader").classList.add("hidden");
 			localStorage.banner = responseJSON.file;
 			$("#userBanner").style.backgroundImage = `url("${responseJSON.file}")`;
 		});
