@@ -32,9 +32,9 @@ window.addEventListener("load", async () => {
 	$("#userpfp").setAttribute("src", user.pfp);
 	$("#userBannerLoader").classList.remove("dark");
 	$("#userBanner").classList.remove("light");
+	$("#userBanner").classList.add("pointer");
 	$("#userBanner").style.backgroundImage = `url('${user.banner}')`;
 	$("#userBannerLoader").classList.add("hidden");
-	$("#userBanner").style.cursor = "pointer";
 	$("#userBanner").addEventListener("click", () => {
 		window.open(user.banner, "_blank");
 	});
