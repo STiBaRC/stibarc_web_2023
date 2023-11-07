@@ -98,6 +98,7 @@ function postblock(post) {
 	if (post.poster.pronouns) userPronouns.innerText = `(${post.poster.pronouns})`;
 	let postDate = new Date(post.date);
 	dateSpan.innerText = postDate.toLocaleString([], { dateStyle: 'short', timeStyle: 'short' });
+	dateSpan.setAttribute("title", postDate.toLocaleString());
 	let postContentText = post.content;
 	contentTextSpan.innerText = postContentText;
 	contentSpan.append(contentTextSpan);
