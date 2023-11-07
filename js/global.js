@@ -155,7 +155,9 @@ function commentBlock(post, comment, isPostPage) {
 	hr2.classList.add("width100");
 	metaSpan.classList.add("leftalign", "width100");
 	upvoteBtn.classList.add("flexcontainer", "button");
+	upvoteBtn.setAttribute("title", "Upvote");
 	downvoteBtn.classList.add("flexcontainer", "button");
+	downvoteBtn.setAttribute("title", "Downvote");
 	editBtn.classList.add("flexcontainer", "button");
 
 	verifiedSpan.innerText = "\u2705";
