@@ -457,6 +457,7 @@ main.flexcontainer {
 }
 
 .smallBadge {
+	margin-top: 5px;
 	text-align: center;
 	align-self: flex-start;
 	font-size: 0.8rem;
@@ -464,6 +465,10 @@ main.flexcontainer {
 	background-color: var(--color3);
 	color: var(--color4);
 	border-radius: 25px;
+}
+
+.smallBadge.dark {
+	background-color: var(--color9);
 }
 
 #overlaybg {

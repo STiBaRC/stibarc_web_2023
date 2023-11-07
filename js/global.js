@@ -132,6 +132,8 @@ function commentBlock(post, comment, isPostPage) {
 	const verifiedSpan = document.createElement("span");
 	const userPronouns = document.createElement("span");
 	const dateSpan = document.createElement("span");
+	const metaTags = document.createDocumentFragment();
+	const editedSpan = document.createElement("span");
 	const hr1 = document.createElement("hr");
 	const contentSpan = document.createElement("span");
 	const hr2 = document.createElement("hr");
@@ -150,6 +152,7 @@ function commentBlock(post, comment, isPostPage) {
 	userPronouns.setAttribute("title", `Pronouns (${post.poster.pronouns})`);
 	userPronouns.setAttribute("class", "pronouns");
 	dateSpan.classList.add("postdate", "leftalign", "width100");
+	editedSpan.classList.add("smallBadge", "dark");
 	hr1.classList.add("width100");
 	contentSpan.classList.add("postcontent", "flexcolumn", "leftalign", "width100");
 	hr2.classList.add("width100");
@@ -162,7 +165,12 @@ function commentBlock(post, comment, isPostPage) {
 
 	verifiedSpan.innerText = "\u2705";
 	if (comment.poster.pronouns) userPronouns.innerText = `(${comment.poster.pronouns})`;
+	editedSpan.innerText = "Edited";
 	dateSpan.innerText = new Date(comment.date).toLocaleString();
+	if (comment.edited) {
+		editedSpan.setAttribute("title", `Edited ${new Date(comment.lastEdited).toLocaleString()}`);
+		metaTags.append(editedSpan);
+	}
 	contentSpan.innerText = comment.content;
 	upvoteBtn.innerText = `\u2191 ${comment.upvotes}`;
 	downvoteBtn.innerText = `\u2193 ${comment.downvotes}`;
@@ -190,7 +198,7 @@ function commentBlock(post, comment, isPostPage) {
 		metaSpan.append(upvoteBtn, downvoteBtn);
 		if (comment.poster.username == localStorage.username) metaSpan.append(editBtn);
 	}
-	commentSpan.append(userSpan, dateSpan, hr1, contentSpan, hr2, metaSpan);
+	commentSpan.append(userSpan, dateSpan, metaTags, hr1, contentSpan, hr2, metaSpan);
 
 	upvoteBtn.addEventListener("click", async () => {
 		if (localStorage.sess) {
