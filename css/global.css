@@ -456,6 +456,16 @@ main.flexcontainer {
 	cursor: pointer;
 }
 
+.smallBadge {
+	text-align: center;
+	align-self: flex-start;
+	font-size: 0.8rem;
+	padding: 1px 6px;
+	background-color: var(--color3);
+	color: var(--color4);
+	border-radius: 25px;
+}
+
 #overlaybg {
 	background-color: #000000;
 	opacity: 0.50;

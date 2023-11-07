@@ -180,6 +180,10 @@ window.addEventListener("load", async function () {
 		$("#pronouns").title = `Pronouns (${post.poster.pronouns})`;
 	}
 	$("#postdate").innerText = new Date(post.date).toLocaleString();
+	if (post.edited) {
+		$("#edited").classList.remove("hidden");
+		$("#edited").title = `Edited ${new Date(post.lastEdited).toLocaleString()}`;
+	}
 	$("#postcontent").innerText = post.content;
 	$("#upvoteBtn").innerText = `\u2191 ${post.upvotes}`;
 	$("#downvoteBtn").innerText = `\u2193 ${post.downvotes}`;
