@@ -96,7 +96,8 @@ function postblock(post) {
 	title.innerText = titleText;
 	verifiedSpan.innerText = "\u2705";
 	if (post.poster.pronouns) userPronouns.innerText = `(${post.poster.pronouns})`;
-	dateSpan.innerText = new Date(post.date).toLocaleString();
+	let postDate = new Date(post.date);
+	dateSpan.innerText = postDate.toLocaleString([], { dateStyle: 'short', timeStyle: 'short' });
 	let postContentText = post.content;
 	contentTextSpan.innerText = postContentText;
 	contentSpan.append(contentTextSpan);
