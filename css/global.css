@@ -44,6 +44,7 @@ textarea {
     padding: 0.55rem 0.75rem;
     border-radius: 6px;
     font-size: 16px;
+	max-width: 100%;
 }
 
 .searchbar input {
@@ -73,6 +74,12 @@ textarea {
 	width: 500px;
 	max-width: calc(100% - 25px);
 	min-height: 250px;
+}
+
+.mediumtextarea {
+	width: 325px;
+	max-width: calc(100% - 8px);
+    min-height: 100px;
 }
 
 #mainHeader {
