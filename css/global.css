@@ -446,6 +446,10 @@ main.flexcontainer {
 	overflow: hidden;
 }
 
+.postdate {
+	margin-top: 5px;
+}
+
 .attachmentimage {
 	margin-top: 6px;
 	display: block;
