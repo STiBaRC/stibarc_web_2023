@@ -78,10 +78,19 @@ textarea {
 #mainHeader {
 	height: 60px;
 	width: 100%;
+	overflow-x: auto;
+    flex-wrap: nowrap;
+}
+
+#mainHeader .flexcontainer {
+	flex-wrap: nowrap;
 }
 
 #logo {
 	margin-left: calc(100vw * 0.01);
+}
+
+#logo img {
 	height: 40px;
 }
 
@@ -493,5 +502,17 @@ footer {
 
 	.button {
 		min-width: 80px;
+	}
+}
+
+@media only screen and (max-width: 300px) {
+	#logo img {
+		height: 30px;
+	}
+}
+
+@media only screen and (max-width: 245px) {
+	#logo img {
+		height: 25px;
 	}
 }
