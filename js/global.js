@@ -80,7 +80,7 @@ function postblock(post) {
 	userPfp.classList.add("pfp");
 	userPfp.setAttribute("src", post.poster.pfp);
 	verifiedSpan.setAttribute("title", "Verified");
-	userPronouns.setAttribute("title", "Pronouns");
+	userPronouns.setAttribute("title", `Pronouns (${post.poster.pronouns})`);
 	userPronouns.setAttribute("class", "pronouns");
 	dateSpan.classList.add("postdate", "leftalign", "width100");
 	hr1.classList.add("width100");
@@ -147,7 +147,7 @@ function commentBlock(post, comment, isPostPage) {
 	userPfp.classList.add("pfp");
 	userPfp.setAttribute("src", comment.poster.pfp);
 	verifiedSpan.setAttribute("title", "Verified");
-	userPronouns.setAttribute("title", "Pronouns");
+	userPronouns.setAttribute("title", `Pronouns (${post.poster.pronouns})`);
 	userPronouns.setAttribute("class", "pronouns");
 	dateSpan.classList.add("postdate", "leftalign", "width100");
 	hr1.classList.add("width100");
@@ -236,7 +236,7 @@ function userBlock(user) {
 	userPfp.classList.add("pfp");
 	userPfp.setAttribute("src", user.pfp);
 	verifiedSpan.setAttribute("title", "Verified");
-	userPronouns.setAttribute("title", "Pronouns");
+	userPronouns.setAttribute("title", `Pronouns (${post.poster.pronouns})`);
 	userPronouns.setAttribute("class", "pronouns");
 
 	verifiedSpan.innerText = "\u2705";

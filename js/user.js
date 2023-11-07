@@ -40,7 +40,10 @@ window.addEventListener("load", async () => {
 	});
 	if (user.banner == "https://betacdn.stibarc.com/banner/default.png") $("#userBanner").classList.add("hidden");
 	$("#name").innerText = `Real name: ${user.name}`;
-	if (user.pronouns) $("#pronouns").innerText = `(${user.pronouns})`;
+	if (user.pronouns) {
+		$("#pronouns").innerText = `(${user.pronouns})`;
+		$("#pronouns").title = `Pronouns (${user.pronouns})`;
+	}
 	$("#email").innerText = `Email: ${user.email}`;
 	if (user.displayBirthday) {
 		const UTCDate = new Date(user.birthday);

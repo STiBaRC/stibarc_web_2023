@@ -177,6 +177,7 @@ window.addEventListener("load", async function () {
 	if (post.poster.verified) $("#postverified").classList.remove("hidden");
 	if (post.poster.pronouns) {
 		$("#pronouns").innerText = `(${post.poster.pronouns})`;
+		$("#pronouns").title = `Pronouns (${post.poster.pronouns})`;
 	}
 	$("#postdate").innerText = new Date(post.date).toLocaleString();
 	$("#postcontent").innerText = post.content;
