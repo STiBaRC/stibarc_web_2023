@@ -92,18 +92,31 @@ async function newPost() {
 	location.href = `./post.html?id=${responseJSON.id}`;
 }
 
-window.addEventListener("load", function() {
-	$("#globalBtn").onclick = function() {
+function setFeed(activeFeed) {
+	if (activeFeed == "followed") {
+		$("#posts").classList.add("hidden");
+		$("#followedposts").classList.remove("hidden");
+		$("#globalBtn").classList.remove("active");
+		$("#followedBtn").classList.add("active");
+	} else {
 		$("#posts").classList.remove("hidden");
 		$("#followedposts").classList.add("hidden");
 		$("#followedBtn").classList.remove("active");
 		$("#globalBtn").classList.add("active");
 	}
+	localStorage.activeFeed = activeFeed;
+}
+
+window.addEventListener("load", function() {
+	setFeed(localStorage.activeFeed);
+	$(".floatingbutton").forEach(e => {
+		e.style.transition = "background-color 0.2s ease-out";
+	});
+	$("#globalBtn").onclick = function() {
+		setFeed("global");
+	}
 	$("#followedBtn").onclick = function() {
-		$("#posts").classList.add("hidden");
-		$("#followedposts").classList.remove("hidden");
-		$("#globalBtn").classList.remove("active");
-		$("#followedBtn").classList.add("active");
+		setFeed("followed");
 	}
 	$("#newpost").onclick = function(e) {
 		if (localStorage.sess) {

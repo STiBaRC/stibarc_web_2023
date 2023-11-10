@@ -21,7 +21,6 @@
 	border-radius: 20px;
 	width: 100px;
 	cursor: pointer;
-	transition: background-color 0.2s ease-out;
 }
 
 .floatingbutton:hover {
