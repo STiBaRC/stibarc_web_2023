@@ -305,6 +305,18 @@ main.flexcontainer {
 	background-color: var(--color2);
 }
 
+.editBtnOverlay {
+	position: absolute;
+	right: 1rem;
+	bottom: 1rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: rgba(0, 0, 0, 0.45);
+	padding: 3px 4px;
+	border-radius: 5px;
+}
+
 .feedFilter {
 	z-index: 10;
 }
