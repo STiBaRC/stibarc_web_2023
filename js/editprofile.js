@@ -101,7 +101,7 @@ window.addEventListener("load", async () => {
 			},
 			body: JSON.stringify({
 				session: localStorage.sess,
-				pfp: "https://piss.pet/logo.png",
+				banner: "https://betacdn.stibarc.com/banner/default.png",
 			})
 		});
 		const responseJSON = await response.json();
