@@ -110,7 +110,7 @@ window.addEventListener("load", async () => {
 		uploadBannerImage();
 	});
 	$("#removeBanner").addEventListener("click", async () => {
-		$("#userBannerLoader").classList.add("loading");
+		$("#userBannerLoader").classList.remove("hidden");
 		const response = await fetch("https://betaapi.stibarc.com/v4/editprofile.sjs", {
 			method: "post",
 			headers: {
@@ -122,9 +122,9 @@ window.addEventListener("load", async () => {
 			})
 		});
 		const responseJSON = await response.json();
-		$("#userBannerLoader").classList.remove("loading");
+		$("#userBannerLoader").classList.add("hidden");
 		delete localStorage.banner;
-		$("#userBanner").setAttribute("src", "");
+		$("#userBanner").style.backgroundImage = "https://betacdn.stibarc.com/banner/default.png";
 	});
 	$("#editprofilebutton").addEventListener("click", async () => {
 		const r = await fetch("https://betaapi.stibarc.com/v4/editprofile.sjs", {
