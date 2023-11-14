@@ -109,15 +109,15 @@ function setFeed(activeFeed) {
 
 window.addEventListener("load", function() {
 	setFeed(localStorage.activeFeed);
-	$(".floatingbutton").forEach(e => {
-		e.style.transition = "background-color 0.2s ease-out";
-	});
 	$("#globalBtn").onclick = function() {
 		setFeed("global");
 	}
 	$("#followedBtn").onclick = function() {
 		setFeed("followed");
 	}
+	$(".floatingbutton").forEach(e => {
+		e.style.transition = "background-color 0.2s ease-out";
+	});
 	$("#newpost").onclick = function(e) {
 		if (localStorage.sess) {
 			window.scrollTo(0, 0);
