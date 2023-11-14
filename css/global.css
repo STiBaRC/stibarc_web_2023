@@ -307,14 +307,46 @@ main.flexcontainer {
 
 .editBtnOverlay {
 	position: absolute;
-	right: 1rem;
-	bottom: 1rem;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	background-color: rgba(0, 0, 0, 0.45);
 	padding: 3px 4px;
-	border-radius: 5px;
+	border-radius: 6px;
+	cursor: pointer;
+}
+
+.profileBanner .editBtnOverlay {
+	right: 1rem;
+	bottom: 1rem;
+}
+
+.editDropdown {
+	display: flex;
+	flex-direction: column;
+	justify-content: left;
+	position: absolute;
+	top: calc(100% - 1rem);
+	right: 1rem;
+	background-color: var(--color2);
+	color: var(--color4);
+	box-shadow: 0 1px 8px 0 rgba(22, 22, 22, 0.2), 0 1px 4px 0 rgba(22, 22, 22, 0.2);
+	padding: 4px 4px;
+	border-radius: 6px;
+	z-index: 10;
+}
+
+.editDropdown span {
+	display: block;
+	width: 5rem;
+	padding: 6px 10px;
+	transition: background-color 0.22s ease-out;
+	cursor: pointer;
+	border-radius: 6px;
+}
+
+.editDropdown span:hover {
+	background-color: var(--color3);
 }
 
 .feedFilter {

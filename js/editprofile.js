@@ -16,20 +16,45 @@ async function updateInfo() {
 	$("#userPfpLoader").classList.remove("loading");
 	$("#userBannerLoader").classList.add("hidden");
 	$("#userBanner").style.backgroundImage = `url("${user.banner}")`;
-	$("#userBanner").classList.add("pointer");
 	$("#nameinput").value = user.name;
 	$("#showname").checked = user.displayName;
 	$("#pronounsinput").value = user.pronouns;
 	$("#showpronouns").checked = user.displayPronouns;
 	$("#emailinput").value = user.email;
 	$("#showemail").checked = user.displayEmail;
-	const bday = new Date(user.birthday);
-	$("#bdayinput").value = `${bday.getUTCFullYear()}-${(bday.getUTCMonth()+1).toString().padStart(2, "0")}-${bday.getUTCDate()}`;
+	if (user.birthday) {
+		const bday = new Date(user.birthday);
+		$("#bdayinput").value = `${bday.getUTCFullYear()}-${(bday.getUTCMonth()+1).toString().padStart(2, "0")}-${bday.getUTCDate()}`;	
+	}
 	$("#showbday").checked = user.displayBirthday;
 	$("#bioinput").value = user.bio;
 	$("#showbio").checked = user.displayBio;
 	$("#tfabutton").innerText = user.totpEnabled ? "Disable 2FA" : "Enable 2FA";
 	tfaEnabled = user.totpEnabled;
+}
+
+function uploadBannerImage() {
+	const fileInput = document.createElement("input");
+	fileInput.setAttribute("type", "file");
+	fileInput.setAttribute("accept", "image/*");
+	fileInput.addEventListener("change", async function(e) {
+		if (fileInput.files.length == 0) return;
+		$("#userBannerLoader").classList.remove("hidden");
+		const response = await fetch("https://betaapi.stibarc.com/v4/uploadfile.sjs", {
+		method: "post",
+		headers: {
+				"Content-Type": fileInput.files[0].type,
+				"X-Session-Key": localStorage.sess,
+				"X-File-Usage": "banner"
+			},
+			body: await fileInput.files[0].arrayBuffer()
+		});
+		const responseJSON = await response.json();
+		$("#userBannerLoader").classList.add("hidden");
+		localStorage.banner = responseJSON.file;
+		$("#userBanner").style.backgroundImage = `url("${responseJSON.file}")`;
+	});
+	fileInput.click();
 }
 
 window.addEventListener("load", async () => {
@@ -64,28 +89,25 @@ window.addEventListener("load", async () => {
 		});
 		fileInput.click();
 	});
-	$("#userBanner").addEventListener("click", () => {
-		const fileInput = document.createElement("input");
-		fileInput.setAttribute("type", "file");
-		fileInput.setAttribute("accept", "image/*");
-		fileInput.addEventListener("change", async function(e) {
-			if (fileInput.files.length == 0) return;
-			$("#userBannerLoader").classList.remove("hidden");
-			const response = await fetch("https://betaapi.stibarc.com/v4/uploadfile.sjs", {
+	$("#uploadBanner").addEventListener("click", () => {
+		uploadBannerImage();
+	});
+	$("#removeBanner").addEventListener("click", async () => {
+		$("#userBannerLoader").classList.add("loading");
+		const response = await fetch("https://betaapi.stibarc.com/v4/editprofile.sjs", {
 			method: "post",
 			headers: {
-					"Content-Type": fileInput.files[0].type,
-					"X-Session-Key": localStorage.sess,
-					"X-File-Usage": "banner"
-				},
-				body: await fileInput.files[0].arrayBuffer()
-			});
-			const responseJSON = await response.json();
-			$("#userBannerLoader").classList.add("hidden");
-			localStorage.banner = responseJSON.file;
-			$("#userBanner").style.backgroundImage = `url("${responseJSON.file}")`;
+				"Content-Type": "application/json"
+			},
+			body: JSON.stringify({
+				session: localStorage.sess,
+				pfp: "https://piss.pet/logo.png",
+			})
 		});
-		fileInput.click();
+		const responseJSON = await response.json();
+		$("#userBannerLoader").classList.remove("loading");
+		delete localStorage.banner;
+		$("#userBanner").setAttribute("src", "");
 	});
 	$("#editprofilebutton").addEventListener("click", async () => {
 		const r = await fetch("https://betaapi.stibarc.com/v4/editprofile.sjs", {
