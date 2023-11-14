@@ -1,5 +1,1 @@
-<?xml version="1.0" encoding="utf-8"?>
-<svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
-  <line style="fill: rgb(216, 216, 216); stroke: rgb(0, 0, 0); stroke-width: 40px; stroke-linecap: round;" x1="250" y1="112.312" x2="250" y2="387.688"/>
-  <line style="fill: rgb(216, 216, 216); stroke: rgb(0, 0, 0); stroke-width: 40px; stroke-linecap: round;" x1="250" y1="112.312" x2="250" y2="387.688" transform="matrix(-0.000001, 1, -1, -0.000001, 500.000235, 0.000235)"/>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500"><path d="M250 112.312v275.376" style="fill:#d8d8d8;stroke:#000;stroke-width:40px;stroke-linecap:round"/><path d="M250 112.312v275.376" style="fill:#d8d8d8;stroke:#000;stroke-width:40px;stroke-linecap:round" transform="rotate(90 250 250)"/></svg>
