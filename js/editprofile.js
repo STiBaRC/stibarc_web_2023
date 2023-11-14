@@ -65,6 +65,23 @@ window.addEventListener("load", async () => {
 			location.href = "./";
 		}
 	});
+	clickhooks.push((event) => {
+		/* banner edit dropdown */
+		if (
+			$("#bannerUpdateDropdown").classList.contains("hidden") ||
+			$("#bannerUpdateDropdown").contains(event.target)
+		) {
+			$("#bannerUpdateBtn").classList.add("active");
+			$("#bannerUpdateDropdown").classList.remove("hidden");
+		} else {
+			$("#bannerUpdateBtn").classList.remove("active");
+			$("#bannerUpdateDropdown").classList.add("hidden");
+		}
+		if (!$("#bannerUpdateBtn").contains(event.target)) {
+			$("#bannerUpdateBtn").classList.remove("active");
+			$("#bannerUpdateDropdown").classList.add("hidden");
+		}
+	});
 	setLoggedinState(localStorage.sess);
 	$("#userpfp").addEventListener("click", () => {
 		const fileInput = document.createElement("input");

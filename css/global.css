@@ -314,6 +314,16 @@ main.flexcontainer {
 	padding: 3px 4px;
 	border-radius: 6px;
 	cursor: pointer;
+	transition: background-color 0.22s ease-out;
+}
+
+.editBtnOverlay:hover {
+	background-color: rgba(0, 0, 0, 0.6);
+}
+
+.editBtnOverlay.active {
+	background-color: #000;
+	/* filter: invert(); */
 }
 
 .profileBanner .editBtnOverlay {

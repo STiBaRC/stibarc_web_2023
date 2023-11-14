@@ -1,4 +1,5 @@
 const listatehooks = [];
+const clickhooks = [];
 const images = ["png","jpg","gif","webp","svg"];
 const videos = ["mov","mp4","webm"];
 const audios = ["spx","m3a","m4a","wma","wav","mp3"];
@@ -429,20 +430,23 @@ async function register() {
 window.addEventListener("load", function() {
 	document.addEventListener("click", function (event) {
 		/* user dropdown */
-		let pfpBtnClicked = document.querySelector("#mypfp").contains(event.target);
-		let dropDownClicked = document.querySelector("#hiddenHeader").contains(event.target);
+		let pfpBtnClicked = $("#mypfp").contains(event.target);
+		let dropDownClicked = $("#hiddenHeader").contains(event.target);
 		if (
-			document.querySelector("#hiddenHeader").style.display == "none" ||
-			document.querySelector("#hiddenHeader").style.display == "" ||
+			$("#hiddenHeader").style.display == "none" ||
+			$("#hiddenHeader").style.display == "" ||
 			dropDownClicked
 		) {
-			document.querySelector("#hiddenHeader").style.display = "block";
+			$("#hiddenHeader").style.display = "block";
 		} else {
-			document.querySelector("#hiddenHeader").style.display = "none";
+			$("#hiddenHeader").style.display = "none";
 		}
 		if (!pfpBtnClicked/* && !dropDownClicked*/) {
 			//the click was outside the nav dropdown
-			document.querySelector("#hiddenHeader").style.display = "none";
+			$("#hiddenHeader").style.display = "none";
+		}
+		for (const func of clickhooks) {
+			func(event);
 		}
 	});
 	$("#menulogin").onclick = function(e) {
