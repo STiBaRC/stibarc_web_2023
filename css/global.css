@@ -311,7 +311,7 @@ main.flexcontainer {
 	align-items: center;
 	justify-content: center;
 	background-color: rgba(0, 0, 0, 0.45);
-	padding: 3px 4px;
+	padding: 5px 5px;
 	border-radius: 6px;
 	cursor: pointer;
 	transition: background-color 0.22s ease-out;
@@ -322,12 +322,12 @@ main.flexcontainer {
 }
 
 .editBtnOverlay.active {
-	background-color: #000;
+	background-color: rgba(0, 0, 0, 0.92);
 }
 
 .profileBanner .editBtnOverlay {
-	right: 1rem;
-	bottom: 1rem;
+	right: 12px;
+	bottom: 12px;
 }
 
 .editDropdown {
@@ -335,8 +335,8 @@ main.flexcontainer {
 	flex-direction: column;
 	justify-content: left;
 	position: absolute;
-	top: calc(100% - 1rem);
-	right: 1rem;
+	top: calc(100% - 12px);
+	right: 12px;
 	background-color: var(--color2);
 	color: var(--color4);
 	box-shadow: 0 1px 8px 0 rgba(22, 22, 22, 0.2), 0 1px 4px 0 rgba(22, 22, 22, 0.2);
