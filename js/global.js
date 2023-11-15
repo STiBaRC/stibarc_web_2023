@@ -1,8 +1,8 @@
 const listatehooks = [];
 const clickhooks = [];
-const images = ["png","jpg","gif","webp","svg"];
-const videos = ["mov","mp4","webm"];
-const audios = ["spx","m3a","m4a","wma","wav","mp3"];
+const images = ["png", "jpg", "gif", "webp", "svg"];
+const videos = ["mov", "mp4", "webm"];
+const audios = ["spx", "m3a", "m4a", "wma", "wav", "mp3"];
 const maxTitleLength = 250;
 let clicked = false;
 
@@ -11,7 +11,7 @@ function $(qs) {
 	return document.querySelectorAll(qs);
 }
 
-async function vote({id, target, vote, commentId}) {
+async function vote({ id, target, vote, commentId }) {
 	const request = await fetch("https://betaapi.stibarc.com/v4/vote.sjs", {
 		method: "post",
 		headers: {
@@ -90,8 +90,8 @@ function postblock(post) {
 	metaSpan.classList.add("leftalign", "width100");
 
 	let titleText = post.title;
-	if(post.title.length > maxTitleLength) {
-		titleText = post.title.substring(0,maxTitleLength);
+	if (post.title.length > maxTitleLength) {
+		titleText = post.title.substring(0, maxTitleLength);
 		titleText += "...";
 	}
 	title.innerText = titleText;
@@ -111,14 +111,14 @@ function postblock(post) {
 		attachment.classList.add("attachmentimage");
 		contentSpan.append(attachment);
 	}
-	
+
 	userLink.append(userPfp, post.poster.username);
 	userSpan.append(userLink);
 	if (post.poster.verified) userSpan.append(verifiedSpan);
 	userSpan.append(userPronouns);
 	postSpan.append(title, userSpan, dateSpan, hr1, contentSpan, hr2, metaSpan);
 
-	postSpan.onclick = function(e) {
+	postSpan.onclick = function (e) {
 		location.href = postLink;
 	}
 
@@ -190,7 +190,7 @@ function commentBlock(post, comment, isPostPage) {
 			contentSpan.append(attachment);
 		}
 	}
-	
+
 	userLink.append(userPfp, comment.poster.username);
 	userSpan.append(userLink);
 	if (comment.poster.verified) userSpan.append(verifiedSpan);
@@ -203,7 +203,7 @@ function commentBlock(post, comment, isPostPage) {
 
 	upvoteBtn.addEventListener("click", async () => {
 		if (localStorage.sess) {
-			const voteResult = await vote({id: post.id, commentId: comment.id, target: "comment", vote: "upvote"});
+			const voteResult = await vote({ id: post.id, commentId: comment.id, target: "comment", vote: "upvote" });
 			upvoteBtn.innerText = `\u2191 ${voteResult.upvotes}`;
 			downvoteBtn.innerText = `\u2193 ${voteResult.downvotes}`;
 		} else {
@@ -216,7 +216,7 @@ function commentBlock(post, comment, isPostPage) {
 
 	downvoteBtn.addEventListener("click", async () => {
 		if (localStorage.sess) {
-			const voteResult = await vote({id: post.id, commentId: comment.id, target: "comment", vote: "downvote"});
+			const voteResult = await vote({ id: post.id, commentId: comment.id, target: "comment", vote: "downvote" });
 			upvoteBtn.innerText = `\u2191 ${voteResult.upvotes}`;
 			downvoteBtn.innerText = `\u2193 ${voteResult.downvotes}`;
 		} else {
@@ -252,7 +252,7 @@ function userBlock(user) {
 
 	verifiedSpan.innerText = "\u2705";
 	if (user.pronouns) userPronouns.innerText = `(${user.pronouns})`;
-	
+
 	userLink.append(userPfp, user.username);
 	userSpan.append(userLink);
 	if (user.verified) userSpan.append(verifiedSpan);
@@ -427,40 +427,39 @@ async function register() {
 	clicked = false;
 }
 
-window.addEventListener("load", function() {
+window.addEventListener("load", function () {
 	document.addEventListener("click", function (event) {
-		/* user dropdown */
-		let pfpBtnClicked = $("#mypfp").contains(event.target);
-		let dropDownClicked = $("#hiddenHeader").contains(event.target);
+		/* header pfp dropdown */
 		if (
-			$("#hiddenHeader").style.display == "none" ||
-			$("#hiddenHeader").style.display == "" ||
-			dropDownClicked
+			$("#hiddenHeader").classList.contains("hidden") ||
+			$("#hiddenHeader").contains(event.target)
 		) {
-			$("#hiddenHeader").style.display = "block";
+			$("#mypfp").classList.add("active");
+			$("#hiddenHeader").classList.remove("hidden");
 		} else {
-			$("#hiddenHeader").style.display = "none";
+			$("#mypfp").classList.remove("active");
+			$("#hiddenHeader").classList.add("hidden");
 		}
-		if (!pfpBtnClicked/* && !dropDownClicked*/) {
-			//the click was outside the nav dropdown
-			$("#hiddenHeader").style.display = "none";
+		if (!$("#mypfp").contains(event.target)) {
+			$("#mypfp").classList.remove("active");
+			$("#hiddenHeader").classList.add("hidden");
 		}
 		for (const func of clickhooks) {
 			func(event);
 		}
 	});
-	$("#menulogin").onclick = function(e) {
+	$("#menulogin").onclick = function (e) {
 		window.scrollTo(0, 0);
 		$("#Login-tfa").classList.add("hidden");
 		$("#loginformcontainer").classList.remove("hidden");
 		$("#overlay").classList.remove("hidden");
 		document.body.classList.add("overflowhidden");
 	}
-	$("#loginlink").onclick = function(e) {
+	$("#loginlink").onclick = function (e) {
 		$("#registercancel").onclick();
 		$("#menulogin").onclick();
 	}
-	$("#logincancel").onclick = function(e) {
+	$("#logincancel").onclick = function (e) {
 		$("#loginerrorcontainer").classList.add("hidden");
 		$("#loginformcontainer").classList.add("hidden");
 		$("#overlay").classList.add("hidden");
@@ -470,17 +469,17 @@ window.addEventListener("load", function() {
 	}
 	$("#loginbutton").onclick = login;
 	$("#menulogout").onclick = logout;
-	$("#menuregister").onclick = function(e) {
+	$("#menuregister").onclick = function (e) {
 		window.scrollTo(0, 0);
 		$("#registerformcontainer").classList.remove("hidden");
 		$("#overlay").classList.remove("hidden");
 		document.body.classList.add("overflowhidden");
 	}
-	$("#registerlink").onclick = function(e) {
+	$("#registerlink").onclick = function (e) {
 		$("#logincancel").onclick();
 		$("#menuregister").onclick();
 	}
-	$("#registercancel").onclick = function(e) {
+	$("#registercancel").onclick = function (e) {
 		$("#registererrorcontainer").classList.add("hidden");
 		$("#registerformcontainer").classList.add("hidden");
 		$("#overlay").classList.add("hidden");
@@ -500,7 +499,7 @@ window.addEventListener("load", function() {
 		$("#Reg-showbio").checked = false;
 	}
 	$("#registerbutton").onclick = register;
-	$("#menueditprofile").onclick = function(e) {
+	$("#menueditprofile").onclick = function (e) {
 		location.href = "editprofile.html";
 	}
 	$("#searchBtn").addEventListener("click", () => {
@@ -514,7 +513,7 @@ window.addEventListener("load", function() {
 	});
 });
 
-window.addEventListener("scroll", function() {
+window.addEventListener("scroll", function () {
 	if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
 		document.querySelector("#headerElement").classList.add("headerShadow");
 	} else {
