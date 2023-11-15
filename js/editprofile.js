@@ -14,7 +14,7 @@ async function updateInfo() {
 	const user = (await r.json()).user;
 	$("#userpfp").setAttribute("src", user.pfp);
 	$("#userPfpLoader").classList.remove("loading");
-	$("#userBannerLoader").classList.add("hidden");
+	$("#userBanner").classList.remove("loading");
 	$("#userBanner").style.backgroundImage = `url("${user.banner}")`;
 	$("#nameinput").value = user.name;
 	$("#showname").checked = user.displayName;
@@ -39,7 +39,7 @@ function uploadBannerImage() {
 	fileInput.setAttribute("accept", "image/*");
 	fileInput.addEventListener("change", async function(e) {
 		if (fileInput.files.length == 0) return;
-		$("#userBannerLoader").classList.remove("hidden");
+		$("#userBanner").classList.add("loading");
 		const response = await fetch("https://betaapi.stibarc.com/v4/uploadfile.sjs", {
 		method: "post",
 		headers: {
@@ -50,7 +50,7 @@ function uploadBannerImage() {
 			body: await fileInput.files[0].arrayBuffer()
 		});
 		const responseJSON = await response.json();
-		$("#userBannerLoader").classList.add("hidden");
+		$("#userBanner").classList.remove("loading");
 		localStorage.banner = responseJSON.file;
 		$("#userBanner").style.backgroundImage = `url("${responseJSON.file}")`;
 	});
@@ -111,7 +111,7 @@ window.addEventListener("load", async () => {
 	});
 	$("#removeBanner").addEventListener("click", async () => {
 		const defaultBannerUrl = "https://betacdn.stibarc.com/banner/default.png";
-		$("#userBannerLoader").classList.remove("hidden");
+		$("#userBanner").classList.add("loading");
 		const response = await fetch("https://betaapi.stibarc.com/v4/editprofile.sjs", {
 			method: "post",
 			headers: {
@@ -123,7 +123,7 @@ window.addEventListener("load", async () => {
 			})
 		});
 		const responseJSON = await response.json();
-		$("#userBannerLoader").classList.add("hidden");
+		$("#userBanner").classList.remove("loading");
 		delete localStorage.banner;
 		$("#userBanner").style.backgroundImage = `url("${defaultBannerUrl}")`;
 	});
