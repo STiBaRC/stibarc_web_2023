@@ -30,15 +30,13 @@ window.addEventListener("load", async () => {
 	user = requestJSON.user;
 	if (user.verified) $("#userverified").classList.remove("hidden");
 	$("#userpfp").setAttribute("src", user.pfp);
-	$("#userBannerLoader").classList.remove("dark");
-	$("#userBanner").classList.remove("light");
+	if (user.banner !== "https://betacdn.stibarc.com/banner/default.png") $("#userBanner").classList.remove("hidden");
+	$("#userBanner").classList.remove("light", "loading");
 	$("#userBanner").classList.add("pointer");
 	$("#userBanner").style.backgroundImage = `url('${user.banner}')`;
-	$("#userBannerLoader").classList.add("hidden");
 	$("#userBanner").addEventListener("click", () => {
 		window.open(user.banner, "_blank");
 	});
-	if (user.banner == "https://betacdn.stibarc.com/banner/default.png") $("#userBanner").classList.add("hidden");
 	$("#name").innerText = `Real name: ${user.name}`;
 	if (user.pronouns) {
 		$("#pronouns").innerText = `(${user.pronouns})`;
@@ -98,7 +96,7 @@ window.addEventListener("load", async () => {
 			$("#followbutton").innerText = "Follow";
 		}
 	});
-	
+	$("#userPostsLoader").classList.add("hidden");
 	const posts = document.createDocumentFragment();
 	for (let i in user.posts) {
 		const post = postblock(user.posts[i]);

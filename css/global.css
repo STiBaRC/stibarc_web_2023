@@ -153,6 +153,10 @@ main.flexcontainer {
 	margin-top: 14px;
 }
 
+.marginbottom {
+	margin-bottom: 14px;
+}
+
 #hiddenHeader {
 	position: fixed;
 	left: 50%;
@@ -210,6 +214,9 @@ main.flexcontainer {
 
 .loading {
 	position: relative;
+	display: inline-flex;
+	justify-content: center;
+	align-items: center;
 }
 
 .loading::before {
@@ -225,6 +232,10 @@ main.flexcontainer {
     height: 25px;
 	z-index: 1;
 	animation: spin 0.45s linear infinite;
+}
+
+.loading.light::before {
+	border-top: 5px solid var(--color1);
 }
 
 .leftalign {

@@ -49,11 +49,10 @@
 		<span class="verticalspacer"></span>
 		<span class="block flexcontainer flexcolumn">
 			<span class="flexcontainer leftalign width100">
-				<span id="userBanner" class="profileBanner flexcontainer light">
-					<span id="userBannerLoader" class="loader dark"></span>
+				<span id="userBanner" class="profileBanner flexcontainer light loading hidden">
 				</span>
 				<span id="postuserlink" class="flexcontainer">
-					<img id="userpfp" class="pfp" src="https://betacdn.stibarc.com/pfp/default.png">
+					<span id="userPfpLoader" class="flexcontainer"><img id="userpfp" class="pfp"></span>
 					<span id="userusername">Loading...</span>
 				</span>
 				<span id="userverified" title="Verified" class="hidden">&#x2705;</span>
@@ -71,6 +70,7 @@
 			</span>
 		</span>
 		<span id="posts" class="flexcontainer flexcolumn posts">
+			<span id="userPostsLoader" class="loader"></span>
 		</span>
 	</main>
 	<footer class="flexcontainer">
