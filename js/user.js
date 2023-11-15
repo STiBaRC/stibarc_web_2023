@@ -2,6 +2,35 @@ const sp = new URL(location).searchParams;
 const username = sp.get("username") || sp.get("id");
 let user;
 
+async function followSwitch() {
+	$("#followbutton").innerText = "";
+	$("#followbutton").classList.add("loading");
+	const fr = await fetch("https://betaapi.stibarc.com/v4/followuser.sjs", {
+		method: "post",
+		headers: {
+			"Content-Type": "application/json"
+		},
+		body: JSON.stringify({
+			session: localStorage.sess,
+			username
+		})
+	});
+	const frj = await fr.json();
+	$("#followbutton").classList.remove("loading");
+	if (frj.action == "followed") {
+		user.followers.push({username: localStorage.username});
+	} else {
+		user.followers = user.followers.filter(e => e.username != localStorage.username)
+	}
+	$("#followers").innerText = `Followers: ${user.followers.length}`;
+	$("#following").innerText = `Following: ${user.following.length}`;
+	if (user.followers.filter(e => e.username == localStorage.username).length > 0) {
+		$("#followbutton").innerText = "Unfollow";
+	} else {
+		$("#followbutton").innerText = "Follow";
+	}
+}
+
 window.addEventListener("load", async () => {
 	document.title = `${username} | STiBaRC`;
 	$("#userusername").innerText = username;
@@ -72,29 +101,7 @@ window.addEventListener("load", async () => {
 		$("#followbutton").innerText = "Follow";
 	}
 	$("#followbutton").addEventListener("click", async () => {
-		const fr = await fetch("https://betaapi.stibarc.com/v4/followuser.sjs", {
-			method: "post",
-			headers: {
-				"Content-Type": "application/json"
-			},
-			body: JSON.stringify({
-				session: localStorage.sess,
-				username
-			})
-		});
-		const frj = await fr.json();
-		if (frj.action == "followed") {
-			user.followers.push({username: localStorage.username});
-		} else {
-			user.followers = user.followers.filter(e => e.username != localStorage.username)
-		}
-		$("#followers").innerText = `Followers: ${user.followers.length}`;
-		$("#following").innerText = `Following: ${user.following.length}`;
-		if (user.followers.filter(e => e.username == localStorage.username).length > 0) {
-			$("#followbutton").innerText = "Unfollow";
-		} else {
-			$("#followbutton").innerText = "Follow";
-		}
+		followSwitch();
 	});
 	$("#userPostsLoader").classList.add("hidden");
 	const posts = document.createDocumentFragment();

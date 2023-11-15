@@ -242,6 +242,28 @@ main.flexcontainer {
 	border-top: 5px solid var(--color1);
 }
 
+.loading.dark::before {
+	border-top: 5px solid var(--text);
+}
+
+.loading.small::before {
+	width: 15px;
+	height: 15px;
+	border: 3px solid transparent;
+    border-radius: 50%;
+    border-top: 3px solid var(--color2);
+    border-right: 3px solid transparent;
+    border-bottom: 3px solid transparent;
+}
+
+.loading.small.light::before {
+	border-top: 3px solid var(--color1);
+}
+
+.loading.small.dark::before {
+	border-top: 3px solid var(--text);
+}
+
 .leftalign {
 	display: flex;
 	justify-content: left;
@@ -456,6 +478,7 @@ main.flexcontainer {
 
 .button {
 	background-color: var(--color1);
+	color: var(--text);
 	margin: 5px;
 	padding: 5px;
 	height: 30px;
