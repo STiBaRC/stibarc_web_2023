@@ -441,6 +441,10 @@ main.flexcontainer {
 	margin-bottom: 5px;
 }
 
+.posts {
+	width: 100%;
+}
+
 .posts .postcontent span {
 	-webkit-box-orient: vertical;
 	display: -webkit-box;
