@@ -427,6 +427,21 @@ async function register() {
 	clicked = false;
 }
 
+function showLoginModel() {
+	window.scrollTo(0, 0);
+	$("#Login-tfa").classList.add("hidden");
+	$("#loginformcontainer").classList.remove("hidden");
+	$("#overlay").classList.remove("hidden");
+	document.body.classList.add("overflowhidden");
+}
+
+function showRegisterModel()  {
+	window.scrollTo(0, 0);
+	$("#registerformcontainer").classList.remove("hidden");
+	$("#overlay").classList.remove("hidden");
+	document.body.classList.add("overflowhidden");
+}
+
 window.addEventListener("load", function () {
 	document.addEventListener("click", function (event) {
 		/* header pfp dropdown */
@@ -449,11 +464,7 @@ window.addEventListener("load", function () {
 		}
 	});
 	$("#menulogin").onclick = function (e) {
-		window.scrollTo(0, 0);
-		$("#Login-tfa").classList.add("hidden");
-		$("#loginformcontainer").classList.remove("hidden");
-		$("#overlay").classList.remove("hidden");
-		document.body.classList.add("overflowhidden");
+		showLoginModel();
 	}
 	$("#loginlink").onclick = function (e) {
 		$("#registercancel").onclick();
@@ -470,10 +481,7 @@ window.addEventListener("load", function () {
 	$("#loginbutton").onclick = login;
 	$("#menulogout").onclick = logout;
 	$("#menuregister").onclick = function (e) {
-		window.scrollTo(0, 0);
-		$("#registerformcontainer").classList.remove("hidden");
-		$("#overlay").classList.remove("hidden");
-		document.body.classList.add("overflowhidden");
+		showRegisterModel();
 	}
 	$("#registerlink").onclick = function (e) {
 		$("#logincancel").onclick();

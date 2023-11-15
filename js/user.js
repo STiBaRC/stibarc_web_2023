@@ -2,7 +2,7 @@ const sp = new URL(location).searchParams;
 const username = sp.get("username") || sp.get("id");
 let user;
 
-async function followSwitch() {
+async function followAction() {
 	$("#followbutton").innerText = "";
 	$("#followbutton").classList.add("loading");
 	const fr = await fetch("https://betaapi.stibarc.com/v4/followuser.sjs", {
@@ -84,14 +84,23 @@ window.addEventListener("load", async () => {
 	if (user.displayBio) $("#bio").classList.remove("hidden");
 	$("#followers").innerText = `Followers: ${user.followers.length}`;
 	$("#following").innerText = `Following: ${user.following.length}`;
+	if (localStorage.sess) {
+		$("#followbutton").addEventListener("click", followAction);
+	} else {
+		$("#followbutton").addEventListener("click", showLoginModel);
+	}
 	listatehooks.push((state) => {
 		if (state) {
+			$("#followbutton").removeEventListener("click", showLoginModel);
+			$("#followbutton").addEventListener("click", followAction);
 			if (user.followers.filter(e => e.username == localStorage.username).length > 0) {
 				$("#followbutton").innerText = "Unfollow";
 			} else {
 				$("#followbutton").innerText = "Follow";
 			}
 		} else {
+			$("#followbutton").removeEventListener("click", followAction);
+			$("#followbutton").addEventListener("click", showLoginModel);
 			$("#followbutton").innerText = "Follow";
 		}
 	});
@@ -100,9 +109,6 @@ window.addEventListener("load", async () => {
 	} else {
 		$("#followbutton").innerText = "Follow";
 	}
-	$("#followbutton").addEventListener("click", async () => {
-		followSwitch();
-	});
 	$("#userPostsLoader").classList.add("hidden");
 	const posts = document.createDocumentFragment();
 	for (let i in user.posts) {
