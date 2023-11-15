@@ -122,6 +122,9 @@ textarea {
 main {
 	/* 100vh - header height - footer height - footer padding top - footer padding bottom - footer margin top*/
 	min-height: calc(100vh - 60px - 20px - 16px - 16px - 40px);
+	width: calc(100vw - 40px);
+	max-width: 95vw;
+	margin: 0 auto;
 }
 
 main.flexcontainer {
@@ -320,7 +323,7 @@ main.flexcontainer {
 	width: 55px;
 	height: 55px;
 	border-radius: 50%;
-	margin-right: calc(100vw * 0.01);
+	margin-right: 7px;
 }
 
 .profileBanner {
@@ -416,8 +419,7 @@ main.flexcontainer {
 .post {
 	box-sizing: border-box;
 	border-radius: 15px;
-	width: calc(100vw - 100px);
-	min-width: 95vw;
+	width: 100%;
 	background-color: var(--color2);
 	padding: 12px;
 	margin-bottom: 14px;
@@ -460,21 +462,21 @@ main.flexcontainer {
 }
 
 .comment {
+	display: block;
 	box-sizing: border-box;
 	border-radius: 15px;
-	width: calc(100vw - 100px);
-	min-width: calc(95vw - 20px);
+	width: 100%;
 	background-color: var(--color3);
 	padding: 12px;
 	margin-bottom: 14px;
 	user-select: text;
 	box-shadow: 0 1px 8px 0 rgba(22, 22, 22, 0.2), 0 1px 4px 0 rgba(22, 22, 22, 0.2);
-	transition: box-shadow 0.2s ease-out;
+	/* transition: box-shadow 0.2s ease-out; */
 }
 
-.comment:hover {
+/* .comment:hover {
 	box-shadow: 0 1px 8px 0 rgba(22, 22, 22, 0.4), 0 1px 4px 0 rgba(22, 22, 22, 0.4);
-}
+} */
 
 .button {
 	background-color: var(--color1);
@@ -518,11 +520,17 @@ main.flexcontainer {
 	height: 100vh;
 }
 
+.container {
+	width: calc(100vw - 40px);
+	max-width: 95vw;
+}
+
 .block {
 	box-sizing: border-box;
 	border-radius: 15px;
-	width: calc(100vw - 100px);
-	min-width: 95vw;
+	width: 100%;
+	width: calc(100vw - 40px);
+	max-width: 95vw;
 	background-color: var(--color2);
 	padding: 12px;
 	margin-bottom: 14px;
