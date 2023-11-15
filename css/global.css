@@ -34,21 +34,33 @@ input[type=password],
 input[type=email],
 input[type=number],
 input[type=date],
-input[tyle=search],
+input[type=search],
 textarea {
 	font-family: inherit;
 	vertical-align: baseline;
     box-sizing: border-box;
     background-color: var(--color2);
-    border: 2px solid var(--color3);
+	border: none;
+    outline: 2px solid var(--color3);
     padding: 0.55rem 0.75rem;
     border-radius: 6px;
     font-size: 16px;
 	max-width: 100%;
 }
 
+input[type=text]:focus,
+input[type=password]:focus,
+input[type=email]:focus,
+input[type=number]:focus,
+input[type=date]:focus,
+input[type=search]:focus,
+textarea:focus {
+	outline-color: var(--color1);
+}
+
 .searchbar input {
 	font-family: inherit;
+	font-size: 14px;
 	box-sizing: border-box;
 	width: 75%;
 	min-width: 200px;
@@ -61,13 +73,20 @@ textarea {
 	background-repeat: no-repeat;
 	background-position-y: center;
 	background-position-x: 9px;
-	outline: none;
-	border: 2px solid var(--color1);
-	transition: all 0.25s;
+	outline: 2px solid var(--color1);
+}
+
+header .searchbar input {
+	outline: 3px solid transparent;
 }
 
 .searchbar input:focus {
-	border: 2px solid var(--color4);
+	outline-color: var(--color4);
+}
+
+header .searchbar input:focus {
+	border: none;
+	outline: 3px solid rgba(255,255,255,.18);
 }
 
 .bigtextarea {
@@ -288,10 +307,11 @@ main.flexcontainer {
 	border-radius: 50%;
 	margin-right: calc(100vw * 0.01);
 	cursor: pointer;
+	outline: 3px solid transparent;
 }
 
 .headerpfp.active {
-	outline: 3px solid rgba(255,255,255,.16);
+	outline-color: rgba(255,255,255,.18);
 }
 
 .headerDropdown {
