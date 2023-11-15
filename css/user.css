@@ -1,8 +1,12 @@
+#topUserInfo {
+	margin-bottom: 8px;
+}
+
 #bio {
 	box-sizing: border-box;
 	border-radius: 15px;
-	width: calc(100vw - 100px);
-	min-width: calc(95vw - 20px);
+	/* width: calc(100vw - 100px);
+	min-width: calc(95vw - 20px); */
 	background-color: var(--color3);
 	padding: 12px;
 	margin-top: 14px;

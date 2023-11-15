@@ -149,6 +149,10 @@ main.flexcontainer {
 	flex-grow: 0;
 }
 
+.flexgrow {
+	flex-grow: 1;
+}
+
 .margintop {
 	margin-top: 14px;
 }
