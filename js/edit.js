@@ -108,6 +108,9 @@ window.addEventListener("load", async () => {
 		location.href = `./post.html?id=${id}`;
 	});
 	$("#deletebutton").addEventListener("click", async () => {
+		if (!window.confirm(`Delete this ${target}?`)) {
+			return
+		}
 		if (clicked) return;
 		clicked = true;
 		const r = await fetch("https://betaapi.stibarc.com/v4/edit.sjs", {
@@ -124,6 +127,7 @@ window.addEventListener("load", async () => {
 			})
 		});
 		const rj = await r.json();
+		clicked = false;
 		location.href = (target == "post") ? "/" : `post.html?id=${id}`;
 	});
 	setLoggedinState(localStorage.sess);
