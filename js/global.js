@@ -5,6 +5,7 @@ const videos = ["mov", "mp4", "webm"];
 const audios = ["spx", "m3a", "m4a", "wma", "wav", "mp3"];
 const maxTitleLength = 250;
 let clicked = false;
+let loadingSessInfo = false;
 
 function $(qs) {
 	if (qs.startsWith("#")) return document.querySelector(qs);
@@ -267,6 +268,10 @@ function userBlock(user) {
 
 function setLoggedinState(state) {
 	if (state) {
+		if (localStorage.username === undefined || localStorage.pfp === undefined) {
+			reloadSessInfo();
+			return;
+		}
 		$("#mypfp").setAttribute("src", localStorage.pfp);
 		$("#menuprofile").innerText = localStorage.username;
 		$("#menuprofile").addEventListener("click", () => {
@@ -351,6 +356,8 @@ async function logout() {
 	});
 	delete localStorage.sess;
 	delete localStorage.username;
+	delete localStorage.pfp;
+	delete localStorage.banner;
 	$("#mypfp").setAttribute("src", "https://betacdn.stibarc.com/pfp/default.png");
 	setLoggedinState(false);
 }
@@ -435,14 +442,47 @@ function showLoginModel() {
 	document.body.classList.add("overflowhidden");
 }
 
-function showRegisterModel()  {
+function showRegisterModel() {
 	window.scrollTo(0, 0);
 	$("#registerformcontainer").classList.remove("hidden");
 	$("#overlay").classList.remove("hidden");
 	document.body.classList.add("overflowhidden");
 }
 
+async function reloadSessInfo() {
+	if (loadingSessInfo) return;
+	loadingSessInfo = true;
+	const request = await fetch("https://betaapi.stibarc.com/v4/getprivatedata.sjs", {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json"
+		},
+		body: JSON.stringify({
+			session: localStorage.sess
+		})
+	});
+	const responseJSON = await request.json();
+	loadingSessInfo = false;
+	sessionStorage.loadedBefore = true;
+	if (responseJSON.status === "ok") {
+		localStorage.username = responseJSON.user.username;
+		localStorage.pfp = responseJSON.user.pfp;
+		localStorage.banner = responseJSON.user.banner;
+		setLoggedinState(true);
+	}
+	if (responseJSON.status === "error" && responseJSON.statusCode === "is") {
+		delete localStorage.sess;
+		delete localStorage.username;
+		delete localStorage.pfp;
+		delete localStorage.banner;
+		setLoggedinState(false);
+	}
+}
+
 window.addEventListener("load", function () {
+	if (localStorage.sess !== undefined && sessionStorage.loadedBefore === undefined) {
+		reloadSessInfo();
+	}
 	document.addEventListener("click", function (event) {
 		/* header pfp dropdown */
 		if (
@@ -508,7 +548,7 @@ window.addEventListener("load", function () {
 	}
 	$("#registerbutton").onclick = register;
 	$("#menueditprofile").onclick = function (e) {
-		location.href = "editprofile.html";
+		location.href = "./editprofile.html";
 	}
 	$("#searchBtn").addEventListener("click", () => {
 		location.href = "./search.html";
