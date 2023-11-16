@@ -1,0 +1,16 @@
+on:
+  push:
+    branches:
+      - dev
+jobs:
+  deploy_to_dev:
+    name: Deploy to dev environment
+    if: ${{ github.ref == 'refs/heads/dev' }}
+    runs-on: stibarc-beta-dev
+    steps:
+      - name: Delete old web folder
+        run: rm -rf /var/www
+      - name: Make new web folder
+        run: mkdir /var/www
+      - name: Copy files to web folder
+        run: cp -r . /var/www
