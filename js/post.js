@@ -216,8 +216,13 @@ window.addEventListener("load", async function () {
 	listatehooks.push((state) => {
 		if (state) {
 			if (post.poster.username == localStorage.username) $("#editBtn").classList.remove("hidden");
+			$(".editBtn").forEach(editBtn => {
+				if (localStorage.username == editBtn.dataset.username) editBtn.classList.remove("hidden");
+			});
 		} else {
-
+			$(".editBtn").forEach(editBtn => {
+				editBtn.classList.add("hidden");
+			});
 		}
 	});
 });

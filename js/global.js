@@ -163,7 +163,8 @@ function commentBlock(post, comment, isPostPage) {
 	upvoteBtn.setAttribute("title", "Upvote");
 	downvoteBtn.classList.add("flexcontainer", "button", "primary");
 	downvoteBtn.setAttribute("title", "Downvote");
-	editBtn.classList.add("flexcontainer", "button", "editBtn", "loggedin");
+	editBtn.classList.add("flexcontainer", "button", "editBtn", "hidden");
+	editBtn.setAttribute("data-username", comment.poster.username);
 
 	verifiedSpan.innerText = "\u2705";
 	if (comment.poster.pronouns) userPronouns.innerText = `(${comment.poster.pronouns})`;
@@ -198,7 +199,8 @@ function commentBlock(post, comment, isPostPage) {
 	userSpan.append(userPronouns);
 	if (isPostPage) {
 		metaSpan.append(upvoteBtn, downvoteBtn);
-		if (comment.poster.username == localStorage.username) metaSpan.append(editBtn);
+				if (comment.poster.username == localStorage.username) editBtn.classList.remove("hidden");
+		metaSpan.append(editBtn);
 	}
 	commentSpan.append(userSpan, dateSpan, metaTags, hr1, contentSpan, hr2, metaSpan);
 
@@ -474,7 +476,7 @@ async function reloadSessInfo() {
 }
 
 window.addEventListener("load", function () {
-	if (localStorage.sess !== undefined && sessionStorage.loadedBefore === undefined || localStorage.username === undefined || localStorage.pfp === undefined) {
+	if (localStorage.sess !== undefined && sessionStorage.loadedBefore === undefined || (localStorage.sess && localStorage.username === undefined || localStorage.pfp === undefined)) {
 		reloadSessInfo();
 		$("#mypfp").setAttribute("src", localStorage.pfp || "https://betacdn.stibarc.com/pfp/default.png");
 		$("#menuprofile").innerText = localStorage.username;
