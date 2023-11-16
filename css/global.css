@@ -504,16 +504,24 @@ hr, .post hr,
 	box-shadow: 0 1px 8px 0 rgba(22, 22, 22, 0.4), 0 1px 4px 0 rgba(22, 22, 22, 0.4);
 } */
 
-.comment .editBtn {
+.editBtn {
 	width: 24px;
 	height: auto;
-	padding: 3px;
+	padding: 4px;
 	background: transparent  url("../img/icon/edit.svg") center center no-repeat;
 	background-size: auto;
 	cursor: pointer;
 	filter: invert();
+	opacity: 0.7;
+	transition: opacity 0.2s ease-out;
+}
+
+.editBtn:hover {
+	opacity: 0.9;
+}
+
+.comment .editBtn {
 	opacity: 0.5;
-	transition: opacity 0.22s ease-out;
 }
 
 .comment .editBtn:hover {
