@@ -8,8 +8,8 @@ jobs:
     if: ${{ github.ref == 'refs/heads/dev' }}
     runs-on: stibarc-beta-dev
     steps:
-      - name: DEBUG
-        run: ls && pwd
+      - name: Checkout repository
+        run: git clone --branch dev git@github.com:STiBaRC/stibarc_web_2023.git
       - name: Delete old web folder
         run: rm -rf /var/www
       - name: Make new web folder
