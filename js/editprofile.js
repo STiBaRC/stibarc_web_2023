@@ -308,4 +308,5 @@ window.addEventListener("load", async () => {
 		$("#disabletfaerrorcontainer").classList.add("hidden");
 		$("#disabletfainput").value = "";
 	});
+	setLoggedinState(localStorage.sess)
 });

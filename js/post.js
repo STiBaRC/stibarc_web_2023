@@ -146,6 +146,8 @@ window.addEventListener("load", async function () {
 		location.href = `./edit.html?id=${id}`;
 	});
 
+	setLoggedinState(localStorage.sess);
+
 	const request = await fetch("https://betaapi.stibarc.com/v4/getpost.sjs", {
 		method: "post",
 		headers: {

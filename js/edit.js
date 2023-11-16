@@ -183,4 +183,5 @@ window.addEventListener("load", async () => {
 		}
 		target = "comment";
 	}
+	setLoggedinState(localStorage.sess);
 });

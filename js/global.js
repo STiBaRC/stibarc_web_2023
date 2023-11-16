@@ -267,17 +267,11 @@ function userBlock(user) {
 }
 
 function setLoggedinState(state) {
-	if (state) {
-		if (localStorage.username === undefined || localStorage.pfp === undefined) {
-			reloadSessInfo();
-			return;
-		}
-		$("#mypfp").setAttribute("src", localStorage.pfp);
-		$("#menuprofile").innerText = localStorage.username;
-		$("#menuprofile").addEventListener("click", () => {
-			location.href = `./user.html?username=${localStorage.username}`;
-		});
-	}
+	$("#mypfp").setAttribute("src", localStorage.pfp || "https://betacdn.stibarc.com/pfp/default.png");
+	$("#menuprofile").innerText = localStorage.username;
+	$("#menuprofile").addEventListener("click", () => {
+		location.href = `./user.html?username=${localStorage.username}`;
+	});
 	Array.from(document.getElementsByClassName("loggedin")).forEach(element => {
 		if (state) {
 			element.classList.remove("hidden");
@@ -480,8 +474,13 @@ async function reloadSessInfo() {
 }
 
 window.addEventListener("load", function () {
-	if (localStorage.sess !== undefined && sessionStorage.loadedBefore === undefined) {
+	if (localStorage.sess !== undefined && sessionStorage.loadedBefore === undefined || localStorage.username === undefined || localStorage.pfp === undefined) {
 		reloadSessInfo();
+		$("#mypfp").setAttribute("src", localStorage.pfp || "https://betacdn.stibarc.com/pfp/default.png");
+		$("#menuprofile").innerText = localStorage.username;
+		$("#menuprofile").addEventListener("click", () => {
+			location.href = `./user.html?username=${localStorage.username}`;
+		});
 	}
 	document.addEventListener("click", function (event) {
 		/* header pfp dropdown */

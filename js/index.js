@@ -3,6 +3,8 @@ let attachmentFiles = [];
 let attachmentBlobURLs = [];
 
 async function getPosts() {
+	$("#postsLoader").classList.remove("hidden");
+	$("#followedPostsLoader").classList.remove("hidden");
 	const posts = document.createDocumentFragment();
 	const fposts = document.createDocumentFragment();
 	const request = await fetch("https://betaapi.stibarc.com/v4/getposts.sjs", {
@@ -16,8 +18,8 @@ async function getPosts() {
 		})
 	});
 	const requestJSON = await request.json();
-	$("#postsLoader").style.display = "none";
-	$("#followedPostsLoader").style.display = "none";
+	$("#postsLoader").classList.add("hidden");
+	$("#followedPostsLoader").classList.add("hidden");
 	for (let i in requestJSON.globalPosts) {
 		const post = postblock(requestJSON.globalPosts[i]);
 		posts.appendChild(post);
@@ -188,11 +190,14 @@ window.addEventListener("load", function() {
 		attachmentBlobURLs = [];
 	}
 	$("#newpostbutton").onclick = newPost;
-	if (localStorage.sess == undefined) {
-		const span = document.createElement("span");
-		span.innerText = "Log in or register to view followed users";
-		$("#followedposts").appendChild(span);
-	}
+
+	listatehooks.push((state) => {
+		$(".post").forEach((e) => {
+			e.remove();
+		});
+		getPosts();
+	});
+	setLoggedinState(localStorage.sess);
 	getPosts();
 });
 
