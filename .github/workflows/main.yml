@@ -15,4 +15,4 @@ jobs:
       - name: Make new web folder
         run: mkdir /var/www
       - name: Copy files to web folder
-        run: cp -r . /var/www
+        run: cp -r * /var/www
