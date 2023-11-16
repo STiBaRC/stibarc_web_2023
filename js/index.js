@@ -193,7 +193,6 @@ window.addEventListener("load", function() {
 		span.innerText = "Log in or register to view followed users";
 		$("#followedposts").appendChild(span);
 	}
-	setLoggedinState(localStorage.sess);
 	getPosts();
 });
 

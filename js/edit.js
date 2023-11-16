@@ -130,7 +130,7 @@ window.addEventListener("load", async () => {
 		clicked = false;
 		location.href = (target == "post") ? "/" : `post.html?id=${id}`;
 	});
-	setLoggedinState(localStorage.sess);
+	
 	const r = await fetch("https://betaapi.stibarc.com/v4/getpost.sjs", {
 		method: "post",
 		headers: {

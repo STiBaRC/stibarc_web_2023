@@ -34,7 +34,7 @@ async function followAction() {
 window.addEventListener("load", async () => {
 	document.title = `${username} | STiBaRC`;
 	$("#userusername").innerText = username;
-	setLoggedinState(localStorage.sess);
+	
 	const request = await fetch("https://betaapi.stibarc.com/v4/getuser.sjs", {
 		method: "post",
 		headers: {
