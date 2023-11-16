@@ -142,6 +142,7 @@ function commentBlock(post, comment, isPostPage) {
 	const metaSpan = document.createElement("span");
 	const upvoteBtn = document.createElement("span");
 	const downvoteBtn = document.createElement("span");
+	const flexGrow = document.createElement("span");
 	const editBtn = document.createElement("span");
 
 	commentSpan.classList.add("comment", "flexcontainer", "flexcolumn");
@@ -163,7 +164,9 @@ function commentBlock(post, comment, isPostPage) {
 	upvoteBtn.setAttribute("title", "Upvote");
 	downvoteBtn.classList.add("flexcontainer", "button", "primary");
 	downvoteBtn.setAttribute("title", "Downvote");
-	editBtn.classList.add("flexcontainer", "button", "editBtn", "hidden");
+	flexGrow.classList.add("flexgrow");
+	editBtn.classList.add("flexcontainer", "editBtn", "hidden");
+	editBtn.setAttribute("title", "Edit comment");
 	editBtn.setAttribute("data-username", comment.poster.username);
 
 	verifiedSpan.innerText = "\u2705";
@@ -177,7 +180,7 @@ function commentBlock(post, comment, isPostPage) {
 	contentSpan.innerText = comment.content;
 	upvoteBtn.innerText = `\u2191 ${comment.upvotes}`;
 	downvoteBtn.innerText = `\u2193 ${comment.downvotes}`;
-	editBtn.innerText = "\ud83d\udcdd Edit";
+	editBtn.innerText = "";
 	if (!isPostPage) {
 		metaSpan.innerText = `\u2191 ${comment.upvotes} \u2193 ${comment.downvotes}`;
 	}
@@ -198,8 +201,8 @@ function commentBlock(post, comment, isPostPage) {
 	if (comment.poster.verified) userSpan.append(verifiedSpan);
 	userSpan.append(userPronouns);
 	if (isPostPage) {
-		metaSpan.append(upvoteBtn, downvoteBtn);
-				if (comment.poster.username == localStorage.username) editBtn.classList.remove("hidden");
+		metaSpan.append(upvoteBtn, downvoteBtn, flexGrow);
+		if (comment.poster.username == localStorage.username) editBtn.classList.remove("hidden");
 		metaSpan.append(editBtn);
 	}
 	commentSpan.append(userSpan, dateSpan, metaTags, hr1, contentSpan, hr2, metaSpan);
