@@ -212,4 +212,12 @@ window.addEventListener("load", async function () {
 	}
 
 	$("#comments").appendChild(comments);
+
+	listatehooks.push((state) => {
+		if (state) {
+			if (post.poster.username == localStorage.username) $("#editBtn").classList.remove("hidden");
+		} else {
+
+		}
+	});
 });

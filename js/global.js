@@ -163,7 +163,7 @@ function commentBlock(post, comment, isPostPage) {
 	upvoteBtn.setAttribute("title", "Upvote");
 	downvoteBtn.classList.add("flexcontainer", "button", "primary");
 	downvoteBtn.setAttribute("title", "Downvote");
-	editBtn.classList.add("flexcontainer", "button");
+	editBtn.classList.add("flexcontainer", "button", "editBtn", "loggedin");
 
 	verifiedSpan.innerText = "\u2705";
 	if (comment.poster.pronouns) userPronouns.innerText = `(${comment.poster.pronouns})`;
