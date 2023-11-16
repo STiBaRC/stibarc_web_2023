@@ -480,6 +480,7 @@ async function reloadSessInfo() {
 }
 
 window.addEventListener("load", function () {
+	setLoggedinState(localStorage.sess);
 	if (localStorage.sess !== undefined && sessionStorage.loadedBefore === undefined) {
 		reloadSessInfo();
 	}

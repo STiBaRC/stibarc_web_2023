@@ -82,7 +82,7 @@ window.addEventListener("load", async () => {
 			$("#bannerUpdateDropdown").classList.add("hidden");
 		}
 	});
-	setLoggedinState(localStorage.sess);
+	
 	$("#userpfp").addEventListener("click", () => {
 		const fileInput = document.createElement("input");
 		fileInput.setAttribute("type", "file");

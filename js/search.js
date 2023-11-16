@@ -11,8 +11,6 @@ window.addEventListener("load", async () => {
 		}
 	});
 
-	setLoggedinState(localStorage.sess);
-
 	const url = new URL(location);
 	let query = null;
 	if (url.searchParams.has('q')) {
