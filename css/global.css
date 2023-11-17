@@ -134,6 +134,10 @@ header .searchbar input:focus {
 	transition: background-color .25s ease-in-out;
 }
 
+#searchBtn > img {
+	width: 25px;
+}
+
 #searchBtn:hover {
 	background-color: var(--color5);
 }
