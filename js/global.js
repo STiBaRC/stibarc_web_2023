@@ -160,9 +160,9 @@ function commentBlock(post, comment, isPostPage) {
 	contentSpan.classList.add("postcontent", "flexcolumn", "leftalign", "width100");
 	hr2.classList.add("width100");
 	metaSpan.classList.add("leftalign", "width100");
-	upvoteBtn.classList.add("flexcontainer", "button", "primary");
+	upvoteBtn.classList.add("flexcontainer", "button", "primary", "voteBtn");
 	upvoteBtn.setAttribute("title", "Upvote");
-	downvoteBtn.classList.add("flexcontainer", "button", "primary");
+	downvoteBtn.classList.add("flexcontainer", "button", "primary", "voteBtn");
 	downvoteBtn.setAttribute("title", "Downvote");
 	flexGrow.classList.add("flexgrow");
 	editBtn.classList.add("flexcontainer", "editBtn", "hidden");
