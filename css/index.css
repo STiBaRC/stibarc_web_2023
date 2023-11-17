@@ -28,6 +28,10 @@
 }
 
 .floatingbutton.active {
+	background-color: var(--color11);
+}
+
+.floatingbutton.active:hover {
 	background-color: var(--color2);
 }
 
