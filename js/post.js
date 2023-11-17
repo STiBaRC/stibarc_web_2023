@@ -185,6 +185,13 @@ window.addEventListener("load", async function () {
 		$("#edited").classList.remove("hidden");
 		$("#edited").title = `Edited ${new Date(post.lastEdited).toLocaleString()}`;
 	}
+	if (post.deleted) {
+		$("#deleted").classList.remove("hidden");
+		$("#upvoteBtn").classList.add("hidden");
+		$("#downvoteBtn").classList.add("hidden");
+		$("#editBtn").classList.add("hidden");
+		$("#opennewcommentbutton").classList.add("hidden");
+	}
 	$("#postcontent").innerText = post.content;
 	$("#upvoteBtn").innerText = `\u2191 ${post.upvotes}`;
 	$("#downvoteBtn").innerText = `\u2193 ${post.downvotes}`;

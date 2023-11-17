@@ -209,7 +209,7 @@ main.flexcontainer {
 }
 
 .red {
-	color: var(--color7);
+	color: var(--red);
 }
 
 .loader {
@@ -562,7 +562,7 @@ hr, .post hr,
 }
 
 .button.danger {
-	color: var(--color7);
+	color: var(--red);
 }
 
 .showOnMobileFlex {
@@ -641,8 +641,8 @@ hr, .post hr,
 	margin-top: 5px;
 	text-align: center;
 	align-self: flex-start;
-	font-size: 0.8rem;
-	padding: 1px 6px;
+	font-size: 13px;
+	padding: 1px 7px;
 	background-color: var(--color3);
 	color: var(--color4);
 	border-radius: 25px;
@@ -650,6 +650,11 @@ hr, .post hr,
 
 .smallBadge.dark {
 	background-color: var(--color9);
+}
+
+.smallBadge.red {
+	background-color: var(--redBg);
+	color: rgba(255, 255, 255, 0.95)
 }
 
 #overlaybg {
