@@ -190,15 +190,15 @@ window.addEventListener("load", function() {
 		attachmentBlobURLs = [];
 	}
 	$("#newpostbutton").onclick = newPost;
-
+	
 	listatehooks.push((state) => {
 		$(".post").forEach((e) => {
 			e.remove();
 		});
 		getPosts();
 	});
+
 	setLoggedinState(localStorage.sess);
-	getPosts();
 });
 
 window.addEventListener("scroll", function() {
