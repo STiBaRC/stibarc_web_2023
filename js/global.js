@@ -479,7 +479,7 @@ async function reloadSessInfo() {
 }
 
 window.addEventListener("load", function () {
-	if (localStorage.sess !== undefined && sessionStorage.loadedBefore === undefined || (localStorage.sess && localStorage.username === undefined || localStorage.pfp === undefined)) {
+	if (localStorage.sess !== undefined && (sessionStorage.loadedBefore === undefined || localStorage.username === undefined || localStorage.pfp === undefined)) {
 		reloadSessInfo();
 		$("#mypfp").setAttribute("src", localStorage.pfp || "https://betacdn.stibarc.com/pfp/default.png");
 		$("#menuprofile").innerText = localStorage.username;
