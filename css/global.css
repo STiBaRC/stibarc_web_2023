@@ -73,7 +73,7 @@ textarea:focus {
 	background-repeat: no-repeat;
 	background-position-y: center;
 	background-position-x: 9px;
-	outline: 2px solid var(--color8);
+	outline: 2px solid var(--color5);
 }
 
 header .searchbar input {
