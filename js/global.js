@@ -253,7 +253,7 @@ function userBlock(user) {
 	userPfp.classList.add("pfp");
 	userPfp.setAttribute("src", user.pfp);
 	verifiedSpan.setAttribute("title", "Verified");
-	userPronouns.setAttribute("title", `Pronouns (${post.poster.pronouns})`);
+	userPronouns.setAttribute("title", `Pronouns (${user.pronouns})`);
 	userPronouns.setAttribute("class", "pronouns");
 
 	verifiedSpan.innerText = "\u2705";
