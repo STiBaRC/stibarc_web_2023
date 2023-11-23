@@ -118,6 +118,7 @@ header .searchbar input:focus {
 
 #logo img {
 	height: 40px;
+	text-indent: -10000px;
 }
 
 .searchbar {
@@ -313,6 +314,7 @@ main.flexcontainer {
 	margin-right: calc(100vw * 0.01);
 	cursor: pointer;
 	outline: 3px solid transparent;
+	text-indent: -10000px;
 }
 
 .headerpfp.active {
@@ -349,6 +351,7 @@ main.flexcontainer {
 	height: 55px;
 	border-radius: 50%;
 	margin-right: 7px;
+	text-indent: -10000px;
 }
 
 .profileBanner {
@@ -439,6 +442,7 @@ main.flexcontainer {
 	width: 110px;
 	height: 110px;
 	border-radius: 50%;
+	text-indent: -10000px;
 }
 
 .post {
