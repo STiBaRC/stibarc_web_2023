@@ -510,6 +510,9 @@ window.addEventListener("load", function () {
 	$("#menulogin").onclick = function (e) {
 		showLoginModel();
 	}
+	$("#menusettings").addEventListener("click", () => {
+		location.href = `./settings.html`;
+	});
 	$("#loginlink").onclick = function (e) {
 		$("#registercancel").onclick();
 		$("#menulogin").onclick();

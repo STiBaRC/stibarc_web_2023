@@ -3,7 +3,7 @@
 
 <head>
 	<meta charset="utf-8" />
-	<title>STiBaRC</title>
+	<title>Settings | STiBaRC</title>
 	<meta name="viewport" content="initial-scale=1, maximum-scale=5, user-scalable=yes, width=device-width">
 	<link rel="icon" type="image/png" href="./img/icon.png">
 	<link rel="preconnect" href="https://fonts.googleapis.com">
@@ -11,9 +11,8 @@
 	<link href="https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@300;400&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="./css/themes/default.css" id="theme">
 	<link rel="stylesheet" href="./css/global.css">
-	<link rel="stylesheet" href="./css/user.css">
 	<script src="./js/global.js"></script>
-	<script src="./js/user.js"></script>
+	<script src="./js/settings.js"></script>
 </head>
 
 <body>
@@ -48,36 +47,18 @@
 	</header>
 	<main class="flexcontainer flexcolumn">
 		<span class="verticalspacer"></span>
-		<span class="block flexcontainer flexcolumn">
-			<span class="flexcontainer leftalign width100">
-				<span id="userBanner" class="profileBanner flexcontainer light loading hidden">
-				</span>
-				<span id="topUserInfo" class="flexcontainer width100">
-					<span id="postuserlink" class="flexcontainer">
-						<span id="userPfpLoader" class="flexcontainer"><img id="userpfp" class="pfp"></span>
-						<span id="userusername">Loading...</span>
-					</span>
-					<span id="userverified" title="Verified" class="hidden">&#x2705;</span>
-					<span id="pronouns" class="pronouns" title="Pronouns"></span>
-					<span class="flexgrow"></span>
-					<span id="followbutton" class="flexcontainer button small primary"></span>
-				</span>
+		<span class="flexcontainer flexcolumn block">
+			<h2>Settings</h2>
+			<span class="flexcontainer marginbottom">
+				<h2 class="flexcontainer width100 marginbottom">Security</h2>
+				<a id="changepasswordbutton" class="flexcontainer button">Change Password</a>
+				<a id="tfabutton" class="flexcontainer button">Enable 2FA</a>
 			</span>
-			<span id="name" class="leftalign width100">Real name: Loading...</span>
-			<span id="bio" class="hidden leftalign width100">Loading...</span>
-			<hr class="width100">
-			<span id="email" class="leftalign width100">Email: Loading...</span>
-			<span id="birthday" class="leftalign width100">Birthday: Loading...</span>
-			<span id="rank" class="leftalign width100">Rank: Loading...</span>
-			<span class="leftalign width100">
-				<span id="followers">Followers: Loading...</span>
-				<span>&nbsp;&nbsp;</span>
-				<span id="following">Following: Loading...</span>
+			<span>&nbsp;</span>
+			<span class="flexcontainer">
+				<a id="editprofilebutton" class="flexcontainer button primary">Submit</a>
+				<a id="cancel" class="flexcontainer button">Cancel</a>
 			</span>
-	
-		</span>
-		<span id="posts" class="flexcontainer flexcolumn posts">
-			<span id="userPostsLoader" class="loader"></span>
 		</span>
 	</main>
 	<footer class="flexcontainer">
@@ -153,6 +134,71 @@
 					<a id="loginlink" class="flexcontainer button">Login</a>
 				</div>
 			</span>
+		</span>
+		<span id="changepasswordformcontainer" class="hidden flexcontainer flexcolumn formcontainer">
+			<span id="changepasswordform" class="block modal">
+				<div class="flexcontainer flexcolumn">
+					<h2>Change Password</h2>
+					<span id="changepassworderrorcontainer" class="flexcontainer flexcolumn hidden">
+						<span id="changepassworderror" class="red"></span>
+						<span>&nbsp;</span>
+					</span>
+					<input type="password" id="oldpasswordinput" placeholder="Old Password" autocomplete="current-password">
+					<span>&nbsp;</span>
+					<input type="password" id="newpasswordinput" placeholder="New Password" autocomplete="new-password">
+					<span>&nbsp;</span>
+					<input type="password" id="newpasswordinput2" placeholder="New Password again" autocomplete="new-password">
+					<span>&nbsp;</span>
+					<span>
+						<input type="checkbox" id="logoutothers">
+						<label for="logoutothers">Logout other devices</label>
+					</span>
+					<span>&nbsp;</span>
+					<span class="flexcontainer">
+						<a id="changepasswordsubmitbutton" class="flexcontainer button">Change Password</a>
+						<a id="changepasswordcancel" class="flexcontainer button">Cancel</a>
+					</span>
+				</div>
+			</span>
+		</span>
+		<span id="enabletfaformcontainer" class="hidden flexcontainer flexcolumn formcontainer">
+			<span id="enabletfaform" class="block modal">
+				<div class="flexcontainer flexcolumn">
+					<h2>Enable 2FA</h2>
+					<span id="pleaseWait">Please wait while we generate your code...</span>
+					<span id="enabletfaerrorcontainer" class="flexcontainer flexcolumn hidden">
+						<span id="enabletfaerror" class="red"></span>
+						<span>&nbsp;</span>
+					</span>
+					<img id="enabletfaqr" src="">
+					<span>&nbsp;</span>
+					<span id="tfakey"></span>
+					<span>&nbsp;</span>
+					<input type="number" id="enabletfainput" placeholder="2FA Code">
+					<span>&nbsp;</span>
+					<span class="flexcontainer">
+						<a id="enabletfasubmitbutton" class="flexcontainer button">Enable 2FA</a>
+						<a id="enabletfacancel" class="flexcontainer button">Cancel</a>
+					</span>
+				</div>
+			</span>
+		</span>
+	</span>
+	<span id="disabletfaformcontainer" class="hidden flexcontainer flexcolumn formcontainer">
+		<span id="disabletfaform" class="block modal">
+			<div class="flexcontainer flexcolumn">
+				<h2>Disable 2FA</h2>
+				<span id="disabletfaerrorcontainer" class="flexcontainer flexcolumn hidden">
+					<span id="disabletfaerror" class="red"></span>
+					<span>&nbsp;</span>
+				</span>
+				<input type="number" id="disabletfainput" placeholder="2FA Code">
+				<span>&nbsp;</span>
+				<span class="flexcontainer">
+					<a id="disabletfasubmitbutton" class="flexcontainer button">Disable 2FA</a>
+					<a id="disabletfacancel" class="flexcontainer button">Cancel</a>
+				</span>
+			</div>
 		</span>
 	</span>
 </body>
