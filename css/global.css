@@ -470,7 +470,7 @@ main.flexcontainer {
 	margin-bottom: 5px;
 }
 
-.posts, #users {
+.posts, .users, #users {
 	width: 100%;
 }
 
