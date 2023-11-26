@@ -25,6 +25,10 @@ async function updateInfo() {
         })
     });
     const user = (await r.json()).user;
+    $(".sideContent").forEach(item => {
+        item.classList.remove("hidden");
+    });
+    $("#sideContentLoading").classList.add("hidden");
     $("#tfabutton").innerText = user.totpEnabled ? "Disable 2FA" : "Enable 2FA";
     tfaEnabled = user.totpEnabled;
 }
