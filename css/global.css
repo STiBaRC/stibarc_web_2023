@@ -163,7 +163,7 @@ header .searchbar input:focus {
 	transition: background-color .25s ease-in-out;
 }
 
-#searchBtn > img {
+#searchBtn>img {
 	width: 25px;
 }
 
@@ -498,7 +498,9 @@ main.flexcontainer {
 	margin-bottom: 5px;
 }
 
-.posts, .users, #users {
+.posts,
+.users,
+#users {
 	width: 100%;
 }
 
@@ -513,7 +515,8 @@ main.flexcontainer {
 	text-overflow: ellipsis;
 }
 
-hr, .post hr,
+hr,
+.post hr,
 .block hr {
 	border: 1px solid var(--color3);
 	margin: 0.65rem 0;
@@ -544,7 +547,7 @@ hr, .post hr,
 	width: 24px;
 	height: auto;
 	padding: 4px;
-	background: transparent  url("../img/icon/edit.svg") center center no-repeat;
+	background: transparent url("../img/icon/edit.svg") center center no-repeat;
 	background-size: auto;
 	cursor: pointer;
 	filter: invert();
@@ -580,11 +583,13 @@ hr, .post hr,
 	background-color: var(--color9);
 }
 
-.button.light, .comment .button {
+.button.light,
+.comment .button {
 	background-color: var(--color10);
 }
 
-.button.light, .comment .button:hover {
+.button.light,
+.comment .button:hover {
 	background-color: var(--color2);
 }
 
@@ -752,4 +757,63 @@ footer {
 	#logo img {
 		height: 25px;
 	}
+}
+
+
+.contentWithSidebar {
+	display: flex;
+
+}
+
+.sidebar {
+	width: 30%;
+}
+
+.sideContent {
+	width: 70%;
+}
+
+.sidebar h2 {
+	margin: 0.55rem 0 1rem 0;
+}
+
+.sidebarItems {
+	padding: 0;
+	list-style-type: none;
+	box-sizing: border-box;
+	margin-right: 1rem;
+}
+
+.sidebarItems li {
+	position: relative;
+	list-style-type: none;
+	cursor: pointer;
+	padding: 10px 0 10px calc(30vw * 0.1);
+	border-radius: 8px;
+	width: 100%;
+}
+
+.sidebarItems li:before {
+	position: absolute;
+	content: "";
+	left: calc(30vw * 0.045);
+	top: 7px;
+	background-color: transparent;
+	height: calc(100% - 22px);
+	border-top: 4px inset transparent;
+	border-bottom: 4px inset transparent;
+	width: 4px;
+	border-radius: 10px;
+}
+
+.sidebarItems li.active {
+	background-color: var(--color3);
+}
+
+.sidebarItems li.active:before {
+	background-color: var(--color1)
+}
+
+.sidebarItems li:hover:not(.active) {
+	background-color: var(--color10);
 }
