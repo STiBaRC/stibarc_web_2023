@@ -40,9 +40,6 @@ window.addEventListener("load", async () => {
 			$("#bannerUpdateDropdown").classList.add("hidden");
 		}
 	});
-	$("#cancel").addEventListener("click", () => {
-		location.href = `user.html?username=${localStorage.username}`;
-	});
 	$("#changepasswordbutton").addEventListener("click", () => {
 		window.scrollTo(0, 0);
 		$("#changepasswordformcontainer").classList.remove("hidden");
