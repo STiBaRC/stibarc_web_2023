@@ -1,6 +1,4 @@
-const url = new URL(location);
-const sp = url.searchParams;
-const tab = sp.get("tab") || "security";
+let selectedTab = location.hash.slice(1) || "security";
 let tfaEnabled = false;
 
 function switchTab(tabEl) {
@@ -9,11 +7,11 @@ function switchTab(tabEl) {
     });
     tabEl.classList.add("active");
     let tab = tabEl.id.replace("tab-", "");
+    location.hash = tab;
     $(".tabContent").forEach(item => {
         item.classList.add("hidden");
     });
     $(`#tabContent-${tab}`).classList.remove("hidden");
-    url.searchParams.set('tab', tab);
 }
 
 async function updateInfo() {
@@ -47,8 +45,8 @@ window.addEventListener("load", async () => {
     $(".tabContent").forEach(element => {
         element.classList.add("hidden");
     });
-    $(`#tab-${tab}`).classList.add("active");
-    $(`#tabContent-${tab}`).classList.remove("hidden");
+    $(`#tab-${selectedTab}`).classList.add("active");
+    $(`#tabContent-${selectedTab}`).classList.remove("hidden");
     $("#changepasswordbutton").addEventListener("click", () => {
         window.scrollTo(0, 0);
         $("#changepasswordformcontainer").classList.remove("hidden");

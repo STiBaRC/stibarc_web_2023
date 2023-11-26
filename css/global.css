@@ -788,7 +788,7 @@ footer {
 	position: relative;
 	list-style-type: none;
 	cursor: pointer;
-	padding: 10px 0 10px calc(30vw * 0.1);
+	padding: 9px 0 9px calc(30vw * 0.1);
 	border-radius: 8px;
 	width: 100%;
 }
@@ -803,7 +803,7 @@ footer {
 	border-top: 4px inset transparent;
 	border-bottom: 4px inset transparent;
 	width: 4px;
-	border-radius: 10px;
+	border-radius: 8px;
 }
 
 .sidebarItems li.active {
