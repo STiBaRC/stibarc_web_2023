@@ -51,14 +51,28 @@
 			<span class="sidebar">
 				<h2>Settings</h2>
 				<ul class="sidebarItems">
-					<li class="active">Security</li>
+					<li class="active" id="tab-security">Security</li>
+					<li class="" id="tab-sessions">Sessions</li>
+					<li class="" id="tab-display">Display</li>
+					<li class="" id="tab-experiments">Experiments</li>
 				</ul>
 			</span>
 			<span class="sideContent">
 				<span class="flexcontainer marginbottom">
-					<h2 class="flexcontainer width100 marginbottom">Security</h2>
-					<a id="changepasswordbutton" class="flexcontainer button">Change Password</a>
-					<a id="tfabutton" class="flexcontainer button">Enable 2FA</a>
+					<span class="tabContent hidden" id="tabContent-security">
+						<h2 class="flexcontainer width100 marginbottom">Security</h2>
+						<a id="changepasswordbutton" class="flexcontainer button">Change Password</a>
+						<a id="tfabutton" class="flexcontainer button">Enable 2FA</a>
+					</span>
+					<span class="tabContent hidden" id="tabContent-sessions">
+						<h2 class="flexcontainer width100 marginbottom">Sessions</h2>
+					</span>
+					<span class="tabContent hidden" id="tabContent-display">
+						<h2 class="flexcontainer width100 marginbottom">Display</h2>
+					</span>
+					<span class="tabContent hidden" id="tabContent-experiments">
+						<h2 class="flexcontainer width100 marginbottom">Experiments</h2>
+					</span>
 				</span>
 			</span>
 		</span>
