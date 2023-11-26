@@ -812,7 +812,7 @@ footer {
 	left: 0;
 	margin-left: calc(60% * 0.5 * 0.25);
 	background-color: transparent;
-	height: calc(100% - 23px);
+	height: calc(100% - 26px);
 	border-top: 4px inset transparent;
 	border-bottom: 4px inset transparent;
 	width: 4px;
