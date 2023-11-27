@@ -1,4 +1,5 @@
 let selectedTab = location.hash.slice(1) || "security";
+let isMobile;
 let tfaEnabled = false;
 
 function switchTab(tabEl) {
@@ -11,6 +12,11 @@ function switchTab(tabEl) {
     $(".tabContent").forEach(item => {
         item.classList.add("hidden");
     });
+    if (isMobile) {
+        $("#backBtn").classList.remove("hidden");
+        $("#sideContent").classList.remove("hidden");
+        $("#sidebarTabs").classList.add("hidden");
+    }
     $(`#tabContent-${tab}`).classList.remove("hidden");
 }
 
@@ -33,6 +39,27 @@ async function updateInfo() {
     tfaEnabled = user.totpEnabled;
 }
 
+const mediaQuery = window.matchMedia('(max-width: 475px)');
+
+function handleViewportChange(e) {
+    if (e.matches) {
+        isMobile = true;
+        if (location.hash) {
+            $("#backBtn").classList.remove("hidden");
+            $("#sideContent").classList.remove("hidden");
+            $("#sidebarTabs").classList.add("hidden");
+        } else {
+            $("#backBtn").classList.add("hidden");
+            $("#sideContent").classList.add("hidden");
+            $("#sidebarTabs").classList.remove("hidden");
+        }
+    } else {
+        isMobile = false;
+        $("#sidebarTabs").classList.remove("hidden");
+        $("#backBtn").classList.add("hidden");
+    }
+}
+
 window.addEventListener("load", async () => {
     listatehooks.push((state) => {
         if (state) {
@@ -51,6 +78,20 @@ window.addEventListener("load", async () => {
     });
     $(`#tab-${selectedTab}`).classList.add("active");
     $(`#tabContent-${selectedTab}`).classList.remove("hidden");
+
+    mediaQuery.addListener(handleViewportChange);
+    handleViewportChange(mediaQuery);
+
+    $("#backBtn").addEventListener("click", () => {
+        $("#backBtn").classList.add("hidden");
+        $("#sideContent").classList.add("hidden");
+        $("#sidebarTabs").classList.remove("hidden");
+        selectedTab = "";
+        $(".sidebarItems li").forEach(item => {
+            item.classList.remove("active");
+        });
+    })
+
     $("#changepasswordbutton").addEventListener("click", () => {
         window.scrollTo(0, 0);
         $("#changepasswordformcontainer").classList.remove("hidden");

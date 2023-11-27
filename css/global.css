@@ -568,6 +568,9 @@ hr,
 }
 
 .button {
+	border: none;
+	font-size: inherit;
+	font-family: inherit;
 	background-color: var(--color3);
 	color: var(--text);
 	margin: 5px;
@@ -774,7 +777,7 @@ footer {
 }
 
 .sidebar h2 {
-	margin: 0.55rem 0 1rem 0;
+	margin: 0.75rem 0 1rem 0;
 }
 
 .sidebarItems {
@@ -856,5 +859,25 @@ footer {
 
 	.contentWithSidebar {
 		display: block;
+	}
+
+	.sidebarItems li:before {
+		display: none;
+	}
+
+	.sidebarItems li:after {
+		position: absolute;
+		content: "";
+		right: 0;
+		margin-right: 16px;
+		border: solid var(--color8);
+		border-width: 0 3px 3px 0;
+		transform: rotate(-45deg);
+		-webkit-transform: rotate(-45deg);
+		padding: 3px;
+	}
+
+	.sidebarItems li {
+		padding: 10px 0 10px 16px;
 	}
 }
