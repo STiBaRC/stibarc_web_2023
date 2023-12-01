@@ -676,7 +676,12 @@ hr,
 	margin-top: 5px;
 }
 
-.attachmentimage, .moreAttachment {
+.attachmentContainer {
+	display: flex;
+	flex-direction: row;
+}
+
+.attachmentimage {
 	margin-top: 6px;
 	display: block;
 	max-width: 100%;
@@ -686,9 +691,18 @@ hr,
 	cursor: pointer;
 }
 
-.moreAttachment {
-	background-color: var(--color10);
-	height: 150px;
+.moreAttachments {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 24px;
+	background-color: var(--color4);
+	color: var(--color11);
+	opacity: 0.5;
+	height: 125px;
+	width: 125px;
+	max-width: 100%;
+	margin-left: 6px;
 }
 
 .smallBadge {

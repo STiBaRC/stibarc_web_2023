@@ -72,6 +72,8 @@ function postblock(post) {
 	const contentTextSpan = document.createElement("span");
 	const hr2 = document.createElement("hr");
 	const metaSpan = document.createElement("span");
+	const attachmentContainer = document.createElement("div");
+	const moreAttachments = document.createElement("div");
 
 	postSpan.classList.add("post", "flexcontainer", "flexcolumn");
 	title.classList.add("posttitle", "leftalign", "width100");
@@ -89,6 +91,8 @@ function postblock(post) {
 	contentSpan.classList.add("postcontent", "flexcolumn", "leftalign", "width100");
 	hr2.classList.add("width100");
 	metaSpan.classList.add("leftalign", "width100");
+	attachmentContainer.classList.add("attachmentContainer");
+	moreAttachments.classList.add("moreAttachments");
 
 	let titleText = post.title;
 	if (post.title.length > maxTitleLength) {
@@ -110,7 +114,12 @@ function postblock(post) {
 	if (post.attachments && post.attachments.length > 0 && post.attachments[0] !== null) {
 		const attachment = attachmentblock(post.attachments[0]);
 		attachment.classList.add("attachmentimage");
-		contentSpan.append(attachment);
+		attachmentContainer.append(attachment);
+		if (post.attachments.length > 1) {
+			moreAttachments.innerText = `+${post.attachments.length - 1}`;
+			attachmentContainer.append(moreAttachments);
+		}
+		contentSpan.append(attachmentContainer);
 	}
 
 	userLink.append(userPfp, post.poster.username);
