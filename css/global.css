@@ -577,8 +577,15 @@ hr,
 	margin: 5px;
 	padding: 9px 16px;
 	border-radius: 20px;
+	min-width: 75px;
+	height: 20px;
+	max-width: 100%;
 	cursor: pointer;
 	transition: background-color 0.2s ease-out;
+}
+
+button.button {
+	height: auto;
 }
 
 .button:hover {

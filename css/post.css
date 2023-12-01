@@ -4,10 +4,6 @@
 	cursor: pointer;
 }
 
-.button {
-	min-width: 75px;
-}
-
 #opennewcommentbutton {
 	margin-bottom: 12px;
 }
