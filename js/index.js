@@ -57,6 +57,8 @@ async function newPost() {
 		return;
 	}
 	clicked = true;
+	$("#newpostbutton").innerText = "Posting";
+	$("#newpostbutton").classList.add("loading", "small");
 	for (const file of attachmentFiles) {
 		const response = await fetch("https://betaapi.stibarc.com/v4/uploadfile.sjs", {
 		method: "post",
@@ -83,6 +85,8 @@ async function newPost() {
 		})
 	});
 	const responseJSON = await response.json();
+	$("#newpostbutton").innerText = "Post";
+	$("#newpostbutton").classList.remove("loading", "small");
 	$("#newposttitle").value = "";
 	$("#newpostbody").value = "";
 	attachments = [];

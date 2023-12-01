@@ -569,15 +569,14 @@ hr,
 
 .button {
 	border: none;
-	font-size: inherit;
 	font-family: inherit;
+	font-size: 1rem;
+	line-height: normal;
 	background-color: var(--color3);
 	color: var(--text);
 	margin: 5px;
-	padding: 5px 14px;
-	height: 30px;
+	padding: 9px 16px;
 	border-radius: 20px;
-	min-width: 100px;
 	cursor: pointer;
 	transition: background-color 0.2s ease-out;
 }
@@ -607,6 +606,12 @@ hr,
 
 .button.danger {
 	color: var(--red);
+}
+
+.button:disabled, .button:disabled:hover, .button:disabled:focus {
+	background-color: var(--color9);
+	color: var(--color10);
+	cursor: default;
 }
 
 .showOnMobileFlex {
@@ -671,7 +676,7 @@ hr,
 	margin-top: 5px;
 }
 
-.attachmentimage {
+.attachmentimage, .moreAttachment {
 	margin-top: 6px;
 	display: block;
 	max-width: 100%;
@@ -679,6 +684,11 @@ hr,
 	width: 150px;
 	object-fit: contain;
 	cursor: pointer;
+}
+
+.moreAttachment {
+	background-color: var(--color10);
+	height: 150px;
 }
 
 .smallBadge {
