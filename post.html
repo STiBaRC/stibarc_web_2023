@@ -64,16 +64,18 @@
 			<hr class="width100">
 			<span id="postcontent" class="postcontent flexcolumn leftalign width100">Loading...</span>
 			<hr class="width100">
-			<span class="leftalign width100">
-				<span id="upvoteBtn" class="flexcontainer button primary" title="Upvote">&#x2191; 0</span>
-				<span id="downvoteBtn" class="flexcontainer button primary" title="Downvote">&#x2193; 0</span>
+			<span class="aligncenter leftalign width100 flexwrap">
+				<button id="upvoteBtn" class="flexcontainer button primary" title="Upvote">&#x2191; 0</button>
+				<button id="downvoteBtn" class="flexcontainer button primary" title="Downvote">&#x2193; 0</button>
 				<span class="flexgrow"></span>
-				<span id="editBtn" class="flexcontainer hidden editBtn"></span>
+				<span id="editBtn" class="flexcontainer hidden editBtn" title="Edit post">
+					<img src="./img/icon/edit.svg" width="24" height="24">
+				</span>
 			</span>
 		</span>
 		<span id="comments" class="block flexcontainer flexcolumn">
 			<span id="posttitle" class="posttitle leftalign width100">Comments</span>
-			<a id="opennewcommentbutton" class="flexcontainer button">New Comment</a>
+			<button id="opennewcommentbutton" class="flexcontainer button">New Comment</button>
 			<div id="newcomment" class="flexcontainer flexcolumn width100 hidden">
 				<hr class="width100">
 				<h2>New Comment</h2>
@@ -83,8 +85,8 @@
 				<span id="attachments" class="flexcontainer"></span><br>
 				<a id="addattachment" class="flexcontainer button">Add attachment</a>
 				<span class="flexcontainer">
-					<a id="newcommentbutton" class="flexcontainer button primary">Comment</a>
-					<a id="newcommentcancel" class="flexcontainer button">Cancel</a>
+					<button id="newcommentbutton" class="flexcontainer button primary">Comment</button>
+					<button id="newcommentcancel" class="flexcontainer button">Cancel</button>
 				</span>
 				<hr class="width100">
 			</div>

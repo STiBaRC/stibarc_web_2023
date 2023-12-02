@@ -149,10 +149,11 @@ function commentBlock(post, comment, isPostPage) {
 	const contentSpan = document.createElement("span");
 	const hr2 = document.createElement("hr");
 	const metaSpan = document.createElement("span");
-	const upvoteBtn = document.createElement("span");
-	const downvoteBtn = document.createElement("span");
+	const upvoteBtn = document.createElement("button");
+	const downvoteBtn = document.createElement("button");
 	const flexGrow = document.createElement("span");
 	const editBtn = document.createElement("span");
+	const editIcon = new Image();
 
 	commentSpan.classList.add("comment", "flexcontainer", "flexcolumn");
 	userSpan.classList.add("flexcontainer", "leftalign", "width100");
@@ -168,7 +169,7 @@ function commentBlock(post, comment, isPostPage) {
 	hr1.classList.add("width100");
 	contentSpan.classList.add("postcontent", "flexcolumn", "leftalign", "width100");
 	hr2.classList.add("width100");
-	metaSpan.classList.add("leftalign", "width100");
+	metaSpan.classList.add("aligncenter", "leftalign", "width100", "flexwrap");
 	upvoteBtn.classList.add("flexcontainer", "button", "primary", "voteBtn");
 	upvoteBtn.setAttribute("title", "Upvote");
 	downvoteBtn.classList.add("flexcontainer", "button", "primary", "voteBtn");
@@ -177,6 +178,7 @@ function commentBlock(post, comment, isPostPage) {
 	editBtn.classList.add("flexcontainer", "editBtn", "hidden");
 	editBtn.setAttribute("title", "Edit comment");
 	editBtn.setAttribute("data-username", comment.poster.username);
+	editIcon.src = "./img/icon/edit.svg";
 
 	verifiedSpan.innerText = "\u2705";
 	if (comment.poster.pronouns) userPronouns.innerText = `(${comment.poster.pronouns})`;
@@ -211,6 +213,7 @@ function commentBlock(post, comment, isPostPage) {
 	userSpan.append(userPronouns);
 	if (isPostPage) {
 		metaSpan.append(upvoteBtn, downvoteBtn, flexGrow);
+		editBtn.append(editIcon);
 		if (comment.poster.username == localStorage.username) editBtn.classList.remove("hidden");
 		metaSpan.append(editBtn);
 	}

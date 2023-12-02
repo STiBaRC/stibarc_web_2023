@@ -334,6 +334,14 @@ main.flexcontainer {
 	flex-basis: 0;
 }
 
+.aligncenter {
+	align-items: center;
+}
+
+.flexwrap {
+	flex-wrap: wrap;
+}
+
 .headerpfp {
 	background-color: var(--color2);
 	width: 45px;
@@ -407,7 +415,7 @@ main.flexcontainer {
 	align-items: center;
 	justify-content: center;
 	background-color: rgba(0, 0, 0, 0.45);
-	padding: 5px 5px;
+	padding: 5px;
 	border-radius: 6px;
 	cursor: pointer;
 	transition: background-color 0.22s ease-out;
@@ -544,27 +552,21 @@ hr,
 } */
 
 .editBtn {
-	width: 24px;
-	height: auto;
-	padding: 4px;
-	background: transparent url("../img/icon/edit.svg") center center no-repeat;
-	background-size: auto;
+	padding: 5px;
+	border-radius: 6px;
 	cursor: pointer;
+	transition: background-color 0.2s ease-out;
+}
+
+.editBtn img {
+	width: 24px;
+	height: 24px;
 	filter: invert();
 	opacity: 0.7;
-	transition: opacity 0.2s ease-out;
 }
 
 .editBtn:hover {
-	opacity: 0.9;
-}
-
-.comment .editBtn {
-	opacity: 0.6;
-}
-
-.comment .editBtn:hover {
-	opacity: 0.95;
+	background-color: var(--color10);
 }
 
 .button {
@@ -577,7 +579,7 @@ hr,
 	margin: 5px;
 	padding: 9px 16px;
 	border-radius: 20px;
-	min-width: 75px;
+	min-width: 100px;
 	height: 20px;
 	max-width: 100%;
 	cursor: pointer;
