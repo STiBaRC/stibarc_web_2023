@@ -152,7 +152,7 @@ function commentBlock(post, comment, isPostPage) {
 	const upvoteBtn = document.createElement("button");
 	const downvoteBtn = document.createElement("button");
 	const flexGrow = document.createElement("span");
-	const editBtn = document.createElement("span");
+	const editBtn = document.createElement("button");
 	const editIcon = new Image();
 
 	commentSpan.classList.add("comment", "flexcontainer", "flexcolumn");
