@@ -338,6 +338,10 @@ main.flexcontainer {
 	align-items: center;
 }
 
+.justifycenter {
+	justify-content: center;
+}
+
 .flexwrap {
 	flex-wrap: wrap;
 }
@@ -576,6 +580,7 @@ hr,
 }
 
 .button {
+	display: inline-block;
 	border: none;
 	font-family: inherit;
 	font-size: 1rem;
