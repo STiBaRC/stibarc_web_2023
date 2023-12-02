@@ -563,6 +563,7 @@ hr,
 	font-family: inherit;
 	font-size: inherit;
 	padding: 5px;
+	margin: 5px;
 	border-radius: 6px;
 	cursor: pointer;
 	background-color: transparent;
