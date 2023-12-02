@@ -12,6 +12,8 @@ async function newComment() {
 	const content = $("#newcommentbody").value;
 	if (content.trim() == "" && newAttachmentFiles.length == 0) return;
 	clicked = true;
+	$("#newcommentbutton").classList.add("loading", "small");
+	$("#newcommentbutton").innerText = "";
 	for (const file of newAttachmentFiles) {
 		const response = await fetch("https://betaapi.stibarc.com/v4/uploadfile.sjs", {
 			method: "post",
@@ -38,6 +40,8 @@ async function newComment() {
 		})
 	});
 	const responseJSON = await response.json();
+	$("#newcommentbutton").classList.remove("loading", "small");
+	$("#newcommentbutton").innerText = "Comment";
 	$("#opennewcommentbutton").classList.remove("hidden");
 	$("#newcomment").classList.add("hidden");
 	$("#newcommentbody").value = "";
