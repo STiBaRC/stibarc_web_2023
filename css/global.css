@@ -582,7 +582,7 @@ hr,
 }
 
 .button {
-	display: inline-block;
+	display: inline-flex;
 	border: none;
 	font-family: inherit;
 	font-size: 1rem;
