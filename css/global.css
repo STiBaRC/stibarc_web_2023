@@ -410,6 +410,9 @@ main.flexcontainer {
 }
 
 .editBtnOverlay {
+	border: none;
+	font-family: inherit;
+	font-size: inherit;
 	position: absolute;
 	display: flex;
 	align-items: center;
@@ -552,6 +555,9 @@ hr,
 } */
 
 .editBtn {
+	border: none;
+	font-family: inherit;
+	font-size: inherit;
 	padding: 5px;
 	border-radius: 6px;
 	cursor: pointer;
@@ -581,17 +587,25 @@ hr,
 	border-radius: 20px;
 	min-width: 100px;
 	height: 20px;
+	max-height: 100vh;
 	max-width: 100%;
 	cursor: pointer;
 	transition: background-color 0.2s ease-out;
 }
 
 button.button {
-	height: auto;
+	min-height: calc(1.25em + 18px);
 }
 
 .button:hover {
 	background-color: var(--color9);
+}
+
+.button.smallBtn {
+	min-height: 0;
+	height: auto;
+	padding: 7px 14px;
+	min-width: 0;
 }
 
 .button.light,
@@ -782,7 +796,7 @@ footer {
 	}
 
 	.button {
-		min-width: 80px;
+		min-width: 90px;
 	}
 }
 

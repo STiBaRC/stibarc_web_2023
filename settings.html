@@ -48,7 +48,7 @@
 	<main class="flexcontainer flexcolumn">
 		<span class="verticalspacer"></span>
 		<span class="contentWithSidebar block">
-			<button class="button" id="backBtn">Back</button>
+			<button class="button smallBtn" id="backBtn">Back</button>
 			<span class="sidebar" id="sidebarTabs">
 				<h2>Settings</h2>
 				<ul class="sidebarItems">
@@ -67,8 +67,8 @@
 				<span class="flexcontainer marginbottom">
 					<span class="tabContent hidden" id="tabContent-security">
 						<h2 class="flexcontainer width100 marginbottom">Security</h2>
-						<a id="changepasswordbutton" class="flexcontainer button">Change Password</a>
-						<a id="tfabutton" class="flexcontainer button">Enable 2FA</a>
+						<button id="changepasswordbutton" class="flexcontainer button">Change Password</button>
+						<button id="tfabutton" class="flexcontainer button">Enable 2FA</button>
 					</span>
 					<span class="tabContent hidden" id="tabContent-sessions">
 						<h2 class="flexcontainer width100 marginbottom">Sessions</h2>
@@ -108,10 +108,10 @@
 						<span>&nbsp;</span>
 					</span>
 					<span class="flexcontainer">
-						<a id="loginbutton" class="flexcontainer button primary">Login</a>
-						<a id="logincancel" class="flexcontainer button">Cancel</a>
+						<button id="loginbutton" class="flexcontainer button primary">Login</button>
+						<button id="logincancel" class="flexcontainer button">Cancel</button>
 					</span>
-					<a id="registerlink" class="flexcontainer button">Register</a>
+					<button id="registerlink" class="flexcontainer button">Register</button>
 				</div>
 			</span>
 		</span>
@@ -151,10 +151,10 @@
 					<span>Show bio: <input type="checkbox" id="Reg-showbio"></span>
 					<span>&nbsp;</span>
 					<span class="flexcontainer">
-						<a id="registerbutton" class="flexcontainer button primary">Register</a>
-						<a id="registercancel" class="flexcontainer button">Cancel</a>
+						<button id="registerbutton" class="flexcontainer button primary">Register</button>
+						<button id="registercancel" class="flexcontainer button">Cancel</button>
 					</span>
-					<a id="loginlink" class="flexcontainer button">Login</a>
+					<button id="loginlink" class="flexcontainer button">Login</button>
 				</div>
 			</span>
 		</span>
@@ -178,8 +178,8 @@
 					</span>
 					<span>&nbsp;</span>
 					<span class="flexcontainer">
-						<a id="changepasswordsubmitbutton" class="flexcontainer button primary">Change Password</a>
-						<a id="changepasswordcancel" class="flexcontainer button">Cancel</a>
+						<button id="changepasswordsubmitbutton" class="flexcontainer button primary">Change Password</button>
+						<button id="changepasswordcancel" class="flexcontainer button">Cancel</button>
 					</span>
 				</div>
 			</span>
@@ -202,8 +202,8 @@
 					<input id="enabletfainput" placeholder="000 000" maxlength="7" autocomplete="one-time-code" name="one-time-code" type="text" autocapitalize="none" autocorrect="off" inputmode="numeric" spellcheck="false">
 					<span>&nbsp;</span>
 					<span class="flexcontainer">
-						<a id="enabletfasubmitbutton" class="flexcontainer button primary">Enable 2FA</a>
-						<a id="enabletfacancel" class="flexcontainer button">Cancel</a>
+						<button id="enabletfasubmitbutton" class="flexcontainer button primary">Enable 2FA</button>
+						<button id="enabletfacancel" class="flexcontainer button">Cancel</button>
 					</span>
 				</div>
 			</span>
@@ -220,8 +220,8 @@
 				<input id="disabletfainput" placeholder="000 000" maxlength="7" autocomplete="one-time-code" name="one-time-code" type="text" autocapitalize="none" autocorrect="off" inputmode="numeric" spellcheck="false">
 				<span>&nbsp;</span>
 				<span class="flexcontainer">
-					<a id="disabletfasubmitbutton" class="flexcontainer button primary">Disable 2FA</a>
-					<a id="disabletfacancel" class="flexcontainer button">Cancel</a>
+					<button id="disabletfasubmitbutton" class="flexcontainer button primary">Disable 2FA</button>
+					<button id="disabletfacancel" class="flexcontainer button">Cancel</button>
 				</span>
 			</div>
 		</span>
