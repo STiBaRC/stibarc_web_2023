@@ -123,6 +123,9 @@ function postblock(post) {
 	const contentTextSpan = document.createElement("span");
 	const hr2 = document.createElement("hr");
 	const metaSpan = document.createElement("span");
+	const upvoteIcon = document.createElement("icon-img");
+	const downvoteIcon = document.createElement("icon-img");
+	const commentIcon = document.createElement("icon-img");
 	const attachmentContainer = document.createElement("div");
 	const moreAttachments = document.createElement("div");
 
@@ -144,6 +147,9 @@ function postblock(post) {
 	contentSpan.classList.add("postcontent", "flexcolumn", "leftalign", "width100");
 	hr2.classList.add("width100");
 	metaSpan.classList.add("leftalign", "width100", "metaSpan");
+	upvoteIcon.setAttribute("name", "up_arrow");
+	downvoteIcon.setAttribute("name", "down_arrow");
+	commentIcon.setAttribute("name", "comment");
 	attachmentContainer.classList.add("attachmentContainer");
 	moreAttachments.classList.add("moreAttachments");
 
@@ -161,7 +167,7 @@ function postblock(post) {
 	contentTextSpan.innerText = postContentText;
 	contentSpan.append(contentTextSpan);
 
-	// metaSpan.append(upvoteIcon, post.upvotes, downvoteIcon, post.downvotes, commentIcon, post.comments);
+	metaSpan.append(upvoteIcon, post.upvotes, downvoteIcon, post.downvotes, commentIcon, post.comments);
 
 	if (post.attachments && post.attachments.length > 0 && post.attachments[0] !== null) {
 		const attachment = attachmentblock(post.attachments[0]);
