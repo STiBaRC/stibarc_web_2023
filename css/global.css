@@ -530,6 +530,19 @@ main.flexcontainer {
 	text-overflow: ellipsis;
 }
 
+.metaSpan {
+	display: flex;
+	align-items: center;
+}
+
+.metaSpan .icon {
+	margin-right: 3px;
+}
+
+.metaSpan .icon:not(:first-child) {
+	margin: 0 3px 0 8px;
+}
+
 hr,
 .post hr,
 .block hr {
@@ -638,7 +651,9 @@ button.button {
 	color: var(--red);
 }
 
-.button:disabled, .button:disabled:hover, .button:disabled:focus {
+.button:disabled,
+.button:disabled:hover,
+.button:disabled:focus {
 	background-color: var(--color9);
 	color: var(--color10);
 	cursor: default;

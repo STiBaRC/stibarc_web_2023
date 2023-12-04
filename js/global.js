@@ -72,6 +72,9 @@ function postblock(post) {
 	const contentTextSpan = document.createElement("span");
 	const hr2 = document.createElement("hr");
 	const metaSpan = document.createElement("span");
+	const upVoteIcon = new Image();
+	const downVoteIcon = new Image();
+	const commentIcon = new Image();
 	const attachmentContainer = document.createElement("div");
 	const moreAttachments = document.createElement("div");
 
@@ -91,7 +94,10 @@ function postblock(post) {
 	hr1.classList.add("width100");
 	contentSpan.classList.add("postcontent", "flexcolumn", "leftalign", "width100");
 	hr2.classList.add("width100");
-	metaSpan.classList.add("leftalign", "width100");
+	metaSpan.classList.add("leftalign", "width100", "metaSpan");
+	upVoteIcon.classList.add("icon");
+	downVoteIcon.classList.add("icon");
+	commentIcon.classList.add("icon");
 	attachmentContainer.classList.add("attachmentContainer");
 	moreAttachments.classList.add("moreAttachments");
 
@@ -112,7 +118,13 @@ function postblock(post) {
 	contentTextSpan.innerText = postContentText;
 	contentSpan.append(contentTextSpan);
 
-	metaSpan.innerText = `\u2191 ${post.upvotes} \u2193 ${post.downvotes} \ud83d\udcac ${post.comments}`;
+	upVoteIcon.src = "./img/icon/up_arrow.svg";
+	upVoteIcon.height = 16;
+	downVoteIcon.src = "./img/icon/down_arrow.svg";
+	downVoteIcon.height = 16;
+	commentIcon.src = "./img/icon/comment.svg";
+	commentIcon.height = 16;
+	metaSpan.append(upVoteIcon, post.upvotes, downVoteIcon, post.downvotes, commentIcon, post.comments);
 
 	if (post.attachments && post.attachments.length > 0 && post.attachments[0] !== null) {
 		const attachment = attachmentblock(post.attachments[0]);
