@@ -85,7 +85,6 @@ function postblock(post) {
 	userPfp.setAttribute("src", post.poster.pfp);
 	verifiedBadge.classList.add("verifiedBadge");
 	verifiedBadge.setAttribute("title", "Verified");
-	verifiedBadge.src = "./img/icon/verified.svg";
 	userPronouns.setAttribute("title", `Pronouns (${post.poster.pronouns})`);
 	userPronouns.setAttribute("class", "pronouns");
 	dateSpan.classList.add("postdate", "leftalign", "width100");
@@ -102,6 +101,7 @@ function postblock(post) {
 		titleText += "...";
 	}
 	title.innerText = titleText;
+	verifiedBadge.src = "./img/icon/verified.svg";
 	verifiedBadge.width = 16
 	verifiedBadge.height = 16;
 	if (post.poster.pronouns) userPronouns.innerText = `(${post.poster.pronouns})`;
@@ -143,7 +143,7 @@ function commentBlock(post, comment, isPostPage) {
 	const userSpan = document.createElement("span");
 	const userLink = document.createElement("a");
 	const userPfp = document.createElement("img");
-	const verifiedSpan = document.createElement("span");
+	const verifiedBadge = new Image();
 	const userPronouns = document.createElement("span");
 	const dateSpan = document.createElement("span");
 	const metaTags = document.createDocumentFragment();
@@ -164,7 +164,8 @@ function commentBlock(post, comment, isPostPage) {
 	userLink.classList.add("flexcontainer");
 	userPfp.classList.add("pfp");
 	userPfp.setAttribute("src", comment.poster.pfp);
-	verifiedSpan.setAttribute("title", "Verified");
+	verifiedBadge.classList.add("verifiedBadge");
+	verifiedBadge.setAttribute("title", "Verified");
 	userPronouns.setAttribute("title", `Pronouns (${post.poster.pronouns})`);
 	userPronouns.setAttribute("class", "pronouns");
 	dateSpan.classList.add("postdate", "leftalign", "width100");
@@ -183,7 +184,9 @@ function commentBlock(post, comment, isPostPage) {
 	editBtn.setAttribute("data-username", comment.poster.username);
 	editIcon.src = "./img/icon/edit.svg";
 
-	verifiedSpan.innerText = "\u2705";
+	verifiedBadge.src = "./img/icon/verified.svg";
+	verifiedBadge.width = 16
+	verifiedBadge.height = 16;
 	if (comment.poster.pronouns) userPronouns.innerText = `(${comment.poster.pronouns})`;
 	editedSpan.innerText = "Edited";
 	dateSpan.innerText = new Date(comment.date).toLocaleString();
@@ -212,7 +215,7 @@ function commentBlock(post, comment, isPostPage) {
 
 	userLink.append(userPfp, comment.poster.username);
 	userSpan.append(userLink);
-	if (comment.poster.verified) userSpan.append(verifiedSpan);
+	if (comment.poster.verified) userSpan.append(verifiedBadge);
 	userSpan.append(userPronouns);
 	if (isPostPage) {
 		metaSpan.append(upvoteBtn, downvoteBtn, flexGrow);
@@ -259,7 +262,7 @@ function userBlock(user) {
 	const userSpan = document.createElement("span");
 	const userLink = document.createElement("a");
 	const userPfp = document.createElement("img");
-	const verifiedSpan = document.createElement("span");
+	const verifiedBadge = new Image();
 	const userPronouns = document.createElement("span");
 
 	userSpan.classList.add("post", "flexcontainer", "leftalign", "width100");
@@ -267,16 +270,18 @@ function userBlock(user) {
 	userLink.classList.add("flexcontainer");
 	userPfp.classList.add("pfp");
 	userPfp.setAttribute("src", user.pfp);
-	verifiedSpan.setAttribute("title", "Verified");
+	verifiedBadge.setAttribute("title", "Verified");
 	userPronouns.setAttribute("title", `Pronouns (${user.pronouns})`);
 	userPronouns.setAttribute("class", "pronouns");
 
-	verifiedSpan.innerText = "\u2705";
+	verifiedBadge.src = "./img/icon/verified.svg";
+	verifiedBadge.width = 16;
+	verifiedBadge.height = 16;
 	if (user.pronouns) userPronouns.innerText = `(${user.pronouns})`;
 
 	userLink.append(userPfp, user.username);
 	userSpan.append(userLink);
-	if (user.verified) userSpan.append(verifiedSpan);
+	if (user.verified) userSpan.append(verifiedBadge);
 	userSpan.append(userPronouns);
 
 	userSpan.addEventListener("click", () => {

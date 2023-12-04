@@ -55,7 +55,8 @@
 					<img id="postpfp" class="pfp" src="">
 					<span id="postusername">Loading...</span>
 				</a>
-				<span id="postverified" title="Verified" class="hidden">&#x2705;</span>
+				<img id="postverified" title="Verified" class="verifiedBadge hidden" src="./img/icon/verified.svg"
+					width="16" height="16">
 				<span id="pronouns" class="pronouns" title="Pronouns"></span>
 			</span>
 			<span id="postdate" class="postdate leftalign width100">Loading...</span>
@@ -109,7 +110,8 @@
 					</span>
 					<input type="text" id="Login-usernameinput" placeholder="Username" autocomplete="username">
 					<span>&nbsp;</span>
-					<input type="password" id="Login-passwordinput" placeholder="Password" autocomplete="current-password">
+					<input type="password" id="Login-passwordinput" placeholder="Password"
+						autocomplete="current-password">
 					<span>&nbsp;</span>
 					<span id="Login-tfa" class="hidden flexcontainer flexcolumn">
 						<input type="number" id="Login-tfainput" placeholder="2FA Code">
@@ -135,12 +137,14 @@
 					<span>&nbsp;</span>
 					<input type="password" id="Reg-passwordinput" placeholder="Password" autocomplete="new-password">
 					<span>&nbsp;</span>
-					<input type="password" id="Reg-passwordinput2" placeholder="Password again" autocomplete="new-password">
+					<input type="password" id="Reg-passwordinput2" placeholder="Password again"
+						autocomplete="new-password">
 					<h3>Optional</h3>
 					<input type="text" id="Reg-nameinput" placeholder="Name" autocomplete="given-name">
 					<span>Show name: <input type="checkbox" id="Reg-showname"></span>
 					<span>&nbsp;</span>
-					<input list="Reg-commonPronouns" id="Reg-pronounsinput" type="text" placeholder="Pronouns" autocomplete="off" autocapitalize="none" maxlength="40">
+					<input list="Reg-commonPronouns" id="Reg-pronounsinput" type="text" placeholder="Pronouns"
+						autocomplete="off" autocapitalize="none" maxlength="40">
 					<datalist id="Reg-commonPronouns">
 						<option value="she/her"></option>
 						<option value="he/him"></option>
