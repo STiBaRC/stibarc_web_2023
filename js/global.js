@@ -38,22 +38,6 @@ class icon extends HTMLElement {
 }
 window.customElements.define('icon-img', icon);
 
-const verifiedBadge = new Image(16, 16);
-const upvoteIcon = new Image(16, 16);
-const downvoteIcon = new Image(16, 16);
-const commentIcon = new Image(16, 16);
-
-verifiedBadge.classList.add("verifiedBadge");
-upvoteIcon.classList.add("icon", "textOnRight");
-downvoteIcon.classList.add("icon", "textOnRight");
-commentIcon.classList.add("icon", "textOnRight");
-
-verifiedBadge.src = "./img/icon/verified.svg";
-verifiedBadge.setAttribute("title", "Verified");
-upvoteIcon.src = "./img/icon/up_arrow.svg";
-downvoteIcon.src = "./img/icon/down_arrow.svg";
-commentIcon.src = "./img/icon/comment.svg";
-
 /*
 	Functions
 */
@@ -198,7 +182,7 @@ function commentBlock(post, comment, isPostPage) {
 	const userSpan = document.createElement("span");
 	const userLink = document.createElement("a");
 	const userPfp = document.createElement("img");
-	const verifiedBadge = new Image();
+	const verifiedBadge = document.createElement("icon-img");
 	const userPronouns = document.createElement("span");
 	const dateSpan = document.createElement("span");
 	const metaTags = document.createDocumentFragment();
@@ -207,13 +191,13 @@ function commentBlock(post, comment, isPostPage) {
 	const contentSpan = document.createElement("span");
 	const hr2 = document.createElement("hr");
 	const metaSpan = document.createElement("span");
-	const upvoteIcon = new Image();
-	const downvoteIcon = new Image();
+	const upvoteIcon = document.createElement("icon-img");
+	const downvoteIcon = document.createElement("icon-img");
 	const upvoteBtn = document.createElement("button");
 	const downvoteBtn = document.createElement("button");
 	const flexGrow = document.createElement("span");
 	const editBtn = document.createElement("button");
-	const editIcon = new Image();
+	const editIcon = document.createElement("icon-img");
 
 	commentSpan.classList.add("comment", "flexcontainer", "flexcolumn");
 	userSpan.classList.add("flexcontainer", "leftalign", "width100");
@@ -221,6 +205,7 @@ function commentBlock(post, comment, isPostPage) {
 	userLink.classList.add("flexcontainer");
 	userPfp.classList.add("pfp");
 	userPfp.setAttribute("src", comment.poster.pfp);
+	verifiedBadge.setAttribute("name", "verified");
 	verifiedBadge.classList.add("verifiedBadge");
 	verifiedBadge.setAttribute("title", "Verified");
 	userPronouns.setAttribute("title", `Pronouns (${post.poster.pronouns})`);
@@ -231,8 +216,10 @@ function commentBlock(post, comment, isPostPage) {
 	contentSpan.classList.add("postcontent", "flexcolumn", "leftalign", "width100");
 	hr2.classList.add("width100");
 	metaSpan.classList.add("aligncenter", "leftalign", "width100", "flexwrap");
-	upvoteIcon.classList.add("icon", "textOnRight");
-	downvoteIcon.classList.add("icon", "textOnRight");
+	upvoteIcon.setAttribute("name", "up_arrow");
+	upvoteIcon.classList.add("textOnRight");
+	downvoteIcon.setAttribute("name", "down_arrow");
+	downvoteIcon.classList.add("textOnRight");
 	upvoteBtn.classList.add("flexcontainer", "button", "primary", "voteBtn");
 	upvoteBtn.setAttribute("title", "Upvote");
 	downvoteBtn.classList.add("flexcontainer", "button", "primary", "voteBtn");
@@ -241,11 +228,9 @@ function commentBlock(post, comment, isPostPage) {
 	editBtn.classList.add("flexcontainer", "editBtn", "hidden");
 	editBtn.setAttribute("title", "Edit comment");
 	editBtn.setAttribute("data-username", comment.poster.username);
-	editIcon.src = "./img/icon/edit.svg";
+	editIcon.setAttribute("name", "edit");
+	editIcon.setAttribute("size", "24");
 
-	verifiedBadge.src = "./img/icon/verified.svg";
-	verifiedBadge.width = 16
-	verifiedBadge.height = 16;
 	if (comment.poster.pronouns) userPronouns.innerText = `(${comment.poster.pronouns})`;
 	editedSpan.innerText = "Edited";
 	dateSpan.innerText = new Date(comment.date).toLocaleString();
@@ -255,15 +240,10 @@ function commentBlock(post, comment, isPostPage) {
 	}
 	contentSpan.innerText = comment.content;
 
-	upvoteIcon.src = "./img/icon/up_arrow.svg";
-	upvoteIcon.height = 16;
-	downvoteIcon.src = "./img/icon/down_arrow.svg";
-	downvoteIcon.height = 16;
 	upvoteBtn.append(upvoteIcon, ` ${comment.upvotes}`);
 	downvoteBtn.append(downvoteIcon, ` ${comment.downvotes}`);
-	editBtn.innerText = "";
 	if (!isPostPage) {
-		metaSpan.innerText = `\u2191 ${comment.upvotes} \u2193 ${comment.downvotes}`;
+		metaSpan.append(upvoteIcon, ` ${comment.upvotes}`, downvoteIcon, ` ${comment.downvotes}`)
 	}
 
 	if (comment.attachments && comment.attachments.length > 0 && comment.attachments[0] !== null) {
@@ -283,6 +263,7 @@ function commentBlock(post, comment, isPostPage) {
 	userSpan.append(userPronouns);
 	if (isPostPage) {
 		metaSpan.append(upvoteBtn, downvoteBtn, flexGrow);
+		editBtn.innerText = "";
 		editBtn.append(editIcon);
 		if (comment.poster.username == localStorage.username) editBtn.classList.remove("hidden");
 		metaSpan.append(editBtn);
@@ -328,7 +309,7 @@ function userBlock(user) {
 	const userSpan = document.createElement("span");
 	const userLink = document.createElement("a");
 	const userPfp = document.createElement("img");
-	const verifiedBadge = new Image();
+	const verifiedBadge = document.createElement("icon-img");
 	const userPronouns = document.createElement("span");
 
 	userSpan.classList.add("post", "flexcontainer", "leftalign", "width100");
@@ -336,13 +317,12 @@ function userBlock(user) {
 	userLink.classList.add("flexcontainer");
 	userPfp.classList.add("pfp");
 	userPfp.setAttribute("src", user.pfp);
+	verifiedBadge.setAttribute("name", "verified");
+	verifiedBadge.setAttribute("class", "verifiedBadge");
 	verifiedBadge.setAttribute("title", "Verified");
 	userPronouns.setAttribute("title", `Pronouns (${user.pronouns})`);
 	userPronouns.setAttribute("class", "pronouns");
 
-	verifiedBadge.src = "./img/icon/verified.svg";
-	verifiedBadge.width = 16;
-	verifiedBadge.height = 16;
 	if (user.pronouns) userPronouns.innerText = `(${user.pronouns})`;
 
 	userLink.append(userPfp, user.username);

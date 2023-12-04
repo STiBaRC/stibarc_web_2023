@@ -7,6 +7,15 @@ let newAttachmentFiles = [];
 let newAttachmentBlobURLs = [];
 const id = parseInt(new URL(location).searchParams.get("id"));
 
+const upvoteIcon = document.createElement("icon-img");
+const downvoteIcon = document.createElement("icon-img");
+
+upvoteIcon.setAttribute("name", "up_arrow");
+downvoteIcon.setAttribute("name", "down_arrow");
+
+upvoteIcon.classList.add("textOnRight");
+downvoteIcon.classList.add("textOnRight");
+
 async function newComment() {
 	if (clicked) return;
 	const content = $("#newcommentbody").value;

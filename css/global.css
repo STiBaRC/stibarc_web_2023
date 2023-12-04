@@ -583,7 +583,7 @@ hr,
 	transition: background-color 0.2s ease-out;
 }
 
-.editBtn img {
+.editBtn img, icon-img[name="edit"] img {
 	width: 24px;
 	height: 24px;
 	filter: invert();
