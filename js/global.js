@@ -1,3 +1,11 @@
+/*
+	STiBaRC Global js
+*/
+
+/*
+	variables
+*/
+
 const listatehooks = [];
 const clickhooks = [];
 const images = ["png", "jpg", "gif", "webp", "svg"];
@@ -6,6 +14,49 @@ const audios = ["spx", "m3a", "m4a", "wma", "wav", "mp3"];
 const maxTitleLength = 250;
 let clicked = false;
 let loadingSessInfo = false;
+
+/*
+	icons
+*/
+class icon extends HTMLElement {
+	constructor() {
+		super();
+	}
+	connectedCallback() {
+		const shadow = this.attachShadow({ mode: "open" });
+
+		const iconName = this.getAttribute('name');
+		const iconSize = this.getAttribute('size') || 16;
+
+		const iconImg = new Image(iconSize, iconSize);
+		iconImg.src = `./img/icon/${iconName}.svg`;
+
+		iconImg.classList.add("icon");
+
+		shadow.appendChild(iconImg);
+	}
+}
+window.customElements.define('icon-img', icon);
+
+const verifiedBadge = new Image(16, 16);
+const upvoteIcon = new Image(16, 16);
+const downvoteIcon = new Image(16, 16);
+const commentIcon = new Image(16, 16);
+
+verifiedBadge.classList.add("verifiedBadge");
+upvoteIcon.classList.add("icon", "textOnRight");
+downvoteIcon.classList.add("icon", "textOnRight");
+commentIcon.classList.add("icon", "textOnRight");
+
+verifiedBadge.src = "./img/icon/verified.svg";
+verifiedBadge.setAttribute("title", "Verified");
+upvoteIcon.src = "./img/icon/up_arrow.svg";
+downvoteIcon.src = "./img/icon/down_arrow.svg";
+commentIcon.src = "./img/icon/comment.svg";
+
+/*
+	Functions
+*/
 
 function $(qs) {
 	if (qs.startsWith("#")) return document.querySelector(qs);
@@ -65,16 +116,13 @@ function postblock(post) {
 	const userLink = document.createElement("a");
 	const userPfp = document.createElement("img");
 	const userPronouns = document.createElement("span");
-	const verifiedBadge = new Image();
+	const verifiedBadge = document.createElement("icon-img");
 	const dateSpan = document.createElement("span");
 	const hr1 = document.createElement("hr");
 	const contentSpan = document.createElement("span");
 	const contentTextSpan = document.createElement("span");
 	const hr2 = document.createElement("hr");
 	const metaSpan = document.createElement("span");
-	const upvoteIcon = new Image();
-	const downvoteIcon = new Image();
-	const commentIcon = new Image();
 	const attachmentContainer = document.createElement("div");
 	const moreAttachments = document.createElement("div");
 
@@ -86,8 +134,9 @@ function postblock(post) {
 	userLink.classList.add("flexcontainer");
 	userPfp.classList.add("pfp");
 	userPfp.setAttribute("src", post.poster.pfp);
-	verifiedBadge.classList.add("verifiedBadge");
+	verifiedBadge.setAttribute("name", "verified");
 	verifiedBadge.setAttribute("title", "Verified");
+	verifiedBadge.classList.add("verifiedBadge");
 	userPronouns.setAttribute("title", `Pronouns (${post.poster.pronouns})`);
 	userPronouns.setAttribute("class", "pronouns");
 	dateSpan.classList.add("postdate", "leftalign", "width100");
@@ -95,9 +144,6 @@ function postblock(post) {
 	contentSpan.classList.add("postcontent", "flexcolumn", "leftalign", "width100");
 	hr2.classList.add("width100");
 	metaSpan.classList.add("leftalign", "width100", "metaSpan");
-	upvoteIcon.classList.add("icon");
-	downvoteIcon.classList.add("icon");
-	commentIcon.classList.add("icon");
 	attachmentContainer.classList.add("attachmentContainer");
 	moreAttachments.classList.add("moreAttachments");
 
@@ -107,9 +153,6 @@ function postblock(post) {
 		titleText += "...";
 	}
 	title.innerText = titleText;
-	verifiedBadge.src = "./img/icon/verified.svg";
-	verifiedBadge.width = 16
-	verifiedBadge.height = 16;
 	if (post.poster.pronouns) userPronouns.innerText = `(${post.poster.pronouns})`;
 	let postDate = new Date(post.date);
 	dateSpan.innerText = postDate.toLocaleString([], { dateStyle: 'short', timeStyle: 'short' });
@@ -118,13 +161,7 @@ function postblock(post) {
 	contentTextSpan.innerText = postContentText;
 	contentSpan.append(contentTextSpan);
 
-	upvoteIcon.src = "./img/icon/up_arrow.svg";
-	upvoteIcon.height = 16;
-	downvoteIcon.src = "./img/icon/down_arrow.svg";
-	downvoteIcon.height = 16;
-	commentIcon.src = "./img/icon/comment.svg";
-	commentIcon.height = 16;
-	metaSpan.append(upvoteIcon, post.upvotes, downvoteIcon, post.downvotes, commentIcon, post.comments);
+	// metaSpan.append(upvoteIcon, post.upvotes, downvoteIcon, post.downvotes, commentIcon, post.comments);
 
 	if (post.attachments && post.attachments.length > 0 && post.attachments[0] !== null) {
 		const attachment = attachmentblock(post.attachments[0]);

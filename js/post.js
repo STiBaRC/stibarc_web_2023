@@ -58,14 +58,6 @@ window.addEventListener("load", async function () {
 	$("#upvoteBtn").addEventListener("click", async () => {
 		if (localStorage.sess) {
 			const voteResult = await vote({ id, target: "post", vote: "upvote" });
-			const upvoteIcon = new Image();
-			const downvoteIcon = new Image();
-			upvoteIcon.classList.add("icon", "textOnRight");
-			downvoteIcon.classList.add("icon", "textOnRight");
-			upvoteIcon.src = "./img/icon/up_arrow.svg";
-			downvoteIcon.src = "./img/icon/down_arrow.svg";
-			upvoteIcon.height = 16;
-			downvoteIcon.height = 16;
 			$("#upvoteBtn").innerText = $("#downvoteBtn").innerText = "";
 			$("#upvoteBtn").append(upvoteIcon, voteResult.upvotes);
 			$("#downvoteBtn").append(downvoteIcon, voteResult.downvotes);
@@ -79,14 +71,6 @@ window.addEventListener("load", async function () {
 	$("#downvoteBtn").addEventListener("click", async () => {
 		if (localStorage.sess) {
 			const voteResult = await vote({ id, target: "post", vote: "downvote" });
-			const upvoteIcon = new Image();
-			const downvoteIcon = new Image();
-			upvoteIcon.classList.add("icon", "textOnRight");
-			downvoteIcon.classList.add("icon", "textOnRight");
-			upvoteIcon.src = "./img/icon/up_arrow.svg";
-			downvoteIcon.src = "./img/icon/down_arrow.svg";
-			upvoteIcon.height = 16;
-			downvoteIcon.height = 16;
 			$("#upvoteBtn").innerText = $("#downvoteBtn").innerText = "";
 			$("#upvoteBtn").append(upvoteIcon, voteResult.upvotes);
 			$("#downvoteBtn").append(downvoteIcon, voteResult.downvotes);
@@ -208,14 +192,6 @@ window.addEventListener("load", async function () {
 		$("#edited").title = `Edited ${new Date(post.lastEdited).toLocaleString()}`;
 	}
 	$("#postcontent").innerText = post.content;
-	const upvoteIcon = new Image();
-	const downvoteIcon = new Image();
-	upvoteIcon.classList.add("icon", "textOnRight");
-	downvoteIcon.classList.add("icon", "textOnRight");
-	upvoteIcon.src = "./img/icon/up_arrow.svg";
-	downvoteIcon.src = "./img/icon/down_arrow.svg";
-	upvoteIcon.height = 16;
-	downvoteIcon.height = 16;
 	$("#upvoteBtn").innerText = $("#downvoteBtn").innerText = "";
 	$("#upvoteBtn").append(upvoteIcon, post.upvotes);
 	$("#downvoteBtn").append(downvoteIcon, post.downvotes);
