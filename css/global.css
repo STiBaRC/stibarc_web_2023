@@ -702,6 +702,12 @@ button.button {
 	overflow: hidden;
 }
 
+.verifiedBadge {
+	display: flex;
+	align-items: center;
+	margin-left: 3px;
+}
+
 .postdate {
 	margin-top: 5px;
 }

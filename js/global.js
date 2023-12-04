@@ -65,7 +65,7 @@ function postblock(post) {
 	const userLink = document.createElement("a");
 	const userPfp = document.createElement("img");
 	const userPronouns = document.createElement("span");
-	const verifiedSpan = document.createElement("span");
+	const verifiedBadge = new Image();
 	const dateSpan = document.createElement("span");
 	const hr1 = document.createElement("hr");
 	const contentSpan = document.createElement("span");
@@ -83,7 +83,9 @@ function postblock(post) {
 	userLink.classList.add("flexcontainer");
 	userPfp.classList.add("pfp");
 	userPfp.setAttribute("src", post.poster.pfp);
-	verifiedSpan.setAttribute("title", "Verified");
+	verifiedBadge.classList.add("verifiedBadge");
+	verifiedBadge.setAttribute("title", "Verified");
+	verifiedBadge.src = "./img/icon/verified.svg";
 	userPronouns.setAttribute("title", `Pronouns (${post.poster.pronouns})`);
 	userPronouns.setAttribute("class", "pronouns");
 	dateSpan.classList.add("postdate", "leftalign", "width100");
@@ -100,7 +102,8 @@ function postblock(post) {
 		titleText += "...";
 	}
 	title.innerText = titleText;
-	verifiedSpan.innerText = "\u2705";
+	verifiedBadge.width = 16
+	verifiedBadge.height = 16;
 	if (post.poster.pronouns) userPronouns.innerText = `(${post.poster.pronouns})`;
 	let postDate = new Date(post.date);
 	dateSpan.innerText = postDate.toLocaleString([], { dateStyle: 'short', timeStyle: 'short' });
@@ -124,7 +127,7 @@ function postblock(post) {
 
 	userLink.append(userPfp, post.poster.username);
 	userSpan.append(userLink);
-	if (post.poster.verified) userSpan.append(verifiedSpan);
+	if (post.poster.verified) userSpan.append(verifiedBadge);
 	userSpan.append(userPronouns);
 	postSpan.append(title, userSpan, dateSpan, hr1, contentSpan, hr2, metaSpan);
 
