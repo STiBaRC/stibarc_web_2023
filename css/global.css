@@ -188,6 +188,14 @@ main.flexcontainer {
 	align-items: center;
 }
 
+.icon.inverted, icon-img.inverted {
+	filter: invert();
+}
+
+.icon.inverted-light, icon-img.inverted-light {
+	filter: opacity(0.65) invert();
+}
+
 .flexcontainer {
 	display: flex;
 	flex-direction: row;
@@ -583,7 +591,7 @@ hr,
 	transition: background-color 0.2s ease-out;
 }
 
-.editBtn img, icon-img[name="edit"] img {
+.editBtn img {
 	width: 24px;
 	height: 24px;
 	filter: invert();

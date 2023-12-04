@@ -32,6 +32,8 @@ class icon extends HTMLElement {
 		iconImg.src = `./img/icon/${iconName}.svg`;
 
 		iconImg.classList.add("icon");
+		if (this.getAttribute('inverted')) this.classList.add("inverted");
+		if (this.getAttribute('inverted-light')) this.classList.add("inverted-light");
 
 		shadow.appendChild(iconImg);
 	}
@@ -230,6 +232,7 @@ function commentBlock(post, comment, isPostPage) {
 	editBtn.setAttribute("data-username", comment.poster.username);
 	editIcon.setAttribute("name", "edit");
 	editIcon.setAttribute("size", "24");
+	editIcon.setAttribute("inverted-light", true);
 
 	if (comment.poster.pronouns) userPronouns.innerText = `(${comment.poster.pronouns})`;
 	editedSpan.innerText = "Edited";
