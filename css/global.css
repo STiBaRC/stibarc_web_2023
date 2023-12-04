@@ -659,6 +659,14 @@ button.button {
 	cursor: default;
 }
 
+.button .icon.textOnRight {
+	margin-right: 3px;
+}
+
+.button .icon.textOnLeft {
+	margin-left: 3px;
+}
+
 .showOnMobileFlex {
 	display: none;
 }

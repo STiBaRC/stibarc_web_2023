@@ -72,8 +72,8 @@ function postblock(post) {
 	const contentTextSpan = document.createElement("span");
 	const hr2 = document.createElement("hr");
 	const metaSpan = document.createElement("span");
-	const upVoteIcon = new Image();
-	const downVoteIcon = new Image();
+	const upvoteIcon = new Image();
+	const downvoteIcon = new Image();
 	const commentIcon = new Image();
 	const attachmentContainer = document.createElement("div");
 	const moreAttachments = document.createElement("div");
@@ -95,8 +95,8 @@ function postblock(post) {
 	contentSpan.classList.add("postcontent", "flexcolumn", "leftalign", "width100");
 	hr2.classList.add("width100");
 	metaSpan.classList.add("leftalign", "width100", "metaSpan");
-	upVoteIcon.classList.add("icon");
-	downVoteIcon.classList.add("icon");
+	upvoteIcon.classList.add("icon");
+	downvoteIcon.classList.add("icon");
 	commentIcon.classList.add("icon");
 	attachmentContainer.classList.add("attachmentContainer");
 	moreAttachments.classList.add("moreAttachments");
@@ -118,13 +118,13 @@ function postblock(post) {
 	contentTextSpan.innerText = postContentText;
 	contentSpan.append(contentTextSpan);
 
-	upVoteIcon.src = "./img/icon/up_arrow.svg";
-	upVoteIcon.height = 16;
-	downVoteIcon.src = "./img/icon/down_arrow.svg";
-	downVoteIcon.height = 16;
+	upvoteIcon.src = "./img/icon/up_arrow.svg";
+	upvoteIcon.height = 16;
+	downvoteIcon.src = "./img/icon/down_arrow.svg";
+	downvoteIcon.height = 16;
 	commentIcon.src = "./img/icon/comment.svg";
 	commentIcon.height = 16;
-	metaSpan.append(upVoteIcon, post.upvotes, downVoteIcon, post.downvotes, commentIcon, post.comments);
+	metaSpan.append(upvoteIcon, post.upvotes, downvoteIcon, post.downvotes, commentIcon, post.comments);
 
 	if (post.attachments && post.attachments.length > 0 && post.attachments[0] !== null) {
 		const attachment = attachmentblock(post.attachments[0]);
@@ -164,6 +164,8 @@ function commentBlock(post, comment, isPostPage) {
 	const contentSpan = document.createElement("span");
 	const hr2 = document.createElement("hr");
 	const metaSpan = document.createElement("span");
+	const upvoteIcon = new Image();
+	const downvoteIcon = new Image();
 	const upvoteBtn = document.createElement("button");
 	const downvoteBtn = document.createElement("button");
 	const flexGrow = document.createElement("span");
@@ -186,6 +188,8 @@ function commentBlock(post, comment, isPostPage) {
 	contentSpan.classList.add("postcontent", "flexcolumn", "leftalign", "width100");
 	hr2.classList.add("width100");
 	metaSpan.classList.add("aligncenter", "leftalign", "width100", "flexwrap");
+	upvoteIcon.classList.add("icon", "textOnRight");
+	downvoteIcon.classList.add("icon", "textOnRight");
 	upvoteBtn.classList.add("flexcontainer", "button", "primary", "voteBtn");
 	upvoteBtn.setAttribute("title", "Upvote");
 	downvoteBtn.classList.add("flexcontainer", "button", "primary", "voteBtn");
@@ -207,8 +211,13 @@ function commentBlock(post, comment, isPostPage) {
 		metaTags.append(editedSpan);
 	}
 	contentSpan.innerText = comment.content;
-	upvoteBtn.innerText = `\u2191 ${comment.upvotes}`;
-	downvoteBtn.innerText = `\u2193 ${comment.downvotes}`;
+
+	upvoteIcon.src = "./img/icon/up_arrow.svg";
+	upvoteIcon.height = 16;
+	downvoteIcon.src = "./img/icon/down_arrow.svg";
+	downvoteIcon.height = 16;
+	upvoteBtn.append(upvoteIcon, ` ${comment.upvotes}`);
+	downvoteBtn.append(downvoteIcon, ` ${comment.downvotes}`);
 	editBtn.innerText = "";
 	if (!isPostPage) {
 		metaSpan.innerText = `\u2191 ${comment.upvotes} \u2193 ${comment.downvotes}`;
@@ -240,8 +249,9 @@ function commentBlock(post, comment, isPostPage) {
 	upvoteBtn.addEventListener("click", async () => {
 		if (localStorage.sess) {
 			const voteResult = await vote({ id: post.id, commentId: comment.id, target: "comment", vote: "upvote" });
-			upvoteBtn.innerText = `\u2191 ${voteResult.upvotes}`;
-			downvoteBtn.innerText = `\u2193 ${voteResult.downvotes}`;
+			upvoteBtn.innerText = downvoteBtn.innerText = ""
+			upvoteBtn.append(upvoteIcon, ` ${voteResult.upvotes}`);
+			downvoteBtn.append(downvoteIcon, ` ${voteResult.downvotes}`);
 		} else {
 			window.scrollTo(0, 0);
 			$("#loginformcontainer").classList.remove("hidden");
@@ -253,8 +263,9 @@ function commentBlock(post, comment, isPostPage) {
 	downvoteBtn.addEventListener("click", async () => {
 		if (localStorage.sess) {
 			const voteResult = await vote({ id: post.id, commentId: comment.id, target: "comment", vote: "downvote" });
-			upvoteBtn.innerText = `\u2191 ${voteResult.upvotes}`;
-			downvoteBtn.innerText = `\u2193 ${voteResult.downvotes}`;
+			upvoteBtn.innerText = downvoteBtn.innerText = ""
+			upvoteBtn.append(upvoteIcon, ` ${voteResult.upvotes}`);
+			downvoteBtn.append(downvoteIcon, ` ${voteResult.downvotes}`);
 		} else {
 			window.scrollTo(0, 0);
 			$("#loginformcontainer").classList.remove("hidden");

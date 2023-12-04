@@ -58,8 +58,17 @@ window.addEventListener("load", async function () {
 	$("#upvoteBtn").addEventListener("click", async () => {
 		if (localStorage.sess) {
 			const voteResult = await vote({ id, target: "post", vote: "upvote" });
-			$("#upvoteBtn").innerText = `\u2191 ${voteResult.upvotes}`;
-			$("#downvoteBtn").innerText = `\u2193 ${voteResult.downvotes}`;
+			const upvoteIcon = new Image();
+			const downvoteIcon = new Image();
+			upvoteIcon.classList.add("icon", "textOnRight");
+			downvoteIcon.classList.add("icon", "textOnRight");
+			upvoteIcon.src = "./img/icon/up_arrow.svg";
+			downvoteIcon.src = "./img/icon/down_arrow.svg";
+			upvoteIcon.height = 16;
+			downvoteIcon.height = 16;
+			$("#upvoteBtn").innerText = $("#downvoteBtn").innerText = "";
+			$("#upvoteBtn").append(upvoteIcon, voteResult.upvotes);
+			$("#downvoteBtn").append(downvoteIcon, voteResult.downvotes);
 		} else {
 			window.scrollTo(0, 0);
 			$("#loginformcontainer").classList.remove("hidden");
@@ -70,8 +79,17 @@ window.addEventListener("load", async function () {
 	$("#downvoteBtn").addEventListener("click", async () => {
 		if (localStorage.sess) {
 			const voteResult = await vote({ id, target: "post", vote: "downvote" });
-			$("#upvoteBtn").innerText = `\u2191 ${voteResult.upvotes}`;
-			$("#downvoteBtn").innerText = `\u2193 ${voteResult.downvotes}`;
+			const upvoteIcon = new Image();
+			const downvoteIcon = new Image();
+			upvoteIcon.classList.add("icon", "textOnRight");
+			downvoteIcon.classList.add("icon", "textOnRight");
+			upvoteIcon.src = "./img/icon/up_arrow.svg";
+			downvoteIcon.src = "./img/icon/down_arrow.svg";
+			upvoteIcon.height = 16;
+			downvoteIcon.height = 16;
+			$("#upvoteBtn").innerText = $("#downvoteBtn").innerText = "";
+			$("#upvoteBtn").append(upvoteIcon, voteResult.upvotes);
+			$("#downvoteBtn").append(downvoteIcon, voteResult.downvotes);
 		} else {
 			window.scrollTo(0, 0);
 			$("#loginformcontainer").classList.remove("hidden");
@@ -190,8 +208,17 @@ window.addEventListener("load", async function () {
 		$("#edited").title = `Edited ${new Date(post.lastEdited).toLocaleString()}`;
 	}
 	$("#postcontent").innerText = post.content;
-	$("#upvoteBtn").innerText = `\u2191 ${post.upvotes}`;
-	$("#downvoteBtn").innerText = `\u2193 ${post.downvotes}`;
+	const upvoteIcon = new Image();
+	const downvoteIcon = new Image();
+	upvoteIcon.classList.add("icon", "textOnRight");
+	downvoteIcon.classList.add("icon", "textOnRight");
+	upvoteIcon.src = "./img/icon/up_arrow.svg";
+	downvoteIcon.src = "./img/icon/down_arrow.svg";
+	upvoteIcon.height = 16;
+	downvoteIcon.height = 16;
+	$("#upvoteBtn").innerText = $("#downvoteBtn").innerText = "";
+	$("#upvoteBtn").append(upvoteIcon, post.upvotes);
+	$("#downvoteBtn").append(downvoteIcon, post.downvotes);
 	if (post.poster.username == localStorage.username) $("#editBtn").classList.remove("hidden");
 
 	if (post.attachments && post.attachments.length > 0 && post.attachments[0] !== null) {
