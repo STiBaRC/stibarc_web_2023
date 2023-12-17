@@ -2,6 +2,11 @@ let attachments = [];
 let attachmentFiles = [];
 let attachmentBlobURLs = [];
 
+let lastSeenGlobalPost = null;
+let lastSeenFollowedPost = null;
+let hideLoadMoreGlobal = true;
+let hideLoadMoreFollowed = true;
+
 async function getPosts() {
 	$("#postsLoader").classList.remove("hidden");
 	$("#followedPostsLoader").classList.remove("hidden");
@@ -18,8 +23,15 @@ async function getPosts() {
 		})
 	});
 	const requestJSON = await request.json();
+	lastSeenGlobalPost = requestJSON.globalPosts[requestJSON.globalPosts.length - 1].id;
+	if (requestJSON.followedPosts) {
+		lastSeenFollowedPost = requestJSON.followedPosts[requestJSON.followedPosts.length - 1].id;
+	}
 	$("#postsLoader").classList.add("hidden");
 	$("#followedPostsLoader").classList.add("hidden");
+	$("#loadMoreBtn").classList.remove("hidden");
+	hideLoadMoreGlobal = false;
+	hideLoadMoreFollowed = false;
 	for (let i in requestJSON.globalPosts) {
 		const post = postblock(requestJSON.globalPosts[i]);
 		posts.appendChild(post);
@@ -28,7 +40,6 @@ async function getPosts() {
 		for (let i in requestJSON.followedPosts) {
 			const post = postblock(requestJSON.followedPosts[i]);
 			fposts.appendChild(post);
-			
 		}
 	}
 	if (requestJSON.globalPosts.length == 0) {
@@ -104,13 +115,73 @@ function setFeed(activeFeed) {
 		$("#followedposts").classList.remove("hidden");
 		$("#globalBtn").classList.remove("active");
 		$("#followedBtn").classList.add("active");
+		$("#loadMoreBtn").classList.remove("hidden");
+		if (hideLoadMoreFollowed) {
+			$("#loadMoreBtn").classList.add("hidden");
+		}
 	} else {
 		$("#posts").classList.remove("hidden");
 		$("#followedposts").classList.add("hidden");
 		$("#followedBtn").classList.remove("active");
 		$("#globalBtn").classList.add("active");
+		$("#loadMoreBtn").classList.remove("hidden");
+		if (hideLoadMoreGlobal) {
+			$("#loadMoreBtn").classList.add("hidden");
+		}
 	}
 	localStorage.activeFeed = activeFeed;
+}
+
+async function loadMore() {
+	const loader = document.createElement("span");
+	loader.setAttribute("class", "loader");
+	$("#loadMoreBtn").classList.add("hidden");
+	$("main")[0].appendChild(loader);
+
+	const posts = document.createDocumentFragment();
+	const request = await fetch("https://betaapi.stibarc.com/v4/getposts.sjs", {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json"
+		},
+		body: JSON.stringify({
+			lastSeenGlobalPost: (localStorage.activeFeed == "global") ? lastSeenGlobalPost : undefined,
+			lastSeenFollowedPost: (localStorage.activeFeed == "followed" && localStorage.sess !== "") ? lastSeenFollowedPost : undefined,
+			returnGlobal: (localStorage.activeFeed == "global") ? true : false,
+			returnFollowed: (localStorage.activeFeed == "followed" && localStorage.sess !== "") ? true : undefined,
+			session: (localStorage.activeFeed == "followed" && localStorage.sess !== "") ? localStorage.sess : undefined
+		})
+	});
+	const requestJSON = await request.json();
+	const feedPosts = (localStorage.activeFeed == "global") ? requestJSON.globalPosts : requestJSON.followedPosts;
+
+	if (feedPosts.length !== 0) {
+		if (localStorage.activeFeed == "global") {
+			lastSeenGlobalPost = feedPosts[feedPosts.length - 1].id;
+		} else {
+			lastSeenFollowedPost = feedPosts[feedPosts.length - 1].id;
+		}
+	}
+
+	for (let i in feedPosts) {
+		const post = postblock(feedPosts[i]);
+		posts.appendChild(post);
+	}
+
+	if (localStorage.activeFeed == "global") {
+		$("#posts").appendChild(posts);
+	} else {
+		$("#followedposts").appendChild(posts);
+	}
+
+	if (localStorage.activeFeed == "global") {
+		hideLoadMoreGlobal = (feedPosts.length == 0);
+	} else {
+		hideLoadMoreFollowed = (feedPosts.length == 0);
+	}
+
+	loader.remove();
+	if (feedPosts.length !== 0) $("#loadMoreBtn").classList.remove("hidden");
 }
 
 window.addEventListener("load", function() {
@@ -124,6 +195,7 @@ window.addEventListener("load", function() {
 	$(".floatingbutton").forEach(e => {
 		e.style.transition = "background-color 0.2s ease-out";
 	});
+	$("#loadMoreBtn").onclick = loadMore;
 	$("#newpost").onclick = function(e) {
 		if (localStorage.sess) {
 			window.scrollTo(0, 0);
