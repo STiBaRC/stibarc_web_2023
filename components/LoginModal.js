@@ -55,7 +55,7 @@ class LoginModalComponent extends HTMLElement {
 		this.shadow = this.attachShadow({ mode: "closed" });
 		this.shadow.innerHTML = this.#shadowDomHTML;
 		this.shadow.querySelector("#loginbutton").addEventListener("click", () => {
-			this.login();
+			this.#login();
 		});
 		this.shadow.querySelector("#logincancel").addEventListener("click", () => {
 			this.hide();
@@ -71,17 +71,17 @@ class LoginModalComponent extends HTMLElement {
 		}
 		this.shadow.querySelector("#password").onkeyup = (e) => {
 			if (e.key == "Enter") {
-				this.login();
+				this.#login();
 			}
 		};
 		this.shadow.querySelector("#tfainput").onkeyup = (e) => {
 			if (e.key == "Enter") {
-				this.login();
+				this.#login();
 			}
 		};
 	}
 
-	async login() {
+	async #login() {
 		if (this.#clicked) return;
 		this.shadow.querySelector("#errorcontainer").classList.add("hidden");
 		this.shadow.querySelector("#error").innerText = "";

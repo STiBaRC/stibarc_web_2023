@@ -358,85 +358,6 @@ async function logout() {
 	setLoggedinState(false);
 }
 
-async function register() {
-	if (clicked) return;
-	const username = $("#Reg-usernameinput").value.trim();
-	const password = $("#Reg-passwordinput").value;
-	const password2 = $("#Reg-passwordinput2").value;
-	const name = $("#Reg-nameinput").value || undefined;
-	const displayName = $("#Reg-showname").checked || undefined;
-	const pronouns = $("#Reg-pronounsinput").value || undefined;
-	const displayPronouns = $("#Reg-showpronouns").checked || undefined;
-	const email = $("#Reg-emailinput").value || undefined;
-	const displayEmail = $("#Reg-showemail").checked || undefined;
-	const birthday = ($("#Reg-bdayinput").value != "") ? new Date($("#Reg-bdayinput").value) : undefined;
-	const displayBirthday = $("#Reg-showbday").checked || undefined;
-	const bio = $("#Reg-bioinput").value || undefined;
-	const displayBio = $("#Reg-showbio").checked || undefined;
-	if (username == "") {
-		$("#registererror").innerText = "Username required";
-		$("#registererrorcontainer").classList.remove("hidden");
-		return;
-	}
-	if (password == "") {
-		$("#registererror").innerText = "Password required";
-		$("#registererrorcontainer").classList.remove("hidden");
-		return;
-	}
-	if (password != password2) {
-		$("#registererror").innerText = "Passwords must match";
-		$("#registererrorcontainer").classList.remove("hidden");
-		return;
-	}
-	clicked = true;
-	const response = await fetch("https://betaapi.stibarc.com/v4/registeruser.sjs", {
-		method: "post",
-		headers: {
-			"Content-Type": "application/json"
-		},
-		body: JSON.stringify({
-			username,
-			password,
-			name,
-			displayName,
-			pronouns,
-			displayPronouns,
-			email,
-			displayEmail,
-			birthday,
-			displayBirthday,
-			bio,
-			displayBio
-		})
-	});
-	const responseJSON = await response.json();
-	switch (responseJSON.status) {
-		case "ok":
-			localStorage.username = username;
-			localStorage.pfp = "https://betacdn.stibarc.com/pfp/default.png";
-			localStorage.sess = responseJSON.session;
-			setLoggedinState(true);
-			$("#registercancel").onclick();
-			break;
-		case "error":
-			switch (responseJSON.errorCode) {
-				case "ue":
-					$("#registererror").innerText = "User already registered";
-					$("#registererrorcontainer").classList.remove("hidden");
-					break;
-			}
-			break;
-	}
-	clicked = false;
-}
-
-function showRegisterModel() {
-	window.scrollTo(0, 0);
-	$("#registerformcontainer").classList.remove("hidden");
-	$("#overlay").classList.remove("hidden");
-	document.body.classList.add("overflowhidden");
-}
-
 async function reloadSessInfo() {
 	if (loadingSessInfo) return;
 	loadingSessInfo = true;
@@ -502,34 +423,10 @@ window.addEventListener("load", function () {
 	$("#menusettings").addEventListener("click", () => {
 		location.href = `./settings.html`;
 	});
-	$("#loginlink").onclick = function (e) {
-		$("#registercancel").onclick();
-		$("#menulogin").onclick();
-	}
 	$("#menulogout").onclick = logout;
 	$("#menuregister").onclick = function (e) {
-		showRegisterModel();
+		$("stibarc-register-modal")[0].show();
 	}
-	$("#registercancel").onclick = function (e) {
-		$("#registererrorcontainer").classList.add("hidden");
-		$("#registerformcontainer").classList.add("hidden");
-		$("#overlay").classList.add("hidden");
-		document.body.classList.remove("overflowhidden");
-		$("#Reg-usernameinput").value = "";
-		$("#Reg-passwordinput").value = "";
-		$("#Reg-passwordinput2").value = "";
-		$("#Reg-nameinput").value = "";
-		$("#Reg-showname").checked = false;
-		$("#Reg-pronounsinput").value = "";
-		$("#Reg-showpronouns").checked = false;
-		$("#Reg-emailinput").value = "";
-		$("#Reg-showemail").checked = false;
-		$("#Reg-bdayinput").value = "";
-		$("#Reg-showbday").checked = false;
-		$("#Reg-bioinput").value = "";
-		$("#Reg-showbio").checked = false;
-	}
-	$("#registerbutton").onclick = register;
 	$("#menueditprofile").onclick = function (e) {
 		location.href = "./editprofile.html";
 	}
