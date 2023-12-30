@@ -367,11 +367,15 @@ function setLoggedinState(state) {
 
 async function login() {
 	if (clicked) return;
+	$("#loginerrorcontainer").classList.add("hidden");
+	$("#loginerror").innerText = "";
 	const username = $("#Login-usernameinput").value;
 	const password = $("#Login-passwordinput").value;
 	const totpCode = $("#Login-tfainput").value;
 	if (username.trim() == "" || password.trim() == "") return;
 	clicked = true;
+	$("#loginbutton").innerText = "";
+	$("#loginbutton").classList.add("loading");
 	const response = await fetch("https://betaapi.stibarc.com/v4/login.sjs", {
 		method: "post",
 		headers: {
@@ -394,6 +398,7 @@ async function login() {
 				case "totpr":
 					$("#loginerror").innerText = "2FA code required";
 					$("#Login-tfa").classList.remove("hidden");
+					$("#Login-tfainput").focus();
 					break;
 				case "itotp":
 					$("#loginerror").innerText = "Invalid 2FA code";
@@ -410,6 +415,8 @@ async function login() {
 			break;
 	}
 	clicked = false;
+	$("#loginbutton").innerText = "Login";
+	$("#loginbutton").classList.remove("loading");
 }
 
 async function logout() {
@@ -594,6 +601,21 @@ window.addEventListener("load", function () {
 		$("#Login-usernameinput").value = "";
 		$("#Login-passwordinput").value = "";
 	}
+	$("#Login-usernameinput").addEventListener("keypress", (e) => {
+		if (e.key == "Enter") {
+			$("#Login-passwordinput").focus();
+		}
+	});
+	$("#Login-passwordinput").addEventListener("keypress", (e) => {
+		if (e.key == "Enter") {
+			$("#loginbutton").onclick();
+		}
+	});
+	$("#Login-tfainput").addEventListener("keypress", (e) => {
+		if (e.key == "Enter") {
+			$("#loginbutton").onclick();
+		}
+	});
 	$("#loginbutton").onclick = login;
 	$("#menulogout").onclick = logout;
 	$("#menuregister").onclick = function (e) {
