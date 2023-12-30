@@ -7,8 +7,8 @@ let newAttachmentFiles = [];
 let newAttachmentBlobURLs = [];
 const id = parseInt(new URL(location).searchParams.get("id"));
 
-const upvoteIcon = document.createElement("icon-img");
-const downvoteIcon = document.createElement("icon-img");
+const upvoteIcon = document.createElement("stibarc-icon");
+const downvoteIcon = document.createElement("stibarc-icon");
 
 upvoteIcon.setAttribute("name", "up_arrow");
 downvoteIcon.setAttribute("name", "down_arrow");

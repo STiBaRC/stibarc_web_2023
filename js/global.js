@@ -16,31 +16,6 @@ let clicked = false;
 let loadingSessInfo = false;
 
 /*
-	icons
-*/
-class icon extends HTMLElement {
-	constructor() {
-		super();
-	}
-	connectedCallback() {
-		const shadow = this.attachShadow({ mode: "open" });
-
-		const iconName = this.getAttribute('name');
-		const iconSize = this.getAttribute('size') || 16;
-
-		const iconImg = new Image(iconSize, iconSize);
-		iconImg.src = `./img/icon/${iconName}.svg`;
-
-		iconImg.classList.add("icon");
-		if (this.getAttribute('inverted')) this.classList.add("inverted");
-		if (this.getAttribute('inverted-light')) this.classList.add("inverted-light");
-
-		shadow.appendChild(iconImg);
-	}
-}
-window.customElements.define('icon-img', icon);
-
-/*
 	Functions
 */
 
@@ -102,16 +77,16 @@ function postblock(post) {
 	const userLink = document.createElement("a");
 	const userPfp = document.createElement("img");
 	const userPronouns = document.createElement("span");
-	const verifiedBadge = document.createElement("icon-img");
+	const verifiedBadge = document.createElement("stibarc-icon");
 	const dateSpan = document.createElement("span");
 	const hr1 = document.createElement("hr");
 	const contentSpan = document.createElement("span");
 	const contentTextSpan = document.createElement("span");
 	const hr2 = document.createElement("hr");
 	const metaSpan = document.createElement("span");
-	const upvoteIcon = document.createElement("icon-img");
-	const downvoteIcon = document.createElement("icon-img");
-	const commentIcon = document.createElement("icon-img");
+	const upvoteIcon = document.createElement("stibarc-icon");
+	const downvoteIcon = document.createElement("stibarc-icon");
+	const commentIcon = document.createElement("stibarc-icon");
 	const attachmentContainer = document.createElement("div");
 	const moreAttachments = document.createElement("div");
 
@@ -184,7 +159,7 @@ function commentBlock(post, comment, isPostPage) {
 	const userSpan = document.createElement("span");
 	const userLink = document.createElement("a");
 	const userPfp = document.createElement("img");
-	const verifiedBadge = document.createElement("icon-img");
+	const verifiedBadge = document.createElement("stibarc-icon");
 	const userPronouns = document.createElement("span");
 	const dateSpan = document.createElement("span");
 	const metaTags = document.createDocumentFragment();
@@ -193,13 +168,13 @@ function commentBlock(post, comment, isPostPage) {
 	const contentSpan = document.createElement("span");
 	const hr2 = document.createElement("hr");
 	const metaSpan = document.createElement("span");
-	const upvoteIcon = document.createElement("icon-img");
-	const downvoteIcon = document.createElement("icon-img");
+	const upvoteIcon = document.createElement("stibarc-icon");
+	const downvoteIcon = document.createElement("stibarc-icon");
 	const upvoteBtn = document.createElement("button");
 	const downvoteBtn = document.createElement("button");
 	const flexGrow = document.createElement("span");
 	const editBtn = document.createElement("button");
-	const editIcon = document.createElement("icon-img");
+	const editIcon = document.createElement("stibarc-icon");
 
 	commentSpan.classList.add("comment", "flexcontainer", "flexcolumn");
 	userSpan.classList.add("flexcontainer", "leftalign", "width100");
@@ -312,7 +287,7 @@ function userBlock(user) {
 	const userSpan = document.createElement("span");
 	const userLink = document.createElement("a");
 	const userPfp = document.createElement("img");
-	const verifiedBadge = document.createElement("icon-img");
+	const verifiedBadge = document.createElement("stibarc-icon");
 	const userPronouns = document.createElement("span");
 
 	userSpan.classList.add("post", "flexcontainer", "leftalign", "width100");
@@ -363,60 +338,6 @@ function setLoggedinState(state) {
 	for (const func of listatehooks) {
 		func(state);
 	}
-}
-
-async function login() {
-	if (clicked) return;
-	$("#loginerrorcontainer").classList.add("hidden");
-	$("#loginerror").innerText = "";
-	const username = $("#Login-usernameinput").value;
-	const password = $("#Login-passwordinput").value;
-	const totpCode = $("#Login-tfainput").value;
-	if (username.trim() == "" || password.trim() == "") return;
-	clicked = true;
-	$("#loginbutton").innerText = "";
-	$("#loginbutton").classList.add("loading");
-	const response = await fetch("https://betaapi.stibarc.com/v4/login.sjs", {
-		method: "post",
-		headers: {
-			"Content-Type": "application/json"
-		},
-		body: JSON.stringify({
-			username,
-			password,
-			totpCode
-		})
-	});
-	const responseJSON = await response.json();
-	switch (responseJSON.status) {
-		default:
-		case "error":
-			switch (responseJSON.errorCode) {
-				case "iuop":
-					$("#loginerror").innerText = "Invalid username or password";
-					break;
-				case "totpr":
-					$("#loginerror").innerText = "2FA code required";
-					$("#Login-tfa").classList.remove("hidden");
-					$("#Login-tfainput").focus();
-					break;
-				case "itotp":
-					$("#loginerror").innerText = "Invalid 2FA code";
-					break;
-			}
-			$("#loginerrorcontainer").classList.remove("hidden");
-			break;
-		case "ok":
-			localStorage.username = username;
-			localStorage.pfp = responseJSON.pfp;
-			localStorage.sess = responseJSON.session;
-			setLoggedinState(true);
-			$("#logincancel").onclick();
-			break;
-	}
-	clicked = false;
-	$("#loginbutton").innerText = "Login";
-	$("#loginbutton").classList.remove("loading");
 }
 
 async function logout() {
@@ -509,14 +430,6 @@ async function register() {
 	clicked = false;
 }
 
-function showLoginModel() {
-	window.scrollTo(0, 0);
-	$("#Login-tfa").classList.add("hidden");
-	$("#loginformcontainer").classList.remove("hidden");
-	$("#overlay").classList.remove("hidden");
-	document.body.classList.add("overflowhidden");
-}
-
 function showRegisterModel() {
 	window.scrollTo(0, 0);
 	$("#registerformcontainer").classList.remove("hidden");
@@ -583,9 +496,9 @@ window.addEventListener("load", function () {
 			func(event);
 		}
 	});
-	$("#menulogin").onclick = function (e) {
-		showLoginModel();
-	}
+	$("#menulogin").addEventListener("click", () => {
+		$("stibarc-login-modal")[0].show();
+	});
 	$("#menusettings").addEventListener("click", () => {
 		location.href = `./settings.html`;
 	});
@@ -593,37 +506,9 @@ window.addEventListener("load", function () {
 		$("#registercancel").onclick();
 		$("#menulogin").onclick();
 	}
-	$("#logincancel").onclick = function (e) {
-		$("#loginerrorcontainer").classList.add("hidden");
-		$("#loginformcontainer").classList.add("hidden");
-		$("#overlay").classList.add("hidden");
-		document.body.classList.remove("overflowhidden");
-		$("#Login-usernameinput").value = "";
-		$("#Login-passwordinput").value = "";
-	}
-	$("#Login-usernameinput").addEventListener("keypress", (e) => {
-		if (e.key == "Enter") {
-			$("#Login-passwordinput").focus();
-		}
-	});
-	$("#Login-passwordinput").addEventListener("keypress", (e) => {
-		if (e.key == "Enter") {
-			$("#loginbutton").onclick();
-		}
-	});
-	$("#Login-tfainput").addEventListener("keypress", (e) => {
-		if (e.key == "Enter") {
-			$("#loginbutton").onclick();
-		}
-	});
-	$("#loginbutton").onclick = login;
 	$("#menulogout").onclick = logout;
 	$("#menuregister").onclick = function (e) {
 		showRegisterModel();
-	}
-	$("#registerlink").onclick = function (e) {
-		$("#logincancel").onclick();
-		$("#menuregister").onclick();
 	}
 	$("#registercancel").onclick = function (e) {
 		$("#registererrorcontainer").classList.add("hidden");

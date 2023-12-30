@@ -12,6 +12,8 @@
 	<link rel="stylesheet" href="./css/themes/default.css" id="theme">
 	<link rel="stylesheet" href="./css/global.css">
 	<link rel="stylesheet" href="./css/index.css">
+	<script type="module" src="./components/LoginModal.js"></script>
+	<script type="module" src="./components/Icon.js"></script>
 	<script src="./js/global.js"></script>
 	<script src="./js/index.js"></script>
 </head>
@@ -78,6 +80,7 @@
 			<img src="./img/icon/plus.svg" alt="Create Post">
 		</div>
 	</span>
+	<stibarc-login-modal></stibarc-login-modal>
 	<span id="overlay" class="hidden">
 		<span id="overlaybg"></span>
 		<span id="newpostformcontainer" class="hidden flexcontainer flexcolumn formcontainer">
@@ -95,30 +98,6 @@
 						<button id="newpostbutton" class="flexcontainer button primary">Post</button>
 						<button id="newpostcancel" class="flexcontainer button">Cancel</button>
 					</span>
-				</div>
-			</span>
-		</span>
-		<span id="loginformcontainer" class="hidden flexcontainer flexcolumn formcontainer">
-			<span id="loginform" class="block modal">
-				<div class="flexcontainer flexcolumn">
-					<h2>Login</h2>
-					<span id="loginerrorcontainer" class="flexcontainer flexcolumn hidden">
-						<span id="loginerror" class="red"></span>
-						<span>&nbsp;</span>
-					</span>
-					<input type="text" id="Login-usernameinput" placeholder="Username" autocomplete="username">
-					<span>&nbsp;</span>
-					<input type="password" id="Login-passwordinput" placeholder="Password" autocomplete="current-password">
-					<span>&nbsp;</span>
-					<span id="Login-tfa" class="hidden flexcontainer flexcolumn">
-						<input type="number" id="Login-tfainput" placeholder="2FA Code">
-						<span>&nbsp;</span>
-					</span>
-					<span class="flexcontainer">
-						<button id="loginbutton" class="flexcontainer button small primary">Login</button>
-						<button id="logincancel" class="flexcontainer button">Cancel</button>
-					</span>
-					<button id="registerlink" class="flexcontainer button">Register</button>
 				</div>
 			</span>
 		</span>
