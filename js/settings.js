@@ -14,10 +14,14 @@ function switchTab(tabEl) {
     });
     if (isMobile) {
         $("#backBtn").classList.remove("hidden");
-        $("#sideContent").classList.remove("hidden");
         $("#sidebarTabs").classList.add("hidden");
+        if (tab) {
+            $("#sideContent").classList.remove("hidden");
+        }
     }
-    $(`#tabContent-${tab}`).classList.remove("hidden");
+    if (tab || !isMobile) {
+        $(`#tabContent-${tab}`).classList.remove("hidden");
+    }
 }
 
 async function updateInfo() {
@@ -31,9 +35,11 @@ async function updateInfo() {
         })
     });
     const user = (await r.json()).user;
-    $(".sideContent").forEach(item => {
-        item.classList.remove("hidden");
-    });
+    if (location.hash) {
+        $(".sideContent").forEach(item => {
+            item.classList.remove("hidden");
+        });
+    }
     $("#sideContentLoading").classList.add("hidden");
     $("#tfabutton").innerText = user.totpEnabled ? "Disable 2FA" : "Enable 2FA";
     tfaEnabled = user.totpEnabled;
@@ -55,14 +61,18 @@ function handleViewportChange(e) {
         }
     } else {
         isMobile = false;
-        $("#sidebarTabs").classList.remove("hidden");
         $("#backBtn").classList.add("hidden");
+        $("#sideContent").classList.remove("hidden");
+        $("#sidebarTabs").classList.remove("hidden");
     }
 }
 
 window.addEventListener("load", async () => {
     listatehooks.push((state) => {
         if (state) {
+            if (isMobile && !location.hash) {
+                $("#sideContentLoading").classList.add("hidden");
+            }
             updateInfo();
         } else {
             location.href = "./";
@@ -71,16 +81,18 @@ window.addEventListener("load", async () => {
     $(".sidebarItems li").forEach(item => {
         item.addEventListener("click", () => {
             switchTab(item);
-        })
+        });
     });
     $(".tabContent").forEach(element => {
         element.classList.add("hidden");
     });
     $(`#tab-${selectedTab}`).classList.add("active");
-    $(`#tabContent-${selectedTab}`).classList.remove("hidden");
+    if (location.hash || !isMobile) {
+        $(`#tabContent-${selectedTab}`).classList.remove("hidden");
+    }
 
-    mediaQuery.addListener(handleViewportChange);
     handleViewportChange(mediaQuery);
+    mediaQuery.addListener(handleViewportChange);
 
     $("#backBtn").addEventListener("click", () => {
         $("#backBtn").classList.add("hidden");
@@ -90,7 +102,7 @@ window.addEventListener("load", async () => {
         $(".sidebarItems li").forEach(item => {
             item.classList.remove("active");
         });
-    })
+    });
 
     $("#changepasswordbutton").addEventListener("click", () => {
         window.scrollTo(0, 0);
