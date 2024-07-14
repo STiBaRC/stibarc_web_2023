@@ -20,6 +20,19 @@ function switchTab(tabEl) {
     $(`#tabContent-${tab}`).classList.remove("hidden");
 }
 
+function updateThemeSelector() {
+    $("#changeThemeSelector").value = localStorage.getItem("theme") || "light";
+}
+
+window.addEventListener("load", () => {
+    updateThemeSelector();
+    $("#changeThemeSelector").addEventListener("change", (e) => {
+        localStorage.setItem("theme", e.target.value || "light");
+        updateThemeSelector();
+        refreshTheme();
+    });
+});
+
 async function updateInfo() {
     const r = await fetch("https://betaapi.stibarc.com/v4/getprivatedata.sjs", {
         method: "post",

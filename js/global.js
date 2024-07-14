@@ -49,6 +49,32 @@ function $(qs) {
 	return document.querySelectorAll(qs);
 }
 
+/*
+	Theme
+*/
+
+const darkThemeMq = window.matchMedia("(prefers-color-scheme: dark)");
+
+function refreshTheme() {
+	if (!localStorage.getItem("theme")) {
+		if (darkThemeMq.matches) {
+			localStorage.setItem("theme", "dark");
+		} else {
+			localStorage.setItem("theme", "light");
+		}
+	}
+	let themeName = localStorage.getItem("theme") || "light";
+	document.documentElement.classList = "";
+	document.documentElement.className = themeName;
+	updateThemeSelector();
+}
+
+darkThemeMq.addListener(e => {
+	// reset theme, set to browser theme
+	localStorage.removeItem("theme");
+	refreshTheme();
+});
+
 async function vote({ id, target, vote, commentId }) {
 	const request = await fetch("https://betaapi.stibarc.com/v4/vote.sjs", {
 		method: "post",
