@@ -25,20 +25,21 @@ class icon extends HTMLElement {
 	connectedCallback() {
 		const shadow = this.attachShadow({ mode: "open" });
 
-		const iconName = this.getAttribute('name');
-		const iconSize = this.getAttribute('size') || 16;
+		const iconName = this.getAttribute("name");
+		const iconSize = this.getAttribute("size") || 16;
 
 		const iconImg = new Image(iconSize, iconSize);
 		iconImg.src = `./img/icon/${iconName}.svg`;
 
 		iconImg.classList.add("icon");
-		if (this.getAttribute('inverted')) this.classList.add("inverted");
-		if (this.getAttribute('inverted-light')) this.classList.add("inverted-light");
+		if (this.getAttribute("inverted")) this.classList.add("inverted");
+		if (this.getAttribute("inverted-light"))
+			this.classList.add("inverted-light");
 
 		shadow.appendChild(iconImg);
 	}
 }
-window.customElements.define('icon-img', icon);
+window.customElements.define("icon-img", icon);
 
 /*
 	Functions
@@ -66,32 +67,37 @@ function refreshTheme() {
 	let themeName = localStorage.getItem("theme") || "light";
 	document.documentElement.classList = "";
 	document.documentElement.className = themeName;
-	updateThemeSelector();
 }
 
-darkThemeMq.addListener(e => {
+darkThemeMq.addListener((e) => {
 	// reset theme, set to browser theme
 	localStorage.removeItem("theme");
+	updateThemeSelector();
 	refreshTheme();
 });
+
+function updateThemeSelector() {
+	if ($("#changeThemeSelector")) {
+		$("#changeThemeSelector").value = localStorage.getItem("theme") || "light";
+	}
+}
 
 async function vote({ id, target, vote, commentId }) {
 	const request = await fetch("https://betaapi.stibarc.com/v4/vote.sjs", {
 		method: "post",
 		headers: {
-			"Content-Type": "application/json"
+			"Content-Type": "application/json",
 		},
 		body: JSON.stringify({
 			session: localStorage.sess,
 			id,
 			commentId,
 			target,
-			vote
-		})
+			vote,
+		}),
 	});
 	return await request.json();
 }
-
 
 function attachmentblock(attachments) {
 	let attachment;
@@ -156,7 +162,12 @@ function postblock(post) {
 	userPronouns.setAttribute("class", "pronouns");
 	dateSpan.classList.add("postdate", "leftalign", "width100");
 	hr1.classList.add("width100");
-	contentSpan.classList.add("postcontent", "flexcolumn", "leftalign", "width100");
+	contentSpan.classList.add(
+		"postcontent",
+		"flexcolumn",
+		"leftalign",
+		"width100"
+	);
 	hr2.classList.add("width100");
 	metaSpan.classList.add("leftalign", "width100", "metaSpan");
 	upvoteIcon.setAttribute("name", "up_arrow");
@@ -171,17 +182,32 @@ function postblock(post) {
 		titleText += "...";
 	}
 	title.innerText = titleText;
-	if (post.poster.pronouns) userPronouns.innerText = `(${post.poster.pronouns})`;
+	if (post.poster.pronouns)
+		userPronouns.innerText = `(${post.poster.pronouns})`;
 	let postDate = new Date(post.date);
-	dateSpan.innerText = postDate.toLocaleString([], { dateStyle: 'short', timeStyle: 'short' });
+	dateSpan.innerText = postDate.toLocaleString([], {
+		dateStyle: "short",
+		timeStyle: "short",
+	});
 	dateSpan.setAttribute("title", postDate.toLocaleString());
 	let postContentText = post.content;
 	contentTextSpan.innerText = postContentText;
 	contentSpan.append(contentTextSpan);
 
-	metaSpan.append(upvoteIcon, post.upvotes, downvoteIcon, post.downvotes, commentIcon, post.comments);
+	metaSpan.append(
+		upvoteIcon,
+		post.upvotes,
+		downvoteIcon,
+		post.downvotes,
+		commentIcon,
+		post.comments
+	);
 
-	if (post.attachments && post.attachments.length > 0 && post.attachments[0] !== null) {
+	if (
+		post.attachments &&
+		post.attachments.length > 0 &&
+		post.attachments[0] !== null
+	) {
 		const attachment = attachmentblock(post.attachments[0]);
 		attachment.classList.add("attachmentimage");
 		attachmentContainer.append(attachment);
@@ -200,7 +226,7 @@ function postblock(post) {
 
 	postSpan.onclick = function (e) {
 		location.href = postLink;
-	}
+	};
 
 	return postSpan;
 }
@@ -229,7 +255,10 @@ function commentBlock(post, comment, isPostPage) {
 
 	commentSpan.classList.add("comment", "flexcontainer", "flexcolumn");
 	userSpan.classList.add("flexcontainer", "leftalign", "width100");
-	userLink.setAttribute("href", `./user.html?username=${comment.poster.username}`);
+	userLink.setAttribute(
+		"href",
+		`./user.html?username=${comment.poster.username}`
+	);
 	userLink.classList.add("flexcontainer");
 	userPfp.classList.add("pfp");
 	userPfp.setAttribute("src", comment.poster.pfp);
@@ -241,7 +270,12 @@ function commentBlock(post, comment, isPostPage) {
 	dateSpan.classList.add("postdate", "leftalign", "width100");
 	editedSpan.classList.add("smallBadge", "dark");
 	hr1.classList.add("width100");
-	contentSpan.classList.add("postcontent", "flexcolumn", "leftalign", "width100");
+	contentSpan.classList.add(
+		"postcontent",
+		"flexcolumn",
+		"leftalign",
+		"width100"
+	);
 	hr2.classList.add("width100");
 	metaSpan.classList.add("aligncenter", "leftalign", "width100", "flexwrap");
 	upvoteIcon.setAttribute("name", "up_arrow");
@@ -260,11 +294,15 @@ function commentBlock(post, comment, isPostPage) {
 	editIcon.setAttribute("size", "24");
 	editIcon.setAttribute("inverted-light", true);
 
-	if (comment.poster.pronouns) userPronouns.innerText = `(${comment.poster.pronouns})`;
+	if (comment.poster.pronouns)
+		userPronouns.innerText = `(${comment.poster.pronouns})`;
 	editedSpan.innerText = "Edited";
 	dateSpan.innerText = new Date(comment.date).toLocaleString();
 	if (comment.edited) {
-		editedSpan.setAttribute("title", `Edited ${new Date(comment.lastEdited).toLocaleString()}`);
+		editedSpan.setAttribute(
+			"title",
+			`Edited ${new Date(comment.lastEdited).toLocaleString()}`
+		);
 		metaTags.append(editedSpan);
 	}
 	contentSpan.innerText = comment.content;
@@ -272,10 +310,19 @@ function commentBlock(post, comment, isPostPage) {
 	upvoteBtn.append(upvoteIcon, ` ${comment.upvotes}`);
 	downvoteBtn.append(downvoteIcon, ` ${comment.downvotes}`);
 	if (!isPostPage) {
-		metaSpan.append(upvoteIcon, ` ${comment.upvotes}`, downvoteIcon, ` ${comment.downvotes}`)
+		metaSpan.append(
+			upvoteIcon,
+			` ${comment.upvotes}`,
+			downvoteIcon,
+			` ${comment.downvotes}`
+		);
 	}
 
-	if (comment.attachments && comment.attachments.length > 0 && comment.attachments[0] !== null) {
+	if (
+		comment.attachments &&
+		comment.attachments.length > 0 &&
+		comment.attachments[0] !== null
+	) {
 		for (let i = 0; i < comment.attachments.length; i++) {
 			let attachment = attachmentblock(comment.attachments[i]);
 			attachment.classList.add("postattachment");
@@ -294,15 +341,29 @@ function commentBlock(post, comment, isPostPage) {
 		metaSpan.append(upvoteBtn, downvoteBtn, flexGrow);
 		editBtn.innerText = "";
 		editBtn.append(editIcon);
-		if (comment.poster.username == localStorage.username) editBtn.classList.remove("hidden");
+		if (comment.poster.username == localStorage.username)
+			editBtn.classList.remove("hidden");
 		metaSpan.append(editBtn);
 	}
-	commentSpan.append(userSpan, dateSpan, metaTags, hr1, contentSpan, hr2, metaSpan);
+	commentSpan.append(
+		userSpan,
+		dateSpan,
+		metaTags,
+		hr1,
+		contentSpan,
+		hr2,
+		metaSpan
+	);
 
 	upvoteBtn.addEventListener("click", async () => {
 		if (localStorage.sess) {
-			const voteResult = await vote({ id: post.id, commentId: comment.id, target: "comment", vote: "upvote" });
-			upvoteBtn.innerText = downvoteBtn.innerText = ""
+			const voteResult = await vote({
+				id: post.id,
+				commentId: comment.id,
+				target: "comment",
+				vote: "upvote",
+			});
+			upvoteBtn.innerText = downvoteBtn.innerText = "";
 			upvoteBtn.append(upvoteIcon, ` ${voteResult.upvotes}`);
 			downvoteBtn.append(downvoteIcon, ` ${voteResult.downvotes}`);
 		} else {
@@ -315,8 +376,13 @@ function commentBlock(post, comment, isPostPage) {
 
 	downvoteBtn.addEventListener("click", async () => {
 		if (localStorage.sess) {
-			const voteResult = await vote({ id: post.id, commentId: comment.id, target: "comment", vote: "downvote" });
-			upvoteBtn.innerText = downvoteBtn.innerText = ""
+			const voteResult = await vote({
+				id: post.id,
+				commentId: comment.id,
+				target: "comment",
+				vote: "downvote",
+			});
+			upvoteBtn.innerText = downvoteBtn.innerText = "";
 			upvoteBtn.append(upvoteIcon, ` ${voteResult.upvotes}`);
 			downvoteBtn.append(downvoteIcon, ` ${voteResult.downvotes}`);
 		} else {
@@ -367,25 +433,30 @@ function userBlock(user) {
 }
 
 function setLoggedinState(state) {
-	$("#mypfp").setAttribute("src", localStorage.pfp || "https://betacdn.stibarc.com/pfp/default.png");
+	$("#mypfp").setAttribute(
+		"src",
+		localStorage.pfp || "https://betacdn.stibarc.com/pfp/default.png"
+	);
 	$("#menuprofile").innerText = localStorage.username;
 	$("#menuprofile").addEventListener("click", () => {
 		location.href = `./user.html?username=${localStorage.username}`;
 	});
-	Array.from(document.getElementsByClassName("loggedin")).forEach(element => {
+	Array.from(document.getElementsByClassName("loggedin")).forEach((element) => {
 		if (state) {
 			element.classList.remove("hidden");
 		} else {
 			element.classList.add("hidden");
 		}
 	});
-	Array.from(document.getElementsByClassName("loggedout")).forEach(element => {
-		if (state) {
-			element.classList.add("hidden");
-		} else {
-			element.classList.remove("hidden");
+	Array.from(document.getElementsByClassName("loggedout")).forEach(
+		(element) => {
+			if (state) {
+				element.classList.add("hidden");
+			} else {
+				element.classList.remove("hidden");
+			}
 		}
-	});
+	);
 	for (const func of listatehooks) {
 		func(state);
 	}
@@ -405,13 +476,13 @@ async function login() {
 	const response = await fetch("https://betaapi.stibarc.com/v4/login.sjs", {
 		method: "post",
 		headers: {
-			"Content-Type": "application/json"
+			"Content-Type": "application/json",
 		},
 		body: JSON.stringify({
 			username,
 			password,
-			totpCode
-		})
+			totpCode,
+		}),
 	});
 	const responseJSON = await response.json();
 	switch (responseJSON.status) {
@@ -449,17 +520,20 @@ async function logout() {
 	await fetch("https://betaapi.stibarc.com/v4/logout.sjs", {
 		method: "post",
 		headers: {
-			"Content-Type": "application/json"
+			"Content-Type": "application/json",
 		},
 		body: JSON.stringify({
-			session: localStorage.sess
-		})
+			session: localStorage.sess,
+		}),
 	});
 	delete localStorage.sess;
 	delete localStorage.username;
 	delete localStorage.pfp;
 	delete localStorage.banner;
-	$("#mypfp").setAttribute("src", "https://betacdn.stibarc.com/pfp/default.png");
+	$("#mypfp").setAttribute(
+		"src",
+		"https://betacdn.stibarc.com/pfp/default.png"
+	);
 	setLoggedinState(false);
 }
 
@@ -474,7 +548,10 @@ async function register() {
 	const displayPronouns = $("#Reg-showpronouns").checked || undefined;
 	const email = $("#Reg-emailinput").value || undefined;
 	const displayEmail = $("#Reg-showemail").checked || undefined;
-	const birthday = ($("#Reg-bdayinput").value != "") ? new Date($("#Reg-bdayinput").value) : undefined;
+	const birthday =
+		$("#Reg-bdayinput").value != ""
+			? new Date($("#Reg-bdayinput").value)
+			: undefined;
 	const displayBirthday = $("#Reg-showbday").checked || undefined;
 	const bio = $("#Reg-bioinput").value || undefined;
 	const displayBio = $("#Reg-showbio").checked || undefined;
@@ -494,26 +571,29 @@ async function register() {
 		return;
 	}
 	clicked = true;
-	const response = await fetch("https://betaapi.stibarc.com/v4/registeruser.sjs", {
-		method: "post",
-		headers: {
-			"Content-Type": "application/json"
-		},
-		body: JSON.stringify({
-			username,
-			password,
-			name,
-			displayName,
-			pronouns,
-			displayPronouns,
-			email,
-			displayEmail,
-			birthday,
-			displayBirthday,
-			bio,
-			displayBio
-		})
-	});
+	const response = await fetch(
+		"https://betaapi.stibarc.com/v4/registeruser.sjs",
+		{
+			method: "post",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({
+				username,
+				password,
+				name,
+				displayName,
+				pronouns,
+				displayPronouns,
+				email,
+				displayEmail,
+				birthday,
+				displayBirthday,
+				bio,
+				displayBio,
+			}),
+		}
+	);
 	const responseJSON = await response.json();
 	switch (responseJSON.status) {
 		case "ok":
@@ -553,15 +633,18 @@ function showRegisterModel() {
 async function reloadSessInfo() {
 	if (loadingSessInfo) return;
 	loadingSessInfo = true;
-	const request = await fetch("https://betaapi.stibarc.com/v4/getprivatedata.sjs", {
-		method: "POST",
-		headers: {
-			"Content-Type": "application/json"
-		},
-		body: JSON.stringify({
-			session: localStorage.sess
-		})
-	});
+	const request = await fetch(
+		"https://betaapi.stibarc.com/v4/getprivatedata.sjs",
+		{
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({
+				session: localStorage.sess,
+			}),
+		}
+	);
 	const responseJSON = await request.json();
 	loadingSessInfo = false;
 	sessionStorage.loadedBefore = true;
@@ -580,11 +663,29 @@ async function reloadSessInfo() {
 	}
 }
 
+refreshTheme();
+
+if (
+	localStorage.sess !== undefined &&
+	(sessionStorage.loadedBefore === undefined ||
+		localStorage.username === undefined ||
+		localStorage.pfp === undefined)
+) {
+	$("#mypfp").setAttribute(
+		"src",
+		localStorage.pfp || "https://betacdn.stibarc.com/pfp/default.png"
+	);
+	$("#menuprofile").innerText = localStorage.username;
+}
+
 window.addEventListener("load", function () {
-	if (localStorage.sess !== undefined && (sessionStorage.loadedBefore === undefined || localStorage.username === undefined || localStorage.pfp === undefined)) {
+	if (
+		localStorage.sess !== undefined &&
+		(sessionStorage.loadedBefore === undefined ||
+			localStorage.username === undefined ||
+			localStorage.pfp === undefined)
+	) {
 		reloadSessInfo();
-		$("#mypfp").setAttribute("src", localStorage.pfp || "https://betacdn.stibarc.com/pfp/default.png");
-		$("#menuprofile").innerText = localStorage.username;
 		$("#menuprofile").addEventListener("click", () => {
 			location.href = `./user.html?username=${localStorage.username}`;
 		});
@@ -611,14 +712,14 @@ window.addEventListener("load", function () {
 	});
 	$("#menulogin").onclick = function (e) {
 		showLoginModel();
-	}
+	};
 	$("#menusettings").addEventListener("click", () => {
 		location.href = `./settings.html`;
 	});
 	$("#loginlink").onclick = function (e) {
 		$("#registercancel").onclick();
 		$("#menulogin").onclick();
-	}
+	};
 	$("#logincancel").onclick = function (e) {
 		$("#loginerrorcontainer").classList.add("hidden");
 		$("#loginformcontainer").classList.add("hidden");
@@ -626,7 +727,7 @@ window.addEventListener("load", function () {
 		document.body.classList.remove("overflowhidden");
 		$("#Login-usernameinput").value = "";
 		$("#Login-passwordinput").value = "";
-	}
+	};
 	$("#Login-usernameinput").addEventListener("keypress", (e) => {
 		if (e.key == "Enter") {
 			$("#Login-passwordinput").focus();
@@ -646,11 +747,11 @@ window.addEventListener("load", function () {
 	$("#menulogout").onclick = logout;
 	$("#menuregister").onclick = function (e) {
 		showRegisterModel();
-	}
+	};
 	$("#registerlink").onclick = function (e) {
 		$("#logincancel").onclick();
 		$("#menuregister").onclick();
-	}
+	};
 	$("#registercancel").onclick = function (e) {
 		$("#registererrorcontainer").classList.add("hidden");
 		$("#registerformcontainer").classList.add("hidden");
@@ -669,11 +770,11 @@ window.addEventListener("load", function () {
 		$("#Reg-showbday").checked = false;
 		$("#Reg-bioinput").value = "";
 		$("#Reg-showbio").checked = false;
-	}
+	};
 	$("#registerbutton").onclick = register;
 	$("#menueditprofile").onclick = function (e) {
 		location.href = "./editprofile.html";
-	}
+	};
 	$("#searchBtn").addEventListener("click", () => {
 		location.href = "./search.html";
 	});
