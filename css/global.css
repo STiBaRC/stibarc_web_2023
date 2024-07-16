@@ -68,7 +68,7 @@ select {
 	font-family: inherit;
 	vertical-align: baseline;
 	box-sizing: border-box;
-	background-color: var(--color2);
+	background-color: var(--color11);
 	color: var(--text);
 	border: none;
 	outline: 2px solid var(--color3);
@@ -466,7 +466,7 @@ main.flexcontainer {
 	top: calc(100% - 12px);
 	right: 12px;
 	background-color: var(--color2);
-	color: var(--color4);
+	color: var(--text);
 	box-shadow: 0 1px 8px 0 rgba(22, 22, 22, 0.2), 0 1px 4px 0 rgba(22, 22, 22, 0.2);
 	padding: 4px 4px;
 	border-radius: 6px;
@@ -630,7 +630,7 @@ button.button {
 }
 
 .button:hover {
-	background-color: var(--color9);
+	background-color: var(--color10);
 }
 
 .button.smallBtn {
@@ -656,7 +656,7 @@ button.button {
 }
 
 .button.primary:hover {
-	background-color: var(--color6);
+	background-color: var(--color5);
 }
 
 .button.danger {
@@ -919,11 +919,11 @@ footer {
 }
 
 .sidebarItems li.active {
-	background-color: var(--color3);
+	background-color: var(--color9);
 }
 
 .sidebarItems li.active:before {
-	background-color: var(--color1)
+	background-color: var(--color5)
 }
 
 .sidebarItems li:hover:not(.active) {

@@ -14,7 +14,7 @@
 }
 
 .floatingbutton {
-	background-color: var(--color1);
+	background-color: var(--color3);
 	margin: 5px;
 	padding: 5px;
 	height: 30px;
@@ -24,15 +24,15 @@
 }
 
 .floatingbutton:hover {
-	background-color: var(--color6);
+	background-color: var(--color9);
 }
 
 .floatingbutton.active {
-	background-color: var(--color11);
+	background-color: var(--color6);
 }
 
 .floatingbutton.active:hover {
-	background-color: var(--color2);
+	background-color: var(--primaryFocus);
 }
 
 .floatingbuttonShadow {
@@ -63,7 +63,7 @@
 }
 
 .floatingplusbutton:hover {
-	background-color: var(--color6);
+	background-color: var(--color3);
 }
 
 .floatingplusbutton img {
