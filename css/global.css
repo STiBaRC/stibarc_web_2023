@@ -69,6 +69,7 @@ select {
 	vertical-align: baseline;
 	box-sizing: border-box;
 	background-color: var(--color2);
+	color: var(--text);
 	border: none;
 	outline: 2px solid var(--color3);
 	padding: 0.55rem 0.75rem;
