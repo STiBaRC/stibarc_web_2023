@@ -16,32 +16,6 @@ let clicked = false;
 let loadingSessInfo = false;
 
 /*
-	icons
-*/
-class icon extends HTMLElement {
-	constructor() {
-		super();
-	}
-	connectedCallback() {
-		const shadow = this.attachShadow({ mode: "open" });
-
-		const iconName = this.getAttribute("name");
-		const iconSize = this.getAttribute("size") || 16;
-
-		const iconImg = new Image(iconSize, iconSize);
-		iconImg.src = `./img/icon/${iconName}.svg`;
-
-		iconImg.classList.add("icon");
-		if (this.getAttribute("inverted")) this.classList.add("inverted");
-		if (this.getAttribute("inverted-light"))
-			this.classList.add("inverted-light");
-
-		shadow.appendChild(iconImg);
-	}
-}
-window.customElements.define("icon-img", icon);
-
-/*
 	Functions
 */
 
@@ -134,16 +108,16 @@ function postblock(post) {
 	const userLink = document.createElement("a");
 	const userPfp = document.createElement("img");
 	const userPronouns = document.createElement("span");
-	const verifiedBadge = document.createElement("icon-img");
+	const verifiedBadge = document.createElement("stibarc-icon");
 	const dateSpan = document.createElement("span");
 	const hr1 = document.createElement("hr");
 	const contentSpan = document.createElement("span");
 	const contentTextSpan = document.createElement("span");
 	const hr2 = document.createElement("hr");
 	const metaSpan = document.createElement("span");
-	const upvoteIcon = document.createElement("icon-img");
-	const downvoteIcon = document.createElement("icon-img");
-	const commentIcon = document.createElement("icon-img");
+	const upvoteIcon = document.createElement("stibarc-icon");
+	const downvoteIcon = document.createElement("stibarc-icon");
+	const commentIcon = document.createElement("stibarc-icon");
 	const attachmentContainer = document.createElement("div");
 	const moreAttachments = document.createElement("div");
 
@@ -236,7 +210,7 @@ function commentBlock(post, comment, isPostPage) {
 	const userSpan = document.createElement("span");
 	const userLink = document.createElement("a");
 	const userPfp = document.createElement("img");
-	const verifiedBadge = document.createElement("icon-img");
+	const verifiedBadge = document.createElement("stibarc-icon");
 	const userPronouns = document.createElement("span");
 	const dateSpan = document.createElement("span");
 	const metaTags = document.createDocumentFragment();
@@ -245,13 +219,13 @@ function commentBlock(post, comment, isPostPage) {
 	const contentSpan = document.createElement("span");
 	const hr2 = document.createElement("hr");
 	const metaSpan = document.createElement("span");
-	const upvoteIcon = document.createElement("icon-img");
-	const downvoteIcon = document.createElement("icon-img");
+	const upvoteIcon = document.createElement("stibarc-icon");
+	const downvoteIcon = document.createElement("stibarc-icon");
 	const upvoteBtn = document.createElement("button");
 	const downvoteBtn = document.createElement("button");
 	const flexGrow = document.createElement("span");
 	const editBtn = document.createElement("button");
-	const editIcon = document.createElement("icon-img");
+	const editIcon = document.createElement("stibarc-icon");
 
 	commentSpan.classList.add("comment", "flexcontainer", "flexcolumn");
 	userSpan.classList.add("flexcontainer", "leftalign", "width100");
@@ -404,7 +378,7 @@ function userBlock(user) {
 	const userSpan = document.createElement("span");
 	const userLink = document.createElement("a");
 	const userPfp = document.createElement("img");
-	const verifiedBadge = document.createElement("icon-img");
+	const verifiedBadge = document.createElement("stibarc-icon");
 	const userPronouns = document.createElement("span");
 
 	userSpan.classList.add("post", "flexcontainer", "leftalign", "width100");
@@ -462,60 +436,6 @@ function setLoggedinState(state) {
 	}
 }
 
-async function login() {
-	if (clicked) return;
-	$("#loginerrorcontainer").classList.add("hidden");
-	$("#loginerror").innerText = "";
-	const username = $("#Login-usernameinput").value;
-	const password = $("#Login-passwordinput").value;
-	const totpCode = $("#Login-tfainput").value;
-	if (username.trim() == "" || password.trim() == "") return;
-	clicked = true;
-	$("#loginbutton").innerText = "";
-	$("#loginbutton").classList.add("loading");
-	const response = await fetch("https://betaapi.stibarc.com/v4/login.sjs", {
-		method: "post",
-		headers: {
-			"Content-Type": "application/json",
-		},
-		body: JSON.stringify({
-			username,
-			password,
-			totpCode,
-		}),
-	});
-	const responseJSON = await response.json();
-	switch (responseJSON.status) {
-		default:
-		case "error":
-			switch (responseJSON.errorCode) {
-				case "iuop":
-					$("#loginerror").innerText = "Invalid username or password";
-					break;
-				case "totpr":
-					$("#loginerror").innerText = "2FA code required";
-					$("#Login-tfa").classList.remove("hidden");
-					$("#Login-tfainput").focus();
-					break;
-				case "itotp":
-					$("#loginerror").innerText = "Invalid 2FA code";
-					break;
-			}
-			$("#loginerrorcontainer").classList.remove("hidden");
-			break;
-		case "ok":
-			localStorage.username = username;
-			localStorage.pfp = responseJSON.pfp;
-			localStorage.sess = responseJSON.session;
-			setLoggedinState(true);
-			$("#logincancel").onclick();
-			break;
-	}
-	clicked = false;
-	$("#loginbutton").innerText = "Login";
-	$("#loginbutton").classList.remove("loading");
-}
-
 async function logout() {
 	await fetch("https://betaapi.stibarc.com/v4/logout.sjs", {
 		method: "post",
@@ -535,99 +455,6 @@ async function logout() {
 		"https://betacdn.stibarc.com/pfp/default.png"
 	);
 	setLoggedinState(false);
-}
-
-async function register() {
-	if (clicked) return;
-	const username = $("#Reg-usernameinput").value.trim();
-	const password = $("#Reg-passwordinput").value;
-	const password2 = $("#Reg-passwordinput2").value;
-	const name = $("#Reg-nameinput").value || undefined;
-	const displayName = $("#Reg-showname").checked || undefined;
-	const pronouns = $("#Reg-pronounsinput").value || undefined;
-	const displayPronouns = $("#Reg-showpronouns").checked || undefined;
-	const email = $("#Reg-emailinput").value || undefined;
-	const displayEmail = $("#Reg-showemail").checked || undefined;
-	const birthday =
-		$("#Reg-bdayinput").value != ""
-			? new Date($("#Reg-bdayinput").value)
-			: undefined;
-	const displayBirthday = $("#Reg-showbday").checked || undefined;
-	const bio = $("#Reg-bioinput").value || undefined;
-	const displayBio = $("#Reg-showbio").checked || undefined;
-	if (username == "") {
-		$("#registererror").innerText = "Username required";
-		$("#registererrorcontainer").classList.remove("hidden");
-		return;
-	}
-	if (password == "") {
-		$("#registererror").innerText = "Password required";
-		$("#registererrorcontainer").classList.remove("hidden");
-		return;
-	}
-	if (password != password2) {
-		$("#registererror").innerText = "Passwords must match";
-		$("#registererrorcontainer").classList.remove("hidden");
-		return;
-	}
-	clicked = true;
-	const response = await fetch(
-		"https://betaapi.stibarc.com/v4/registeruser.sjs",
-		{
-			method: "post",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify({
-				username,
-				password,
-				name,
-				displayName,
-				pronouns,
-				displayPronouns,
-				email,
-				displayEmail,
-				birthday,
-				displayBirthday,
-				bio,
-				displayBio,
-			}),
-		}
-	);
-	const responseJSON = await response.json();
-	switch (responseJSON.status) {
-		case "ok":
-			localStorage.username = username;
-			localStorage.pfp = "https://betacdn.stibarc.com/pfp/default.png";
-			localStorage.sess = responseJSON.session;
-			setLoggedinState(true);
-			$("#registercancel").onclick();
-			break;
-		case "error":
-			switch (responseJSON.errorCode) {
-				case "ue":
-					$("#registererror").innerText = "User already registered";
-					$("#registererrorcontainer").classList.remove("hidden");
-					break;
-			}
-			break;
-	}
-	clicked = false;
-}
-
-function showLoginModel() {
-	window.scrollTo(0, 0);
-	$("#Login-tfa").classList.add("hidden");
-	$("#loginformcontainer").classList.remove("hidden");
-	$("#overlay").classList.remove("hidden");
-	document.body.classList.add("overflowhidden");
-}
-
-function showRegisterModel() {
-	window.scrollTo(0, 0);
-	$("#registerformcontainer").classList.remove("hidden");
-	$("#overlay").classList.remove("hidden");
-	document.body.classList.add("overflowhidden");
 }
 
 async function reloadSessInfo() {
@@ -710,68 +537,7 @@ window.addEventListener("load", function () {
 			func(event);
 		}
 	});
-	$("#menulogin").onclick = function (e) {
-		showLoginModel();
-	};
-	$("#menusettings").addEventListener("click", () => {
-		location.href = `./settings.html`;
-	});
-	$("#loginlink").onclick = function (e) {
-		$("#registercancel").onclick();
-		$("#menulogin").onclick();
-	};
-	$("#logincancel").onclick = function (e) {
-		$("#loginerrorcontainer").classList.add("hidden");
-		$("#loginformcontainer").classList.add("hidden");
-		$("#overlay").classList.add("hidden");
-		document.body.classList.remove("overflowhidden");
-		$("#Login-usernameinput").value = "";
-		$("#Login-passwordinput").value = "";
-	};
-	$("#Login-usernameinput").addEventListener("keypress", (e) => {
-		if (e.key == "Enter") {
-			$("#Login-passwordinput").focus();
-		}
-	});
-	$("#Login-passwordinput").addEventListener("keypress", (e) => {
-		if (e.key == "Enter") {
-			$("#loginbutton").onclick();
-		}
-	});
-	$("#Login-tfainput").addEventListener("keypress", (e) => {
-		if (e.key == "Enter") {
-			$("#loginbutton").onclick();
-		}
-	});
-	$("#loginbutton").onclick = login;
-	$("#menulogout").onclick = logout;
-	$("#menuregister").onclick = function (e) {
-		showRegisterModel();
-	};
-	$("#registerlink").onclick = function (e) {
-		$("#logincancel").onclick();
-		$("#menuregister").onclick();
-	};
-	$("#registercancel").onclick = function (e) {
-		$("#registererrorcontainer").classList.add("hidden");
-		$("#registerformcontainer").classList.add("hidden");
-		$("#overlay").classList.add("hidden");
-		document.body.classList.remove("overflowhidden");
-		$("#Reg-usernameinput").value = "";
-		$("#Reg-passwordinput").value = "";
-		$("#Reg-passwordinput2").value = "";
-		$("#Reg-nameinput").value = "";
-		$("#Reg-showname").checked = false;
-		$("#Reg-pronounsinput").value = "";
-		$("#Reg-showpronouns").checked = false;
-		$("#Reg-emailinput").value = "";
-		$("#Reg-showemail").checked = false;
-		$("#Reg-bdayinput").value = "";
-		$("#Reg-showbday").checked = false;
-		$("#Reg-bioinput").value = "";
-		$("#Reg-showbio").checked = false;
-	};
-	$("#registerbutton").onclick = register;
+
 	$("#menueditprofile").onclick = function (e) {
 		location.href = "./editprofile.html";
 	};

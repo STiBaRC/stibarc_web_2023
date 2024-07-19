@@ -187,16 +187,16 @@ main.flexcontainer {
 	justify-content: flex-start;
 }
 
-.icon, icon-img {
+.icon, stibarc-icon {
 	display: flex;
 	align-items: center;
 }
 
-.icon.inverted, icon-img.inverted {
+.icon.inverted, stibarc-icon.inverted {
 	filter: invert();
 }
 
-.icon.inverted-light, icon-img.inverted-light {
+.icon.inverted-light, stibarc-icon.inverted-light {
 	filter: opacity(0.65) invert();
 }
 
@@ -547,11 +547,11 @@ main.flexcontainer {
 	text-overflow: ellipsis;
 }
 
-.metaSpan icon-img {
+.metaSpan stibarc-icon {
 	margin-right: 3px;
 }
 
-.metaSpan icon-img:not(:first-child) {
+.metaSpan stibarc-icon:not(:first-child) {
 	margin: 0 3px 0 8px;
 }
 

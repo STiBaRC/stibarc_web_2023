@@ -12,11 +12,16 @@
 	<link rel="stylesheet" href="./css/themes/default.css" id="theme">
 	<link rel="stylesheet" href="./css/global.css">
 	<link rel="stylesheet" href="./css/index.css">
+	<script type="module" src="./components/LoginModal.js"></script>
+	<script type="module" src="./components/RegisterModal.js"></script>
+	<script type="module" src="./components/Icon.js"></script>
 	<script src="./js/global.js"></script>
 	<script src="./js/index.js"></script>
 </head>
 
 <body>
+	<stibarc-login-modal></stibarc-login-modal>
+	<stibarc-register-modal></stibarc-register-modal>
 	<header id="headerElement">
 		<span id="mainHeader" class="flexcontainer">
 			<span class="leftalign">
@@ -95,73 +100,6 @@
 						<button id="newpostbutton" class="flexcontainer button primary">Post</button>
 						<button id="newpostcancel" class="flexcontainer button">Cancel</button>
 					</span>
-				</div>
-			</span>
-		</span>
-		<span id="loginformcontainer" class="hidden flexcontainer flexcolumn formcontainer">
-			<span id="loginform" class="block modal">
-				<div class="flexcontainer flexcolumn">
-					<h2>Login</h2>
-					<span id="loginerrorcontainer" class="flexcontainer flexcolumn hidden">
-						<span id="loginerror" class="red"></span>
-						<span>&nbsp;</span>
-					</span>
-					<input type="text" id="Login-usernameinput" placeholder="Username" autocomplete="username">
-					<span>&nbsp;</span>
-					<input type="password" id="Login-passwordinput" placeholder="Password" autocomplete="current-password">
-					<span>&nbsp;</span>
-					<span id="Login-tfa" class="hidden flexcontainer flexcolumn">
-						<input type="number" id="Login-tfainput" placeholder="2FA Code">
-						<span>&nbsp;</span>
-					</span>
-					<span class="flexcontainer">
-						<button id="loginbutton" class="flexcontainer button small primary">Login</button>
-						<button id="logincancel" class="flexcontainer button">Cancel</button>
-					</span>
-					<button id="registerlink" class="flexcontainer button">Register</button>
-				</div>
-			</span>
-		</span>
-		<span id="registerformcontainer" class="hidden flexcontainer flexcolumn formcontainer">
-			<span id="registerform" class="block modal">
-				<div class="flexcontainer flexcolumn">
-					<h2>Register</h2>
-					<span id="registererrorcontainer" class="flexcontainer flexcolumn hidden">
-						<span id="registererror" class="red"></span>
-						<span>&nbsp;</span>
-					</span>
-					<input type="text" id="Reg-usernameinput" placeholder="Username" autocomplete="username">
-					<span>&nbsp;</span>
-					<input type="password" id="Reg-passwordinput" placeholder="Password" autocomplete="new-password">
-					<span>&nbsp;</span>
-					<input type="password" id="Reg-passwordinput2" placeholder="Password again" autocomplete="new-password">
-					<h3>Optional</h3>
-					<input type="text" id="Reg-nameinput" placeholder="Name" autocomplete="given-name">
-					<span>Show name: <input type="checkbox" id="Reg-showname"></span>
-					<span>&nbsp;</span>
-					<input list="Reg-commonPronouns" id="Reg-pronounsinput" type="text" placeholder="Pronouns" autocomplete="off" autocapitalize="none" maxlength="40">
-					<datalist id="Reg-commonPronouns">
-						<option value="she/her"></option>
-						<option value="he/him"></option>
-						<option value="they/them"></option>
-						<option value="it/it"></option>
-					</datalist>
-					<span>Show pronouns: <input type="checkbox" id="Reg-showpronouns"></span>
-					<span>&nbsp;</span>
-					<input type="email" id="Reg-emailinput" placeholder="Email" autocomplete="email">
-					<span>Show email: <input type="checkbox" id="Reg-showemail"></span>
-					<span>&nbsp;</span>
-					<input type="date" id="Reg-bdayinput" placeholder="Birthday" autocomplete="bday">
-					<span>Show birthday: <input type="checkbox" id="Reg-showbday"></span>
-					<span>&nbsp;</span>
-					<textarea id="Reg-bioinput" placeholder="Bio"></textarea>
-					<span>Show bio: <input type="checkbox" id="Reg-showbio"></span>
-					<span>&nbsp;</span>
-					<span class="flexcontainer">
-						<button id="registerbutton" class="flexcontainer button primary">Register</button>
-						<button id="registercancel" class="flexcontainer button">Cancel</button>
-					</span>
-					<button id="loginlink" class="flexcontainer button">Login</button>
 				</div>
 			</span>
 		</span>
