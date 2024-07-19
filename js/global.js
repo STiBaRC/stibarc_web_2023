@@ -407,11 +407,10 @@ function userBlock(user) {
 }
 
 function setLoggedinState(state) {
-	$("#mypfp").setAttribute(
-		"src",
-		localStorage.pfp || "https://betacdn.stibarc.com/pfp/default.png"
-	);
-	$("#menuprofile").innerText = localStorage.username;
+	if ($("#mypfp")) {
+		$("#mypfp").setAttribute("src", localStorage.pfp || "https://betacdn.stibarc.com/pfp/default.png");
+		$("#menuprofile").innerText = localStorage.username;
+	}
 	$("#menuprofile").addEventListener("click", () => {
 		location.href = `./user.html?username=${localStorage.username}`;
 	});
@@ -492,17 +491,13 @@ async function reloadSessInfo() {
 
 refreshTheme();
 
-if (
-	localStorage.sess !== undefined &&
-	(sessionStorage.loadedBefore === undefined ||
-		localStorage.username === undefined ||
-		localStorage.pfp === undefined)
+if (localStorage.sess !== undefined &&
+	(sessionStorage.loadedBefore === undefined || localStorage.username === undefined || localStorage.pfp === undefined)
 ) {
-	$("#mypfp").setAttribute(
-		"src",
-		localStorage.pfp || "https://betacdn.stibarc.com/pfp/default.png"
-	);
-	$("#menuprofile").innerText = localStorage.username;
+	if ($("#mypfp")) {
+		$("#mypfp").setAttribute("src", localStorage.pfp || "https://betacdn.stibarc.com/pfp/default.png");
+		$("#menuprofile").innerText = localStorage.username;
+	}
 }
 
 window.addEventListener("load", function () {

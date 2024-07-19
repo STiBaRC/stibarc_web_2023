@@ -29,8 +29,6 @@ async function updateInfo() {
 	$("#showbday").checked = user.displayBirthday;
 	$("#bioinput").value = user.bio;
 	$("#showbio").checked = user.displayBio;
-	$("#tfabutton").innerText = user.totpEnabled ? "Disable 2FA" : "Enable 2FA";
-	tfaEnabled = user.totpEnabled;
 }
 
 function uploadBannerImage() {
