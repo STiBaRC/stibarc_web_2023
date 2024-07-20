@@ -32,15 +32,15 @@
 		</span>
 		<span id="hiddenHeader" class="hidden">
 			<div class="loggedout headerDropdown">
-				<div class="menuElement" id="menulogin">Login</div>
-				<div class="menuElement" id="menuregister">Register</div>
+				<button class="menuElement" id="menulogin" onclick="login()">Login</button>
+				<button class="menuElement" id="menuregister" onclick="register()">Register</button>
 			</div>
 			<div class="loggedin headerDropdown hidden">
-				<div class="menuElement" id="menueditprofile">Edit profile</div>
-				<div class="menuElement" id="menusettings">Settings</div>
+				<a class="menuElement" id="menueditprofile" href="./editprofile.html">Edit profile</a>
+				<a class="menuElement" id="menusettings" href="./settings.html">Settings</a>
 				<div class="separator"></div>
-				<div class="menuElement" id="menuprofile"></div>
-				<div class="menuElement red" id="menulogout">Logout</div>
+				<a class="menuElement" id="menuprofile"></a>
+				<button class="menuElement red" id="menulogout" onclick="logout()">Logout</button>
 			</div>
 		</span>
 		<span id="searchResults" class="flexcontainer flexcolumn hidden">

@@ -268,7 +268,7 @@ stibarc-icon.inverted-light {
 }
 
 .red {
-	color: var(--red);
+	color: var(--red) !important;
 }
 
 .loader {
@@ -393,9 +393,21 @@ stibarc-icon.inverted-light {
 }
 
 .headerDropdown .menuElement {
+	-webkit-appearance: none;
+	appearance: none;
+	text-decoration: none;
+	text-align: inherit;
+	border: none;
+	font-family: inherit;
+	font-size: 1rem;
+	line-height: normal;
+	width: 100%;
+	box-sizing: border-box;
 	display: flex;
+	margin: 0;
 	justify-content: left;
 	background-color: var(--color2);
+	color: inherit;
 	padding: 9px 18px;
 	transition: background-color 0.22s ease-out;
 	cursor: pointer;
@@ -550,6 +562,7 @@ stibarc-icon.inverted-light {
 	display: -webkit-box;
 	flex-basis: unset;
 	-webkit-line-clamp: 7;
+	line-clamp: 7;
 	word-wrap: break-word;
 	max-width: 100%;
 	overflow: hidden;
@@ -669,7 +682,7 @@ button.button {
 }
 
 .button.danger {
-	color: var(--red);
+	color: var(--red) !important;
 }
 
 .button:disabled,
@@ -678,6 +691,16 @@ button.button {
 	background-color: var(--color9);
 	color: var(--color10);
 	cursor: default;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+	color: var(--text);
 }
 
 .button .icon.textOnRight {

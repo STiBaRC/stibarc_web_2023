@@ -408,7 +408,10 @@ function userBlock(user) {
 
 function setLoggedinState(state) {
 	if ($("#mypfp")) {
-		$("#mypfp").setAttribute("src", localStorage.pfp || "https://betacdn.stibarc.com/pfp/default.png");
+		$("#mypfp").setAttribute(
+			"src",
+			localStorage.pfp || "https://betacdn.stibarc.com/pfp/default.png"
+);
 		$("#menuprofile").innerText = localStorage.username;
 	}
 	$("#menuprofile").addEventListener("click", () => {
@@ -433,6 +436,14 @@ function setLoggedinState(state) {
 	for (const func of listatehooks) {
 		func(state);
 	}
+}
+
+function login() {
+	$("stibarc-login-modal")[0].show();
+}
+
+function register() {
+	$("stibarc-register-modal")[0].show();
 }
 
 async function logout() {
@@ -491,12 +502,19 @@ async function reloadSessInfo() {
 
 refreshTheme();
 
-if (localStorage.sess !== undefined &&
-	(sessionStorage.loadedBefore === undefined || localStorage.username === undefined || localStorage.pfp === undefined)
+if (
+	localStorage.sess !== undefined &&
+	(sessionStorage.loadedBefore === undefined ||
+		localStorage.username === undefined ||
+		localStorage.pfp === undefined)
 ) {
 	if ($("#mypfp")) {
-		$("#mypfp").setAttribute("src", localStorage.pfp || "https://betacdn.stibarc.com/pfp/default.png");
+		$("#mypfp").setAttribute(
+			"src",
+			localStorage.pfp || "https://betacdn.stibarc.com/pfp/default.png"
+		);
 		$("#menuprofile").innerText = localStorage.username;
+		$("#menuprofile").href = `./user.html?username=${localStorage.username}`;
 	}
 }
 
@@ -508,9 +526,7 @@ window.addEventListener("load", function () {
 			localStorage.pfp === undefined)
 	) {
 		reloadSessInfo();
-		$("#menuprofile").addEventListener("click", () => {
-			location.href = `./user.html?username=${localStorage.username}`;
-		});
+		$("#menuprofile").href = `./user.html?username=${localStorage.username}`;
 	}
 	document.addEventListener("click", function (event) {
 		/* header pfp dropdown */
@@ -532,10 +548,6 @@ window.addEventListener("load", function () {
 			func(event);
 		}
 	});
-
-	$("#menueditprofile").onclick = function (e) {
-		location.href = "./editprofile.html";
-	};
 	$("#searchBtn").addEventListener("click", () => {
 		location.href = "./search.html";
 	});
