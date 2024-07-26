@@ -237,7 +237,7 @@ function commentBlock(post, comment, isPostPage) {
 	userPfp.classList.add("pfp");
 	userPfp.setAttribute("src", comment.poster.pfp);
 	verifiedBadge.setAttribute("name", "verified");
-	verifiedBadge.classList.add("verifiedBadge");
+	verifiedBadge.setAttribute("type", "verifiedBadge");
 	verifiedBadge.setAttribute("title", "Verified");
 	userPronouns.setAttribute("title", `Pronouns (${post.poster.pronouns})`);
 	userPronouns.setAttribute("class", "pronouns");
