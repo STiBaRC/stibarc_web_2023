@@ -2,16 +2,18 @@ class RegisterModalComponent extends HTMLElement {
 	// This is safe because no part of this is dynamic
 	#shadowDomHTML = `
 		<style>
-			@import url("css/global.css");
+			@import url("./css/global.css");
 			dialog {
 				box-sizing: border-box;
 				border-radius: 15px;
 				background-color: var(--color2);
+				color: var(--text);
 				padding: 12px;
 				user-select: text;
 				box-shadow: 0 1px 8px 0 rgba(22, 22, 22, 0.2), 0 1px 4px 0 rgba(22, 22, 22, 0.2);
 				max-height: 90vh;
-				max-width: 95vw;
+				width: 100%;
+				max-width: 50vw;
 				overflow-y: auto;
 				flex-wrap: nowrap;
 			}
@@ -20,6 +22,10 @@ class RegisterModalComponent extends HTMLElement {
 				dialog {
 					width: calc(100vw - 40px);
 				}
+			}
+
+			dialog input, dialog textarea {
+				margin-bottom: 0.25rem;
 			}
 		</style>
 		<dialog>
@@ -36,7 +42,7 @@ class RegisterModalComponent extends HTMLElement {
 				<input type="password" id="password2" placeholder="Password again" autocomplete="new-password">
 				<h3>Optional</h3>
 				<input type="text" id="name" placeholder="Name" autocomplete="given-name">
-				<span>Show name: <input type="checkbox" id="showname"></span>
+				<div>Show name: <input type="checkbox" id="showname"></div>
 				<span>&nbsp;</span>
 				<input list="commonPronouns" id="pronouns" type="text" placeholder="Pronouns" autocomplete="off" autocapitalize="none" maxlength="40">
 				<datalist id="commonPronouns">
@@ -45,22 +51,24 @@ class RegisterModalComponent extends HTMLElement {
 					<option value="they/them"></option>
 					<option value="it/it"></option>
 				</datalist>
-				<span>Show pronouns: <input type="checkbox" id="showpronouns"></span>
+				<div>Show pronouns: <input type="checkbox" id="showpronouns"></div>
 				<span>&nbsp;</span>
 				<input type="email" id="email" placeholder="Email" autocomplete="email">
-				<span>Show email: <input type="checkbox" id="showemail"></span>
+				<div>Show email: <input type="checkbox" id="showemail"></div>
 				<span>&nbsp;</span>
 				<input type="date" id="bday" placeholder="Birthday" autocomplete="bday">
-				<span>Show birthday: <input type="checkbox" id="showbday"></span>
+				<div>Show birthday: <input type="checkbox" id="showbday"></div>
 				<span>&nbsp;</span>
 				<textarea id="bio" placeholder="Bio"></textarea>
-				<span>Show bio: <input type="checkbox" id="showbio"></span>
+				<div>Show bio: <input type="checkbox" id="showbio"></div>
 				<span>&nbsp;</span>
 				<span class="flexcontainer">
 					<button id="registerbutton" class="flexcontainer button small primary">Register</button>
 					<button id="registercancel" class="flexcontainer button">Cancel</button>
 				</span>
-				<button id="loginlink" class="flexcontainer button">Login</button>
+				<span class="flexcontainer marginbottom">
+					<button id="loginlink" class="flexcontainer button">Login</button>
+				</span>
 			</div>
 		</dialog>
 	`;

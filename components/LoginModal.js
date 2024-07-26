@@ -2,16 +2,18 @@ class LoginModalComponent extends HTMLElement {
 	// This is safe because no part of this is dynamic
 	#shadowDomHTML = `
 		<style>
-			@import url("css/global.css");
+			@import url("./css/global.css");
 			dialog {
 				box-sizing: border-box;
 				border-radius: 15px;
 				background-color: var(--color2);
+				color: var(--text);
 				padding: 12px;
 				user-select: text;
 				box-shadow: 0 1px 8px 0 rgba(22, 22, 22, 0.2), 0 1px 4px 0 rgba(22, 22, 22, 0.2);
 				max-height: 90vh;
-				max-width: 95vw;
+				width: 100%;
+				max-width: 50vw;
 				overflow-y: auto;
 				flex-wrap: nowrap;
 			}
@@ -20,6 +22,10 @@ class LoginModalComponent extends HTMLElement {
 				dialog {
 					width: calc(100vw - 40px);
 				}
+			}
+
+			dialog input, dialog textarea {
+				margin-bottom: 0.25rem;
 			}
 		</style>
 		<dialog>
@@ -41,7 +47,9 @@ class LoginModalComponent extends HTMLElement {
 					<button id="loginbutton" class="flexcontainer button small primary">Login</button>
 					<button id="logincancel" class="flexcontainer button">Cancel</button>
 				</span>
-				<button id="registerlink" class="flexcontainer button">Register</button>
+				<span class="flexcontainer marginbottom">
+					<button id="registerlink" class="flexcontainer button">Register</button>
+				</span>
 			</div>
 		</dialog>
 	`;
@@ -68,7 +76,7 @@ class LoginModalComponent extends HTMLElement {
 			if (e.key == "Enter") {
 				this.shadow.querySelector("#password").focus();
 			}
-		}
+		};
 		this.shadow.querySelector("#password").onkeyup = (e) => {
 			if (e.key == "Enter") {
 				this.#login();
@@ -95,13 +103,13 @@ class LoginModalComponent extends HTMLElement {
 		const response = await fetch("https://betaapi.stibarc.com/v4/login.sjs", {
 			method: "post",
 			headers: {
-				"Content-Type": "application/json"
+				"Content-Type": "application/json",
 			},
 			body: JSON.stringify({
 				username,
 				password,
-				totpCode
-			})
+				totpCode,
+			}),
 		});
 		const responseJSON = await response.json();
 		switch (responseJSON.status) {
@@ -109,7 +117,8 @@ class LoginModalComponent extends HTMLElement {
 			case "error":
 				switch (responseJSON.errorCode) {
 					case "iuop":
-						this.shadow.querySelector("#error").innerText = "Invalid username or password";
+						this.shadow.querySelector("#error").innerText =
+							"Invalid username or password";
 						break;
 					case "totpr":
 						this.shadow.querySelector("#error").innerText = "2FA code required";
