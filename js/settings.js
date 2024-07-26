@@ -27,7 +27,7 @@ function switchTab(tabEl) {
 window.addEventListener("load", () => {
 	updateThemeSelector();
 	$("#changeThemeSelector").addEventListener("change", (e) => {
-		localStorage.setItem("theme", e.target.value || "light");
+		localStorage.setItem("theme", e.target.value || "lightTheme");
 		updateThemeSelector();
 		refreshTheme();
 	});

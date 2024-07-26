@@ -33,12 +33,12 @@ const darkThemeMq = window.matchMedia("(prefers-color-scheme: dark)");
 function refreshTheme() {
 	if (!localStorage.getItem("theme")) {
 		if (darkThemeMq.matches) {
-			localStorage.setItem("theme", "dark");
+			localStorage.setItem("theme", "darkTheme");
 		} else {
-			localStorage.setItem("theme", "light");
+			localStorage.setItem("theme", "lightTheme");
 		}
 	}
-	let themeName = localStorage.getItem("theme") || "light";
+	let themeName = localStorage.getItem("theme") || "lightTheme";
 	document.documentElement.classList = "";
 	document.documentElement.className = themeName;
 }
@@ -52,7 +52,7 @@ darkThemeMq.addListener((e) => {
 
 function updateThemeSelector() {
 	if ($("#changeThemeSelector")) {
-		$("#changeThemeSelector").value = localStorage.getItem("theme") || "light";
+		$("#changeThemeSelector").value = localStorage.getItem("theme") || "lightTheme";
 	}
 }
 
@@ -125,7 +125,7 @@ function postblock(post) {
 	title.classList.add("posttitle", "leftalign", "width100");
 	title.setAttribute("href", `./post.html?id=${post.id}`);
 	userSpan.classList.add("flexcontainer", "leftalign", "width100");
-	userLink.setAttribute("href", `/user.html?username=${post.poster.username}`);
+	userLink.setAttribute("href", `./user.html?username=${post.poster.username}`);
 	userLink.classList.add("flexcontainer");
 	userPfp.classList.add("pfp");
 	userPfp.setAttribute("src", post.poster.pfp);
