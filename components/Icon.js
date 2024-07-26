@@ -9,18 +9,27 @@ class IconComponent extends HTMLElement {
 	.icon {
 		width: 16px;
 		height: 16px;
-		fill: var(--text);
-	}
+		fill: transparent;
+		stroke: var(--text);
+		stroke-width: 8px;
+		stroke-linecap: round;
+		stroke-linejoin: round;
+	}	
 	
 	.iconLarge {
 		width: 24px;
 		height: 24px;
-		fill: var(--text);
+	}
+	
+	.iconBig {
+		width: 28px;
+		height: 28px;
 	}
 
 	.verifiedBadge {
 		margin: 0 2px 0 3px;
 		fill: var(--color1);
+		stroke: none;
 	}
 	</style>`;
 
