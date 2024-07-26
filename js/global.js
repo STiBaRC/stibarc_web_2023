@@ -130,8 +130,8 @@ function postblock(post) {
 	userPfp.classList.add("pfp");
 	userPfp.setAttribute("src", post.poster.pfp);
 	verifiedBadge.setAttribute("name", "verified");
+	verifiedBadge.setAttribute("type", "verifiedBadge");
 	verifiedBadge.setAttribute("title", "Verified");
-	verifiedBadge.classList.add("verifiedBadge");
 	userPronouns.setAttribute("title", `Pronouns (${post.poster.pronouns})`);
 	userPronouns.setAttribute("class", "pronouns");
 	dateSpan.classList.add("postdate", "leftalign", "width100");

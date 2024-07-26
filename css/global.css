@@ -193,20 +193,16 @@ main.flexcontainer {
 	fill: var(--text);
 }
 
+.iconLarge {
+	width: 24px;
+	height: 24px;
+	fill: var(--text);
+}
+
 .icon,
 stibarc-icon {
 	display: flex;
 	align-items: center;
-}
-
-.icon.inverted,
-stibarc-icon.inverted {
-	filter: invert();
-}
-
-.icon.inverted-light,
-stibarc-icon.inverted-light {
-	filter: opacity(0.65) invert();
 }
 
 .flexcontainer {
@@ -771,7 +767,7 @@ p {
 
 .verifiedBadge {
 	margin: 0 2px 0 3px;
-	fill: var(--color1)
+	fill: var(--color1);
 }
 
 .postdate {
