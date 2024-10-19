@@ -150,7 +150,6 @@ window.addEventListener("load", function () {
 			localStorage.pfp === undefined)
 	) {
 		reloadSessInfo();
-		$("#menuprofile").href = `./user.html?username=${localStorage.username}`;
 	}
 	document.addEventListener("click", function (event) {
 		for (const func of clickhooks) {

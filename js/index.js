@@ -8,7 +8,7 @@ let hideLoadMoreGlobal = true;
 let hideLoadMoreFollowed = true;
 let clicked = false;
 
-async function getPosts() {
+async function getPosts(state) {
 	$("#postsLoader").classList.remove("hidden");
 	$("#followedPostsLoader").classList.remove("hidden");
 	const posts = document.createDocumentFragment();
@@ -25,7 +25,7 @@ async function getPosts() {
 	});
 	const requestJSON = await request.json();
 	lastSeenGlobalPost = requestJSON.globalPosts[requestJSON.globalPosts.length - 1].id;
-	if (requestJSON.followedPosts) {
+	if (requestJSON.followedPosts && requestJSON.followedPosts.length > 0) {
 		lastSeenFollowedPost = requestJSON.followedPosts[requestJSON.followedPosts.length - 1].id;
 	}
 	$("#postsLoader").classList.add("hidden");
