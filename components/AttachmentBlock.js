@@ -64,6 +64,11 @@ class AttachmentBlockComponent extends HTMLElement {
 		switch (this.type) {
 			case "img":
 				element = this.shadow.querySelector("img");
+				if (this.isPost) {
+					element.addEventListener("click", () => {
+						window.open(this.attachment, "_blank");
+					});
+				}
 				break;
 			case "video":
 				element = this.shadow.querySelector("video");
@@ -77,12 +82,6 @@ class AttachmentBlockComponent extends HTMLElement {
 		} else {
 			element.classList.add("attachmentimage");
 		}
-
-		this.addEventListener("click", () => {
-			if (this.isPost && this.type == "img") {
-				window.open(this.attachment, "_blank");
-			}
-		});
 	}
 }
 

@@ -146,11 +146,11 @@ async function loadMore() {
 			"Content-Type": "application/json"
 		},
 		body: JSON.stringify({
-			lastSeenGlobalPost: (localStorage.activeFeed == "global") ? lastSeenGlobalPost : undefined,
-			lastSeenFollowedPost: (localStorage.activeFeed == "followed" && localStorage.sess !== "") ? lastSeenFollowedPost : undefined,
-			returnGlobal: (localStorage.activeFeed == "global") ? true : false,
-			returnFollowed: (localStorage.activeFeed == "followed" && localStorage.sess !== "") ? true : undefined,
-			session: (localStorage.activeFeed == "followed" && localStorage.sess !== "") ? localStorage.sess : undefined
+			lastSeenGlobalPost: (localStorage.activeFeed === "global" || localStorage.activeFeed === undefined) ? lastSeenGlobalPost : undefined,
+			lastSeenFollowedPost: (localStorage.activeFeed === "followed" && localStorage.sess !== "") ? lastSeenFollowedPost : undefined,
+			returnGlobal: (localStorage.activeFeed === "global" || localStorage.activeFeed === undefined) ? true : false,
+			returnFollowed: (localStorage.activeFeed === "followed" && localStorage.sess !== "") ? true : undefined,
+			session: (localStorage.activeFeed === "followed" && localStorage.sess !== "") ? localStorage.sess : undefined
 		})
 	});
 	const requestJSON = await request.json();

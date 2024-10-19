@@ -208,7 +208,7 @@ window.addEventListener("load", async function () {
 	const comments = document.createDocumentFragment();
 
 	for (const comment of post.comments) {
-		comments.appendChild(commentBlock(post, comment, true));
+		comments.appendChild(new CommentBlockComponent(post, comment, true));
 	}
 
 	$("#comments").appendChild(comments);
