@@ -6,6 +6,7 @@ let lastSeenGlobalPost = null;
 let lastSeenFollowedPost = null;
 let hideLoadMoreGlobal = true;
 let hideLoadMoreFollowed = true;
+let clicked = false;
 
 async function getPosts() {
 	$("#postsLoader").classList.remove("hidden");
@@ -33,12 +34,12 @@ async function getPosts() {
 	hideLoadMoreGlobal = false;
 	hideLoadMoreFollowed = false;
 	for (let i in requestJSON.globalPosts) {
-		const post = postblock(requestJSON.globalPosts[i]);
+		const post = new PostBlockComponent(requestJSON.globalPosts[i]);
 		posts.appendChild(post);
 	}
 	if (requestJSON.followedPosts) {
 		for (let i in requestJSON.followedPosts) {
-			const post = postblock(requestJSON.followedPosts[i]);
+			const post = new PostBlockComponent(requestJSON.followedPosts[i]);
 			fposts.appendChild(post);
 		}
 	}
@@ -164,7 +165,7 @@ async function loadMore() {
 	}
 
 	for (let i in feedPosts) {
-		const post = postblock(feedPosts[i]);
+		const post = new PostBlockComponent(feedPosts[i]);
 		posts.appendChild(post);
 	}
 
@@ -203,10 +204,7 @@ window.addEventListener("load", function() {
 			$("#overlay").classList.remove("hidden");
 			document.body.classList.add("overflowhidden");
 		} else {
-			window.scrollTo(0, 0);
-			$("#loginformcontainer").classList.remove("hidden");
-			$("#overlay").classList.remove("hidden");
-			document.body.classList.add("overflowhidden");
+			$("stibarc-login-modal")[0].show();
 		}
 	}
 	$("#addattachment").onclick = function(e) {

@@ -12,45 +12,21 @@
 	<link rel="stylesheet" href="./css/themes/default.css" id="theme">
 	<link rel="stylesheet" href="./css/global.css">
 	<link rel="stylesheet" href="./css/index.css">
+	<script src="./js/global.js"></script>
 	<script type="module" src="./components/LoginModal.js"></script>
 	<script type="module" src="./components/RegisterModal.js"></script>
+	<script type="module" src="./components/Header.js"></script>
+	<script type="module" src="./components/Footer.js"></script>
 	<script type="module" src="./components/Icon.js"></script>
-	<script src="./js/global.js"></script>
+	<script src="./components/AttachmentBlock.js"></script>
+	<script src="./components/PostBlock.js"></script>
 	<script src="./js/index.js"></script>
 </head>
 
 <body>
+	<stibarc-header></stibarc-header>
 	<stibarc-login-modal></stibarc-login-modal>
 	<stibarc-register-modal></stibarc-register-modal>
-	<header id="headerElement">
-		<span id="mainHeader" class="flexcontainer">
-			<span class="leftalign">
-				<a href="./" class="flexcontainer" id="logo"><img src="./img/logo.png"></a>
-			</span>
-			<span class="searchbar flexcontainer hideOnMobile">
-				<input type="search" id="searchbox" placeholder="Search" autocomplete="false">
-			</span>
-			<span class="flexcontainer rightalign">
-				<span id="searchBtn" class="showOnMobileFlex"><img src="./img/icon/search.svg" alt="Search"></span>
-				<img src="https://betacdn.stibarc.com/pfp/default.png" id="mypfp" class="headerpfp">
-			</span>
-		</span>
-		<span id="hiddenHeader" class="hidden">
-			<div class="loggedout headerDropdown">
-				<button class="menuElement" id="menulogin" onclick="login()">Login</button>
-				<button class="menuElement" id="menuregister" onclick="register()">Register</button>
-			</div>
-			<div class="loggedin headerDropdown hidden">
-				<a class="menuElement" id="menueditprofile" href="./editprofile.html">Edit profile</a>
-				<a class="menuElement" id="menusettings" href="./settings.html">Settings</a>
-				<div class="separator"></div>
-				<a class="menuElement" id="menuprofile"></a>
-				<button class="menuElement red" id="menulogout" onclick="logout()">Logout</button>
-			</div>
-		</span>
-		<span id="searchResults" class="flexcontainer flexcolumn hidden">
-		</span>
-	</header>
 	<main class="flexcontainer flexcolumn">
 		<span class="flexcontainer feedFilter">
 			<span class="rightalign">
@@ -73,11 +49,7 @@
 		</span>
 		<button id="loadMoreBtn" class="hidden flexcontainer button primary">Load more</button>
 	</main>
-	<footer class="flexcontainer">
-		<span>
-			&copy; 2024 <a href="https://team.stibarc.com" target="_blank">STiBaRC Team</a>
-		</span>
-	</footer>
+	<stibarc-footer></stibarc-footer>
 	<span class="floatingplusbuttoncontainer">
 		<div id="newpost" class="flexcontainer floatingplusbutton" title="Create Post">
 			<svg class="icon iconBig"><use href="./img/icon/icons.svg#plus"></use></svg>

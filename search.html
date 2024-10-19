@@ -12,39 +12,21 @@
 	<link rel="stylesheet" href="./css/themes/default.css" id="theme">
 	<link rel="stylesheet" href="./css/global.css">
 	<script src="./js/global.js"></script>
+	<script type="module" src="./components/LoginModal.js"></script>
+	<script type="module" src="./components/RegisterModal.js"></script>
+	<script type="module" src="./components/Header.js"></script>
+	<script type="module" src="./components/Footer.js"></script>
+	<script type="module" src="./components/Icon.js"></script>
+	<script src="./components/UserBlock.js"></script>
+	<script src="./components/AttachmentBlock.js"></script>
+	<script src="./components/PostBlock.js"></script>
 	<script src="./js/search.js"></script>
 </head>
 
 <body>
-	<header id="headerElement">
-		<span id="mainHeader" class="flexcontainer">
-			<span class="leftalign">
-				<a href="./" class="flexcontainer" id="logo"><img src="./img/logo.png"></a>
-			</span>
-			<span class="searchbar flexcontainer hideOnMobile">
-				<input type="search" id="searchbox" placeholder="Search" autocomplete="false">
-			</span>
-			<span class="flexcontainer rightalign">
-				<span id="searchBtn" class="showOnMobileFlex"><img src="./img/icon/search.svg" alt="Search"></span>
-				<img src="https://betacdn.stibarc.com/pfp/default.png" id="mypfp" class="headerpfp">
-			</span>
-		</span>
-		<span id="hiddenHeader" class="hidden">
-			<div class="loggedout headerDropdown">
-				<button class="menuElement" id="menulogin" onclick="login()">Login</button>
-				<button class="menuElement" id="menuregister" onclick="register()">Register</button>
-			</div>
-			<div class="loggedin headerDropdown hidden">
-				<a class="menuElement" id="menueditprofile" href="./editprofile.html">Edit profile</a>
-				<a class="menuElement" id="menusettings" href="./settings.html">Settings</a>
-				<div class="separator"></div>
-				<a class="menuElement" id="menuprofile"></a>
-				<button class="menuElement red" id="menulogout" onclick="logout()">Logout</button>
-			</div>
-		</span>
-		<span id="searchResults" class="flexcontainer flexcolumn hidden">
-		</span>
-	</header>
+	<stibarc-header></stibarc-header>
+	<stibarc-login-modal></stibarc-login-modal>
+	<stibarc-register-modal></stibarc-register-modal>
 	<main class="flexcontainer flexcolumn">
 		<span class="searchbar flexcontainer flexcolumn flexstart noflexgrow margintop showOnMobileFlex">
 			<input type="search" id="searchboxMobile" placeholder="Search" autocomplete="off">
@@ -55,39 +37,10 @@
 		<span id="users"></span>
 		<span id="posts" class="posts"></span>
 	</main>
-	<footer class="flexcontainer">
-		<span>
-			&copy; 2024 <a href="https://team.stibarc.com" target="_blank">STiBaRC Team</a>
-		</span>
-	</footer>
+	<stibarc-footer></stibarc-footer>
 	<span id="overlay" class="hidden">
 		<span id="overlaybg"></span>
-		<span id="loginformcontainer" class="hidden flexcontainer flexcolumn formcontainer">
-			<span id="loginform" class="block modal">
-				<div class="flexcontainer flexcolumn">
-					<h2>Login</h2>
-					<span id="loginerrorcontainer" class="flexcontainer flexcolumn hidden">
-						<span id="loginerror" class="red"></span>
-						<span>&nbsp;</span>
-					</span>
-					<input type="text" id="Login-usernameinput" placeholder="Username" autocomplete="username">
-					<span>&nbsp;</span>
-					<input type="password" id="Login-passwordinput" placeholder="Password" autocomplete="current-password">
-					<span>&nbsp;</span>
-					<span id="Login-tfa" class="hidden flexcontainer flexcolumn">
-						<input type="number" id="Login-tfainput" placeholder="2FA Code">
-						<span>&nbsp;</span>
-					</span>
-					<span class="flexcontainer">
-						<button id="loginbutton" class="flexcontainer button small primary">Login</button>
-						<button id="logincancel" class="flexcontainer button">Cancel</button>
-					</span>
-					<button id="registerlink" class="flexcontainer button">Register</button>
-				</div>
-			</span>
-		</span>
-
-
+	</span>
 </body>
 
 </html>

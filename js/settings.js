@@ -3,25 +3,25 @@ let isMobile;
 let tfaEnabled = false;
 
 function switchTab(tabEl) {
-    $(".sidebarItems li").forEach(item => {
-        item.classList.remove("active");
-    });
-    tabEl.classList.add("active");
-    let tab = tabEl.id.replace("tab-", "");
-    location.hash = tab;
-    $(".tabContent").forEach(item => {
-        item.classList.add("hidden");
-    });
-    if (isMobile) {
-        $("#backBtn").classList.remove("hidden");
-        $("#sidebarTabs").classList.add("hidden");
-        if (tab) {
-            $("#sideContent").classList.remove("hidden");
-        }
-    }
-    if (tab || !isMobile) {
-        $(`#tabContent-${tab}`).classList.remove("hidden");
-    }
+	$(".sidebarItems li").forEach(item => {
+		item.classList.remove("active");
+	});
+	tabEl.classList.add("active");
+	let tab = tabEl.id.replace("tab-", "");
+	location.hash = tab;
+	$(".tabContent").forEach(item => {
+		item.classList.add("hidden");
+	});
+	if (isMobile) {
+		$("#backBtn").classList.remove("hidden");
+		$("#sidebarTabs").classList.add("hidden");
+		if (tab) {
+			$("#sideContent").classList.remove("hidden");
+		}
+	}
+	if (tab || !isMobile) {
+		$(`#tabContent-${tab}`).classList.remove("hidden");
+	}
 }
 
 window.addEventListener("load", () => {
@@ -68,61 +68,61 @@ function displaySessions(sessions) {
 const mediaQuery = window.matchMedia("(max-width: 475px)");
 
 function handleViewportChange(e) {
-    if (e.matches) {
-        isMobile = true;
-        if (location.hash) {
-            $("#backBtn").classList.remove("hidden");
-            $("#sideContent").classList.remove("hidden");
-            $("#sidebarTabs").classList.add("hidden");
-        } else {
-            $("#backBtn").classList.add("hidden");
-            $("#sideContent").classList.add("hidden");
-            $("#sidebarTabs").classList.remove("hidden");
-        }
-    } else {
-        isMobile = false;
-        $("#backBtn").classList.add("hidden");
-        $("#sideContent").classList.remove("hidden");
-        $("#sidebarTabs").classList.remove("hidden");
-    }
+	if (e.matches) {
+		isMobile = true;
+		if (location.hash) {
+			$("#backBtn").classList.remove("hidden");
+			$("#sideContent").classList.remove("hidden");
+			$("#sidebarTabs").classList.add("hidden");
+		} else {
+			$("#backBtn").classList.add("hidden");
+			$("#sideContent").classList.add("hidden");
+			$("#sidebarTabs").classList.remove("hidden");
+		}
+	} else {
+		isMobile = false;
+		$("#backBtn").classList.add("hidden");
+		$("#sideContent").classList.remove("hidden");
+		$("#sidebarTabs").classList.remove("hidden");
+	}
 }
 
 window.addEventListener("load", async () => {
-    listatehooks.push((state) => {
-        if (state) {
-            if (isMobile && !location.hash) {
-                $("#sideContentLoading").classList.add("hidden");
-            }
-            updateInfo();
-        } else {
-            location.href = "./";
-        }
-    });
-    $(".sidebarItems li").forEach(item => {
-        item.addEventListener("click", () => {
-            switchTab(item);
-        });
-    });
-    $(".tabContent").forEach(element => {
-        element.classList.add("hidden");
-    });
-    $(`#tab-${selectedTab}`).classList.add("active");
-    if (location.hash || !isMobile) {
-        $(`#tabContent-${selectedTab}`).classList.remove("hidden");
-    }
+	listatehooks.push((state) => {
+		if (state) {
+			if (isMobile && !location.hash) {
+				$("#sideContentLoading").classList.add("hidden");
+			}
+			updateInfo();
+		} else {
+			location.href = "./";
+		}
+	});
+	$(".sidebarItems li").forEach(item => {
+		item.addEventListener("click", () => {
+			switchTab(item);
+		});
+	});
+	$(".tabContent").forEach(element => {
+		element.classList.add("hidden");
+	});
+	$(`#tab-${selectedTab}`).classList.add("active");
+	if (location.hash || !isMobile) {
+		$(`#tabContent-${selectedTab}`).classList.remove("hidden");
+	}
 
-    handleViewportChange(mediaQuery);
-    mediaQuery.addListener(handleViewportChange);
+	handleViewportChange(mediaQuery);
+	mediaQuery.addListener(handleViewportChange);
 
-    $("#backBtn").addEventListener("click", () => {
-        $("#backBtn").classList.add("hidden");
-        $("#sideContent").classList.add("hidden");
-        $("#sidebarTabs").classList.remove("hidden");
-        selectedTab = "";
-        $(".sidebarItems li").forEach(item => {
-            item.classList.remove("active");
-        });
-    });
+	$("#backBtn").addEventListener("click", () => {
+		$("#backBtn").classList.add("hidden");
+		$("#sideContent").classList.add("hidden");
+		$("#sidebarTabs").classList.remove("hidden");
+		selectedTab = "";
+		$(".sidebarItems li").forEach(item => {
+			item.classList.remove("active");
+		});
+	});
 
 	$("#changepasswordbutton").addEventListener("click", () => {
 		window.scrollTo(0, 0);

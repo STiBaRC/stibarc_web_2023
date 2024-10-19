@@ -22,7 +22,7 @@ window.addEventListener("load", async () => {
 		return;
 	}
 
-	$("#searchbox").value = query;
+	$("stibarc-header")[0].setSearchBox(query);
 	$("#searchboxMobile").value = query;
 	$("#loader").style.display = "flex";
 
@@ -44,11 +44,11 @@ window.addEventListener("load", async () => {
 	const posts = document.createDocumentFragment();
 
 	for (const user of rj.results.users) {
-		users.appendChild(userBlock(user));
+		users.appendChild(new UserBlockComponent(user));
 	}
 
 	for (const post of rj.results.posts) {
-		posts.appendChild(postblock(post));
+		posts.appendChild(new PostBlockComponent(post));
 	}
 
 	$("#users").appendChild(users);

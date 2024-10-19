@@ -83,4 +83,5 @@
 
 .feedFilter {
 	padding: 0.75rem 0;
+	z-index: 10;
 }

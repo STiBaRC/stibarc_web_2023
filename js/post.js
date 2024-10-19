@@ -5,6 +5,7 @@ let attachmentBlobURLs = [];
 let newAttachments = [];
 let newAttachmentFiles = [];
 let newAttachmentBlobURLs = [];
+let clicked = false;
 const id = parseInt(new URL(location).searchParams.get("id"));
 
 const upvoteIcon = document.createElement("stibarc-icon");
@@ -71,10 +72,7 @@ window.addEventListener("load", async function () {
 			$("#upvoteBtn").append(upvoteIcon, voteResult.upvotes);
 			$("#downvoteBtn").append(downvoteIcon, voteResult.downvotes);
 		} else {
-			window.scrollTo(0, 0);
-			$("#loginformcontainer").classList.remove("hidden");
-			$("#overlay").classList.remove("hidden");
-			document.body.classList.add("overflowhidden");
+			$("stibarc-login-modal")[0].show();
 		}
 	});
 	$("#downvoteBtn").addEventListener("click", async () => {
@@ -84,10 +82,7 @@ window.addEventListener("load", async function () {
 			$("#upvoteBtn").append(upvoteIcon, voteResult.upvotes);
 			$("#downvoteBtn").append(downvoteIcon, voteResult.downvotes);
 		} else {
-			window.scrollTo(0, 0);
-			$("#loginformcontainer").classList.remove("hidden");
-			$("#overlay").classList.remove("hidden");
-			document.body.classList.add("overflowhidden");
+			$("stibarc-login-modal")[0].show();
 		}
 	});
 	$("#opennewcommentbutton").addEventListener("click", () => {
@@ -95,10 +90,7 @@ window.addEventListener("load", async function () {
 			$("#opennewcommentbutton").classList.add("hidden");
 			$("#newcomment").classList.remove("hidden");
 		} else {
-			window.scrollTo(0, 0);
-			$("#loginformcontainer").classList.remove("hidden");
-			$("#overlay").classList.remove("hidden");
-			document.body.classList.add("overflowhidden");
+			$("stibarc-login-modal")[0].show();
 		}
 	});
 	$("#newcommentbutton").addEventListener("click", newComment);
@@ -208,15 +200,7 @@ window.addEventListener("load", async function () {
 
 	if (post.attachments && post.attachments.length > 0 && post.attachments[0] !== null) {
 		for (let i = 0; i < post.attachments.length; i++) {
-			const attachment = attachmentblock(post.attachments[i]);
-			attachment.classList.add("postattachment");
-			const parts = post.attachments[i].split(".");
-			const ext = parts[parts.length - 1];
-			if (images.indexOf(ext) != -1) {
-				attachment.addEventListener("click", () => {
-					window.open(post.attachments[i], "_blank");
-				});
-			}
+			const attachment = new AttachmentBlockComponent(post.attachments[i], true);
 			$("#postcontent").append(attachment);
 		}
 	}

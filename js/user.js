@@ -31,6 +31,10 @@ async function followAction() {
 	}
 }
 
+function showLogin() {
+	document.querySelector("stibarc-login-modal").show();
+}
+
 window.addEventListener("load", async () => {
 	document.title = `${username} | STiBaRC`;
 	$("#userusername").innerText = username;
@@ -89,11 +93,11 @@ window.addEventListener("load", async () => {
 	if (localStorage.sess) {
 		$("#followbutton").addEventListener("click", followAction);
 	} else {
-		$("#followbutton").addEventListener("click", showLoginModel);
+		$("#followbutton").addEventListener("click", showLogin);
 	}
 	listatehooks.push((state) => {
 		if (state) {
-			$("#followbutton").removeEventListener("click", showLoginModel);
+			$("#followbutton").removeEventListener("click", showLogin);
 			$("#followbutton").addEventListener("click", followAction);
 			if (user.followers.filter(e => e.username == localStorage.username).length > 0) {
 				$("#followbutton").innerText = "Unfollow";
@@ -102,7 +106,7 @@ window.addEventListener("load", async () => {
 			}
 		} else {
 			$("#followbutton").removeEventListener("click", followAction);
-			$("#followbutton").addEventListener("click", showLoginModel);
+			$("#followbutton").addEventListener("click", showLogin);
 			$("#followbutton").innerText = "Follow";
 		}
 	});
@@ -114,7 +118,7 @@ window.addEventListener("load", async () => {
 	$("#userPostsLoader").classList.add("hidden");
 	const posts = document.createDocumentFragment();
 	for (let i in user.posts) {
-		const post = postblock(user.posts[i]);
+		const post = new PostBlockComponent(user.posts[i]);
 		posts.appendChild(post);
 	}
 	$("#posts").appendChild(posts);

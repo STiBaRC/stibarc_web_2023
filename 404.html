@@ -11,16 +11,17 @@
 	<link href="https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@300;400&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="/css/themes/default.css" id="theme">
 	<link rel="stylesheet" href="/css/global.css">
+	<script src="/js/global.js"></script>
+	<script type="module" src="./components/LoginModal.js"></script>
+	<script type="module" src="./components/RegisterModal.js"></script>
+	<script type="module" src="./components/Header.js"></script>
+	<script type="module" src="./components/Footer.js"></script>
 </head>
 
 <body>
-	<header id="headerElement">
-		<span id="mainHeader" class="flexcontainer">
-			<span class="leftalign">
-				<a href="/" class="flexcontainer" id="logo"><img src="/img/logo.png"></a>
-			</span>
-		</span>
-	</header>
+	<stibarc-header></stibarc-header>
+	<stibarc-login-modal></stibarc-login-modal>
+	<stibarc-register-modal></stibarc-register-modal>
 	<main class="flexcontainer flexcolumn">
 		<span class="verticalspacer"></span>
 		<span class="block flexcontainer flexcolumn">
@@ -28,11 +29,10 @@
 			<img src="/img/jimbomournsyourmisfortune.png">
 		</span>
 	</main>
-	<footer class="flexcontainer">
-		<span>
-			&copy; 2024 <a href="https://team.stibarc.com" target="_blank">STiBaRC Team</a>
-		</span>
-	</footer>
+	<stibarc-footer></stibarc-footer>
+	<span id="overlay" class="hidden">
+		<span id="overlaybg"></span>
+	</span>
 </body>
 
 </html>

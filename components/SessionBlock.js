@@ -5,49 +5,49 @@ class SessionBlockComponent extends HTMLElement {
 		<style>
 			@import url("./css/global.css");
 
-            .sessionBlock {
-                background-color: var(--color3);
-                padding: 12px;
-                border-radius: 8px;
-                margin-bottom: 10px;
-            }
+			.sessionBlock {
+				background-color: var(--color3);
+				padding: 12px;
+				border-radius: 8px;
+				margin-bottom: 10px;
+			}
 
-            .topFlex {
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-            }
+			.topFlex {
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+			}
 
-            #loginDate {
-                
-            }
+			#loginDate {
 
-            #delete {
-                margin-left: 8px;
-                transition: color 0.15s ease-in-out;
-            }
+			}
 
-            #delete:hover, #delete:focus {
-                color: var(--red);
-            }
+			#delete {
+				margin-left: 8px;
+				transition: color 0.15s ease-in-out;
+			}
 
-            #permissions {
-                padding-top: 12px;
-            }
+			#delete:hover, #delete:focus {
+				color: var(--red);
+			}
 
-            .badge {
-                background-color: var(--color10);
-                border-radius: 25px;
-                padding: 2px 8px;
-                margin-right: 4px;
-            }
+			#permissions {
+				padding-top: 12px;
+			}
+
+			.badge {
+				background-color: var(--color10);
+				border-radius: 25px;
+				padding: 2px 8px;
+				margin-right: 4px;
+			}
 
 		</style>
 		<div class="sessionBlock" id="session">
 			<div class="topFlex"><span id="loginDate"></span><button class="button smallBtn light" id="delete" title="Revoke Session">X</button></div>
 			<div id="userAgent"></div>
 			<div id="loginIP"></div>
-            <div id="permissions"></div>
+			<div id="permissions"></div>
 		</div>
 	`;
 	session;

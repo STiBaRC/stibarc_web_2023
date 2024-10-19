@@ -32,7 +32,7 @@ class IconComponent extends HTMLElement {
 		stroke: none;
 	}
 	</style>`;
-
+ 
 	connectedCallback() {
 
 		this.shadow = this.attachShadow({ mode: "closed" });

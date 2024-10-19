@@ -4,6 +4,7 @@ let target;
 let newAttachments = [];
 let newAttachmentFiles = [];
 let newAttachmentBlobURLs = [];
+let clicked = false;
 const sp = new URL(location).searchParams;
 const id = parseInt(sp.get("id"));
 const cid = parseInt(sp.get("cid"));
@@ -160,7 +161,7 @@ window.addEventListener("load", async () => {
 		$("#editbody").value = post.content;
 		if (post.attachments && post.attachments.length > 0 && post.attachments[0] !== null) {
 			for (let i = 0; i < post.attachments.length; i++) {
-				const attachment = attachmentblock(post.attachments[i]);
+				const attachment = new AttachmentBlockComponent(post.attachments[i]);
 				attachment.addEventListener("click", () => {
 					post.attachments.splice(i, 1);
 					attachment.remove();
@@ -173,7 +174,7 @@ window.addEventListener("load", async () => {
 	} else {
 		$("#editbody").value = comment.content;
 		for (const i in comment.attachments) {
-			let attachment = attachmentblock(comment.attachments[i]);
+			let attachment = new AttachmentBlockComponent(comment.attachments[i]);
 			attachment.addEventListener("click", () => {
 				comment.attachments.splice(i, 1);
 				attachment.remove();
