@@ -137,6 +137,16 @@ class CommentBlockComponent extends HTMLElement {
 				this.shadow.querySelector("#content").append(attachment);
 			}
 		}
+
+		listatehooks.push((state) => {
+			if (state) {
+				if (this.comment.poster.username === localStorage.username) {
+					this.shadow.querySelector("#edit").classList.remove("hidden");
+				}
+			} else {
+				this.shadow.querySelector("#edit").classList.add("hidden");
+			}
+		});
 	}
 }
 
