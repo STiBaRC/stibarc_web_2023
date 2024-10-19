@@ -30,7 +30,7 @@ class UserBlockComponent extends HTMLElement {
 		this.shadow.querySelector("#username").textContent = this.user.username;
 		if (this.user.verified) this.shadow.querySelector("#verified").classList.remove("hidden");
 		this.shadow.querySelector("#pronouns").setAttribute("title", `Pronouns (${this.user.pronouns})`);
-		this.shadow.querySelector("#pronouns").textContent = `(${this.user.pronouns})`;
+		if (this.user.pronouns) this.shadow.querySelector("#pronouns").textContent = `(${this.user.pronouns})`;
 	}
 }
 

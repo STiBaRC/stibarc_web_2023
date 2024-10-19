@@ -3,6 +3,7 @@ class LoginModalComponent extends HTMLElement {
 	#shadowDomHTML = `
 		<style>
 			@import url("./css/global.css");
+
 			dialog {
 				box-sizing: border-box;
 				border-radius: 15px;
@@ -21,6 +22,7 @@ class LoginModalComponent extends HTMLElement {
 			@media only screen and (max-width: 750px) {
 				dialog {
 					width: calc(100vw - 40px);
+					max-width: calc(100vw - 40px);
 				}
 			}
 
@@ -62,26 +64,36 @@ class LoginModalComponent extends HTMLElement {
 	connectedCallback() {
 		this.shadow = this.attachShadow({ mode: "closed" });
 		this.shadow.innerHTML = this.#shadowDomHTML;
+
+		this.shadow.querySelector("dialog").addEventListener("cancel", (e) => {
+			e.preventDefault();
+		});
+
 		this.shadow.querySelector("#loginbutton").addEventListener("click", () => {
 			this.#login();
 		});
+
 		this.shadow.querySelector("#logincancel").addEventListener("click", () => {
 			this.hide();
 		});
+
 		this.shadow.querySelector("#registerlink").addEventListener("click", () => {
 			this.hide();
 			document.querySelector("stibarc-register-modal").show();
 		});
+
 		this.shadow.querySelector("#username").onkeyup = (e) => {
 			if (e.key == "Enter") {
 				this.shadow.querySelector("#password").focus();
 			}
 		};
+
 		this.shadow.querySelector("#password").onkeyup = (e) => {
 			if (e.key == "Enter") {
 				this.#login();
 			}
 		};
+
 		this.shadow.querySelector("#tfainput").onkeyup = (e) => {
 			if (e.key == "Enter") {
 				this.#login();

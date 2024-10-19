@@ -3,6 +3,7 @@ class RegisterModalComponent extends HTMLElement {
 	#shadowDomHTML = `
 		<style>
 			@import url("./css/global.css");
+
 			dialog {
 				box-sizing: border-box;
 				border-radius: 15px;
@@ -21,6 +22,7 @@ class RegisterModalComponent extends HTMLElement {
 			@media only screen and (max-width: 750px) {
 				dialog {
 					width: calc(100vw - 40px);
+					max-width: calc(100vw - 40px);
 				}
 			}
 
@@ -81,6 +83,10 @@ class RegisterModalComponent extends HTMLElement {
 	connectedCallback() {
 		this.shadow = this.attachShadow({ mode: "closed" });
 		this.shadow.innerHTML = this.#shadowDomHTML;
+
+		this.shadow.querySelector("dialog").addEventListener("cancel", (e) => {
+			e.preventDefault();
+		});
 
 		this.shadow.querySelector("#registerbutton").addEventListener("click", () => {
 			this.#register();
