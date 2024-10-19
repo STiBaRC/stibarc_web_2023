@@ -43,13 +43,26 @@ async function updateInfo() {
 			session: localStorage.sess,
 		}),
 	});
-	const user = (await r.json()).user;
+	const response = (await r.json());
+	/* FTA */
+	const user = response['user'];
 	$(".sideContent").forEach((item) => {
 		item.classList.remove("hidden");
 	});
 	$("#sideContentLoading").classList.add("hidden");
 	$("#tfabutton").innerText = user.totpEnabled ? "Disable 2FA" : "Enable 2FA";
 	tfaEnabled = user.totpEnabled;
+	/* Sessions */
+	const sessions = user['sessions'];
+	displaySessions(sessions);
+}
+
+function displaySessions(sessions) {
+	const sessionBlocks = document.createDocumentFragment();
+	for (const session of sessions) {
+		sessionBlocks.appendChild(new SessionBlockComponent(session));
+	}
+	$("#sessions").appendChild(sessionBlocks);
 }
 
 const mediaQuery = window.matchMedia("(max-width: 475px)");

@@ -11,40 +11,20 @@
 	<link href="https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@300;400&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="./css/themes/default.css" id="theme">
 	<link rel="stylesheet" href="./css/global.css">
+	<link rel="stylesheet" href="./css/settings.css">
 	<script src="./js/global.js"></script>
+	<script type="module" src="./components/LoginModal.js"></script>
+	<script type="module" src="./components/RegisterModal.js"></script>
+	<script type="module" src="./components/Header.js"></script>
+	<script type="module" src="./components/Footer.js"></script>
+	<script src="./components/SessionBlock.js"></script>
 	<script src="./js/settings.js"></script>
 </head>
 
 <body>
-	<header id="headerElement">
-		<span id="mainHeader" class="flexcontainer">
-			<span class="leftalign">
-				<a href="./" class="flexcontainer" id="logo"><img src="./img/logo.png"></a>
-			</span>
-			<span class="searchbar flexcontainer hideOnMobile">
-				<input type="search" id="searchbox" placeholder="Search" autocomplete="false">
-			</span>
-			<span class="flexcontainer rightalign">
-				<span id="searchBtn" class="showOnMobileFlex"><img src="./img/icon/search.svg" alt="Search"></span>
-				<img src="https://betacdn.stibarc.com/pfp/default.png" id="mypfp" class="headerpfp">
-			</span>
-		</span>
-		<span id="hiddenHeader" class="hidden">
-			<div class="loggedout headerDropdown">
-				<button class="menuElement" id="menulogin" onclick="login()">Login</button>
-				<button class="menuElement" id="menuregister" onclick="register()">Register</button>
-			</div>
-			<div class="loggedin headerDropdown hidden">
-				<a class="menuElement" id="menueditprofile" href="./editprofile.html">Edit profile</a>
-				<a class="menuElement" id="menusettings" href="./settings.html">Settings</a>
-				<div class="separator"></div>
-				<a class="menuElement" id="menuprofile"></a>
-				<button class="menuElement red" id="menulogout" onclick="logout()">Logout</button>
-			</div>
-		</span>
-		<span id="searchResults" class="flexcontainer flexcolumn hidden">
-		</span>
-	</header>
+	<stibarc-header></stibarc-header>
+	<stibarc-login-modal></stibarc-login-modal>
+	<stibarc-register-modal></stibarc-register-modal>
 	<main class="flexcontainer flexcolumn">
 		<span class="verticalspacer"></span>
 		<span class="contentWithSidebar block">
@@ -74,6 +54,7 @@
 					</span>
 					<span class="tabContent hidden" id="tabContent-sessions">
 						<h2 class="flexcontainer width100 marginbottom">Sessions</h2>
+						<div id="sessions"></div>
 					</span>
 					<span class="tabContent hidden" id="tabContent-display">
 						<h2 class="flexcontainer width100 marginbottom">Display</h2>
@@ -91,80 +72,9 @@
 		</span>
 	
 	</main>
-	<footer class="flexcontainer">
-		<span>
-			&copy; 2024 <a href="https://team.stibarc.com" target="_blank">STiBaRC Team</a>
-		</span>
-	</footer>
+	<stibarc-footer></stibarc-footer>
 	<span id="overlay" class="hidden">
 		<span id="overlaybg"></span>
-		<span id="loginformcontainer" class="hidden flexcontainer flexcolumn formcontainer">
-			<span id="loginform" class="block modal">
-				<div class="flexcontainer flexcolumn">
-					<h2>Login</h2>
-					<span id="loginerrorcontainer" class="flexcontainer flexcolumn hidden">
-						<span id="loginerror" class="red"></span>
-						<span>&nbsp;</span>
-					</span>
-					<input type="text" id="Login-usernameinput" placeholder="Username" autocomplete="username">
-					<span>&nbsp;</span>
-					<input type="password" id="Login-passwordinput" placeholder="Password" autocomplete="current-password">
-					<span>&nbsp;</span>
-					<span id="Login-tfa" class="hidden flexcontainer flexcolumn">
-						<input type="number" id="Login-tfainput" placeholder="2FA Code">
-						<span>&nbsp;</span>
-					</span>
-					<span class="flexcontainer">
-						<button id="loginbutton" class="flexcontainer button small primary">Login</button>
-						<button id="logincancel" class="flexcontainer button">Cancel</button>
-					</span>
-					<button id="registerlink" class="flexcontainer button">Register</button>
-				</div>
-			</span>
-		</span>
-
-			<span id="registerform" class="block modal">
-				<div class="flexcontainer flexcolumn">
-					<h2>Register</h2>
-					<span id="registererrorcontainer" class="flexcontainer flexcolumn hidden">
-						<span id="registererror" class="red"></span>
-						<span>&nbsp;</span>
-					</span>
-					<input type="text" id="Reg-usernameinput" placeholder="Username" autocomplete="username">
-					<span>&nbsp;</span>
-					<input type="password" id="Reg-passwordinput" placeholder="Password" autocomplete="new-password">
-					<span>&nbsp;</span>
-					<input type="password" id="Reg-passwordinput2" placeholder="Password again" autocomplete="new-password">
-					<h3>Optional</h3>
-					<input type="text" id="Reg-nameinput" placeholder="Name" autocomplete="given-name">
-					<span>Show name: <input type="checkbox" id="Reg-showname"></span>
-					<span>&nbsp;</span>
-					<input list="Reg-commonPronouns" id="Reg-pronounsinput" type="text" placeholder="Pronouns" autocomplete="off" autocapitalize="none" maxlength="40">
-					<datalist id="Reg-commonPronouns">
-						<option value="she/her"></option>
-						<option value="he/him"></option>
-						<option value="they/them"></option>
-						<option value="it/it"></option>
-					</datalist>
-					<span>Show pronouns: <input type="checkbox" id="Reg-showpronouns"></span>
-					<span>&nbsp;</span>
-					<input type="email" id="Reg-emailinput" placeholder="Email" autocomplete="email">
-					<span>Show email: <input type="checkbox" id="Reg-showemail"></span>
-					<span>&nbsp;</span>
-					<input type="date" id="Reg-bdayinput" placeholder="Birthday" autocomplete="bday">
-					<span>Show birthday: <input type="checkbox" id="Reg-showbday"></span>
-					<span>&nbsp;</span>
-					<textarea id="Reg-bioinput" placeholder="Bio"></textarea>
-					<span>Show bio: <input type="checkbox" id="Reg-showbio"></span>
-					<span>&nbsp;</span>
-					<span class="flexcontainer">
-						<button id="registerbutton" class="flexcontainer button primary">Register</button>
-						<button id="registercancel" class="flexcontainer button">Cancel</button>
-					</span>
-					<button id="loginlink" class="flexcontainer button">Login</button>
-				</div>
-			</span>
-		</span>
 		<span id="changepasswordformcontainer" class="hidden flexcontainer flexcolumn formcontainer">
 			<span id="changepasswordform" class="block modal">
 				<div class="flexcontainer flexcolumn">
@@ -215,22 +125,22 @@
 				</div>
 			</span>
 		</span>
-	</span>
-	<span id="disabletfaformcontainer" class="hidden flexcontainer flexcolumn formcontainer">
-		<span id="disabletfaform" class="block modal">
-			<div class="flexcontainer flexcolumn">
-				<h2>Disable 2FA</h2>
-				<span id="disabletfaerrorcontainer" class="flexcontainer flexcolumn hidden">
-					<span id="disabletfaerror" class="red"></span>
+		<span id="disabletfaformcontainer" class="hidden flexcontainer flexcolumn formcontainer">
+			<span id="disabletfaform" class="block modal">
+				<div class="flexcontainer flexcolumn">
+					<h2>Disable 2FA</h2>
+					<span id="disabletfaerrorcontainer" class="flexcontainer flexcolumn hidden">
+						<span id="disabletfaerror" class="red"></span>
+						<span>&nbsp;</span>
+					</span>
+					<input id="disabletfainput" placeholder="000 000" maxlength="7" autocomplete="one-time-code" name="one-time-code" type="text" autocapitalize="none" autocorrect="off" inputmode="numeric" spellcheck="false">
 					<span>&nbsp;</span>
-				</span>
-				<input id="disabletfainput" placeholder="000 000" maxlength="7" autocomplete="one-time-code" name="one-time-code" type="text" autocapitalize="none" autocorrect="off" inputmode="numeric" spellcheck="false">
-				<span>&nbsp;</span>
-				<span class="flexcontainer">
-					<button id="disabletfasubmitbutton" class="flexcontainer button primary">Disable 2FA</button>
-					<button id="disabletfacancel" class="flexcontainer button">Cancel</button>
-				</span>
-			</div>
+					<span class="flexcontainer">
+						<button id="disabletfasubmitbutton" class="flexcontainer button primary">Disable 2FA</button>
+						<button id="disabletfacancel" class="flexcontainer button">Cancel</button>
+					</span>
+				</div>
+			</span>
 		</span>
 	</span>
 </body>
