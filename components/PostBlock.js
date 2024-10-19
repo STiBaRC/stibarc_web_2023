@@ -80,6 +80,10 @@ class PostBlockComponent extends HTMLElement {
 			}
 			this.shadow.querySelector("#postcontent").append(attachmentContainer);
 		}
+
+		this.addEventListener("click", () => {
+			window.location.href = `./post.html?id=${this.post.id}`;
+		});
 	}
 }
 
