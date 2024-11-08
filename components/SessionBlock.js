@@ -34,6 +34,13 @@ class SessionBlockComponent extends HTMLElement {
 			#permissions {
 				padding-top: 12px;
 			}
+			
+			#application {
+				padding-top: 12px;
+				justify-content: flex-start;
+				align-items: center;
+				align-content: flex-start;
+			}
 
 			.badge {
 				background-color: var(--color10);
@@ -48,6 +55,7 @@ class SessionBlockComponent extends HTMLElement {
 			<div id="userAgent"></div>
 			<div id="loginIP"></div>
 			<div id="permissions"></div>
+			<div id="application" class="flexcontainer width100"></div>
 		</div>
 	`;
 	session;
@@ -65,6 +73,15 @@ class SessionBlockComponent extends HTMLElement {
 		this.shadow.querySelector("#loginDate").textContent = `Login Date: ${dateString}`;
 		this.shadow.querySelector("#userAgent").textContent = `User Agent: ${this.session.userAgent}`;
 		this.shadow.querySelector("#loginIP").textContent = `IP: ${this.session.loginIP}`;
+		this.shadow.querySelector("#application").textContent = `Application: ${this.session.application.name}`;
+		if (this.session.application.verified) {
+			const icon = new IconComponent();
+			icon.setAttribute("name", "verified");
+			icon.setAttribute("type", "verifiedBadge");
+			icon.setAttribute("title", "Verified Application");
+			icon.classList.add("verifiedBadge");
+			this.shadow.querySelector("#application").appendChild(icon);
+		}
 		const permissionTags = document.createDocumentFragment();
 		for (const permission of this.session.permissions) {
 			const permissionTag = document.createElement("span");
