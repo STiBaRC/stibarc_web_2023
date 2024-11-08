@@ -23,7 +23,7 @@ async function newComment() {
 	if (content.trim() == "" && newAttachmentFiles.length == 0) return;
 	clicked = true;
 	$("#newcommentbutton").classList.add("loading", "small");
-	$("#newcommentbutton").innerText = "";
+	$("#newcommentbutton").textContent = "";
 	for (const file of newAttachmentFiles) {
 		const response = await fetch("https://betaapi.stibarc.com/v4/uploadfile.sjs", {
 			method: "post",
@@ -51,7 +51,7 @@ async function newComment() {
 	});
 	const responseJSON = await response.json();
 	$("#newcommentbutton").classList.remove("loading", "small");
-	$("#newcommentbutton").innerText = "Comment";
+	$("#newcommentbutton").textContent = "Comment";
 	$("#opennewcommentbutton").classList.remove("hidden");
 	$("#newcomment").classList.add("hidden");
 	$("#newcommentbody").value = "";
@@ -68,7 +68,7 @@ window.addEventListener("load", async function () {
 	$("#upvoteBtn").addEventListener("click", async () => {
 		if (localStorage.sess) {
 			const voteResult = await vote({ id, target: "post", vote: "upvote" });
-			$("#upvoteBtn").innerText = $("#downvoteBtn").innerText = "";
+			$("#upvoteBtn").textContent = $("#downvoteBtn").textContent = "";
 			$("#upvoteBtn").append(upvoteIcon, voteResult.upvotes);
 			$("#downvoteBtn").append(downvoteIcon, voteResult.downvotes);
 		} else {
@@ -78,7 +78,7 @@ window.addEventListener("load", async function () {
 	$("#downvoteBtn").addEventListener("click", async () => {
 		if (localStorage.sess) {
 			const voteResult = await vote({ id, target: "post", vote: "downvote" });
-			$("#upvoteBtn").innerText = $("#downvoteBtn").innerText = "";
+			$("#upvoteBtn").textContent = $("#downvoteBtn").textContent = "";
 			$("#upvoteBtn").append(upvoteIcon, voteResult.upvotes);
 			$("#downvoteBtn").append(downvoteIcon, voteResult.downvotes);
 		} else {
@@ -178,22 +178,22 @@ window.addEventListener("load", async function () {
 	}
 	post = responseJSON.post;
 	document.title = `${post.title} | STiBaRC`;
-	$("#posttitle").innerText = post.title;
+	$("#posttitle").textContent = post.title;
 	$("#postuserlink").setAttribute("href", `./user.html?id=${post.poster.username}`);
 	$("#postpfp").setAttribute("src", post.poster.pfp);
-	$("#postusername").innerText = post.poster.username;
+	$("#postusername").textContent = post.poster.username;
 	if (post.poster.verified) $("#postverified").classList.remove("hidden");
 	if (post.poster.pronouns) {
-		$("#pronouns").innerText = `(${post.poster.pronouns})`;
+		$("#pronouns").textContent = `(${post.poster.pronouns})`;
 		$("#pronouns").title = `Pronouns (${post.poster.pronouns})`;
 	}
-	$("#postdate").innerText = new Date(post.date).toLocaleString();
+	$("#postdate").textContent = new Date(post.date).toLocaleString();
 	if (post.edited) {
 		$("#edited").classList.remove("hidden");
 		$("#edited").title = `Edited ${new Date(post.lastEdited).toLocaleString()}`;
 	}
-	$("#postcontent").innerText = post.content;
-	$("#upvoteBtn").innerText = $("#downvoteBtn").innerText = "";
+	$("#posttextcontent").textContent = post.content;
+	$("#upvoteBtn").textContent = $("#downvoteBtn").textContent = "";
 	$("#upvoteBtn").append(upvoteIcon, post.upvotes);
 	$("#downvoteBtn").append(downvoteIcon, post.downvotes);
 	if (post.poster.username == localStorage.username) $("#editBtn").classList.remove("hidden");

@@ -104,13 +104,13 @@ class LoginModalComponent extends HTMLElement {
 	async #login() {
 		if (this.#clicked) return;
 		this.shadow.querySelector("#errorcontainer").classList.add("hidden");
-		this.shadow.querySelector("#error").innerText = "";
+		this.shadow.querySelector("#error").textContent = "";
 		const username = this.shadow.querySelector("#username").value;
 		const password = this.shadow.querySelector("#password").value;
 		const totpCode = this.shadow.querySelector("#tfainput").value;
 		if (username.trim() == "" || password.trim() == "") return;
 		this.#clicked = true;
-		this.shadow.querySelector("#loginbutton").innerText = "";
+		this.shadow.querySelector("#loginbutton").textContent = "";
 		this.shadow.querySelector("#loginbutton").classList.add("loading");
 		const response = await fetch("https://betaapi.stibarc.com/v4/login.sjs", {
 			method: "post",
@@ -129,16 +129,16 @@ class LoginModalComponent extends HTMLElement {
 			case "error":
 				switch (responseJSON.errorCode) {
 					case "iuop":
-						this.shadow.querySelector("#error").innerText =
+						this.shadow.querySelector("#error").textContent =
 							"Invalid username or password";
 						break;
 					case "totpr":
-						this.shadow.querySelector("#error").innerText = "2FA code required";
+						this.shadow.querySelector("#error").textContent = "2FA code required";
 						this.shadow.querySelector("#tfa").classList.remove("hidden");
 						this.shadow.querySelector("#tfainput").focus();
 						break;
 					case "itotp":
-						this.shadow.querySelector("#error").innerText = "Invalid 2FA code";
+						this.shadow.querySelector("#error").textContent = "Invalid 2FA code";
 						break;
 				}
 				this.shadow.querySelector("#errorcontainer").classList.remove("hidden");
@@ -152,7 +152,7 @@ class LoginModalComponent extends HTMLElement {
 				break;
 		}
 		this.#clicked = false;
-		this.shadow.querySelector("#loginbutton").innerText = "Login";
+		this.shadow.querySelector("#loginbutton").textContent = "Login";
 		this.shadow.querySelector("#loginbutton").classList.remove("loading");
 	}
 
@@ -171,7 +171,7 @@ class LoginModalComponent extends HTMLElement {
 		this.shadow.querySelector("#username").value = "";
 		this.shadow.querySelector("#password").value = "";
 		this.shadow.querySelector("#tfainput").value = "";
-		this.shadow.querySelector("#error").innerText = "";
+		this.shadow.querySelector("#error").textContent = "";
 		this.shadow.querySelector("#errorcontainer").classList.add("hidden");
 		this.shadow.querySelector("#tfa").classList.add("hidden");
 	}

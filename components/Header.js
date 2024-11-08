@@ -305,7 +305,7 @@ class HeaderComponent extends HTMLElement {
 					"src",
 					localStorage.pfp || "https://betacdn.stibarc.com/pfp/default.png"
 				);
-				menuprofile.innerText = localStorage.username;
+				menuprofile.textContent = localStorage.username;
 				menuprofile.addEventListener("click", () => {
 					location.href = `./user.html?username=${localStorage.username}`;
 				});

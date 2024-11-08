@@ -1,7 +1,7 @@
 let tfaEnabled = false;
 
 async function updateInfo() {
-	$("#userusername").innerText = localStorage.username;
+	$("#userusername").textContent = localStorage.username;
 	const r = await fetch("https://betaapi.stibarc.com/v4/getprivatedata.sjs", {
 		method: "post",
 		headers: {

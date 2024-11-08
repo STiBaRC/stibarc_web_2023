@@ -46,7 +46,7 @@ async function getPosts(state) {
 	if (requestJSON.globalPosts.length == 0) {
 		const span = document.createElement("span");
 		span.setAttribute("class", "posts");
-		span.innerText = "There's nothing here ;(";
+		span.textContent = "There's nothing here ;(";
 		$("#posts").appendChild(span);
 	} else {
 		$("#posts").appendChild(posts);
@@ -55,7 +55,7 @@ async function getPosts(state) {
 	if (localStorage.sess !== undefined && requestJSON.followedPosts.length == 0) {
 		const span = document.createElement("span");
 		span.setAttribute("class", "posts");
-		span.innerText = "There's nothing here ;(";
+		span.textContent = "There's nothing here ;(";
 		$("#followedposts").appendChild(span);
 	}
 }
@@ -69,7 +69,7 @@ async function newPost() {
 		return;
 	}
 	clicked = true;
-	$("#newpostbutton").innerText = "";
+	$("#newpostbutton").textContent = "";
 	$("#newpostbutton").classList.add("loading", "small");
 	for (const file of attachmentFiles) {
 		const response = await fetch("https://betaapi.stibarc.com/v4/uploadfile.sjs", {
@@ -97,7 +97,7 @@ async function newPost() {
 		})
 	});
 	const responseJSON = await response.json();
-	$("#newpostbutton").innerText = "Post";
+	$("#newpostbutton").textContent = "Post";
 	$("#newpostbutton").classList.remove("loading", "small");
 	$("#newposttitle").value = "";
 	$("#newpostbody").value = "";

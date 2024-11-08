@@ -137,7 +137,7 @@ if (
 			"src",
 			localStorage.pfp || "https://betacdn.stibarc.com/pfp/default.png"
 		);
-		$("#menuprofile").innerText = localStorage.username;
+		$("#menuprofile").textContent = localStorage.username;
 		$("#menuprofile").href = `./user.html?username=${localStorage.username}`;
 	}
 }

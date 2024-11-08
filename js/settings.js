@@ -50,7 +50,7 @@ async function updateInfo() {
 		item.classList.remove("hidden");
 	});
 	$("#sideContentLoading").classList.add("hidden");
-	$("#tfabutton").innerText = user.totpEnabled ? "Disable 2FA" : "Enable 2FA";
+	$("#tfabutton").textContent = user.totpEnabled ? "Disable 2FA" : "Enable 2FA";
 	tfaEnabled = user.totpEnabled;
 	/* Sessions */
 	const sessions = user['sessions'];
@@ -138,12 +138,12 @@ window.addEventListener("load", async () => {
 		$("#newpasswordinput").value = "";
 		$("#newpasswordinput2").value = "";
 		$("#logoutothers").checked = false;
-		$("#changepassworderror").innerText = "";
+		$("#changepassworderror").textContent = "";
 		$("#changepassworderrorcontainer").classList.add("hidden");
 	});
 	$("#changepasswordsubmitbutton").addEventListener("click", async () => {
 		if ($("#newpasswordinput").value != $("#newpasswordinput2").value) {
-			$("#changepassworderror").innerText = "Passwords do not match";
+			$("#changepassworderror").textContent = "Passwords do not match";
 			$("#changepassworderrorcontainer").classList.remove("hidden");
 			return;
 		}
@@ -168,10 +168,10 @@ window.addEventListener("load", async () => {
 			$("#newpasswordinput").value = "";
 			$("#newpasswordinput2").value = "";
 			$("#logoutothers").checked = false;
-			$("#changepassworderror").innerText = "";
+			$("#changepassworderror").textContent = "";
 			$("#changepassworderrorcontainer").classList.add("hidden");
 		} else {
-			$("#changepassworderror").innerText = d.error;
+			$("#changepassworderror").textContent = d.error;
 			$("#changepassworderrorcontainer").classList.remove("hidden");
 		}
 	});
@@ -197,7 +197,7 @@ window.addEventListener("load", async () => {
 			});
 			const d = await r.json();
 			if (d.status == "ok") {
-				$("#tfakey").innerText = d.totpCode;
+				$("#tfakey").textContent = d.totpCode;
 				const totpString = `otpauth://totp/${encodeURIComponent(
 					localStorage.username
 				)}?secret=${encodeURIComponent(d.totpCode)}&issuer=STiBaRC%20Beta`;
@@ -229,15 +229,15 @@ window.addEventListener("load", async () => {
 			$("#enabletfaformcontainer").classList.add("hidden");
 			$("#overlay").classList.add("hidden");
 			document.body.classList.remove("overflowhidden");
-			$("#enabletfaerror").innerText = "";
+			$("#enabletfaerror").textContent = "";
 			$("#enabletfaerrorcontainer").classList.add("hidden");
 			$("#enabletfaqr").setAttribute("src", "");
-			$("#tfakey").innerText = "";
+			$("#tfakey").textContent = "";
 			$("#tfacode").value = "";
-			$("#tfabutton").innerText = "Disable 2FA";
+			$("#tfabutton").textContent = "Disable 2FA";
 			tfaEnabled = true;
 		} else {
-			$("#enabletfaerror").innerText = d.error;
+			$("#enabletfaerror").textContent = d.error;
 			$("#enabletfaerrorcontainer").classList.remove("hidden");
 		}
 	});
@@ -245,10 +245,10 @@ window.addEventListener("load", async () => {
 		$("#enabletfaformcontainer").classList.add("hidden");
 		$("#overlay").classList.add("hidden");
 		document.body.classList.remove("overflowhidden");
-		$("#enabletfaerror").innerText = "";
+		$("#enabletfaerror").textContent = "";
 		$("#enabletfaerrorcontainer").classList.add("hidden");
 		$("#enabletfaqr").setAttribute("src", "");
-		$("#tfakey").innerText = "";
+		$("#tfakey").textContent = "";
 		$("#tfacode").value = "";
 	});
 	$("#disabletfasubmitbutton").addEventListener("click", async () => {
@@ -269,13 +269,13 @@ window.addEventListener("load", async () => {
 			$("#disabletfaformcontainer").classList.add("hidden");
 			$("#overlay").classList.add("hidden");
 			document.body.classList.remove("overflowhidden");
-			$("#disabletfaerror").innerText = "";
+			$("#disabletfaerror").textContent = "";
 			$("#disabletfaerrorcontainer").classList.add("hidden");
 			$("#disabletfainput").value = "";
-			$("#tfabutton").innerText = "Enable 2FA";
+			$("#tfabutton").textContent = "Enable 2FA";
 			tfaEnabled = false;
 		} else {
-			$("#disabletfaerror").innerText = d.error;
+			$("#disabletfaerror").textContent = d.error;
 			$("#disabletfaerrorcontainer").classList.remove("hidden");
 		}
 	});
@@ -283,7 +283,7 @@ window.addEventListener("load", async () => {
 		$("#disabletfaformcontainer").classList.add("hidden");
 		$("#overlay").classList.add("hidden");
 		document.body.classList.remove("overflowhidden");
-		$("#disabletfaerror").innerText = "";
+		$("#disabletfaerror").textContent = "";
 		$("#disabletfaerrorcontainer").classList.add("hidden");
 		$("#disabletfainput").value = "";
 	});

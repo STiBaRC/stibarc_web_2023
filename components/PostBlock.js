@@ -7,6 +7,18 @@ class PostBlockComponent extends HTMLElement {
 			:host {
 				width: 100%;
 			}
+			#posttextcontent {
+				-webkit-box-orient: vertical;
+				display: -webkit-box;
+				flex-basis: unset;
+				-webkit-line-clamp: 7;
+				line-clamp: 7;
+				word-wrap: break-word;
+				max-width: 100%;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: pre-wrap;
+			}
 		</style>
 		<span class="post flexcontainer flexcolumn">
 			<a id="titleLink" class="posttitle leftalign width100"></a>
@@ -75,7 +87,7 @@ class PostBlockComponent extends HTMLElement {
 			const attachment = new AttachmentBlockComponent(this.post.attachments[0]);
 			attachmentContainer.append(attachment);
 			if (this.post.attachments.length > 1) {
-				moreAttachments.innerText = `+${this.post.attachments.length - 1}`;
+				moreAttachments.textContent = `+${this.post.attachments.length - 1}`;
 				attachmentContainer.append(moreAttachments);
 			}
 			this.shadow.querySelector("#postcontent").append(attachmentContainer);

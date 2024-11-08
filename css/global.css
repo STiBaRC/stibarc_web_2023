@@ -360,18 +360,6 @@ stibarc-icon {
 	width: 100%;
 }
 
-.posts .postcontent span {
-	-webkit-box-orient: vertical;
-	display: -webkit-box;
-	flex-basis: unset;
-	-webkit-line-clamp: 7;
-	line-clamp: 7;
-	word-wrap: break-word;
-	max-width: 100%;
-	overflow: hidden;
-	text-overflow: ellipsis;
-}
-
 .metaSpan stibarc-icon {
 	margin-right: 3px;
 }

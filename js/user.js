@@ -3,7 +3,7 @@ const username = sp.get("username") || sp.get("id");
 let user;
 
 async function followAction() {
-	$("#followbutton").innerText = "";
+	$("#followbutton").textContent = "";
 	$("#followbutton").classList.add("loading");
 	const fr = await fetch("https://betaapi.stibarc.com/v4/followuser.sjs", {
 		method: "post",
@@ -22,12 +22,12 @@ async function followAction() {
 	} else {
 		user.followers = user.followers.filter(e => e.username != localStorage.username)
 	}
-	$("#followers").innerText = `Followers: ${user.followers.length}`;
-	$("#following").innerText = `Following: ${user.following.length}`;
+	$("#followers").textContent = `Followers: ${user.followers.length}`;
+	$("#following").textContent = `Following: ${user.following.length}`;
 	if (user.followers.filter(e => e.username == localStorage.username).length > 0) {
-		$("#followbutton").innerText = "Unfollow";
+		$("#followbutton").textContent = "Unfollow";
 	} else {
-		$("#followbutton").innerText = "Follow";
+		$("#followbutton").textContent = "Follow";
 	}
 }
 
@@ -37,7 +37,7 @@ function showLogin() {
 
 window.addEventListener("load", async () => {
 	document.title = `${username} | STiBaRC`;
-	$("#userusername").innerText = username;
+	$("#userusername").textContent = username;
 
 	setLoggedinState(localStorage.sess);
 	
@@ -72,24 +72,24 @@ window.addEventListener("load", async () => {
 	$("#userBanner").addEventListener("click", () => {
 		window.open(user.banner, "_blank");
 	});
-	$("#name").innerText = `Real name: ${user.name}`;
+	$("#name").textContent = `Real name: ${user.name}`;
 	if (user.pronouns) {
-		$("#pronouns").innerText = `(${user.pronouns})`;
+		$("#pronouns").textContent = `(${user.pronouns})`;
 		$("#pronouns").title = `Pronouns (${user.pronouns})`;
 	}
-	$("#email").innerText = `Email: ${user.email}`;
+	$("#email").textContent = `Email: ${user.email}`;
 	if (user.displayBirthday) {
 		const UTCDate = new Date(user.birthday);
 		const diff = UTCDate.getTimezoneOffset() * 60000;
-		$("#birthday").innerText = `Birthday: ${new Date(UTCDate.valueOf() + diff).toLocaleDateString()}`;
+		$("#birthday").textContent = `Birthday: ${new Date(UTCDate.valueOf() + diff).toLocaleDateString()}`;
 	} else {
-		$("#birthday").innerText = "Birthday: Not shown";
+		$("#birthday").textContent = "Birthday: Not shown";
 	}
-	$("#rank").innerText = `Rank: ${user.rank}`;
-	$("#bio").innerText = user.bio;
+	$("#rank").textContent = `Rank: ${user.rank}`;
+	$("#bio").textContent = user.bio;
 	if (user.displayBio) $("#bio").classList.remove("hidden");
-	$("#followers").innerText = `Followers: ${user.followers.length}`;
-	$("#following").innerText = `Following: ${user.following.length}`;
+	$("#followers").textContent = `Followers: ${user.followers.length}`;
+	$("#following").textContent = `Following: ${user.following.length}`;
 	if (localStorage.sess) {
 		$("#followbutton").addEventListener("click", followAction);
 	} else {
@@ -100,20 +100,20 @@ window.addEventListener("load", async () => {
 			$("#followbutton").removeEventListener("click", showLogin);
 			$("#followbutton").addEventListener("click", followAction);
 			if (user.followers.filter(e => e.username == localStorage.username).length > 0) {
-				$("#followbutton").innerText = "Unfollow";
+				$("#followbutton").textContent = "Unfollow";
 			} else {
-				$("#followbutton").innerText = "Follow";
+				$("#followbutton").textContent = "Follow";
 			}
 		} else {
 			$("#followbutton").removeEventListener("click", followAction);
 			$("#followbutton").addEventListener("click", showLogin);
-			$("#followbutton").innerText = "Follow";
+			$("#followbutton").textContent = "Follow";
 		}
 	});
 	if (user.followers.filter(e => e.username == localStorage.username).length > 0) {
-		$("#followbutton").innerText = "Unfollow";
+		$("#followbutton").textContent = "Unfollow";
 	} else {
-		$("#followbutton").innerText = "Follow";
+		$("#followbutton").textContent = "Follow";
 	}
 	$("#userPostsLoader").classList.add("hidden");
 	const posts = document.createDocumentFragment();

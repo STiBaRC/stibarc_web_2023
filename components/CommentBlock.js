@@ -95,8 +95,8 @@ class CommentBlockComponent extends HTMLElement {
 						target: "comment",
 						vote: "upvote",
 					});
-					this.shadow.querySelector("#upvotes").innerText = voteResult.upvotes;
-					this.shadow.querySelector("#downvotes").innerText = voteResult.downvotes;
+					this.shadow.querySelector("#upvotes").textContent = voteResult.upvotes;
+					this.shadow.querySelector("#downvotes").textContent = voteResult.downvotes;
 				} else {
 					$("stibarc-login-modal")[0].show();
 				}
@@ -110,8 +110,8 @@ class CommentBlockComponent extends HTMLElement {
 						target: "comment",
 						vote: "downvote",
 					});
-					this.shadow.querySelector("#upvotes").innerText = voteResult.upvotes;
-					this.shadow.querySelector("#downvotes").innerText = voteResult.downvotes;
+					this.shadow.querySelector("#upvotes").textContent = voteResult.upvotes;
+					this.shadow.querySelector("#downvotes").textContent = voteResult.downvotes;
 				} else {
 					$("stibarc-login-modal")[0].show();
 				}

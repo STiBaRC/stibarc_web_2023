@@ -147,7 +147,7 @@ class RegisterModalComponent extends HTMLElement {
 	async #register() {
 		if (this.#clicked) return;
 		this.shadow.querySelector("#errorcontainer").classList.add("hidden");
-		this.shadow.querySelector("#error").innerText = "";
+		this.shadow.querySelector("#error").textContent = "";
 		const username = this.shadow.querySelector("#username").value.trim();
 		const password = this.shadow.querySelector("#password").value;
 		const password2 = this.shadow.querySelector("#password2").value;
@@ -162,22 +162,22 @@ class RegisterModalComponent extends HTMLElement {
 		const bio = this.shadow.querySelector("#bio").value || undefined;
 		const displayBio = this.shadow.querySelector("#showbio").checked || undefined;
 		if (username == "") {
-			this.shadow.querySelector("#error").innerText = "Username required";
+			this.shadow.querySelector("#error").textContent = "Username required";
 			this.shadow.querySelector("#errorcontainer").classList.remove("hidden");
 			return;
 		}
 		if (password == "") {
-			this.shadow.querySelector("#error").innerText = "Password required";
+			this.shadow.querySelector("#error").textContent = "Password required";
 			this.shadow.querySelector("#errorcontainer").classList.remove("hidden");
 			return;
 		}
 		if (password != password2) {
-			this.shadow.querySelector("#error").innerText = "Passwords must match";
+			this.shadow.querySelector("#error").textContent = "Passwords must match";
 			this.shadow.querySelector("#errorcontainer").classList.remove("hidden");
 			return;
 		}
 		this.#clicked = true;
-		this.shadow.querySelector("#registerbutton").innerText = "";
+		this.shadow.querySelector("#registerbutton").textContent = "";
 		this.shadow.querySelector("#registerbutton").classList.add("loading");
 		const response = await fetch("https://betaapi.stibarc.com/v4/registeruser.sjs", {
 			method: "post",
@@ -211,13 +211,13 @@ class RegisterModalComponent extends HTMLElement {
 			case "error":
 				switch (responseJSON.errorCode) {
 					case "ue":
-						this.shadow.querySelector("#error").innerText = "User already registered";
+						this.shadow.querySelector("#error").textContent = "User already registered";
 						this.shadow.querySelector("#errorcontainer").classList.remove("hidden");
 						break;
 				}
 				break;
 		}
-		this.shadow.querySelector("#registerbutton").innerText = "Register";
+		this.shadow.querySelector("#registerbutton").textContent = "Register";
 		this.shadow.querySelector("#registerbutton").classList.remove("loading");
 		this.#clicked = false;
 	}
@@ -235,7 +235,7 @@ class RegisterModalComponent extends HTMLElement {
 		document.body.classList.remove("overflowhidden");
 		this.shadow.querySelector("dialog").close();
 		this.shadow.querySelector("#errorcontainer").classList.add("hidden");
-		this.shadow.querySelector("#error").innerText = "";
+		this.shadow.querySelector("#error").textContent = "";
 		this.shadow.querySelector("#username").value = "";
 		this.shadow.querySelector("#password").value = "";
 		this.shadow.querySelector("#password2").value = "";
