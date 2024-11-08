@@ -52,7 +52,7 @@ async function getPosts(state) {
 		$("#posts").appendChild(posts);
 		$("#followedposts").appendChild(fposts);
 	}
-	if (localStorage.sess != undefined && requestJSON.followedPosts.length == 0) {
+	if (localStorage.sess !== undefined && requestJSON.followedPosts.length == 0) {
 		const span = document.createElement("span");
 		span.setAttribute("class", "posts");
 		span.innerText = "There's nothing here ;(";
@@ -134,6 +134,8 @@ function setFeed(activeFeed) {
 }
 
 async function loadMore() {
+	if (localStorage.activeFeed == "followed" && !localStorage.sess) return;
+
 	const loader = document.createElement("span");
 	loader.setAttribute("class", "loader");
 	$("#loadMoreBtn").classList.add("hidden");
@@ -147,10 +149,10 @@ async function loadMore() {
 		},
 		body: JSON.stringify({
 			lastSeenGlobalPost: (localStorage.activeFeed === "global" || localStorage.activeFeed === undefined) ? lastSeenGlobalPost : undefined,
-			lastSeenFollowedPost: (localStorage.activeFeed === "followed" && localStorage.sess !== "") ? lastSeenFollowedPost : undefined,
+			lastSeenFollowedPost: (localStorage.activeFeed === "followed" && localStorage.sess !== undefined) ? lastSeenFollowedPost : undefined,
 			returnGlobal: (localStorage.activeFeed === "global" || localStorage.activeFeed === undefined) ? true : false,
-			returnFollowed: (localStorage.activeFeed === "followed" && localStorage.sess !== "") ? true : undefined,
-			session: (localStorage.activeFeed === "followed" && localStorage.sess !== "") ? localStorage.sess : undefined
+			returnFollowed: (localStorage.activeFeed === "followed" && localStorage.sess !== undefined) ? true : undefined,
+			session: (localStorage.activeFeed === "followed" && localStorage.sess !== undefined) ? localStorage.sess : undefined
 		})
 	});
 	const requestJSON = await request.json();
@@ -265,11 +267,15 @@ window.addEventListener("load", function() {
 	}
 	$("#newpostbutton").onclick = newPost;
 	
-	listatehooks.push((state) => {
-		$(".post").forEach((e) => {
+	listatehooks.push(async (state) => {
+		$("stibarc-post").forEach((e) => {
 			e.remove();
 		});
-		getPosts();
+		await getPosts();
+		if (state) {
+			hideLoadMoreFollowed = false;
+		}
+		$("#loadMoreBtn").classList.remove("hidden");
 	});
 
 	setLoggedinState(localStorage.sess);
