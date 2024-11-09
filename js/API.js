@@ -701,9 +701,9 @@ class API {
 					postsToReturn,
 					returnTotalPosts,
 					returnGlobal,
-					returnFollowed: returnFollowed && this.#session !== undefined,
+					returnFollowed: returnFollowed && this.loggedIn,
 					lastSeenGlobalPost: (useLastSeenGlobal) ? this.#lastSeenGlobalPost : undefined,
-					lastSeenFollowedPost: (useLastSeenFollowed && returnFollowed && this.#session !== undefined) ? this.#lastSeenFollowedPost : undefined
+					lastSeenFollowedPost: (useLastSeenFollowed && returnFollowed && this.loggedIn) ? this.#lastSeenFollowedPost : undefined
 				})
 			});
 		} catch (e) {
@@ -733,10 +733,10 @@ class API {
 					throw new Error("Failed to fetch posts");
 			}
 		}
-		if (returnGlobal && responseJSON.globalPosts.length > 0) {
+		if (returnGlobal && responseJSON.globalPosts && responseJSON.globalPosts.length > 0) {
 			this.#lastSeenGlobalPost = responseJSON.globalPosts[responseJSON.globalPosts.length - 1]?.id;
 		}
-		if (returnFollowed && responseJSON.followedPosts.length > 0) {
+		if (this.loggedIn && returnFollowed && responseJSON.followedPosts && responseJSON.followedPosts.length > 0) {
 			this.#lastSeenFollowedPost = responseJSON.followedPosts[responseJSON.followedPosts.length - 1]?.id;
 		}
 		return {
