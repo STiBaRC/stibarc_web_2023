@@ -11,48 +11,38 @@ let clicked = false;
 async function getPosts(state) {
 	$("#postsLoader").classList.remove("hidden");
 	$("#followedPostsLoader").classList.remove("hidden");
-	const posts = document.createDocumentFragment();
-	const fposts = document.createDocumentFragment();
-	const request = await fetch("https://betaapi.stibarc.com/v4/getposts.sjs", {
-		method: "POST",
-		headers: {
-			"Content-Type": "application/json"
-		},
-		body: JSON.stringify({
-			returnFollowed: (localStorage.sess != undefined) ? true : undefined,
-			session: localStorage.sess
-		})
-	});
-	const requestJSON = await request.json();
-	lastSeenGlobalPost = requestJSON.globalPosts[requestJSON.globalPosts.length - 1].id;
-	if (requestJSON.followedPosts && requestJSON.followedPosts.length > 0) {
-		lastSeenFollowedPost = requestJSON.followedPosts[requestJSON.followedPosts.length - 1].id;
+	const postsFrag = document.createDocumentFragment();
+	const fpostsFrag = document.createDocumentFragment();
+	const posts = await api.getPosts({ useLastSeenGlobal: false, useLastSeenFollowed: false });
+	lastSeenGlobalPost = posts.globalPosts[posts.globalPosts.length - 1].id;
+	if (posts.followedPosts && posts.followedPosts.length > 0) {
+		lastSeenFollowedPost = posts.followedPosts[posts.followedPosts.length - 1].id;
 	}
 	$("#postsLoader").classList.add("hidden");
 	$("#followedPostsLoader").classList.add("hidden");
 	$("#loadMoreBtn").classList.remove("hidden");
 	hideLoadMoreGlobal = false;
 	hideLoadMoreFollowed = false;
-	for (let i in requestJSON.globalPosts) {
-		const post = new PostBlockComponent(requestJSON.globalPosts[i]);
-		posts.appendChild(post);
+	for (let i in posts.globalPosts) {
+		const post = new PostBlockComponent(posts.globalPosts[i]);
+		postsFrag.appendChild(post);
 	}
-	if (requestJSON.followedPosts) {
-		for (let i in requestJSON.followedPosts) {
-			const post = new PostBlockComponent(requestJSON.followedPosts[i]);
-			fposts.appendChild(post);
+	if (posts.followedPosts) {
+		for (let i in posts.followedPosts) {
+			const post = new PostBlockComponent(posts.followedPosts[i]);
+			fpostsFrag.appendChild(post);
 		}
 	}
-	if (requestJSON.globalPosts.length == 0) {
+	if (posts.globalPosts.length == 0) {
 		const span = document.createElement("span");
 		span.setAttribute("class", "posts");
 		span.textContent = "There's nothing here ;(";
 		$("#posts").appendChild(span);
 	} else {
-		$("#posts").appendChild(posts);
-		$("#followedposts").appendChild(fposts);
+		$("#posts").appendChild(postsFrag);
+		$("#followedposts").appendChild(fpostsFrag);
 	}
-	if (localStorage.sess !== undefined && requestJSON.followedPosts.length == 0) {
+	if (api.loggedIn && posts.followedPosts.length == 0) {
 		const span = document.createElement("span");
 		span.setAttribute("class", "posts");
 		span.textContent = "There's nothing here ;(";
@@ -72,31 +62,10 @@ async function newPost() {
 	$("#newpostbutton").textContent = "";
 	$("#newpostbutton").classList.add("loading", "small");
 	for (const file of attachmentFiles) {
-		const response = await fetch("https://betaapi.stibarc.com/v4/uploadfile.sjs", {
-		method: "post",
-		headers: {
-				"Content-Type": file.type,
-				"X-Session-Key": localStorage.sess,
-				"X-File-Usage": "attachment"
-			},
-			body: await file.arrayBuffer()
-		});
-		const responseJSON = await response.json();
-		attachments.push(responseJSON.file);
+		const fileName = await api.uploadFile(file, "attachment");
+		attachments.push(fileName);
 	}
-	const response = await fetch("https://betaapi.stibarc.com/v4/newpost.sjs", {
-		method: "post",
-		headers: {
-			"Content-Type": "application/json"
-		},
-		body: JSON.stringify({
-			session: localStorage.sess,
-			title,
-			content,
-			attachments: (attachments.length > 0) ? attachments : undefined
-		})
-	});
-	const responseJSON = await response.json();
+	const newPost = await api.newPost(title, {content, attachments: (attachments.length > 0) ? attachments : undefined});
 	$("#newpostbutton").textContent = "Post";
 	$("#newpostbutton").classList.remove("loading", "small");
 	$("#newposttitle").value = "";
@@ -107,7 +76,7 @@ async function newPost() {
 		child.click();
 	}
 	attachmentBlobURLs = [];
-	location.href = `./post.html?id=${responseJSON.id}`;
+	location.href = `./post.html?id=${newPost.id}`;
 }
 
 function setFeed(activeFeed) {
@@ -134,7 +103,7 @@ function setFeed(activeFeed) {
 }
 
 async function loadMore() {
-	if (localStorage.activeFeed == "followed" && !localStorage.sess) return;
+	if (localStorage.activeFeed == "followed" && !api.loggedIn) return;
 
 	const loader = document.createElement("span");
 	loader.setAttribute("class", "loader");
@@ -142,21 +111,11 @@ async function loadMore() {
 	$("main")[0].appendChild(loader);
 
 	const posts = document.createDocumentFragment();
-	const request = await fetch("https://betaapi.stibarc.com/v4/getposts.sjs", {
-		method: "POST",
-		headers: {
-			"Content-Type": "application/json"
-		},
-		body: JSON.stringify({
-			lastSeenGlobalPost: (localStorage.activeFeed === "global" || localStorage.activeFeed === undefined) ? lastSeenGlobalPost : undefined,
-			lastSeenFollowedPost: (localStorage.activeFeed === "followed" && localStorage.sess !== undefined) ? lastSeenFollowedPost : undefined,
-			returnGlobal: (localStorage.activeFeed === "global" || localStorage.activeFeed === undefined) ? true : false,
-			returnFollowed: (localStorage.activeFeed === "followed" && localStorage.sess !== undefined) ? true : undefined,
-			session: (localStorage.activeFeed === "followed" && localStorage.sess !== undefined) ? localStorage.sess : undefined
-		})
+	const response = await api.getPosts({
+		useLastSeenGlobal: (localStorage.activeFeed === "global" || localStorage.activeFeed === undefined) ? true : false,
+		useLastSeenFollowed: (localStorage.activeFeed === "followed" && localStorage.sess !== undefined) ? true : false
 	});
-	const requestJSON = await request.json();
-	const feedPosts = (localStorage.activeFeed == "global") ? requestJSON.globalPosts : requestJSON.followedPosts;
+	const feedPosts = (localStorage.activeFeed == "global") ? response.globalPosts : response.followedPosts;
 
 	if (feedPosts.length !== 0) {
 		if (localStorage.activeFeed == "global") {
@@ -200,7 +159,7 @@ window.addEventListener("load", function() {
 	});
 	$("#loadMoreBtn").onclick = loadMore;
 	$("#newpost").onclick = function(e) {
-		if (localStorage.sess) {
+		if (api.loggedIn) {
 			window.scrollTo(0, 0);
 			$("#newpostformcontainer").classList.remove("hidden");
 			$("#overlay").classList.remove("hidden");
@@ -278,7 +237,7 @@ window.addEventListener("load", function() {
 		$("#loadMoreBtn").classList.remove("hidden");
 	});
 
-	setLoggedinState(localStorage.sess);
+	setLoggedinState(api.loggedIn);
 });
 
 window.addEventListener("scroll", function() {

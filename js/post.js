@@ -17,6 +17,9 @@ downvoteIcon.setAttribute("name", "down_arrow");
 upvoteIcon.classList.add("textOnRight");
 downvoteIcon.classList.add("textOnRight");
 
+const upvoteSpan = document.createElement("span");
+const downvoteSpan = document.createElement("span");
+
 async function newComment() {
 	if (clicked) return;
 	const content = $("#newcommentbody").value;
@@ -25,31 +28,10 @@ async function newComment() {
 	$("#newcommentbutton").classList.add("loading", "small");
 	$("#newcommentbutton").textContent = "";
 	for (const file of newAttachmentFiles) {
-		const response = await fetch("https://betaapi.stibarc.com/v4/uploadfile.sjs", {
-			method: "post",
-			headers: {
-				"Content-Type": file.type,
-				"X-Session-Key": localStorage.sess,
-				"X-File-Usage": "attachment"
-			},
-			body: await file.arrayBuffer()
-		});
-		const responseJSON = await response.json();
-		newAttachments.push(responseJSON.file);
+		const newFile = await api.uploadFile(file, "attachment");
+		newAttachments.push(newFile);
 	}
-	const response = await fetch("https://betaapi.stibarc.com/v4/postcomment.sjs", {
-		method: "post",
-		headers: {
-			"Content-Type": "application/json"
-		},
-		body: JSON.stringify({
-			session: localStorage.sess,
-			id,
-			content,
-			attachments: (newAttachments.length > 0) ? newAttachments : undefined
-		})
-	});
-	const responseJSON = await response.json();
+	await api.postComment(id, { content, attachments: (newAttachments.length > 0) ? newAttachments : undefined });
 	$("#newcommentbutton").classList.remove("loading", "small");
 	$("#newcommentbutton").textContent = "Comment";
 	$("#opennewcommentbutton").classList.remove("hidden");
@@ -66,27 +48,25 @@ async function newComment() {
 
 window.addEventListener("load", async function () {
 	$("#upvoteBtn").addEventListener("click", async () => {
-		if (localStorage.sess) {
-			const voteResult = await vote({ id, target: "post", vote: "upvote" });
-			$("#upvoteBtn").textContent = $("#downvoteBtn").textContent = "";
-			$("#upvoteBtn").append(upvoteIcon, voteResult.upvotes);
-			$("#downvoteBtn").append(downvoteIcon, voteResult.downvotes);
+		if (api.loggedIn) {
+			const voteResult = await api.vote({ postId: id, target: "post", vote: "upvote" });
+			upvoteSpan.textContent = voteResult.upvotes;
+			downvoteSpan.textContent = voteResult.downvotes;
 		} else {
 			$("stibarc-login-modal")[0].show();
 		}
 	});
 	$("#downvoteBtn").addEventListener("click", async () => {
-		if (localStorage.sess) {
-			const voteResult = await vote({ id, target: "post", vote: "downvote" });
-			$("#upvoteBtn").textContent = $("#downvoteBtn").textContent = "";
-			$("#upvoteBtn").append(upvoteIcon, voteResult.upvotes);
-			$("#downvoteBtn").append(downvoteIcon, voteResult.downvotes);
+		if (api.loggedIn) {
+			const voteResult = await api.vote({ postId: id, target: "post", vote: "downvote" });
+			upvoteSpan.textContent = voteResult.upvotes;
+			downvoteSpan.textContent = voteResult.downvotes;
 		} else {
 			$("stibarc-login-modal")[0].show();
 		}
 	});
 	$("#opennewcommentbutton").addEventListener("click", () => {
-		if (localStorage.sess) {
+		if (api.loggedIn) {
 			$("#opennewcommentbutton").classList.add("hidden");
 			$("#newcomment").classList.remove("hidden");
 		} else {
@@ -153,30 +133,21 @@ window.addEventListener("load", async function () {
 		location.href = `./edit.html?id=${id}`;
 	});
 
-	setLoggedinState(localStorage.sess);
+	setLoggedinState(api.loggedIn);
 
-	const request = await fetch("https://betaapi.stibarc.com/v4/getpost.sjs", {
-		method: "post",
-		headers: {
-			"Content-Type": "application/json"
-		},
-		body: JSON.stringify({
-			id
-		})
-	});
-	const responseJSON = await request.json();
-	if (responseJSON.status == "error") {
-		switch (responseJSON.errorCode) {
-			case "rni":
-			case "pnfod":
+	let post;
+	try {
+		post = await api.getPost(id);
+	} catch(e) {
+		switch (e.message) {
+			default:
+				location.href = "/500.html";
+				break;
+			case "Post not found":
 				location.href = "/404.html";
 				break;
-			case "ise":
-				location.href = "/500.html";
 		}
-		return;
 	}
-	post = responseJSON.post;
 	document.title = `${post.title} | STiBaRC`;
 	$("#posttitle").textContent = post.title;
 	$("#postuserlink").setAttribute("href", `./user.html?id=${post.poster.username}`);
@@ -193,10 +164,13 @@ window.addEventListener("load", async function () {
 		$("#edited").title = `Edited ${new Date(post.lastEdited).toLocaleString()}`;
 	}
 	$("#posttextcontent").textContent = post.content;
-	$("#upvoteBtn").textContent = $("#downvoteBtn").textContent = "";
-	$("#upvoteBtn").append(upvoteIcon, post.upvotes);
-	$("#downvoteBtn").append(downvoteIcon, post.downvotes);
-	if (post.poster.username == localStorage.username) $("#editBtn").classList.remove("hidden");
+	$("#upvoteBtn").textContent = "";
+	$("#downvoteBtn").textContent = "";
+	upvoteSpan.textContent = post.upvotes;
+	downvoteSpan.textContent = post.downvotes;
+	$("#upvoteBtn").append(upvoteIcon, upvoteSpan);
+	$("#downvoteBtn").append(downvoteIcon, downvoteSpan);
+	if (post.poster.username == api.username) $("#editBtn").classList.remove("hidden");
 
 	if (post.attachments && post.attachments.length > 0 && post.attachments[0] !== null) {
 		for (let i = 0; i < post.attachments.length; i++) {
@@ -230,9 +204,9 @@ window.addEventListener("load", async function () {
 	listatehooks.push((state) => {
 		if (!post.deleted) {
 			if (state) {
-				if (post.poster.username == localStorage.username) $("#editBtn").classList.remove("hidden");
+				if (post.poster.username == api.username) $("#editBtn").classList.remove("hidden");
 				$(".editBtn").forEach(editBtn => {
-					if (localStorage.username == editBtn.dataset.username) editBtn.classList.remove("hidden");
+					if (api.username == editBtn.dataset.username) editBtn.classList.remove("hidden");
 				});
 			} else {
 				$(".editBtn").forEach(editBtn => {

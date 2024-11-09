@@ -75,85 +75,37 @@ window.addEventListener("load", async () => {
 		}
 		clicked = true;
 		for (const file of newAttachmentFiles) {
-			const response = await fetch("https://betaapi.stibarc.com/v4/uploadfile.sjs", {
-			method: "post",
-			headers: {
-					"Content-Type": file.type,
-					"X-Session-Key": localStorage.sess,
-					"X-File-Usage": "attachment"
-				},
-				body: await file.arrayBuffer()
-			});
-			const responseJSON = await response.json();
-			newAttachments.push(responseJSON.file);
+			const uploadedFile = await api.uploadFile(file, "attachment");
+			newAttachments.push(uploadedFile);
 		}
 		const to = (target == "post") ? post : comment;
 		const combinedAttachments = [...to.attachments, ...newAttachments];
-		console.log(combinedAttachments);
-		const r = await fetch("https://betaapi.stibarc.com/v4/edit.sjs", {
-			method: "post",
-			headers: {
-				"Content-Type": "application/json"
-			},
-			body: JSON.stringify({
-				session: localStorage.sess,
-				id,
-				target,
-				commentId: (target == "comment") ? cid : undefined,
-				title: (target == "post") ? title : undefined,
-				content,
-				attachments: combinedAttachments
-			})
-		});
-		const rj = await r.json();
+		await api.edit({ postId: id, target, commentId: (target === "comment") ? cid : undefined, title: (target == "post") ? title : undefined, content, attachments: combinedAttachments });
 		location.href = `./post.html?id=${id}`;
 	});
 	$("#deletebutton").addEventListener("click", async () => {
 		if (!window.confirm(`Delete this ${target}?`)) {
-			return
+			return;
 		}
 		if (clicked) return;
 		clicked = true;
-		const r = await fetch("https://betaapi.stibarc.com/v4/edit.sjs", {
-			method: "post",
-			headers: {
-				"Content-Type": "application/json"
-			},
-			body: JSON.stringify({
-				session: localStorage.sess,
-				id,
-				target,
-				commentId: (target == "comment") ? cid : undefined,
-				deleted: true
-			})
-		});
-		const rj = await r.json();
-		clicked = false;
+		await api.edit({ postId: id, target, commentId: (target === "comment") ? cid : undefined, deleted: true });
 		location.href = (target == "post") ? "/" : `post.html?id=${id}`;
 	});
-	
-	const r = await fetch("https://betaapi.stibarc.com/v4/getpost.sjs", {
-		method: "post",
-		headers: {
-			"Content-Type": "application/json"
-		},
-		body: JSON.stringify({
-			id
-		})
-	});
-	const rj = await r.json();
-	if (rj.status == "error") {
-		switch (rj.errorCode) {
-			case "rni":
-			case "pnfod":
+
+	let post;
+	try {
+		post = await api.getPost(id);
+	} catch (e) {
+		switch (e.message) {
+			default:
+				location.href = "/500.html";
+				break;
+			case "Post not found":
 				location.href = "/404.html";
 				break;
-			case "ise":
-				location.href = "/500.html";
 		}
-		return;
 	}
-	post = rj.post;
 	if (cid) comment = post.comments.filter(comment => comment.id == cid)[0];
 	if (cid && !comment) location.href = `./post.html?id=${id}`;
 	if (!cid) {
@@ -184,5 +136,5 @@ window.addEventListener("load", async () => {
 		}
 		target = "comment";
 	}
-	setLoggedinState(localStorage.sess);
+	setLoggedinState(api.loggedIn);
 });

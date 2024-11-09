@@ -6,6 +6,20 @@
 	variables
 */
 
+let environment;
+switch (window.location.hostname) {
+	case "stibarc.com":
+		environment = "prod";
+		break;
+	case "staging.stibarc.com":
+		environment = "staging";
+		break;
+	default:
+	case "dev.stibarc.com":
+		environment = "dev";
+		break;
+}
+let api = new API(environment);
 const listatehooks = [];
 const clickhooks = [];
 const maxTitleLength = 250;
@@ -52,23 +66,6 @@ function updateThemeSelector() {
 	}
 }
 
-async function vote({ id, target, vote, commentId }) {
-	const request = await fetch("https://betaapi.stibarc.com/v4/vote.sjs", {
-		method: "post",
-		headers: {
-			"Content-Type": "application/json",
-		},
-		body: JSON.stringify({
-			session: localStorage.sess,
-			id,
-			commentId,
-			target,
-			vote,
-		}),
-	});
-	return await request.json();
-}
-
 function setLoggedinState(state) {
 	Array.from(document.getElementsByClassName("loggedin")).forEach((element) => {
 		if (state) {
@@ -94,32 +91,14 @@ function setLoggedinState(state) {
 async function reloadSessInfo() {
 	if (loadingSessInfo) return;
 	loadingSessInfo = true;
-	const request = await fetch(
-		"https://betaapi.stibarc.com/v4/getprivatedata.sjs",
-		{
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify({
-				session: localStorage.sess,
-			}),
-		}
-	);
-	const responseJSON = await request.json();
-	loadingSessInfo = false;
-	sessionStorage.loadedBefore = true;
-	if (responseJSON.status === "ok") {
-		localStorage.username = responseJSON.user.username;
-		localStorage.pfp = responseJSON.user.pfp;
-		localStorage.banner = responseJSON.user.banner;
+	try {
+		await api.init();
+		loadingSessInfo = false;
+		sessionStorage.loadedBefore = true;
 		setLoggedinState(true);
-	}
-	if (responseJSON.status === "error" && responseJSON.statusCode === "is") {
-		delete localStorage.sess;
-		delete localStorage.username;
-		delete localStorage.pfp;
-		delete localStorage.banner;
+	} catch(e) {
+		loadingSessInfo = false;
+		sessionStorage.loadedBefore = true;
 		setLoggedinState(false);
 	}
 }
@@ -127,27 +106,27 @@ async function reloadSessInfo() {
 refreshTheme();
 
 if (
-	localStorage.sess !== undefined &&
+	api.loggedIn &&
 	(sessionStorage.loadedBefore === undefined ||
-		localStorage.username === undefined ||
-		localStorage.pfp === undefined)
+		api.username === undefined ||
+		api.pfp === undefined)
 ) {
 	if ($("#mypfp")) {
 		$("#mypfp").setAttribute(
 			"src",
-			localStorage.pfp || "https://betacdn.stibarc.com/pfp/default.png"
+			api.pfp || "https://betacdn.stibarc.com/pfp/default.png"
 		);
-		$("#menuprofile").textContent = localStorage.username;
-		$("#menuprofile").href = `./user.html?username=${localStorage.username}`;
+		$("#menuprofile").textContent = api.username;
+		$("#menuprofile").href = `./user.html?username=${api.username}`;
 	}
 }
 
 window.addEventListener("load", function () {
 	if (
-		localStorage.sess !== undefined &&
+		api.loggedIn &&
 		(sessionStorage.loadedBefore === undefined ||
-			localStorage.username === undefined ||
-			localStorage.pfp === undefined)
+			api.username === undefined ||
+			api.pfp === undefined)
 	) {
 		reloadSessInfo();
 	}

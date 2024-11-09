@@ -11,7 +11,7 @@ window.addEventListener("load", async () => {
 		}
 	});
 
-	setLoggedinState(localStorage.sess);
+	setLoggedinState(api.loggedIn);
 
 	const url = new URL(location);
 	let query = null;
@@ -26,35 +26,25 @@ window.addEventListener("load", async () => {
 	$("#searchboxMobile").value = query;
 	$("#loader").style.display = "flex";
 
-	const r = await fetch("https://betaapi.stibarc.com/v4/search.sjs", {
-		method: "post",
-		headers: {
-			"Content-Type": "application/json"
-		},
-		body: JSON.stringify({
-			query
-		})
-	});
+	const results = await api.search(query);
 
-	const rj = await r.json();
-	if (rj.status == "error") console.error(rj);
 	$("#loader").style.display = "none";
 
 	const users = document.createDocumentFragment();
 	const posts = document.createDocumentFragment();
 
-	for (const user of rj.results.users) {
+	for (const user of results.users) {
 		users.appendChild(new UserBlockComponent(user));
 	}
 
-	for (const post of rj.results.posts) {
+	for (const post of results.posts) {
 		posts.appendChild(new PostBlockComponent(post));
 	}
 
 	$("#users").appendChild(users);
 	$("#posts").appendChild(posts);
 
-	if (rj.results.users.length == 0 && rj.results.posts.length == 0) {
+	if (results.users.length == 0 && results.posts.length == 0) {
 		$("#noResults").style.display = "block";
 	}
 });

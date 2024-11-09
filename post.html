@@ -5,22 +5,23 @@
 	<meta charset="utf-8" />
 	<title>STiBaRC</title>
 	<meta name="viewport" content="initial-scale=1, maximum-scale=5, user-scalable=yes, width=device-width">
-	<link rel="icon" type="image/png" href="./img/icon.png">
+	<link rel="icon" type="image/png" href="/img/icon.png">
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@300;400&display=swap" rel="stylesheet">
-	<link rel="stylesheet" href="./css/themes/default.css" id="theme">
-	<link rel="stylesheet" href="./css/global.css">
-	<link rel="stylesheet" href="./css/post.css">
-	<script src="./js/global.js"></script>
-	<script type="module" src="./components/LoginModal.js"></script>
-	<script type="module" src="./components/RegisterModal.js"></script>
-	<script type="module" src="./components/Header.js"></script>
-	<script type="module" src="./components/Footer.js"></script>
-	<script type="module" src="./components/Icon.js"></script>
-	<script src="./components/AttachmentBlock.js"></script>
-	<script src="./components/CommentBlock.js"></script>
-	<script src="./js/post.js"></script>
+	<link rel="stylesheet" href="/css/themes/default.css" id="theme">
+	<link rel="stylesheet" href="/css/global.css">
+	<link rel="stylesheet" href="/css/post.css">
+	<script src="/js/API.js"></script>
+	<script src="/js/global.js"></script>
+	<script type="module" src="/components/LoginModal.js"></script>
+	<script type="module" src="/components/RegisterModal.js"></script>
+	<script type="module" src="/components/Header.js"></script>
+	<script type="module" src="/components/Footer.js"></script>
+	<script type="module" src="/components/Icon.js"></script>
+	<script src="/components/AttachmentBlock.js"></script>
+	<script src="/components/CommentBlock.js"></script>
+	<script src="/js/post.js"></script>
 </head>
 
 <body>
@@ -37,7 +38,7 @@
 					<span id="postusername">Loading...</span>
 				</a>
 				<svg id="postverified" title="Verified" class="verifiedBadge icon hidden">
-					<use href="./img/icon/icons.svg#verified"></use>
+					<use href="/img/icon/icons.svg#verified"></use>
 				</svg>
 				<span id="pronouns" class="pronouns" title="Pronouns"></span>
 			</span>
@@ -51,14 +52,14 @@
 			<hr class="width100">
 			<span class="aligncenter leftalign width100 flexwrap">
 				<button id="upvoteBtn" class="flexcontainer button primary" title="Upvote"><svg class="icon hidden">
-						<use href="./img/icon/icons.svg#up_arrow"></use>
+						<use href="/img/icon/icons.svg#up_arrow"></use>
 					</svg></button>
 				<button id="downvoteBtn" class="flexcontainer button primary" title="Downvote"><svg class="icon hidden">
-						<use href="./img/icon/icons.svg#down_arrow"></use>
+						<use href="/img/icon/icons.svg#down_arrow"></use>
 					</svg></button>
 				<span class="flexgrow"></span>
 				<button id="editBtn" class="flexcontainer hidden editBtn" title="Edit post">
-					<img src="./img/icon/edit.svg" width="24" height="24">
+					<img src="/img/icon/edit.svg" width="24" height="24">
 				</button>
 			</span>
 		</span>

@@ -5,26 +5,18 @@ let user;
 async function followAction() {
 	$("#followbutton").textContent = "";
 	$("#followbutton").classList.add("loading");
-	const fr = await fetch("https://betaapi.stibarc.com/v4/followuser.sjs", {
-		method: "post",
-		headers: {
-			"Content-Type": "application/json"
-		},
-		body: JSON.stringify({
-			session: localStorage.sess,
-			username
-		})
-	});
-	const frj = await fr.json();
+
+	const response = await api.followUser(username);
+
 	$("#followbutton").classList.remove("loading");
-	if (frj.action == "followed") {
-		user.followers.push({username: localStorage.username});
+	if (response == "followed") {
+		user.followers.push({username: api.username});
 	} else {
-		user.followers = user.followers.filter(e => e.username != localStorage.username)
+		user.followers = user.followers.filter(e => e.username != api.username)
 	}
 	$("#followers").textContent = `Followers: ${user.followers.length}`;
 	$("#following").textContent = `Following: ${user.following.length}`;
-	if (user.followers.filter(e => e.username == localStorage.username).length > 0) {
+	if (user.followers.filter(e => e.username == api.username).length > 0) {
 		$("#followbutton").textContent = "Unfollow";
 	} else {
 		$("#followbutton").textContent = "Follow";
@@ -39,33 +31,25 @@ window.addEventListener("load", async () => {
 	document.title = `${username} | STiBaRC`;
 	$("#userusername").textContent = username;
 
-	setLoggedinState(localStorage.sess);
-	
-	const request = await fetch("https://betaapi.stibarc.com/v4/getuser.sjs", {
-		method: "post",
-		headers: {
-			"Content-Type": "application/json"
-		},
-		body: JSON.stringify({
-			username
-		})
-	});
-	const requestJSON = await request.json();
-	if (requestJSON.status == "error") {
-		switch (requestJSON.errorCode) {
-			case "rnu":
-			case "unf":
+	setLoggedinState(api.loggedIn);
+
+	let user;
+	try {
+		user = await api.getUser(username);
+	} catch (e) {
+		switch (e.message) {
+			default:
+				location.href = "/500.html";
+				break;
+			case "User not found":
 				location.href = "/404.html";
 				break;
-			case "ise":
-				location.href = "/500.html";
 		}
 		return;
 	}
-	user = requestJSON.user;
 	if (user.verified) $("#userverified").classList.remove("hidden");
 	$("#userpfp").setAttribute("src", user.pfp);
-	if (user.banner !== "https://betacdn.stibarc.com/banner/default.png") $("#userBanner").classList.remove("hidden");
+	if (user.banner !== api.defaultBannerUrl) $("#userBanner").classList.remove("hidden");
 	$("#userBanner").classList.remove("light", "loading");
 	$("#userBanner").classList.add("pointer");
 	$("#userBanner").style.backgroundImage = `url('${user.banner}')`;
@@ -90,7 +74,7 @@ window.addEventListener("load", async () => {
 	if (user.displayBio) $("#bio").classList.remove("hidden");
 	$("#followers").textContent = `Followers: ${user.followers.length}`;
 	$("#following").textContent = `Following: ${user.following.length}`;
-	if (localStorage.sess) {
+	if (api.loggedIn) {
 		$("#followbutton").addEventListener("click", followAction);
 	} else {
 		$("#followbutton").addEventListener("click", showLogin);
@@ -99,7 +83,7 @@ window.addEventListener("load", async () => {
 		if (state) {
 			$("#followbutton").removeEventListener("click", showLogin);
 			$("#followbutton").addEventListener("click", followAction);
-			if (user.followers.filter(e => e.username == localStorage.username).length > 0) {
+			if (user.followers.filter(e => e.username == api.username).length > 0) {
 				$("#followbutton").textContent = "Unfollow";
 			} else {
 				$("#followbutton").textContent = "Follow";
@@ -110,7 +94,7 @@ window.addEventListener("load", async () => {
 			$("#followbutton").textContent = "Follow";
 		}
 	});
-	if (user.followers.filter(e => e.username == localStorage.username).length > 0) {
+	if (user.followers.filter(e => e.username == api.username).length > 0) {
 		$("#followbutton").textContent = "Unfollow";
 	} else {
 		$("#followbutton").textContent = "Follow";

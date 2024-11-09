@@ -112,44 +112,20 @@ class LoginModalComponent extends HTMLElement {
 		this.#clicked = true;
 		this.shadow.querySelector("#loginbutton").textContent = "";
 		this.shadow.querySelector("#loginbutton").classList.add("loading");
-		const response = await fetch("https://betaapi.stibarc.com/v4/login.sjs", {
-			method: "post",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify({
-				username,
-				password,
-				totpCode,
-			}),
-		});
-		const responseJSON = await response.json();
-		switch (responseJSON.status) {
-			default:
-			case "error":
-				switch (responseJSON.errorCode) {
-					case "iuop":
-						this.shadow.querySelector("#error").textContent =
-							"Invalid username or password";
-						break;
-					case "totpr":
-						this.shadow.querySelector("#error").textContent = "2FA code required";
-						this.shadow.querySelector("#tfa").classList.remove("hidden");
-						this.shadow.querySelector("#tfainput").focus();
-						break;
-					case "itotp":
-						this.shadow.querySelector("#error").textContent = "Invalid 2FA code";
-						break;
-				}
-				this.shadow.querySelector("#errorcontainer").classList.remove("hidden");
-				break;
-			case "ok":
-				localStorage.username = username;
-				localStorage.pfp = responseJSON.pfp;
-				localStorage.sess = responseJSON.session;
-				setLoggedinState(true);
-				this.hide();
-				break;
+		try {
+			await api.login(username, password, totpCode);
+			setLoggedinState(true);
+			this.hide();
+		} catch (e) {
+			switch (e.message) {
+				case "2FA code required":
+					this.shadow.querySelector("#tfa").classList.remove("hidden");
+					this.shadow.querySelector("#tfainput").focus();
+				default:
+					this.shadow.querySelector("#error").textContent = e.message;
+					break;
+			}
+			this.shadow.querySelector("#errorcontainer").classList.remove("hidden");
 		}
 		this.#clicked = false;
 		this.shadow.querySelector("#loginbutton").textContent = "Login";

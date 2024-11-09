@@ -231,6 +231,7 @@ class HeaderComponent extends HTMLElement {
 		document.addEventListener("click", function (event) {
 			/* header pfp dropdown */
 			if (!event.originalTarget) return;
+			if (!(event.originalTarget instanceof Node)) return;
 			if (
 				hiddenHeader.classList.contains("hidden") &&
 				mypfp.contains(event.originalTarget)
@@ -267,19 +268,7 @@ class HeaderComponent extends HTMLElement {
 		});
 
 		this.shadow.querySelector("#menulogout").addEventListener("click", async () => {
-			await fetch("https://betaapi.stibarc.com/v4/logout.sjs", {
-				method: "post",
-				headers: {
-					"Content-Type": "application/json",
-				},
-				body: JSON.stringify({
-					session: localStorage.sess,
-				}),
-			});
-			delete localStorage.sess;
-			delete localStorage.username;
-			delete localStorage.pfp;
-			delete localStorage.banner;
+			await api.logout();
 			setLoggedinState(false);
 		});
 
@@ -303,11 +292,11 @@ class HeaderComponent extends HTMLElement {
 			if (state) {
 				mypfp.setAttribute(
 					"src",
-					localStorage.pfp || "https://betacdn.stibarc.com/pfp/default.png"
+					api.pfp || "https://betacdn.stibarc.com/pfp/default.png"
 				);
-				menuprofile.textContent = localStorage.username;
+				menuprofile.textContent = api.username;
 				menuprofile.addEventListener("click", () => {
-					location.href = `./user.html?username=${localStorage.username}`;
+					location.href = `./user.html?username=${api.username}`;
 				});
 			} else {
 				mypfp.setAttribute(

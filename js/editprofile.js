@@ -1,17 +1,8 @@
 let tfaEnabled = false;
 
 async function updateInfo() {
-	$("#userusername").textContent = localStorage.username;
-	const r = await fetch("https://betaapi.stibarc.com/v4/getprivatedata.sjs", {
-		method: "post",
-		headers: {
-			"Content-Type": "application/json"
-		},
-		body: JSON.stringify({
-			session: localStorage.sess
-		})
-	});
-	const user = (await r.json()).user;
+	$("#userusername").textContent = api.username;
+	const user = await api.getPrivateData();
 	$("#userpfp").setAttribute("src", user.pfp);
 	$("#userPfpLoader").classList.remove("loading");
 	$("#userBanner").classList.remove("loading");
@@ -38,19 +29,10 @@ function uploadBannerImage() {
 	fileInput.addEventListener("change", async function(e) {
 		if (fileInput.files.length == 0) return;
 		$("#userBanner").classList.add("loading");
-		const response = await fetch("https://betaapi.stibarc.com/v4/uploadfile.sjs", {
-		method: "post",
-		headers: {
-				"Content-Type": fileInput.files[0].type,
-				"X-Session-Key": localStorage.sess,
-				"X-File-Usage": "banner"
-			},
-			body: await fileInput.files[0].arrayBuffer()
-		});
-		const responseJSON = await response.json();
+		const file = await api.uploadFile(fileInput.files[0], "banner");
 		$("#userBanner").classList.remove("loading");
-		localStorage.banner = responseJSON.file;
-		$("#userBanner").style.backgroundImage = `url("${responseJSON.file}")`;
+		api.banner = file;
+		$("#userBanner").style.backgroundImage = `url("${file}")`;
 	});
 	fileInput.click();
 }
@@ -88,19 +70,9 @@ window.addEventListener("load", async () => {
 		fileInput.addEventListener("change", async function(e) {
 			if (fileInput.files.length == 0) return;
 			$("#userPfpLoader").classList.add("loading");
-			const response = await fetch("https://betaapi.stibarc.com/v4/uploadfile.sjs", {
-			method: "post",
-			headers: {
-					"Content-Type": fileInput.files[0].type,
-					"X-Session-Key": localStorage.sess,
-					"X-File-Usage": "pfp"
-				},
-				body: await fileInput.files[0].arrayBuffer()
-			});
-			const responseJSON = await response.json();
+			const file = await api.uploadFile(fileInput.files[0], "pfp");
 			$("#userPfpLoader").classList.remove("loading");
-			localStorage.pfp = responseJSON.file;
-			$("#userpfp").setAttribute("src", responseJSON.file);
+			$("#userpfp").setAttribute("src", file);
 		});
 		fileInput.click();
 	});
@@ -108,47 +80,29 @@ window.addEventListener("load", async () => {
 		uploadBannerImage();
 	});
 	$("#removeBanner").addEventListener("click", async () => {
-		const defaultBannerUrl = "https://betacdn.stibarc.com/banner/default.png";
 		$("#userBanner").classList.add("loading");
-		const response = await fetch("https://betaapi.stibarc.com/v4/editprofile.sjs", {
-			method: "post",
-			headers: {
-				"Content-Type": "application/json"
-			},
-			body: JSON.stringify({
-				session: localStorage.sess,
-				banner: defaultBannerUrl,
-			})
-		});
-		const responseJSON = await response.json();
+		await api.editProfile({ banner: api.defaultBannerUrl });
 		$("#userBanner").classList.remove("loading");
-		delete localStorage.banner;
-		$("#userBanner").style.backgroundImage = `url("${defaultBannerUrl}")`;
+		api.removeBanner();
+		$("#userBanner").style.backgroundImage = `url("${api.defaultBannerUrl}")`;
 	});
 	$("#editprofilebutton").addEventListener("click", async () => {
-		const r = await fetch("https://betaapi.stibarc.com/v4/editprofile.sjs", {
-			method: "post",
-			headers: {
-				"Content-Type": "application/json"
-			},
-			body: JSON.stringify({
-				session: localStorage.sess,
-				name: $("#nameinput").value,
-				displayName: $("#showname").checked,
-				pronouns: $("#pronounsinput").value,
-				displayPronouns: $("#showpronouns").checked,
-				email: $("#emailinput").value,
-				displayEmail: $("#showemail").checked,
-				birthday: $("#bdayinput").value,
-				displayBirthday: $("#showbday").checked,
-				bio: $("#bioinput").value,
-				displayBio: $("#showbio").checked
-			})
+		await api.editProfile({
+			name: $("#nameinput").value,
+			displayName: $("#showname").checked,
+			pronouns: $("#pronounsinput").value,
+			displayPronouns: $("#showpronouns").checked,
+			email: $("#emailinput").value,
+			displayEmail: $("#showemail").checked,
+			birthday: $("#bdayinput").value,
+			displayBirthday: $("#showbday").checked,
+			bio: $("#bioinput").value,
+			displayBio: $("#showbio").checked
 		});
-		location.href = `user.html?username=${localStorage.username}`;
+		location.href = `user.html?username=${api.username}`;
 	});
 	$("#cancel").addEventListener("click", () => {
-		location.href = `user.html?username=${localStorage.username}`;
+		location.href = `user.html?username=${api.username}`;
 	});
-	setLoggedinState(localStorage.sess)
+	setLoggedinState(api.loggedIn)
 });

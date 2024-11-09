@@ -4,14 +4,18 @@ class API {
 	#session;
 	#username;
 	#pfp;
+	#banner;
 	#lastSeenGlobalPost;
 	#lastSeenFollowedPost;
 
 	constructor(environment) {
 		switch (environment) {
+			default:
 			case "development":
-				this.#host = "https://api.dev.stibarc.com";
-				this.#cdn = "https://cdn.dev.stibarc.com";
+				// this.#host = "https://api.dev.stibarc.com";
+				// this.#cdn = "https://cdn.dev.stibarc.com";
+				this.#host = "https://betaapi.stibarc.com";
+				this.#cdn = "https://betacdn.stibarc.com";
 				break;
 			case "staging":
 				this.#host = "https://api.staging.stibarc.com";
@@ -24,7 +28,8 @@ class API {
 		}
 		this.#session = localStorage.sess;
 		this.#username = localStorage.username;
-		this.#pfp = localStorage.pfp;
+		this.#pfp = localStorage.pfp || `${this.#cdn}/pfp/default.png`;
+		this.#banner = localStorage.banner;
 	}
 
 	get host() {
@@ -45,6 +50,40 @@ class API {
 
 	get pfp() {
 		return this.#pfp;
+	}
+
+	get banner() {
+		return this.#banner;
+	}
+
+	get defaultBannerUrl() {
+		return `${api.cdn}/banner/default.png`;
+	}
+
+	get loggedIn() {
+		return this.#session !== undefined;
+	}
+
+	/**
+	 * Removes the cached banner
+	 */
+	removeBanner() {
+		this.#banner = undefined;
+		delete localStorage.banner;
+	}
+
+	/**
+	 * Initializes the API
+	 * @returns {Promise<void>}
+	 */
+	async init() {
+		const sessInfo = await this.getPrivateData();
+		this.#username = sessInfo.username;
+		this.#pfp = sessInfo.pfp || `${this.#cdn}/pfp/default.png`;
+		this.#banner = sessInfo.banner;
+		localStorage.username = this.#username;
+		localStorage.pfp = this.#pfp;
+		localStorage.banner = this.#banner;
 	}
 
 	/**
@@ -76,7 +115,7 @@ class API {
 	/**
 	 * Uploads a file
 	 * @param {File} file The file to upload
-	 * @param {string} usage The usage of the file. Can be "attachment" or "pfp".
+	 * @param {string} usage The usage of the file. Can be "attachment", "pfp", or "banner".
 	 * @returns {Promise<object>} The uploaded file
 	 */
 	async uploadFile(file, usage) {
@@ -106,6 +145,16 @@ class API {
 			// TODO: Show popup
 			throw new Error("Failed to upload file");
 		}
+		switch (usage) {
+			case "pfp":
+				this.#pfp = responseJSON.file;
+				localStorage.pfp = this.#pfp;
+				break;
+			case "banner":
+				this.#banner = responseJSON.file;
+				localStorage.banner = this.#banner;
+				break;
+		}
 		return responseJSON.file;
 	}
 
@@ -118,14 +167,16 @@ class API {
 	 * 	email: string,
 	 * 	birthday: string,
 	 * 	bio: string,
+	 * 	pronouns: string,
 	 * 	displayName: boolean,
 	 * 	displayEmail: boolean,
 	 * 	displayBirthday: boolean,
-	 * 	displayBio: boolean
+	 * 	displayBio: boolean,
+	 * 	displayPronouns: boolean
 	 * }} user The user to register
 	 * @returns {Promise<object>} The session key, username, and profile picture
 	 */
-	async registerUser({ username, password, name, email, birthday, bio, displayName, displayEmail, displayBirthday, displayBio }) {
+	async registerUser({ username, password, name, email, birthday, bio, pronouns, displayName, displayEmail, displayBirthday, displayBio, displayPronouns }) {
 		let response;
 		try {
 			response = await fetch(`${this.#host}/v4/register.sjs`, {
@@ -140,10 +191,12 @@ class API {
 					email,
 					birthday,
 					bio,
+					pronouns,
 					displayName,
 					displayEmail,
 					displayBirthday,
-					displayBio
+					displayBio,
+					displayPronouns
 				})
 			});
 		} catch (e) {
@@ -160,7 +213,7 @@ class API {
 		if (responseJSON.status !== "ok") {
 			switch (responseJSON.errorCode) {
 				case "ue":
-					throw new Error("Username already exists");
+					throw new Error("Username taken");
 				default:
 					// TODO: Show popup
 					throw new Error("Failed to register");
@@ -214,11 +267,11 @@ class API {
 		if (responseJSON.status !== "ok") {
 			switch (responseJSON.errorCode) {
 				case "totpr":
-					throw new Error("2FA is required");
+					throw new Error("2FA code required");
 				case "iuop":
 					throw new Error("Invalid username or password");
 				case "itotp":
-					throw new Error("Invalid TOTP code");
+					throw new Error("Invalid 2FA code");
 				default:
 					// TODO: Show popup
 					throw new Error("Failed to login");
@@ -226,7 +279,7 @@ class API {
 		}
 		this.#session = responseJSON.session;
 		this.#username = responseJSON.username;
-		this.pfp = responseJSON.pfp;
+		this.#pfp = responseJSON.pfp;
 		localStorage.sess = this.#session;
 		localStorage.username = this.#username;
 		localStorage.pfp = this.#pfp;
@@ -274,6 +327,40 @@ class API {
 		this.#session = undefined;
 		this.#username = undefined;
 		this.#pfp = undefined;
+	}
+
+	/**
+	 * Log out a specific session. Will not log out current instance.
+	 * @param {string} session The session to log out
+	 * @returns {Promise<void>}
+	 */
+	async logoutSession(session) {
+		let response;
+		try {
+			response = await fetch(`${this.#host}/v4/logout.sjs`, {
+				method: "post",
+				headers: {
+					"Content-Type": "application/json"
+				},
+				body: JSON.stringify({
+					session
+				})
+			});
+		} catch (e) {
+			// TODO: Show popup
+			throw new Error("Failed to logout");
+		}
+		let responseJSON;
+		try {
+			responseJSON = await response.json();
+		} catch (e) {
+			// TODO: Show popup
+			throw new Error("Failed to parse logout response");
+		}
+		if (responseJSON.status !== "ok") {
+			// TODO: Show popup
+			throw new Error("Failed to logout");
+		}
 	}
 
 	/**
@@ -466,16 +553,18 @@ class API {
 	 * 	email: string,
 	 * 	birthday: string,
 	 * 	bio: string,
+	 * 	pronouns: string,
 	 * 	displayName: boolean,
 	 * 	displayEmail: boolean,
 	 * 	displayBirthday: boolean,
 	 * 	displayBio: boolean,
+	 * 	displayPronouns: boolean,
 	 * 	block: boolean,
 	 * 	displayBlock: boolean
 	 * }} newUserDetails The new details of the user. All fields are optional.
 	 * @returns {Promise<void>}
 	 */
-	async editProfile({ pfp, banner, name, email, birthday, bio, displayName, displayEmail, displayBirthday, displayBio, block, displayBlock }) {
+	async editProfile({ pfp, banner, name, email, birthday, bio, pronouns, displayName, displayEmail, displayBirthday, displayBio, displayPronouns, block, displayBlock }) {
 		let response;
 		try {
 			response = await fetch(`${this.#host}/v4/editprofile.sjs`, {
@@ -491,10 +580,12 @@ class API {
 					email,
 					birthday,
 					bio,
+					pronouns,
 					displayName,
 					displayEmail,
 					displayBirthday,
 					displayBio,
+					displayPronouns,
 					block,
 					displayBlock
 				})
@@ -527,8 +618,10 @@ class API {
 					throw new Error("Failed to edit profile");
 			}
 		}
-		this.#pfp = pfp;
-		localStorage.pfp = this.#pfp;
+		if (pfp !== undefined) {
+			this.#pfp = pfp;
+			localStorage.pfp = this.#pfp;
+		}
 	}
 
 	/**
@@ -589,11 +682,13 @@ class API {
 	 * 	postsToReturn: number,
 	 * 	returnTotalPosts: boolean,
 	 * 	returnGlobal: boolean,
-	 * 	returnFollowed: boolean
+	 * 	returnFollowed: boolean,
+	 * 	useLastSeenGlobal: boolean,
+	 * 	useLastSeenFollowed: boolean
 	 * }} options The options for fetching posts.
 	 * @returns {Promise<object>} The list of posts, including globalPosts, followedPosts, and totalPosts.
 	 */
-	async getPosts({ postsToReturn = 20, returnTotalPosts = true, returnGlobal = true, returnFollowed = true }) {
+	async getPosts({ postsToReturn = 20, returnTotalPosts = true, returnGlobal = true, returnFollowed = true, useLastSeenGlobal = true, useLastSeenFollowed = true }) {
 		let response;
 		try {
 			response = await fetch(`${this.#host}/v4/getposts.sjs`, {
@@ -607,8 +702,8 @@ class API {
 					returnTotalPosts,
 					returnGlobal,
 					returnFollowed: returnFollowed && this.#session !== undefined,
-					lastSeenGlobalPost: this.#lastSeenGlobalPost,
-					lastSeenFollowedPost: (returnFollowed && this.#session !== undefined) ? this.#lastSeenFollowedPost : undefined
+					lastSeenGlobalPost: (useLastSeenGlobal) ? this.#lastSeenGlobalPost : undefined,
+					lastSeenFollowedPost: (useLastSeenFollowed && returnFollowed && this.#session !== undefined) ? this.#lastSeenFollowedPost : undefined
 				})
 			});
 		} catch (e) {
@@ -638,8 +733,12 @@ class API {
 					throw new Error("Failed to fetch posts");
 			}
 		}
-		this.#lastSeenGlobalPost = responseJSON.lastSeenGlobalPost;
-		this.#lastSeenFollowedPost = responseJSON.lastSeenFollowedPost;
+		if (returnGlobal && responseJSON.globalPosts.length > 0) {
+			this.#lastSeenGlobalPost = responseJSON.globalPosts[responseJSON.globalPosts.length - 1]?.id;
+		}
+		if (returnFollowed && responseJSON.followedPosts.length > 0) {
+			this.#lastSeenFollowedPost = responseJSON.followedPosts[responseJSON.followedPosts.length - 1]?.id;
+		}
 		return {
 			globalPosts: responseJSON.globalPosts,
 			followedPosts: responseJSON.followedPosts,
@@ -774,8 +873,8 @@ class API {
 			throw new Error("Failed to search");
 		}
 		return {
-			users: responseJSON.users,
-			posts: responseJSON.posts
+			users: responseJSON.results.users,
+			posts: responseJSON.results.posts
 		};
 	}
 

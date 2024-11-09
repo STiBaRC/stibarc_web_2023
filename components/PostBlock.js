@@ -69,7 +69,7 @@ class PostBlockComponent extends HTMLElement {
 		if (this.post.poster.verified) this.shadow.querySelector("#verified").classList.remove("hidden");
 		this.shadow.querySelector("#pronouns").setAttribute("title", `Pronouns (${this.post.poster.pronouns})`);
 		if (this.post.poster.pronouns) this.shadow.querySelector("#pronouns").textContent = `(${this.post.poster.pronouns})`;
-		this.shadow.querySelector("#date").textContent = this.post.date;
+		this.shadow.querySelector("#date").textContent = new Date(this.post.date).toLocaleString();
 		this.shadow.querySelector("#posttextcontent").textContent = this.post.content;
 		this.shadow.querySelector("#upvotes").textContent = this.post.upvotes;
 		this.shadow.querySelector("#downvotes").textContent = this.post.downvotes;

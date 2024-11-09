@@ -179,43 +179,26 @@ class RegisterModalComponent extends HTMLElement {
 		this.#clicked = true;
 		this.shadow.querySelector("#registerbutton").textContent = "";
 		this.shadow.querySelector("#registerbutton").classList.add("loading");
-		const response = await fetch("https://betaapi.stibarc.com/v4/registeruser.sjs", {
-			method: "post",
-			headers: {
-				"Content-Type": "application/json"
-			},
-			body: JSON.stringify({
+		try {
+			await api.registerUser({
 				username,
 				password,
 				name,
-				displayName,
-				pronouns,
-				displayPronouns,
 				email,
-				displayEmail,
 				birthday,
-				displayBirthday,
 				bio,
-				displayBio
-			})
-		});
-		const responseJSON = await response.json();
-		switch (responseJSON.status) {
-			case "ok":
-				localStorage.username = username;
-				localStorage.pfp = "https://betacdn.stibarc.com/pfp/default.png";
-				localStorage.sess = responseJSON.session;
-				setLoggedinState(true);
-				this.shadow.querySelector("#registercancel").onclick();
-				break;
-			case "error":
-				switch (responseJSON.errorCode) {
-					case "ue":
-						this.shadow.querySelector("#error").textContent = "User already registered";
-						this.shadow.querySelector("#errorcontainer").classList.remove("hidden");
-						break;
-				}
-				break;
+				pronouns,
+				displayName,
+				displayEmail,
+				displayBirthday,
+				displayBio,
+				displayPronouns
+			});
+			setLoggedinState(true);
+			this.shadow.querySelector("#registercancel").onclick();
+		} catch (e) {
+			this.shadow.querySelector("#error").textContent = e.message;
+			this.shadow.querySelector("#errorcontainer").classList.remove("hidden");
 		}
 		this.shadow.querySelector("#registerbutton").textContent = "Register";
 		this.shadow.querySelector("#registerbutton").classList.remove("loading");

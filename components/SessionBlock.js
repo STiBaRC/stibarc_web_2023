@@ -68,6 +68,9 @@ class SessionBlockComponent extends HTMLElement {
 	connectedCallback() {
 		this.shadow = this.attachShadow({ mode: "closed" });
 		this.shadow.innerHTML = this.#shadowDomHTML;
+		if (this.session.id === api.session) {
+			this.shadow.querySelector("#delete").remove();
+		}
 		this.shadow.querySelector("#session").title = this.session.id;
 		const dateString = new Date(this.session.loginDate).toLocaleString();
 		this.shadow.querySelector("#loginDate").textContent = `Login Date: ${dateString}`;
@@ -89,21 +92,12 @@ class SessionBlockComponent extends HTMLElement {
 			permissionTag.textContent = permission;
 			permissionTags.appendChild(permissionTag);
 		}
-		this.shadow.querySelector("#delete").addEventListener("click", async () => {
-			const response = await fetch("https://betaapi.stibarc.com/v4/logout.sjs", {
-				method: "post",
-				headers: {
-					"Content-Type": "application/json",
-				},
-				body: JSON.stringify({
-					session: this.session.id
-				}),
-			});
-			const r = await response.json();
-			if (r.status == "ok") {
+		if (this.session.id !== api.session) {
+			this.shadow.querySelector("#delete").addEventListener("click", async () => {
+				await api.logoutSession(this.session.id);
 				this.remove();
-			}
-		});
+			});
+		}
 		this.shadow.querySelector("#permissions").textContent = "Permissions: ";
 		this.shadow.querySelector("#permissions").appendChild(permissionTags);
 	}

@@ -7,6 +7,14 @@ class CommentBlockComponent extends HTMLElement {
 			:host {
 				width: 100%;
 			}
+
+			#textcontent {
+				-webkit-box-orient: vertical;
+				display: -webkit-box;
+				word-wrap: break-word;
+				max-width: 100%;
+				white-space: pre-wrap;
+			}
 		</style>
 		<span class="comment flexcontainer flexcolumn">
 			<span class="flexcontainer leftalign width100">
@@ -22,7 +30,9 @@ class CommentBlockComponent extends HTMLElement {
 				<span id="edited" class="smallBadge dark hidden">Edited</span>
 			</span>
 			<hr class="width100">
-			<span id="content" class="postcontent flexcolumn leftalign width100"></span>
+			<span id="content" class="postcontent flexcolumn leftalign width100">
+				<span id="textcontent"></span>
+			</span>
 			<hr class="width100">
 			<span id="actions-post" class="aligncenter leftalign width100 flexwrap hidden">
 				<button id="upvote" class="flexcontainer button primary voteBtn" title="Upvote">
@@ -70,7 +80,7 @@ class CommentBlockComponent extends HTMLElement {
 		this.shadow.querySelector("#pronouns").setAttribute("title", `Pronouns (${this.comment.poster.pronouns})`);
 		if (this.comment.poster.pronouns) this.shadow.querySelector("#pronouns").textContent = `(${this.comment.poster.pronouns})`;
 		this.shadow.querySelector("#postdate").textContent = new Date(this.comment.date).toLocaleString();
-		this.shadow.querySelector("#content").textContent = this.comment.content;
+		this.shadow.querySelector("#textcontent").textContent = this.comment.content;
 		if (this.comment.edited) {
 			this.shadow.querySelector("#edited").setAttribute("title", `Edited ${new Date(this.comment.lastEdited).toLocaleString()}`);
 			this.shadow.querySelector("#edited").classList.remove("hidden");
@@ -80,7 +90,7 @@ class CommentBlockComponent extends HTMLElement {
 			this.shadow.querySelector("#upvotes").textContent = this.comment.upvotes;
 			this.shadow.querySelector("#downvotes").textContent = this.comment.downvotes;
 
-			if (this.comment.poster.username === localStorage.username) {
+			if (this.comment.poster.username === api.username) {
 				this.shadow.querySelector("#edit").classList.remove("hidden");
 				this.shadow.querySelector("#edit").addEventListener("click", () => {
 					window.location.href = `./edit.html?id=${this.post.id}&cid=${this.comment.id}`;
@@ -88,9 +98,9 @@ class CommentBlockComponent extends HTMLElement {
 			}
 
 			this.shadow.querySelector("#upvote").addEventListener("click", async () => {
-				if (localStorage.sess) {
-					const voteResult = await vote({
-						id: this.post.id,
+				if (api.loggedIn) {
+					const voteResult = await api.vote({
+						postId: this.post.id,
 						commentId: this.comment.id,
 						target: "comment",
 						vote: "upvote",
@@ -103,9 +113,9 @@ class CommentBlockComponent extends HTMLElement {
 			});
 		
 			this.shadow.querySelector("#downvote").addEventListener("click", async () => {
-				if (localStorage.sess) {
-					const voteResult = await vote({
-						id: this.post.id,
+				if (api.loggedIn) {
+					const voteResult = await api.vote({
+						postId: this.post.id,
 						commentId: this.comment.id,
 						target: "comment",
 						vote: "downvote",
@@ -140,7 +150,7 @@ class CommentBlockComponent extends HTMLElement {
 
 		listatehooks.push((state) => {
 			if (state) {
-				if (this.comment.poster.username === localStorage.username) {
+				if (this.comment.poster.username === api.username) {
 					this.shadow.querySelector("#edit").classList.remove("hidden");
 				}
 			} else {
