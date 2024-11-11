@@ -1,6 +1,5 @@
 window.addEventListener("load", function() {
-	//const socket = new io("https://tv.stibarc.com");
-	const socket = new io("http://localhost:3002");
+	const socket = new io("https://tv.stibarc.com");
 
 	listatehooks.push(function(loggedIn) {
 		if (loggedIn) {
