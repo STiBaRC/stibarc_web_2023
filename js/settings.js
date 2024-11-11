@@ -85,7 +85,7 @@ window.addEventListener("load", async () => {
 			}
 			updateInfo();
 		} else {
-			location.href = "./";
+			location.href = "/";
 		}
 	});
 	$(".sidebarItems li").forEach(item => {

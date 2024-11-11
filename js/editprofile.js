@@ -42,7 +42,7 @@ window.addEventListener("load", async () => {
 		if (state) {
 			updateInfo();
 		} else {
-			location.href = "./";
+			location.href = "/";
 		}
 	});
 	clickhooks.push((event) => {

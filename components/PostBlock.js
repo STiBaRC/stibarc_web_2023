@@ -2,8 +2,8 @@ class PostBlockComponent extends HTMLElement {
 	// This is safe because no part of this is dynamic
 	#shadowDomHTML = `
 		<style>
-			@import url("./css/global.css");
-			@import url("./css/post.css");
+			@import url("/css/global.css");
+			@import url("/css/post.css");
 			:host {
 				width: 100%;
 			}
@@ -61,9 +61,9 @@ class PostBlockComponent extends HTMLElement {
 		let title = this.post.title;
 		if (this.post.title.length > maxTitleLength) title = `${this.post.title.substring(0, maxTitleLength)}...`;
 
-		this.shadow.querySelector("#titleLink").setAttribute("href", `./post.html?id=${this.post.id}`);
+		this.shadow.querySelector("#titleLink").setAttribute("href", `/post.html?id=${this.post.id}`);
 		this.shadow.querySelector("#titleLink").textContent = title;
-		this.shadow.querySelector("#userLink").setAttribute("href", `./user.html?username=${this.post.poster.username}`);
+		this.shadow.querySelector("#userLink").setAttribute("href", `/user.html?username=${this.post.poster.username}`);
 		this.shadow.querySelector("#pfp").setAttribute("src", this.post.poster.pfp);
 		this.shadow.querySelector("#username").textContent = this.post.poster.username;
 		if (this.post.poster.verified) this.shadow.querySelector("#verified").classList.remove("hidden");
@@ -94,7 +94,7 @@ class PostBlockComponent extends HTMLElement {
 		}
 
 		this.addEventListener("click", () => {
-			window.location.href = `./post.html?id=${this.post.id}`;
+			window.location.href = `/post.html?id=${this.post.id}`;
 		});
 	}
 }

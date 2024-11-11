@@ -2,7 +2,7 @@ class CommentBlockComponent extends HTMLElement {
 	// This is safe because no part of this is dynamic
 	#shadowDomHTML = `
 		<style>
-			@import url("./css/global.css");
+			@import url("/css/global.css");
 
 			:host {
 				width: 100%;
@@ -73,7 +73,7 @@ class CommentBlockComponent extends HTMLElement {
 		this.shadow = this.attachShadow({ mode: "closed" });
 		this.shadow.innerHTML = this.#shadowDomHTML;
 
-		this.shadow.querySelector("#userLink").setAttribute("href", `./user.html?username=${this.comment.poster.username}`);
+		this.shadow.querySelector("#userLink").setAttribute("href", `/user.html?username=${this.comment.poster.username}`);
 		this.shadow.querySelector("#pfp").setAttribute("src", this.comment.poster.pfp);
 		this.shadow.querySelector("#username").textContent = this.comment.poster.username;
 		if (this.comment.poster.verified) this.shadow.querySelector("#verified").classList.remove("hidden");
@@ -93,7 +93,7 @@ class CommentBlockComponent extends HTMLElement {
 			if (this.comment.poster.username === api.username) {
 				this.shadow.querySelector("#edit").classList.remove("hidden");
 				this.shadow.querySelector("#edit").addEventListener("click", () => {
-					window.location.href = `./edit.html?id=${this.post.id}&cid=${this.comment.id}`;
+					window.location.href = `/edit.html?id=${this.post.id}&cid=${this.comment.id}`;
 				});
 			}
 

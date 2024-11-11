@@ -42,7 +42,7 @@ class IconComponent extends HTMLElement {
 		const svgIcon = document.createElementNS("http://www.w3.org/2000/svg", "svg");
 		svgIcon.classList.add("icon", this.getAttribute("size"), this.getAttribute("type"));
 		const useBlock = document.createElementNS("http://www.w3.org/2000/svg", "use");
-		useBlock.setAttribute("href", `./img/icon/icons.svg#${iconName}`);
+		useBlock.setAttribute("href", `/img/icon/icons.svg#${iconName}`);
 		svgIcon.append(useBlock);
 
 		this.shadow.appendChild(svgIcon);

@@ -76,7 +76,7 @@ async function newPost() {
 		child.click();
 	}
 	attachmentBlobURLs = [];
-	location.href = `./post.html?id=${newPost.id}`;
+	location.href = `/post.html?id=${newPost}`;
 }
 
 function setFeed(activeFeed) {

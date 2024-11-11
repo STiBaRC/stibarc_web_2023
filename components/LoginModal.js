@@ -2,7 +2,7 @@ class LoginModalComponent extends HTMLElement {
 	// This is safe because no part of this is dynamic
 	#shadowDomHTML = `
 		<style>
-			@import url("./css/global.css");
+			@import url("/css/global.css");
 
 			dialog {
 				box-sizing: border-box;

@@ -1,9 +1,9 @@
 class SessionBlockComponent extends HTMLElement {
 	// This is safe because no part of this is dynamic
 	#shadowDomHTML = `
-		<script src="./Icon.js"></script>
+		<script src="/Icon.js"></script>
 		<style>
-			@import url("./css/global.css");
+			@import url("/css/global.css");
 
 			.sessionBlock {
 				background-color: var(--color3);

@@ -117,7 +117,7 @@ if (
 			api.pfp || "https://betacdn.stibarc.com/pfp/default.png"
 		);
 		$("#menuprofile").textContent = api.username;
-		$("#menuprofile").href = `./user.html?username=${api.username}`;
+		$("#menuprofile").href = `/user.html?username=${api.username}`;
 	}
 }
 

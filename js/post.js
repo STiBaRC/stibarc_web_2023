@@ -130,7 +130,7 @@ window.addEventListener("load", async function () {
 		fileInput.click();
 	}
 	$("#editBtn").addEventListener("click", () => {
-		location.href = `./edit.html?id=${id}`;
+		location.href = `/edit.html?id=${id}`;
 	});
 
 	setLoggedinState(api.loggedIn);
@@ -150,7 +150,7 @@ window.addEventListener("load", async function () {
 	}
 	document.title = `${post.title} | STiBaRC`;
 	$("#posttitle").textContent = post.title;
-	$("#postuserlink").setAttribute("href", `./user.html?id=${post.poster.username}`);
+	$("#postuserlink").setAttribute("href", `/user.html?id=${post.poster.username}`);
 	$("#postpfp").setAttribute("src", post.poster.pfp);
 	$("#postusername").textContent = post.poster.username;
 	if (post.poster.verified) $("#postverified").classList.remove("hidden");

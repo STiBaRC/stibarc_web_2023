@@ -2,7 +2,7 @@ class HeaderComponent extends HTMLElement {
 	// This is safe because no part of this is dynamic
 	#shadowDomHTML = `
 		<style>
-			@import url("./css/global.css");
+			@import url("/css/global.css");
 			header {
 				position: sticky;
 				top: 0px;
@@ -36,7 +36,7 @@ class HeaderComponent extends HTMLElement {
 				color: var(--text);
 				background-color: var(--color2);
 				padding: 0.55rem 0.75rem 0.55rem 37px;
-				background-image: url(../img/icon/search.svg);
+				background-image: url(/img/icon/search.svg);
 				background-size: 24px 24px;
 				background-repeat: no-repeat;
 				background-position-y: center;
@@ -187,13 +187,13 @@ class HeaderComponent extends HTMLElement {
 		<header id="headerElement">
 			<span id="mainHeader" class="flexcontainer">
 				<span class="leftalign">
-					<a href="./" class="flexcontainer" id="logo"><img src="./img/logo.png"></a>
+					<a href="/" class="flexcontainer" id="logo"><img src="/img/logo.png"></a>
 				</span>
 				<span class="searchbar flexcontainer hideOnMobile">
 					<input type="search" id="searchbox" placeholder="Search" autocomplete="false">
 				</span>
 				<span class="flexcontainer rightalign">
-					<span id="searchBtn" class="showOnMobileFlex"><img src="./img/icon/search.svg" alt="Search"></span>
+					<span id="searchBtn" class="showOnMobileFlex"><img src="/img/icon/search.svg" alt="Search"></span>
 					<img src="https://betacdn.stibarc.com/pfp/default.png" id="mypfp" class="headerpfp">
 				</span>
 			</span>
@@ -203,8 +203,8 @@ class HeaderComponent extends HTMLElement {
 					<button class="menuElement" id="menuregister">Register</button>
 				</div>
 				<div class="loggedin headerDropdown hidden">
-					<a class="menuElement" id="menueditprofile" href="./editprofile.html">Edit profile</a>
-					<a class="menuElement" id="menusettings" href="./settings.html">Settings</a>
+					<a class="menuElement" id="menueditprofile" href="/editprofile.html">Edit profile</a>
+					<a class="menuElement" id="menusettings" href="/settings.html">Settings</a>
 					<div class="separator"></div>
 					<a class="menuElement" id="menuprofile"></a>
 					<button class="menuElement red" id="menulogout">Logout</button>
@@ -249,13 +249,13 @@ class HeaderComponent extends HTMLElement {
 		});
 
 		this.shadow.querySelector("#searchBtn").addEventListener("click", () => {
-			location.href = "./search.html";
+			location.href = "/search.html";
 		});
 
 		this.shadow.querySelector("#searchbox").addEventListener("keypress", (e) => {
 			const query = encodeURIComponent(searchbox.value);
 			if (e.key == "Enter" && query.trim() != "") {
-				location.href = `./search.html?q=${query}`;
+				location.href = `/search.html?q=${query}`;
 			}
 		});
 
@@ -296,7 +296,7 @@ class HeaderComponent extends HTMLElement {
 				);
 				menuprofile.textContent = api.username;
 				menuprofile.addEventListener("click", () => {
-					location.href = `./user.html?username=${api.username}`;
+					location.href = `/user.html?username=${api.username}`;
 				});
 			} else {
 				mypfp.setAttribute(

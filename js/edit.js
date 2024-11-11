@@ -59,7 +59,7 @@ window.addEventListener("load", async () => {
 		fileInput.click();
 	}
 	$("#cancel").addEventListener("click", () => {
-		location.href = `./post.html?id=${id}`;
+		location.href = `/post.html?id=${id}`;
 	});
 	$("#editbutton").addEventListener("click", async () => {
 		if (clicked) return;
@@ -81,7 +81,7 @@ window.addEventListener("load", async () => {
 		const to = (target == "post") ? post : comment;
 		const combinedAttachments = [...to.attachments, ...newAttachments];
 		await api.edit({ postId: id, target, commentId: (target === "comment") ? cid : undefined, title: (target == "post") ? title : undefined, content, attachments: combinedAttachments });
-		location.href = `./post.html?id=${id}`;
+		location.href = `/post.html?id=${id}`;
 	});
 	$("#deletebutton").addEventListener("click", async () => {
 		if (!window.confirm(`Delete this ${target}?`)) {
@@ -107,7 +107,7 @@ window.addEventListener("load", async () => {
 		}
 	}
 	if (cid) comment = post.comments.filter(comment => comment.id == cid)[0];
-	if (cid && !comment) location.href = `./post.html?id=${id}`;
+	if (cid && !comment) location.href = `/post.html?id=${id}`;
 	if (!cid) {
 		$("#edittitle").value = post.title;
 		$("#editbody").value = post.content;

@@ -2,8 +2,8 @@ class AttachmentBlockComponent extends HTMLElement {
 	// This is safe because no part of this is dynamic
 	#shadowDomHTML = `
 		<style>
-			@import url("./css/global.css");
-			@import url("./css/post.css");
+			@import url("/css/global.css");
+			@import url("/css/post.css");
 		</style>
 	`;
 	#shadowDomHTMLImg = `
@@ -20,7 +20,7 @@ class AttachmentBlockComponent extends HTMLElement {
 		</audio>
 	`;
 	#shadowDomHTMLError = `
-		<img src="./img/jimbomournsyourmisfortune.png" title="Error: attachment can not be displayed." loading="lazy"></img>
+		<img src="/img/jimbomournsyourmisfortune.png" title="Error: attachment can not be displayed." loading="lazy"></img>
 	`;
 	type;
 	attachment;

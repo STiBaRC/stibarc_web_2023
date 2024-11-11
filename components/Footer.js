@@ -2,7 +2,7 @@ class FooterComponent extends HTMLElement {
 	// This is safe because no part of this is dynamic
 	#shadowDomHTML = `
 		<style>
-			@import url("./css/global.css");
+			@import url("/css/global.css");
 			footer {
 				background-color: var(--color6);
 				margin-top: 2.5rem;

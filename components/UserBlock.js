@@ -1,9 +1,9 @@
 class UserBlockComponent extends HTMLElement {
 	// This is safe because no part of this is dynamic
 	#shadowDomHTML = `
-		<script src="./Icon.js"></script>
+		<script src="/components/Icon.js"></script>
 		<style>
-			@import url("./css/global.css");
+			@import url("/css/global.css");
 		</style>
 		<span class="post flexcontainer leftalign width100">
 			<a id="userLink" class="flexcontainer">
@@ -25,7 +25,7 @@ class UserBlockComponent extends HTMLElement {
 		this.shadow = this.attachShadow({ mode: "closed" });
 		this.shadow.innerHTML = this.#shadowDomHTML;
 
-		this.shadow.querySelector("#userLink").setAttribute("href", `./user.html?username=${this.user.username}`);
+		this.shadow.querySelector("#userLink").setAttribute("href", `/user.html?username=${this.user.username}`);
 		this.shadow.querySelector("#pfp").setAttribute("src", this.user.pfp);
 		this.shadow.querySelector("#username").textContent = this.user.username;
 		if (this.user.verified) this.shadow.querySelector("#verified").classList.remove("hidden");
