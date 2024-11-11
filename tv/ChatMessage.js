@@ -11,7 +11,7 @@ class ChatMessageComponent extends HTMLElement {
 			}
 		</style>
 		<span id="userinfo" class="flexcontainer leftalign width100">
-			<a id="userLink" class="flexcontainer">
+			<a id="userLink" class="flexcontainer" target="_blank">
 				<img id="pfp" class="pfp"></img>
 				<span id="username"></span>
 			</a>
