@@ -4,9 +4,11 @@ window.addEventListener("load", function() {
 	listatehooks.push(function(loggedIn) {
 		if (loggedIn) {
 			$("#chatmsg").disabled = false;
+			$("#chatmsg").placeholder = "Type a message...";
 			$("#sendmsg").disabled = false;
 		} else {
 			$("#chatmsg").disabled = true;
+			$("#chatmsg").placeholder = "Log in to chat";
 			$("#sendmsg").disabled = true;
 		}
 	});
