@@ -6,9 +6,9 @@ window.addEventListener("load", function() {
 		evt.classList.add("width100");
 		evt.setAttribute("title", new Date().toLocaleString());
 		if (data.event === "join") {
-			evt.innerText = `${data.username} joined the chat.`;
+			evt.textContent = `${data.username} joined the chat.`;
 		} else if (data.event === "leave") {
-			evt.innerText = `${data.username} left the chat.`;
+			evt.textContent = `${data.username} left the chat.`;
 		}
 		$("#chatmessages").append(evt);
 		$("#chatmessages").scrollTop = $("#chatmessages").scrollHeight;
@@ -26,17 +26,17 @@ window.addEventListener("load", function() {
 
 	socket.on("typing", function(data) {
 		if (data.typing.length === 0) {
-			$("#typing").innerText = "";
+			$("#typing").textContent = "";
 			$("#typing").classList.add("hidden");
 			return;
 		}
 		$("#typing").classList.remove("hidden");
 		if (data.typing.length === 1) {
-			$("#typing").innerText = `${data.typing[0]} is typing...`;
+			$("#typing").textContent = `${data.typing[0]} is typing...`;
 		} else if (data.typing.length > 1 && data.typing.length <= 4) {
-			$("#typing").innerText = `${data.typing.slice(0, -1).join(", ")}, and ${data.typing[data.typing.length - 1]} are typing...`;
+			$("#typing").textContent = `${data.typing.slice(0, -1).join(", ")}, and ${data.typing[data.typing.length - 1]} are typing...`;
 		} else {
-			$("#typing").innerText = "Several people are typing...";
+			$("#typing").textContent = "Several people are typing...";
 		}
 	});
 });

@@ -237,6 +237,13 @@ window.addEventListener("load", function() {
 		$("#loadMoreBtn").classList.remove("hidden");
 	});
 
+	api.getAnnouncement().then((announcement) => {
+		if (announcement) {
+			$("#announcement").classList.remove("hidden");
+			$("#announcement").textContent = announcement;
+		}
+	});
+
 	setLoggedinState(api.loggedIn);
 });
 

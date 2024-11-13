@@ -191,7 +191,7 @@ window.addEventListener("load", async () => {
 			$("#enabletfaerrorcontainer").classList.add("hidden");
 			$("#enabletfaqr").setAttribute("src", "");
 			$("#tfakey").textContent = "";
-			$("#tfacode").value = "";
+			$("#enabletfainput").value = "";
 			$("#tfabutton").textContent = "Disable 2FA";
 			tfaEnabled = true;
 		} catch(e) {

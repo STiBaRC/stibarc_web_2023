@@ -179,7 +179,7 @@ class API {
 	async registerUser({ username, password, name, email, birthday, bio, pronouns, displayName, displayEmail, displayBirthday, displayBio, displayPronouns }) {
 		let response;
 		try {
-			response = await fetch(`${this.#host}/v4/register.sjs`, {
+			response = await fetch(`${this.#host}/v4/registeruser.sjs`, {
 				method: "post",
 				headers: {
 					"Content-Type": "application/json"
@@ -220,7 +220,7 @@ class API {
 			}
 		}
 		this.#session = responseJSON.session;
-		this.#username = responseJSON.username;
+		this.#username = username;
 		this.#pfp = `${this.#cdn}/pfp/default.png`;
 		localStorage.sess = this.#session;
 		localStorage.username = this.#username;
@@ -272,6 +272,8 @@ class API {
 					throw new Error("Invalid username or password");
 				case "itotp":
 					throw new Error("Invalid 2FA code");
+				case "banned":
+					throw new Error("User is banned");
 				default:
 					// TODO: Show popup
 					throw new Error("Failed to login");

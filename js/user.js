@@ -33,7 +33,6 @@ window.addEventListener("load", async () => {
 
 	setLoggedinState(api.loggedIn);
 
-	let user;
 	try {
 		user = await api.getUser(username);
 	} catch (e) {

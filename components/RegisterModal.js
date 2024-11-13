@@ -195,7 +195,7 @@ class RegisterModalComponent extends HTMLElement {
 				displayPronouns
 			});
 			setLoggedinState(true);
-			this.shadow.querySelector("#registercancel").onclick();
+			this.hide();
 		} catch (e) {
 			this.shadow.querySelector("#error").textContent = e.message;
 			this.shadow.querySelector("#errorcontainer").classList.remove("hidden");
