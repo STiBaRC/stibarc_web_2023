@@ -102,11 +102,14 @@ window.addEventListener("load", function() {
 	source.src = "https://tv.stibarc.com/stream";
 	source.type = "video/webm";
 
-	$("#videoplayer").addEventListener("canplay", function() {
+	$("#videoplayer").addEventListener("loadedmetadata", function() {
 		$("#colorbars").classList.add("hidden");
 		$("#videoplayer").classList.remove("hidden");
-		$("#videoplayer").play();
 		$("#nowplaying").textContent = "Live broadcast";
+	});
+
+	$("#videoplayer").addEventListener("canplaythrough", function() {
+		$("#videoplayer").play();
 	});
 
 	$("#videoplayer").addEventListener("ended", function() {
