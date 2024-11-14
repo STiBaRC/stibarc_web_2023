@@ -71,7 +71,7 @@ window.addEventListener("load", function() {
 		if (data.typing.length === 1) {
 			$("#typing").textContent = `${data.typing[0]} is typing...`;
 		} else if (data.typing.length > 1 && data.typing.length <= 4) {
-			$("#typing").textContent = `${data.typing.slice(0, -1).join(", ")}, and ${data.typing[data.typing.length - 1]} are typing...`;
+			$("#typing").textContent = `${data.typing.slice(0, -1).join(", ")}${(data.typing.length > 2) ? "," : ""} and ${data.typing[data.typing.length - 1]} are typing...`;
 		} else {
 			$("#typing").textContent = "Several people are typing...";
 		}
