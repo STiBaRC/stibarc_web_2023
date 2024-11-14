@@ -31,9 +31,12 @@ window.addEventListener("load", function() {
 		$("#viewers").textContent = data.viewers;
 	});
 
+	let lastUserToSend = "";
+
 	socket.on("chatmemberschange", function(data) {
+		lastUserToSend = "";
 		const evt = document.createElement("i");
-		evt.classList.add("width100");
+		evt.classList.add("width100", "sysnotif");
 		evt.setAttribute("title", new Date().toLocaleString());
 		if (data.event === "join") {
 			evt.textContent = `${data.username} joined the chat.`;
@@ -44,7 +47,6 @@ window.addEventListener("load", function() {
 		$("#chatmessages").scrollTop = $("#chatmessages").scrollHeight;
 	});
 
-	let lastUserToSend = "";
 	socket.on("chatmessage", function(data) {
 		const msg = new ChatMessageComponent(data.user, data.message, lastUserToSend !== data.user.username);
 		msg.classList.add("width100");

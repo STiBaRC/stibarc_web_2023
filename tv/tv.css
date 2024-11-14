@@ -63,6 +63,10 @@
 	margin-bottom: 0;
 }
 
+.sysnotif {
+	color: #7F7F7F;
+}
+
 @media only screen and (max-width: 750px) {
 	#responsivegrid {
 		grid-template-columns: 1fr;

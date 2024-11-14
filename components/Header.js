@@ -228,13 +228,12 @@ class HeaderComponent extends HTMLElement {
 		const searchbox = this.shadow.querySelector("#searchbox");
 		const menuprofile = this.shadow.querySelector("#menuprofile");
 
-		document.addEventListener("click", function (event) {
+		this.shadow.addEventListener("click", function (event) {
 			/* header pfp dropdown */
-			if (!event.originalTarget) return;
-			if (!(event.originalTarget instanceof Node)) return;
+			if (!event.target) return;
 			if (
 				hiddenHeader.classList.contains("hidden") &&
-				mypfp.contains(event.originalTarget)
+				mypfp.contains(event.target)
 			) {
 				mypfp.classList.add("active");
 				hiddenHeader.classList.remove("hidden");
@@ -242,7 +241,15 @@ class HeaderComponent extends HTMLElement {
 				mypfp.classList.remove("active");
 				hiddenHeader.classList.add("hidden");
 			}
-			if (!mypfp.contains(event.originalTarget)) {
+			if (!mypfp.contains(event.target)) {
+				mypfp.classList.remove("active");
+				hiddenHeader.classList.add("hidden");
+			}
+		});
+
+		document.addEventListener("click", function (event) {
+			if (!event.target) return;
+			if (!(event.target instanceof HeaderComponent)) {
 				mypfp.classList.remove("active");
 				hiddenHeader.classList.add("hidden");
 			}
