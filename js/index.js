@@ -244,7 +244,7 @@ window.addEventListener("load", function() {
 		}
 	});
 
-	setLoggedinState(api.loggedIn);
+	if (sessionStorage.loadedBefore !== undefined) setLoggedinState(api.loggedIn);
 });
 
 window.addEventListener("scroll", function() {

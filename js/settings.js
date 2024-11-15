@@ -234,5 +234,5 @@ window.addEventListener("load", async () => {
 		$("#disabletfaerrorcontainer").classList.add("hidden");
 		$("#disabletfainput").value = "";
 	});
-	setLoggedinState(api.loggedIn);
+	if (sessionStorage.loadedBefore !== undefined) setLoggedinState(api.loggedIn);
 });

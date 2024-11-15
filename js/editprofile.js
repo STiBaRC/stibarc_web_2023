@@ -104,5 +104,5 @@ window.addEventListener("load", async () => {
 	$("#cancel").addEventListener("click", () => {
 		location.href = `user.html?username=${api.username}`;
 	});
-	setLoggedinState(api.loggedIn)
+	if (sessionStorage.loadedBefore !== undefined) setLoggedinState(api.loggedIn);
 });
