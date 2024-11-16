@@ -56,6 +56,39 @@ window.addEventListener("load", function() {
 		lastUserToSend = data.user.username;
 	});
 
+	socket.on("history", function(data) {
+		lastUserToSend = "";
+		data.forEach(function(msg) {
+			switch (msg.event) {
+				case "message": {
+					const msgElem = new ChatMessageComponent(msg.user, msg.message, lastUserToSend !== msg.user.username);
+					msgElem.classList.add("width100");
+					msgElem.setAttribute("title", new Date(msg.time).toLocaleString());
+					$("#chatmessages").append(msgElem);
+					lastUserToSend = msg.user.username;
+					break;
+				}
+				case "join": {
+					const evt = document.createElement("i");
+					evt.classList.add("width100", "sysnotif");
+					evt.setAttribute("title", new Date(msg.time).toLocaleString());
+					evt.textContent = `${msg.username} joined the chat.`;
+					$("#chatmessages").append(evt);
+					break;
+				}
+				case "leave": {
+					const evt = document.createElement("i");
+					evt.classList.add("width100", "sysnotif");
+					evt.setAttribute("title", new Date(msg.time).toLocaleString());
+					evt.textContent = `${msg.username} left the chat.`;
+					$("#chatmessages").append(evt);
+					break;
+				}
+			}
+		});
+		$("#chatmessages").scrollTop = $("#chatmessages").scrollHeight;
+	});
+
 	socket.on("typing", function(data) {
 		// Remove self from typing list
 		const index = data.typing.indexOf(api.username);
