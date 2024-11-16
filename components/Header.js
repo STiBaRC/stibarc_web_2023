@@ -187,7 +187,7 @@ class HeaderComponent extends HTMLElement {
 		<header id="headerElement">
 			<span id="mainHeader" class="flexcontainer">
 				<span class="leftalign">
-					<a href="/" class="flexcontainer" id="logo"><img src="/img/logo.png"></a>
+					<a href="/" class="flexcontainer" id="logo"><img id="logoimg" src="/img/logo.png"></a>
 				</span>
 				<span class="searchbar flexcontainer hideOnMobile">
 					<input type="search" id="searchbox" placeholder="Search" autocomplete="false">
@@ -227,6 +227,12 @@ class HeaderComponent extends HTMLElement {
 		const mypfp = this.shadow.querySelector("#mypfp");
 		const searchbox = this.shadow.querySelector("#searchbox");
 		const menuprofile = this.shadow.querySelector("#menuprofile");
+		const logoImg = this.shadow.querySelector("#logoimg");
+		const logo = this.getAttribute("logo");
+
+		if (logo == "tv") {
+			logoImg.src = "/tv/tv_wordmark2.png";
+		}
 
 		this.shadow.addEventListener("click", function (event) {
 			/* header pfp dropdown */
