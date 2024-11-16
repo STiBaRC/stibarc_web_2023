@@ -1,19 +1,6 @@
 window.addEventListener("load", function() {
 	const socket = new io("https://tv.stibarc.com");
 
-	socket.on("chatmemberschange", function(data) {
-		const evt = document.createElement("i");
-		evt.classList.add("width100");
-		evt.setAttribute("title", new Date().toLocaleString());
-		if (data.event === "join") {
-			evt.textContent = `${data.username} joined the chat.`;
-		} else if (data.event === "leave") {
-			evt.textContent = `${data.username} left the chat.`;
-		}
-		$("#chatmessages").append(evt);
-		$("#chatmessages").scrollTop = $("#chatmessages").scrollHeight;
-	});
-
 	let lastUserToSend = "";
 	socket.on("chatmessage", function(data) {
 		const msg = new ChatMessageComponent(data.user, data.message, lastUserToSend !== data.user.username);
@@ -22,6 +9,20 @@ window.addEventListener("load", function() {
 		$("#chatmessages").append(msg);
 		$("#chatmessages").scrollTop = $("#chatmessages").scrollHeight;
 		lastUserToSend = data.user.username;
+	});
+
+	socket.on("chatmemberschange", function(data) {
+		lastUserToSend = "";
+		const evt = document.createElement("i");
+		evt.classList.add("width100", "sysnotif");
+		evt.setAttribute("title", new Date().toLocaleString());
+		if (data.event === "join") {
+			evt.textContent = `${data.username} joined the chat.`;
+		} else if (data.event === "leave") {
+			evt.textContent = `${data.username} left the chat.`;
+		}
+		$("#chatmessages").append(evt);
+		$("#chatmessages").scrollTop = $("#chatmessages").scrollHeight;
 	});
 
 	socket.on("history", function(data) {
