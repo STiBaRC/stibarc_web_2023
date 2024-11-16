@@ -31,7 +31,7 @@ window.addEventListener("load", async () => {
 	document.title = `${username} | STiBaRC`;
 	$("#userusername").textContent = username;
 
-	if (sessionStorage.loadedBefore !== undefined) setLoggedinState(api.loggedIn);
+	setLoggedinState(api.loggedIn);
 
 	try {
 		user = await api.getUser(username);

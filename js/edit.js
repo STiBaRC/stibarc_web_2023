@@ -136,5 +136,5 @@ window.addEventListener("load", async () => {
 		}
 		target = "comment";
 	}
-	if (sessionStorage.loadedBefore !== undefined) setLoggedinState(api.loggedIn);
+	setLoggedinState(api.loggedIn);
 });

@@ -11,7 +11,7 @@ window.addEventListener("load", async () => {
 		}
 	});
 
-	if (sessionStorage.loadedBefore !== undefined) setLoggedinState(api.loggedIn);
+	setLoggedinState(api.loggedIn);
 
 	const url = new URL(location);
 	let query = null;

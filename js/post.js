@@ -133,7 +133,7 @@ window.addEventListener("load", async function () {
 		location.href = `/edit.html?id=${id}`;
 	});
 
-	if (sessionStorage.loadedBefore !== undefined) setLoggedinState(api.loggedIn);
+	setLoggedinState(api.loggedIn);
 
 	let post;
 	try {

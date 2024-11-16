@@ -130,5 +130,5 @@ window.addEventListener("load", function() {
 	$("#videoplayer").append(source);
 	$("#videoplayer").load();
 
-	if (sessionStorage.loadedBefore !== undefined) setLoggedinState(api.loggedIn);
+	setLoggedinState(api.loggedIn);
 });
