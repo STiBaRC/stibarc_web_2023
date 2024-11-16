@@ -181,6 +181,15 @@ stibarc-icon {
 	margin-bottom: 14px;
 }
 
+.margintopsmall {
+	margin-top: 8px;
+}
+
+.marginbottomsmall {
+	margin-bottom: 8px;
+}
+
+
 .red {
 	color: var(--red) !important;
 }
