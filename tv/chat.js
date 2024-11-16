@@ -37,22 +37,22 @@ window.addEventListener("load", function() {
 					lastUserToSend = msg.user.username;
 					break;
 				}
-				case "join": {
-					const evt = document.createElement("i");
-					evt.classList.add("width100", "sysnotif");
-					evt.setAttribute("title", new Date(msg.time).toLocaleString());
-					evt.textContent = `${msg.username} joined the chat.`;
-					$("#chatmessages").append(evt);
-					break;
-				}
-				case "leave": {
-					const evt = document.createElement("i");
-					evt.classList.add("width100", "sysnotif");
-					evt.setAttribute("title", new Date(msg.time).toLocaleString());
-					evt.textContent = `${msg.username} left the chat.`;
-					$("#chatmessages").append(evt);
-					break;
-				}
+				// case "join": {
+				// 	const evt = document.createElement("i");
+				// 	evt.classList.add("width100", "sysnotif");
+				// 	evt.setAttribute("title", new Date(msg.time).toLocaleString());
+				// 	evt.textContent = `${msg.username} joined the chat.`;
+				// 	$("#chatmessages").append(evt);
+				// 	break;
+				// }
+				// case "leave": {
+				// 	const evt = document.createElement("i");
+				// 	evt.classList.add("width100", "sysnotif");
+				// 	evt.setAttribute("title", new Date(msg.time).toLocaleString());
+				// 	evt.textContent = `${msg.username} left the chat.`;
+				// 	$("#chatmessages").append(evt);
+				// 	break;
+				// }
 			}
 		});
 		$("#chatmessages").scrollTop = $("#chatmessages").scrollHeight;
