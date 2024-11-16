@@ -13,6 +13,8 @@ window.addEventListener("load", async function() {
 		}
 	});
 
+	setLoggedinState(api.loggedIn);
+
 	socket.on("connect", function() {
 		listatehooks.push(function(loggedIn) {
 			if (loggedIn) {
@@ -142,6 +144,7 @@ window.addEventListener("load", async function() {
 
 	if (video.canPlayType("application/vnd.apple.mpegurl")) {
 		video.src = source;
+		video.load();
 	} else if (Hls.isSupported()) {
 		function waitForGood() {
 			return new Promise(async function (resolve) {
@@ -196,7 +199,4 @@ window.addEventListener("load", async function() {
 	});
 
 	// $("#videoplayer").append(source);
-	video.load();
-
-	setLoggedinState(api.loggedIn);
 });
