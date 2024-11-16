@@ -1,4 +1,4 @@
-window.addEventListener("load", function() {
+window.addEventListener("load", async function() {
 	const socket = new io("https://tv.stibarc.com");
 
 	listatehooks.push(function(loggedIn) {
@@ -133,35 +133,70 @@ window.addEventListener("load", function() {
 		}
 	});
 
-	const source = document.createElement("source");
-	source.src = "https://tv.stibarc.com/stream";
-	source.type = "video/webm";
+	// const source = document.createElement("source");
+	// source.src = "https://tv.stibarc.com/stream";
+	// source.type = "video/webm";
 
-	$("#videoplayer").addEventListener("loadedmetadata", function() {
+	const video = $("#videoplayer");
+	const source = "https://tv.stibarc.com/stream/hls/stream.m3u8";
+
+	if (video.canPlayType("application/vnd.apple.mpegurl")) {
+		video.src = source;
+	} else if (Hls.isSupported()) {
+		function waitForGood() {
+			return new Promise(async function (resolve) {
+				let good = false;
+				while (!good) {
+					try {
+						await fetch(source);
+						good = true;
+					} catch (e) {
+						await new Promise(function(resolve) {
+							setTimeout(resolve, 1000);
+						});
+					}
+				}
+				resolve();
+			});
+		}
+		
+		await waitForGood();
+		const hls = new Hls();
+		hls.loadSource(source);
+		hls.on(Hls.Events.MANIFEST_PARSED, function() {
+			$("#colorbars").classList.add("hidden");
+			video.classList.remove("hidden");
+			$("#nowplaying").textContent = "Live broadcast";
+			video.play();
+		});
+		hls.attachMedia(video);
+	}
+
+	video.addEventListener("loadedmetadata", function() {
 		$("#colorbars").classList.add("hidden");
-		$("#videoplayer").classList.remove("hidden");
+		video.classList.remove("hidden");
 		$("#nowplaying").textContent = "Live broadcast";
 	});
 
-	$("#videoplayer").addEventListener("canplaythrough", function() {
-		$("#videoplayer").play();
+	video.addEventListener("canplaythrough", function() {
+		video.play();
 	});
 
-	$("#videoplayer").addEventListener("ended", function() {
-		$("#videoplayer").classList.add("hidden");
+	video.addEventListener("ended", function() {
+		video.classList.add("hidden");
 		$("#colorbars").classList.remove("hidden");
 		$("#nowplaying").textContent = "Nothing";
-		$("#videoplayer").load();
+		video.load();
 	});
 
-	source.addEventListener("error", function() {
+	video.addEventListener("error", function() {
 		setTimeout(function() {
-			$("#videoplayer").load();
+			video.load();
 		}, 1000);
 	});
 
-	$("#videoplayer").append(source);
-	$("#videoplayer").load();
+	// $("#videoplayer").append(source);
+	video.load();
 
 	setLoggedinState(api.loggedIn);
 });
