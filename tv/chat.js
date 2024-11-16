@@ -11,19 +11,19 @@ window.addEventListener("load", function() {
 		lastUserToSend = data.user.username;
 	});
 
-	socket.on("chatmemberschange", function(data) {
-		lastUserToSend = "";
-		const evt = document.createElement("i");
-		evt.classList.add("width100", "sysnotif");
-		evt.setAttribute("title", new Date().toLocaleString());
-		if (data.event === "join") {
-			evt.textContent = `${data.username} joined the chat.`;
-		} else if (data.event === "leave") {
-			evt.textContent = `${data.username} left the chat.`;
-		}
-		$("#chatmessages").append(evt);
-		$("#chatmessages").scrollTop = $("#chatmessages").scrollHeight;
-	});
+	// socket.on("chatmemberschange", function(data) {
+	// 	lastUserToSend = "";
+	// 	const evt = document.createElement("i");
+	// 	evt.classList.add("width100", "sysnotif");
+	// 	evt.setAttribute("title", new Date().toLocaleString());
+	// 	if (data.event === "join") {
+	// 		evt.textContent = `${data.username} joined the chat.`;
+	// 	} else if (data.event === "leave") {
+	// 		evt.textContent = `${data.username} left the chat.`;
+	// 	}
+	// 	$("#chatmessages").append(evt);
+	// 	$("#chatmessages").scrollTop = $("#chatmessages").scrollHeight;
+	// });
 
 	socket.on("history", function(data) {
 		lastUserToSend = "";
