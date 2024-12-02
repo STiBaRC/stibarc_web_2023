@@ -308,14 +308,13 @@ class HeaderComponent extends HTMLElement {
 					api.pfp || "https://betacdn.stibarc.com/pfp/default.png"
 				);
 				menuprofile.textContent = api.username;
-				menuprofile.addEventListener("click", () => {
-					location.href = `/user.html?username=${api.username}`;
-				});
+				menuprofile.setAttribute("href", `/user.html?username=${api.username}`);
 			} else {
 				mypfp.setAttribute(
 					"src",
 					"https://betacdn.stibarc.com/pfp/default.png"
 				);
+				menuprofile.setAttribute("href", "");
 			}
 		});
 

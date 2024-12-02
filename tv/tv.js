@@ -71,6 +71,7 @@ window.addEventListener("load", async function() {
 					break;
 				}
 				case "join": {
+					lastUserToSend = "";
 					const evt = document.createElement("i");
 					evt.classList.add("width100", "sysnotif");
 					evt.setAttribute("title", new Date(msg.time).toLocaleString());
@@ -79,6 +80,7 @@ window.addEventListener("load", async function() {
 					break;
 				}
 				case "leave": {
+					lastUserToSend = "";
 					const evt = document.createElement("i");
 					evt.classList.add("width100", "sysnotif");
 					evt.setAttribute("title", new Date(msg.time).toLocaleString());
