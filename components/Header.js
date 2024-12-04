@@ -234,6 +234,10 @@ class HeaderComponent extends HTMLElement {
 			logoImg.src = "/tv/tv_wordmark2.png";
 		}
 
+		if (logo == "video") {
+			logoImg.src = "/video/stibarc_video.png";
+		}
+
 		this.shadow.addEventListener("click", function (event) {
 			/* header pfp dropdown */
 			if (!event.target) return;
