@@ -1,0 +1,1 @@
+const posts = await api.getPosts({ useLastSeenGlobal: false, useLastSeenFollowed: false });
