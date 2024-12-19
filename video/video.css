@@ -1,0 +1,4 @@
+.videoCard video {
+    display: block;
+    max-width: 200px;
+}
