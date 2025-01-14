@@ -14,6 +14,7 @@
 	<link rel="stylesheet" href="/css/index.css">
 	<script src="/js/API.js"></script>
 	<script src="/js/global.js"></script>
+	<script src="/components/Dialog.js"></script>
 	<script type="module" src="/components/LoginModal.js"></script>
 	<script type="module" src="/components/RegisterModal.js"></script>
 	<script type="module" src="/components/Header.js"></script>
@@ -32,12 +33,12 @@
 		<div id="announcement" class="flexcontainer hidden"></div>
 		<span class="flexcontainer feedFilter">
 			<span class="rightalign">
-				<button id="globalBtn" class="flexcontainer button floatingbutton">
+				<button id="globalBtn" class="button floatingbutton">
 					Global
 				</button>
 			</span>
 			<span class="leftalign">
-				<button id="followedBtn" class="flexcontainer button floatingbutton">
+				<button id="followedBtn" class="button floatingbutton">
 					Followed
 				</button>
 			</span>
@@ -49,7 +50,7 @@
 			<span id="followedPostsLoader" class="loader"></span>
 			<span class="marginbottom loggedout">Log in or register to view followed users</span>
 		</span>
-		<button id="loadMoreBtn" class="hidden flexcontainer button primary">Load more</button>
+		<button id="loadMoreBtn" class="hidden button primary">Load more</button>
 	</main>
 	<stibarc-footer></stibarc-footer>
 	<span class="floatingplusbuttoncontainer">
@@ -69,10 +70,10 @@
 					<h3>Attachments</h3>
 					Click attachment to remove
 					<span id="attachments" class="flexcontainer"></span><br>
-					<button id="addattachment" class="flexcontainer button">Add attachment</button>
+					<button id="addattachment" class="button">Add attachment</button>
 					<span class="flexcontainer">
-						<button id="newpostbutton" class="flexcontainer button primary">Post</button>
-						<button id="newpostcancel" class="flexcontainer button">Cancel</button>
+						<button id="newpostbutton" class="button primary">Post</button>
+						<button id="newpostcancel" class="button">Cancel</button>
 					</span>
 				</div>
 			</span>

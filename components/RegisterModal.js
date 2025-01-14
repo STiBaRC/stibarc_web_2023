@@ -65,11 +65,11 @@ class RegisterModalComponent extends HTMLElement {
 				<div>Show bio: <input type="checkbox" id="showbio"></div>
 				<span>&nbsp;</span>
 				<span class="flexcontainer">
-					<button id="registerbutton" class="flexcontainer button small primary">Register</button>
-					<button id="registercancel" class="flexcontainer button">Cancel</button>
+					<button id="registerbutton" class="button small primary">Register</button>
+					<button id="registercancel" class="button">Cancel</button>
 				</span>
 				<span class="flexcontainer marginbottom">
-					<button id="loginlink" class="flexcontainer button">Login</button>
+					<button id="loginlink" class="button">Login</button>
 				</span>
 			</div>
 		</dialog>

@@ -35,11 +35,11 @@ class CommentBlockComponent extends HTMLElement {
 			</span>
 			<hr class="width100">
 			<span id="actions-post" class="aligncenter leftalign width100 flexwrap hidden">
-				<button id="upvote" class="flexcontainer button primary voteBtn" title="Upvote">
+				<button id="upvote" class="button primary voteBtn" title="Upvote">
 					<stibarc-icon name="up_arrow"></stibarc-icon>
 					<span id="upvotes"></span>
 				</button>
-				<button id="downvote" class="flexcontainer button primary voteBtn" title="Downvote">
+				<button id="downvote" class="button primary voteBtn" title="Downvote">
 					<stibarc-icon name="down_arrow"></stibarc-icon>
 					<span id="downvotes"></span>
 				</button>

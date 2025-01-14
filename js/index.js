@@ -65,7 +65,7 @@ async function newPost() {
 		const fileName = await api.uploadFile(file, "attachment");
 		attachments.push(fileName);
 	}
-	const newPost = await api.newPost(title, {content, attachments: (attachments.length > 0) ? attachments : undefined});
+	const newPost = await api.newPost(title, { content, attachments: (attachments.length > 0) ? attachments : undefined });
 	$("#newpostbutton").textContent = "Post";
 	$("#newpostbutton").classList.remove("loading", "small");
 	$("#newposttitle").value = "";
@@ -146,19 +146,19 @@ async function loadMore() {
 	if (feedPosts.length !== 0) $("#loadMoreBtn").classList.remove("hidden");
 }
 
-window.addEventListener("load", function() {
+window.addEventListener("load", function () {
 	setFeed(localStorage.activeFeed);
-	$("#globalBtn").onclick = function() {
+	$("#globalBtn").onclick = function () {
 		setFeed("global");
 	}
-	$("#followedBtn").onclick = function() {
+	$("#followedBtn").onclick = function () {
 		setFeed("followed");
 	}
 	$(".floatingbutton").forEach(e => {
 		e.style.transition = "background-color 0.2s ease-out";
 	});
 	$("#loadMoreBtn").onclick = loadMore;
-	$("#newpost").onclick = function(e) {
+	$("#newpost").onclick = function (e) {
 		if (api.loggedIn) {
 			window.scrollTo(0, 0);
 			$("#newpostformcontainer").classList.remove("hidden");
@@ -168,13 +168,13 @@ window.addEventListener("load", function() {
 			$("stibarc-login-modal")[0].show();
 		}
 	}
-	$("#addattachment").onclick = function(e) {
+	$("#addattachment").onclick = function (e) {
 		const attachmentElements = $("#attachments");
 		const fileInput = document.createElement("input");
 		fileInput.setAttribute("type", "file");
 		fileInput.setAttribute("accept", "image/*,audio/*,video/*");
 		fileInput.setAttribute("multiple", "");
-		fileInput.addEventListener("change", async function(e) {
+		fileInput.addEventListener("change", async function (e) {
 			attachmentFiles = [...attachmentFiles, ...fileInput.files];
 			for (const file of fileInput.files) {
 				const objURL = URL.createObjectURL(file);
@@ -199,7 +199,7 @@ window.addEventListener("load", function() {
 						attachmentElement.appendChild(source);
 						break;
 				}
-				attachmentElement.onclick = function(e) {
+				attachmentElement.onclick = function (e) {
 					const index = attachments.indexOf(file);
 					URL.revokeObjectURL(objURL);
 					attachmentFiles.splice(index, 1);
@@ -212,7 +212,7 @@ window.addEventListener("load", function() {
 		});
 		fileInput.click();
 	}
-	$("#newpostcancel").onclick = function(e) {
+	$("#newpostcancel").onclick = function (e) {
 		$("#newpostformcontainer").classList.add("hidden");
 		$("#overlay").classList.add("hidden");
 		document.body.classList.remove("overflowhidden");
@@ -225,7 +225,7 @@ window.addEventListener("load", function() {
 		attachmentBlobURLs = [];
 	}
 	$("#newpostbutton").onclick = newPost;
-	
+
 	listatehooks.push(async (state) => {
 		$("stibarc-post").forEach((e) => {
 			e.remove();
@@ -247,7 +247,7 @@ window.addEventListener("load", function() {
 	setLoggedinState(api.loggedIn);
 });
 
-window.addEventListener("scroll", function() {
+window.addEventListener("scroll", function () {
 	if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
 		document.querySelector("#globalBtn").classList.add("floatingbuttonShadow");
 		document.querySelector("#followedBtn").classList.add("floatingbuttonShadow");

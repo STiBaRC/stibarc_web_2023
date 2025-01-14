@@ -3,32 +3,6 @@ class LoginModalComponent extends HTMLElement {
 	#shadowDomHTML = `
 		<style>
 			@import url("/css/global.css");
-
-			dialog {
-				box-sizing: border-box;
-				border-radius: 15px;
-				background-color: var(--color2);
-				color: var(--text);
-				padding: 12px;
-				user-select: text;
-				box-shadow: 0 1px 8px 0 rgba(22, 22, 22, 0.2), 0 1px 4px 0 rgba(22, 22, 22, 0.2);
-				max-height: 90vh;
-				width: 100%;
-				max-width: 50vw;
-				overflow-y: auto;
-				flex-wrap: nowrap;
-			}
-
-			@media only screen and (max-width: 750px) {
-				dialog {
-					width: calc(100vw - 40px);
-					max-width: calc(100vw - 40px);
-				}
-			}
-
-			dialog input, dialog textarea {
-				margin-bottom: 0.25rem;
-			}
 		</style>
 		<dialog>
 			<div class="flexcontainer flexcolumn">
@@ -46,11 +20,11 @@ class LoginModalComponent extends HTMLElement {
 					<span>&nbsp;</span>
 				</span>
 				<span class="flexcontainer">
-					<button id="loginbutton" class="flexcontainer button small primary">Login</button>
-					<button id="logincancel" class="flexcontainer button">Cancel</button>
+					<button id="loginbutton" class="button small primary">Login</button>
+					<button id="logincancel" class="button">Cancel</button>
 				</span>
 				<span class="flexcontainer marginbottom">
-					<button id="registerlink" class="flexcontainer button">Register</button>
+					<button id="registerlink" class="button">Register</button>
 				</span>
 			</div>
 		</dialog>
