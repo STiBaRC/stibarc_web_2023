@@ -4,10 +4,11 @@ class UserBlockComponent extends HTMLElement {
 		<script src="/components/Icon.js"></script>
 		<style>
 			@import url("/css/global.css");
+			img { max-width: 100%; }
 		</style>
 		<span class="post flexcontainer leftalign width100">
 			<a id="userLink" class="flexcontainer">
-				<img id="pfp" class="pfp"></img>
+				<img id="pfp" class="pfp" width="55px">
 				<span id="username"></span>
 			</a>
 			<stibarc-icon id="verified" type="verifiedBadge" name="verified" class="verifiedBadge hidden" title="Verified"></stibarc-icon>

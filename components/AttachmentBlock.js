@@ -4,6 +4,7 @@ class AttachmentBlockComponent extends HTMLElement {
 		<style>
 			@import url("/css/global.css");
 			@import url("/css/post.css");
+			#source { max-width: 100%; }
 		</style>
 	`;
 	#shadowDomHTMLImg = `

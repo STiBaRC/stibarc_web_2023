@@ -20,32 +20,33 @@ class PostBlockComponent extends HTMLElement {
 				white-space: pre-wrap;
 			}
 		</style>
-		<span class="post flexcontainer flexcolumn">
-			<a id="titleLink" class="posttitle leftalign width100"></a>
-			<span class="flexcontainer leftalign width100">
+		<div class="post flexcontainer flexcolumn">
+			<div class="width100">
+				<a id="titleLink" class="posttitle leftalign width100"></a
+			</div>
+			<div class="flexcontainer leftalign width100">
 				<a id="userLink" class="flexcontainer">
-					<img id="pfp" class="pfp"></img>
+					<img id="pfp" class="pfp" width="55px"></img>
 					<span id="username"></span>
 				</a>
 				<stibarc-icon id="verified" type="verifiedBadge" name="verified" class="verifiedBadge hidden" title="Verified"></stibarc-icon>
 				<span id="pronouns" class="pronouns"></span>
-			</span>
-			<span id="date" class="postdate leftalign width100">
-			</span>
+			</div>
+			<div id="date" class="postdate leftalign width100"></div>
 			<hr class="width100">
-			<span id="postcontent" class="postcontent flexcolumn leftalign width100">
+			<div id="postcontent" class="postcontent flexcolumn leftalign width100">
 				<span id="posttextcontent"></span>
-			</span>
+			</div>
 			<hr class="width100">
-			<span class="leftalign width100 metaSpan">
+			<div class="leftalign width100 metaSpan">
 				<stibarc-icon name="up_arrow"></stibarc-icon>
 				<span id="upvotes"></span>
 				<stibarc-icon name="down_arrow"></stibarc-icon>
 				<span id="downvotes"></span>
 				<stibarc-icon name="comment"></stibarc-icon>
 				<span id="comments"></span>
-			</span>
-		</span>
+			</div>
+		</div>
 	`;
 	post;
 
