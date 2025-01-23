@@ -18,14 +18,15 @@ class Dialog extends HTMLElement {
         const buttons = document.createElement("div");
         buttons.classList.add("buttons", "flexcontainer");
         const flexgrow = document.createElement("span");
-        flexgrow.classList.add("flex-grow");
+        flexgrow.classList.add("flexgrow");
         buttons.append(flexgrow);
 
         const cancelBtn = document.createElement("button");
-        cancelBtn.classList.add("button", "small", "light");
+        cancelBtn.classList.add("button");
         cancelBtn.textContent = "Cancel";
         cancelBtn.setAttribute("formmethod", "dialog");
-        this.confirmBtn.classList.add("button", "small", "primary");
+        this.confirmBtn.classList.add("button", "primary");
+        this.confirmBtn.focused = true;
         this.confirmBtn.textContent = this.getAttribute("data-confirm") || "Confirm";
         this.confirmBtn.addEventListener("click", (e) => {
             e.preventDefault();

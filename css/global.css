@@ -514,6 +514,10 @@ p {
 	margin-left: 3px;
 }
 
+.buttons {
+	margin-top: 1rem;
+}
+
 .showOnMobileFlex {
 	display: none;
 }
