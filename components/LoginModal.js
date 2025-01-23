@@ -107,16 +107,16 @@ class LoginModalComponent extends HTMLElement {
 	}
 
 	show() {
-		window.scrollTo(0, 0);
-		document.querySelector("#overlay").classList.remove("hidden");
-		document.body.classList.add("overflowhidden");
+		// 	window.scrollTo(0, 0);
+		// document.querySelector("#overlay").classList.remove("hidden");
+		// document.body.classList.add("overflowhidden");
 		this.shadow.querySelector("dialog").showModal();
 		this.shadow.querySelector("#username").focus();
 	}
 
 	hide() {
-		document.querySelector("#overlay").classList.add("hidden");
-		document.body.classList.remove("overflowhidden");
+		// document.querySelector("#overlay").classList.add("hidden");
+		// document.body.classList.remove("overflowhidden");
 		this.shadow.querySelector("dialog").close();
 		this.shadow.querySelector("#username").value = "";
 		this.shadow.querySelector("#password").value = "";
