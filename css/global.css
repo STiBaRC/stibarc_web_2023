@@ -458,6 +458,10 @@ button.button {
 	background-color: var(--color10);
 }
 
+.button:focus {
+	outline-color: var(--text);
+}
+
 .button.smallBtn {
 	min-height: 0;
 	height: auto;
