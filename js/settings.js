@@ -1,4 +1,5 @@
 let selectedTab = location.hash.slice(1) || "security";
+let loggedIn;
 let isMobile;
 let tfaEnabled = false;
 
@@ -85,7 +86,9 @@ window.addEventListener("load", async () => {
 			}
 			updateInfo();
 		} else {
-			location.href = "/";
+			// location.href = "/";
+			switchTab($("#tab-display"));
+			$("#sideContentLoading").classList.add("hidden");
 		}
 	});
 	$(".sidebarItems li").forEach(item => {
@@ -115,6 +118,10 @@ window.addEventListener("load", async () => {
 	});
 
 	$("#changepasswordbutton").addEventListener("click", () => {
+		if (!api.loggedIn) {
+			document.querySelector("stibarc-login-modal").show();
+			return;
+		}
 		window.scrollTo(0, 0);
 		$("#changepasswordformcontainer").classList.remove("hidden");
 		$("#overlay").classList.remove("hidden");
@@ -154,6 +161,10 @@ window.addEventListener("load", async () => {
 		}
 	});
 	$("#tfabutton").addEventListener("click", async () => {
+		if (!api.loggedIn) {
+			document.querySelector("stibarc-login-modal").show();
+			return;
+		}
 		window.scrollTo(0, 0);
 		$("#overlay").classList.remove("hidden");
 		$("#pleaseWait").classList.remove("hidden");

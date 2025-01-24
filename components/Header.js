@@ -201,6 +201,7 @@ class HeaderComponent extends HTMLElement {
 				<div class="loggedout headerDropdown">
 					<button class="menuElement" id="menulogin">Login</button>
 					<button class="menuElement" id="menuregister">Register</button>
+					<a class="menuElement" id="menusettings" href="/settings.html">Settings</a>
 				</div>
 				<div class="loggedin headerDropdown hidden">
 					<a class="menuElement" id="menueditprofile" href="/editprofile.html">Edit profile</a>
