@@ -65,6 +65,22 @@ class API {
 	}
 
 	/**
+	 * Error handling
+	 */
+	errorHandle(text, e) {
+		const confirm = document.createElement("confirm-dialog");
+		// confirm.innerText = `${text}: ${e}`;
+		// confirm.setAttribute("data-confirm", "Okay");
+		// confirm.onConfirm = async () => {
+		// 	confirm.loadingConfirm();
+		// 	// await this.sendRequest(path, conf);
+		// 	confirm.remove();
+		// };
+		// document.body.appendChild(confirm);
+		// confirm.show();
+	}
+
+	/**
 	 * Removes the cached banner
 	 */
 	removeBanner() {
@@ -91,6 +107,8 @@ class API {
 	 * @returns {Promise<string>} The announcement
 	 */
 	async getAnnouncement() {
+		this.errorHandle("Test");
+
 		let response;
 		try {
 			response = await fetch(`${this.#host}/v4/getannouncement.sjs`);
@@ -131,8 +149,7 @@ class API {
 				body: await file.arrayBuffer()
 			});
 		} catch (e) {
-			// TODO: Show popup
-			throw new Error("Failed to upload file");
+			throw new Error(`Failed to upload file: ${e}`);
 		}
 		let responseJSON;
 		try {
