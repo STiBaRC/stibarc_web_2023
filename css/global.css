@@ -642,11 +642,14 @@ p {
 }
 
 #overlaybg {
-	background-color: #000000;
-	opacity: 0.50;
+	background-color: rgba(0, 0, 0, 0.45);
 	display: block;
 	width: 100%;
 	height: 100%;
+}
+
+dialog::backdrop {
+	background-color: rgba(0, 0, 0, 0.45);
 }
 
 dialog {
