@@ -1,7 +1,6 @@
 class Dialog extends HTMLElement {
-    // Paramaters
-    dialogType = this.getAttribute("data-dialog-type")
     onConfirm;
+    onCancel;
 
     // This is safe because no part of this is dynamic
     #shadowDomHTML = `
@@ -10,11 +9,10 @@ class Dialog extends HTMLElement {
             </style>
             <dialog>
                 <div class="flexcontainer flexcolumn">
-                    <h2></h2>
-                    <p></p>
+                    <p id="text" class="margintop"></p>
                     <span class="flexcontainer">
-                        <button id="confirm" class="button small primary">Okay</button>
-                        <button id="cancel" class="button">Close</button>
+                        <button id="confirmBtn" class="button small primary">Okay</button>
+                        <button id="cancelBtn" class="button small">Close</button>
                     </span>
                 </div>
             </dialog>
@@ -28,80 +26,61 @@ class Dialog extends HTMLElement {
         this.shadow = this.attachShadow({ mode: "closed" });
         this.shadow.innerHTML = this.#shadowDomHTML;
 
-        this.shadow.querySelector("dialog").addEventListener("cancel", (e) => {
-            e.preventDefault();
+        this.shadow.querySelector("#confirmBtn").addEventListener("click", (e) => {
+            this.loadingBtn(e.target);
+            if (this.onConfirm) {
+                this.onConfirm();
+            } else {
+                this.hide();
+            }
         });
 
-        this.shadow.querySelector("#confirm").addEventListener("click", () => {
-            // this.#login();
+        this.shadow.querySelector("#cancelBtn").addEventListener("click", (e) => {
+            this.loadingBtn(e.target);
+            if (this.onCancel) {
+                this.onCancel();
+            } else {
+                this.hide();
+            }
         });
 
-        this.shadow.querySelector("#cancel").addEventListener("click", () => {
-            this.hide();
-        });
+        this.shadow.querySelector("#text").textContent = this.text;
+
+        if (this.confirmText) {
+            this.shadow.querySelector("#confirmBtn").textContent = this.confirmText;
+        }
+
+        if (this.hideConfirm) {
+            this.shadow.querySelector("#confirmBtn").remove();
+            // this.shadow.querySelector("#cancelBtn").classList.add("primary");
+        }
+
+        if (this.cancelText) {
+            this.shadow.querySelector("#cancelBtn").textContent = this.cancelText;
+        }
     }
 
     show() {
         this.shadow.querySelector("dialog").showModal();
-        this.shadow.querySelector("#confirm").focus();
+        if (this.hideConfirm) {
+            this.shadow.querySelector("#cancelBtn").focus();
+        } else {
+            this.shadow.querySelector("#confirmBtn").focus();
+        }
     }
 
     hide() {
         this.shadow.querySelector("dialog").close();
     }
 
+    loadingBtn(btn) {
+        btn.disabled = true;
+        btn.classList.add("loading");
+    }
 
-
-    // connectedCallback() {
-
-    //     const form = document.createElement("form");
-
-    //     this.text.classList.add("text");
-    //     form.append(this.text);
-
-    //     const buttons = document.createElement("div");
-    //     buttons.classList.add("buttons", "flexcontainer");
-    //     const flexgrow = document.createElement("span");
-    //     flexgrow.classList.add("flexgrow");
-    //     buttons.append(flexgrow);
-
-    //     const cancelBtn = document.createElement("button");
-    //     cancelBtn.classList.add("button");
-    //     cancelBtn.textContent = "Cancel";
-    //     cancelBtn.setAttribute("formmethod", "dialog");
-    //     this.confirmBtn.classList.add("button", "primary");
-    //     this.confirmBtn.focused = true;
-    //     this.confirmBtn.textContent = this.getAttribute("data-confirm") || "Confirm";
-    //     this.confirmBtn.addEventListener("click", (e) => {
-    //         e.preventDefault();
-    //         this.onConfirm();
-    //     });
-
-    //     buttons.append(cancelBtn, this.confirmBtn);
-    //     form.append(buttons);
-    //     this.dialog.append(form);
-
-    //     const shadow = this.attachShadow({ mode: "closed" });
-
-    //     const linkElem = document.createElement("link");
-    //     linkElem.setAttribute("rel", "stylesheet");
-    //     linkElem.setAttribute("href", "./css/global.css");
-
-    //     shadow.appendChild(linkElem);
-    //     shadow.appendChild(this.dialog);
-
-    //     this.dialog.addEventListener("close", (e) => {
-    //         this.remove();
-    //     });
-    // }
-
-    // show() {
-    //     this.dialog.showModal();
-    // }
-
-    loadingConfirm() {
-        this.confirmBtn.disabled = true;
-        this.confirmBtn.classList.add("loading", "small");
+    loadingDone(btn) {
+        btn.disabled = false;
+        btn.classList.remove("loading");
     }
 
 }

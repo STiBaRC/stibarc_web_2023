@@ -67,17 +67,18 @@ class API {
 	/**
 	 * Error handling
 	 */
-	errorHandle(text, e) {
+	errorHandle(error, callback) {
 		const confirm = document.createElement("confirm-dialog");
-		// confirm.innerText = `${text}: ${e}`;
-		// confirm.setAttribute("data-confirm", "Okay");
+		confirm.text = error;
+		// confirm.confirmText = "Ok";
+		confirm.hideConfirm = true;
 		// confirm.onConfirm = async () => {
 		// 	confirm.loadingConfirm();
 		// 	// await this.sendRequest(path, conf);
 		// 	confirm.remove();
 		// };
-		// document.body.appendChild(confirm);
-		// confirm.show();
+		document.body.appendChild(confirm);
+		confirm.show();
 	}
 
 	/**
@@ -107,13 +108,11 @@ class API {
 	 * @returns {Promise<string>} The announcement
 	 */
 	async getAnnouncement() {
-		this.errorHandle("Test");
-
 		let response;
 		try {
 			response = await fetch(`${this.#host}/v4/getannouncement.sjs`);
 		} catch (e) {
-			// TODO: Show popup
+			this.errorHandle(`Failed to fetch announcement: ${e}`);
 			throw new Error("Failed to fetch announcement");
 		}
 		let responseJSON;

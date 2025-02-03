@@ -86,6 +86,7 @@ class LoginModalComponent extends HTMLElement {
 		this.#clicked = true;
 		this.shadow.querySelector("#loginbutton").textContent = "";
 		this.shadow.querySelector("#loginbutton").classList.add("loading");
+		this.shadow.querySelector("#loginbutton").disabled = true;
 		try {
 			await api.login(username, password, totpCode);
 			setLoggedinState(true);
@@ -104,6 +105,7 @@ class LoginModalComponent extends HTMLElement {
 		this.#clicked = false;
 		this.shadow.querySelector("#loginbutton").textContent = "Login";
 		this.shadow.querySelector("#loginbutton").classList.remove("loading");
+		this.shadow.querySelector("#loginbutton").disabled = false;
 	}
 
 	show() {
