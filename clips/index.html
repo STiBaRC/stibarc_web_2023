@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8" />
+	<title>STiBaRC Clips</title>
+	<link rel="manifest" href="/manifest.json" />
+	<meta name="viewport" content="initial-scale=1, maximum-scale=5, user-scalable=yes, width=device-width">
+	<link rel="icon" type="image/png" href="/img/icon.png">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@300;400&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="/css/themes/default.css" id="theme">
+	<link rel="stylesheet" href="/css/global.css">
+	<link rel="stylesheet" href="/clips/clips.css">
+	<script src="/js/API.js"></script>
+	<script src="/js/global.js"></script>
+	<script type="module" src="/components/LoginModal.js"></script>
+	<script type="module" src="/components/RegisterModal.js"></script>
+	<script type="module" src="/components/Header.js"></script>
+	<script src="/components/Icon.js"></script>
+	<script type="module" src="/clips/ClipComponent.js"></script>
+	<script src="/clips/clips.js"></script>
+</head>
+
+<body>
+	<stibarc-header></stibarc-header>
+	<stibarc-login-modal></stibarc-login-modal>
+	<stibarc-register-modal></stibarc-register-modal>
+	<main class="flexcontainer flexcolumn">
+		<span class="flexcontainer floatingbuttoncontainer feedFilter">
+			<span class="rightalign">
+				<button id="globalBtn" class="button floatingbutton">
+					Global
+				</button>
+			</span>
+			<span class="leftalign">
+				<button id="followedBtn" class="button floatingbutton">
+					Followed
+				</button>
+			</span>
+		</span>
+		<span id="feed" class="height100"></span>
+	</main>
+	<span id="overlay" class="hidden">
+		<span id="overlaybg"></span>
+	</span>
+	<span class="floatingplusbuttoncontainer">
+		<div id="newpost" class="flexcontainer floatingplusbutton" title="Create Post">
+			<svg class="icon iconBig"><use href="/img/icon/icons.svg#plus"></use></svg>
+		</div>
+	</span>
+</body>
+
+</html>
