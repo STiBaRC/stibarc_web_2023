@@ -9,14 +9,14 @@
 let environment;
 switch (window.location.hostname) {
 	case "stibarc.com":
-		environment = "prod";
+		environment = "production";
 		break;
 	case "staging.stibarc.com":
 		environment = "staging";
 		break;
 	default:
 	case "dev.stibarc.com":
-		environment = "dev";
+		environment = "development";
 		break;
 }
 let api = new API(environment);

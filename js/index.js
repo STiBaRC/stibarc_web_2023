@@ -110,15 +110,17 @@ async function loadMore() {
 	$("#loadMoreBtn").classList.add("hidden");
 	$("main")[0].appendChild(loader);
 
+	let globalFeed = localStorage.activeFeed === "global" || localStorage.activeFeed === undefined || localStorage.activeFeed === "undefined";
+
 	const posts = document.createDocumentFragment();
 	const response = await api.getPosts({
-		useLastSeenGlobal: (localStorage.activeFeed === "global" || localStorage.activeFeed === undefined) ? true : false,
-		useLastSeenFollowed: (localStorage.activeFeed === "followed" && localStorage.sess !== undefined) ? true : false
+		useLastSeenGlobal: globalFeed,
+		useLastSeenFollowed: (localStorage.activeFeed === "followed" && localStorage.sess !== undefined && localStorage.sess !== "undefined")
 	});
-	const feedPosts = (localStorage.activeFeed == "global") ? response.globalPosts : response.followedPosts;
+	const feedPosts = (globalFeed) ? response.globalPosts : response.followedPosts;
 
 	if (feedPosts.length !== 0) {
-		if (localStorage.activeFeed == "global") {
+		if (globalFeed) {
 			lastSeenGlobalPost = feedPosts[feedPosts.length - 1].id;
 		} else {
 			lastSeenFollowedPost = feedPosts[feedPosts.length - 1].id;
@@ -130,13 +132,13 @@ async function loadMore() {
 		posts.appendChild(post);
 	}
 
-	if (localStorage.activeFeed == "global") {
+	if (globalFeed) {
 		$("#posts").appendChild(posts);
 	} else {
 		$("#followedposts").appendChild(posts);
 	}
 
-	if (localStorage.activeFeed == "global") {
+	if (globalFeed) {
 		hideLoadMoreGlobal = (feedPosts.length == 0);
 	} else {
 		hideLoadMoreFollowed = (feedPosts.length == 0);
@@ -244,7 +246,9 @@ window.addEventListener("load", function () {
 		}
 	});
 
-	setLoggedinState(api.loggedIn);
+	if (this.sessionStorage.loadedBefore === "true") {
+		setLoggedinState(api.loggedIn);
+	}
 });
 
 window.addEventListener("scroll", function () {

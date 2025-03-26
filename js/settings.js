@@ -35,11 +35,14 @@ window.addEventListener("load", () => {
 });
 
 async function updateInfo() {
+	$("#sideContent").classList.add("hidden");
+	$("#sideContentLoading").classList.remove("hidden");
 	const user = await api.getPrivateData();
 	/* FTA */
 	$(".sideContent").forEach((item) => {
 		item.classList.remove("hidden");
 	});
+	$("#sideContent").classList.remove("hidden");
 	$("#sideContentLoading").classList.add("hidden");
 	$("#tfabutton").textContent = user.totpEnabled ? "Disable 2FA" : "Enable 2FA";
 	tfaEnabled = user.totpEnabled;
@@ -82,13 +85,21 @@ window.addEventListener("load", async () => {
 	listatehooks.push((state) => {
 		if (state) {
 			if (isMobile && !location.hash) {
+				$("#sideContent").classList.remove("hidden");
 				$("#sideContentLoading").classList.add("hidden");
 			}
+			$("#tab-security").classList.remove("hidden");
+			$("#tab-sessions").classList.remove("hidden");
+			$("#tab-experiments").classList.remove("hidden");
 			updateInfo();
 		} else {
 			// location.href = "/";
 			switchTab($("#tab-display"));
+			$("#sideContent").classList.remove("hidden");
 			$("#sideContentLoading").classList.add("hidden");
+			$("#tab-security").classList.add("hidden");
+			$("#tab-sessions").classList.add("hidden");
+			$("#tab-experiments").classList.add("hidden");
 		}
 	});
 	$(".sidebarItems li").forEach(item => {

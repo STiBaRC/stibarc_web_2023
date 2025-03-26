@@ -12,14 +12,14 @@ class API {
 		switch (environment) {
 			default:
 			case "development":
-				// this.#host = "https://api.dev.stibarc.com";
-				// this.#cdn = "https://cdn.dev.stibarc.com";
+				// this.#host = "https://api-dev.stibarc.com";
+				// this.#cdn = "https://cdn-dev.stibarc.com";
 				this.#host = "https://betaapi.stibarc.com";
 				this.#cdn = "https://betacdn.stibarc.com";
 				break;
 			case "staging":
-				this.#host = "https://api.staging.stibarc.com";
-				this.#cdn = "https://cdn.staging.stibarc.com";
+				this.#host = "https://api-staging.stibarc.com";
+				this.#cdn = "https://cdn-staging.stibarc.com";
 				break;
 			case "production":
 				this.#host = "https://api.stibarc.com";
