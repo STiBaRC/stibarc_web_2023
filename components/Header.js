@@ -187,7 +187,7 @@ class HeaderComponent extends HTMLElement {
 		<header id="headerElement">
 			<span id="mainHeader" class="flexcontainer">
 				<span class="leftalign">
-					<a href="/" class="flexcontainer" id="logo"><img id="logoimg" src="/img/logo.png"></a>
+					<a href="/" class="flexcontainer" id="logo"><img id="logoimg" src="/img/logo.webp"></a>
 				</span>
 				<span class="searchbar flexcontainer hideOnMobile">
 					<input type="search" id="searchbox" placeholder="Search" autocomplete="false">
@@ -199,11 +199,19 @@ class HeaderComponent extends HTMLElement {
 			</span>
 			<span id="hiddenHeader" class="hidden">
 				<div class="loggedout headerDropdown">
+					<a class="menuElement" href="/">Home</a>
+					<a class="menuElement" href="/clips/">Clips</a>
+					<a class="menuElement" href="/tv/">TV</a>
+					<div class="separator"></div>
 					<button class="menuElement" id="menulogin">Login</button>
 					<button class="menuElement" id="menuregister">Register</button>
 					<a class="menuElement" id="menusettings" href="/settings.html">Settings</a>
 				</div>
 				<div class="loggedin headerDropdown hidden">
+					<a class="menuElement" href="/">Home</a>
+					<a class="menuElement" href="/clips/">Clips</a>
+					<a class="menuElement" href="/tv/">TV</a>
+					<div class="separator"></div>
 					<a class="menuElement" id="menueditprofile" href="/editprofile.html">Edit profile</a>
 					<a class="menuElement" id="menusettings" href="/settings.html">Settings</a>
 					<div class="separator"></div>
@@ -231,8 +239,15 @@ class HeaderComponent extends HTMLElement {
 		const logoImg = this.shadow.querySelector("#logoimg");
 		const logo = this.getAttribute("logo");
 
-		if (logo == "tv") {
-			logoImg.src = "/tv/tv_wordmark2.png";
+		switch (logo) {
+			case "tv":
+				this.shadow.querySelector("#logo").setAttribute("href", "/tv/");
+				logoImg.src = "/tv/tv_wordmark.webp";
+				break;
+			case "clips":
+				this.shadow.querySelector("#logo").setAttribute("href", "/clips/");
+				logoImg.src = "/clips/clips_wordmark.webp";
+				break;
 		}
 
 		this.shadow.addEventListener("click", function (event) {

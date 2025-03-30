@@ -53,20 +53,20 @@ class CommentBlockComponent extends HTMLElement {
 				<span id="upvotes-non"></span>
 				<stibarc-icon name="down_arrow"></stibarc-icon>
 				<span id="downvotes-non"></span>
-				<stibarc-icon name="comment"></stibarc-icon>
-				<span id="comments-non"></span>
 			</span>
 		</span>
 	`;
 	post;
 	comment;
 	isPostPage;
+	isClipPage;
 
-	constructor(post, comment, isPostPage) {
+	constructor(post, comment, isPostPage, isClipPage) {
 		super();
 		this.post = post;
 		this.comment = comment;
 		this.isPostPage = isPostPage;
+		this.isClipPage = isClipPage;
 	}
 
 	connectedCallback() {
@@ -85,12 +85,12 @@ class CommentBlockComponent extends HTMLElement {
 			this.shadow.querySelector("#edited").setAttribute("title", `Edited ${new Date(this.comment.lastEdited).toLocaleString()}`);
 			this.shadow.querySelector("#edited").classList.remove("hidden");
 		}
-		if (this.isPostPage) {
+		if (this.isPostPage || this.isClipPage) {
 			this.shadow.querySelector("#actions-post").classList.remove("hidden");
 			this.shadow.querySelector("#upvotes").textContent = this.comment.upvotes;
 			this.shadow.querySelector("#downvotes").textContent = this.comment.downvotes;
 
-			if (this.comment.poster.username === api.username) {
+			if (this.comment.poster.username === api.username && this.isPostPage) {
 				this.shadow.querySelector("#edit").classList.remove("hidden");
 				this.shadow.querySelector("#edit").addEventListener("click", () => {
 					window.location.href = `/edit.html?id=${this.post.id}&cid=${this.comment.id}`;
@@ -99,12 +99,22 @@ class CommentBlockComponent extends HTMLElement {
 
 			this.shadow.querySelector("#upvote").addEventListener("click", async () => {
 				if (api.loggedIn) {
-					const voteResult = await api.vote({
-						postId: this.post.id,
-						commentId: this.comment.id,
-						target: "comment",
-						vote: "upvote",
-					});
+					let voteResult;
+					if (this.isPostPage) {
+						voteResult = await api.vote({
+							postId: this.post.id,
+							commentId: this.comment.id,
+							target: "comment",
+							vote: "upvote",
+						});
+					} else if (this.isClipPage) {
+						voteResult = await api.vote({
+							postId: this.post.id,
+							commentId: this.comment.id,
+							target: "clipcomment",
+							vote: "upvote",
+						});
+					}
 					this.shadow.querySelector("#upvotes").textContent = voteResult.upvotes;
 					this.shadow.querySelector("#downvotes").textContent = voteResult.downvotes;
 				} else {
@@ -114,12 +124,22 @@ class CommentBlockComponent extends HTMLElement {
 		
 			this.shadow.querySelector("#downvote").addEventListener("click", async () => {
 				if (api.loggedIn) {
-					const voteResult = await api.vote({
-						postId: this.post.id,
-						commentId: this.comment.id,
-						target: "comment",
-						vote: "downvote",
-					});
+					let voteResult;
+					if (this.isPostPage) {
+						voteResult = await api.vote({
+							postId: this.post.id,
+							commentId: this.comment.id,
+							target: "comment",
+							vote: "downvote",
+						});
+					} else if (this.isClipPage) {
+						voteResult = await api.vote({
+							postId: this.post.id,
+							commentId: this.comment.id,
+							target: "clipcomment",
+							vote: "downvote",
+						});
+					}
 					this.shadow.querySelector("#upvotes").textContent = voteResult.upvotes;
 					this.shadow.querySelector("#downvotes").textContent = voteResult.downvotes;
 				} else {
@@ -130,7 +150,6 @@ class CommentBlockComponent extends HTMLElement {
 			this.shadow.querySelector("#actions-not-post").classList.remove("hidden");
 			this.shadow.querySelector("#upvotes-non").textContent = this.comment.upvotes;
 			this.shadow.querySelector("#downvotes-non").textContent = this.comment.downvotes;
-			this.shadow.querySelector("#comments-non").textContent = this.comment.comments;
 		}
 
 		if (
@@ -150,7 +169,7 @@ class CommentBlockComponent extends HTMLElement {
 
 		listatehooks.push((state) => {
 			if (state) {
-				if (this.comment.poster.username === api.username) {
+				if (this.comment.poster.username === api.username && this.isPostPage) {
 					this.shadow.querySelector("#edit").classList.remove("hidden");
 				}
 			} else {

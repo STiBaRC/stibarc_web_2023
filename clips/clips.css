@@ -93,10 +93,10 @@ main {
 }
 
 .height100 {
-	height: calc(100vh - 60px);
+	height: calc(100dvh - 60px);
 }
 
-#feed {
+.feed {
 	position: relative;
 	aspect-ratio: 9 / 16;
 	max-width: 100vw;

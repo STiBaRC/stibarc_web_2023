@@ -21,3 +21,13 @@
 #userPostsLoader {
 	margin: 0.75rem 0;
 }
+
+#clips {
+	width: 100%;
+	height: 200px;
+	overflow-x: auto;
+	gap: 10px;
+	justify-content: flex-start;
+	margin-bottom: 14px;
+	flex-wrap: nowrap;
+}

@@ -24,32 +24,13 @@ window.addEventListener("load", async () => {
 			for (const file of fileInput.files) {
 				const objURL = URL.createObjectURL(file);
 				newAttachmentBlobURLs.push(objURL);
-				let attachmentElement;
-				const source = document.createElement("source");
-				switch (file.type.split("/")[0]) {
-					case "image":
-						attachmentElement = document.createElement("img");
-						attachmentElement.setAttribute("src", objURL);
-						break;
-					case "audio":
-						attachmentElement = document.createElement("audio");
-						attachmentElement.setAttribute("controls", true);
-						source.setAttribute("src", objURL);
-						source.setAttribute("type", file.type);
-						attachmentElement.appendChild(source);
-						break;
-					case "video":
-						attachmentElement = document.createElement("video");
-						source.setAttribute("src", objURL);
-						source.setAttribute("type", file.type);
-						attachmentElement.appendChild(source);
-						break;
-				}
+				let attachmentElement = new AttachmentBlockComponent(objURL, false, file.name);
 				attachmentElement.onclick = function(e) {
 					const index = newAttachments.indexOf(file);
 					URL.revokeObjectURL(objURL);
 					newAttachmentFiles.splice(index, 1);
 					newAttachmentBlobURLs.splice(index, 1);
+					attachmentElement.preRemove();
 					attachmentElement.remove();
 				}
 				attachmentElement.classList.add("attachmentimage");

@@ -48,12 +48,16 @@ window.addEventListener("load", async () => {
 	}
 	if (user.verified) $("#userverified").classList.remove("hidden");
 	$("#userpfp").setAttribute("src", user.pfp);
+	$("#userpfp").classList.add("pointer");
+	$("#userpfp").addEventListener("click", () => {
+		window.open(user.fullPfp, "_blank");
+	});
 	if (user.banner !== api.defaultBannerUrl) $("#userBanner").classList.remove("hidden");
 	$("#userBanner").classList.remove("light", "loading");
 	$("#userBanner").classList.add("pointer");
 	$("#userBanner").style.backgroundImage = `url('${user.banner}')`;
 	$("#userBanner").addEventListener("click", () => {
-		window.open(user.banner, "_blank");
+		window.open(user.fullBanner, "_blank");
 	});
 	$("#name").textContent = `Real name: ${user.name}`;
 	if (user.pronouns) {
@@ -99,6 +103,15 @@ window.addEventListener("load", async () => {
 		$("#followbutton").textContent = "Follow";
 	}
 	$("#userPostsLoader").classList.add("hidden");
+	if (user.clips.length > 0) {
+		const clips = document.createDocumentFragment();
+		for (let i in user.clips) {
+			const clip = new ClipBlockComponent(user.clips[i]);
+			clips.appendChild(clip);
+		}
+		$("#clips").appendChild(clips);
+		$("#clips").classList.remove("hidden");
+	}
 	const posts = document.createDocumentFragment();
 	for (let i in user.posts) {
 		const post = new PostBlockComponent(user.posts[i]);
