@@ -30,4 +30,5 @@
 	justify-content: flex-start;
 	margin-bottom: 14px;
 	flex-wrap: nowrap;
+	overflow-y: hidden;
 }
