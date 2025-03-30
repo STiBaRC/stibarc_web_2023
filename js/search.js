@@ -31,10 +31,19 @@ window.addEventListener("load", async () => {
 	$("#loader").style.display = "none";
 
 	const users = document.createDocumentFragment();
+	const clips = document.createDocumentFragment();
 	const posts = document.createDocumentFragment();
 
 	for (const user of results.users) {
 		users.appendChild(new UserBlockComponent(user));
+	}
+
+	for (const clip of results.clips) {
+		clips.appendChild(new ClipBlockComponent(clip));
+	}
+
+	if (results.clips.length > 0) {
+		$("#clips").classList.remove("hidden");
 	}
 
 	for (const post of results.posts) {
@@ -42,9 +51,10 @@ window.addEventListener("load", async () => {
 	}
 
 	$("#users").appendChild(users);
+	$("#clips").appendChild(clips);
 	$("#posts").appendChild(posts);
 
-	if (results.users.length == 0 && results.posts.length == 0) {
+	if (results.users.length == 0 && results.clips.length == 0 && results.posts.length == 0) {
 		$("#noResults").style.display = "block";
 	}
 });

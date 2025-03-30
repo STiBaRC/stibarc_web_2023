@@ -31,8 +31,9 @@ function uploadBannerImage() {
 		$("#userBanner").classList.add("loading");
 		const file = await api.uploadFile(fileInput.files[0], "banner");
 		$("#userBanner").classList.remove("loading");
-		api.banner = file;
-		$("#userBanner").style.backgroundImage = `url("${file}")`;
+		api.banner = `${file}.thumb.webp`;
+		localStorage.banner = `${file}.thumb.webp`;
+		$("#userBanner").style.backgroundImage = `url("${file}.thumb.webp")`;
 	});
 	fileInput.click();
 }
@@ -72,7 +73,9 @@ window.addEventListener("load", async () => {
 			$("#userPfpLoader").classList.add("loading");
 			const file = await api.uploadFile(fileInput.files[0], "pfp");
 			$("#userPfpLoader").classList.remove("loading");
-			$("#userpfp").setAttribute("src", file);
+			$("#userpfp").setAttribute("src", `${file}.thumb.webp`);
+			api.pfp = `${file}.thumb.webp`;
+			localStorage.pfp = `${file}.thumb.webp`;
 		});
 		fileInput.click();
 	});

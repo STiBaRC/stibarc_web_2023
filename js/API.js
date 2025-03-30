@@ -7,6 +7,8 @@ class API {
 	#banner;
 	#lastSeenGlobalPost;
 	#lastSeenFollowedPost;
+	#lastSeenGlobalClip;
+	#lastSeenFollowedClip;
 
 	constructor(environment) {
 		switch (environment) {
@@ -57,7 +59,7 @@ class API {
 	}
 
 	get defaultBannerUrl() {
-		return `${api.cdn}/banner/default.png`;
+		return `${api.cdn}/banner/default.png.thumb.webp`;
 	}
 
 	get loggedIn() {
@@ -781,13 +783,13 @@ class API {
 	}
 
 	/**
-	 * Votes on a post or comment
+	 * Votes on a post, comment, clip, or clip comment
 	 * @param {{
 	 *	postId: string,
 	 *	commentId: string,
 	 *	target: string,
 	 *	vote: string
-	 * }} options The options for voting. The target can be "post" or "comment". The vote can be "upvote" or "downvote".
+	 * }} options The options for voting. The target can be "post", "comment", "clip", or "clipcomment". The vote can be "upvote" or "downvote".
 	 * @returns {Promise<object>} The new number of upvotes and downvotes, and the action taken. The action can be "upvoted", "downvoted", "removed upvote", or "removed downvote".
 	 */
 	async vote({ postId, commentId, target, vote }) {
@@ -876,6 +878,7 @@ class API {
 		}
 		return {
 			users: responseJSON.results.users,
+			clips: responseJSON.results.clips,
 			posts: responseJSON.results.posts
 		};
 	}
@@ -1046,6 +1049,217 @@ class API {
 					delete localStorage.username;
 					delete localStorage.pfp;
 					throw new Error("Invalid session");
+			}
+		}
+	}
+
+	/**
+	 * Gets the list of clips
+	 * @param {{
+	 * 	clipsToReturn: number,
+	 * 	returnTotalClips: boolean,
+	 * 	returnGlobal: boolean,
+	 * 	returnFollowed: boolean,
+	 * 	useLastSeenGlobal: boolean,
+	 * 	useLastSeenFollowed: boolean
+	 * }} options The options for fetching posts.
+	 * @returns {Promise<object>} The list of posts, including globalPosts, followedPosts, and totalPosts.
+	 */
+   async getClips({ clipsToReturn = 20, returnTotalClips = true, returnGlobal = true, returnFollowed = true, useLastSeenGlobal = true, useLastSeenFollowed = true }) {
+	   let response;
+	   try {
+		   response = await fetch(`${this.#host}/v4/getclips.sjs`, {
+			   method: "post",
+			   headers: {
+				   "Content-Type": "application/json"
+			   },
+			   body: JSON.stringify({
+				   session: this.#session,
+				   clipsToReturn,
+				   returnTotalClips,
+				   returnGlobal,
+				   returnFollowed: returnFollowed && this.loggedIn,
+				   lastSeenGlobalClip: (useLastSeenGlobal) ? this.#lastSeenGlobalClip : undefined,
+				   lastSeenFollowedClip: (useLastSeenFollowed && returnFollowed && this.loggedIn) ? this.#lastSeenFollowedClip : undefined
+			   })
+		   });
+	   } catch (e) {
+		   // TODO: Show popup
+		   throw new Error("Failed to fetch clips");
+	   }
+	   let responseJSON;
+	   try {
+		   responseJSON = await response.json();
+	   } catch (e) {
+		   // TODO: Show popup
+		   throw new Error("Failed to parse clips response");
+	   }
+	   if (responseJSON.status !== "ok") {
+		   switch (responseJSON.errorCode) {
+			   case "is":
+				   // TODO: Show popup
+				   this.#session = undefined;
+				   this.#username = undefined;
+				   this.#pfp = undefined;
+				   delete localStorage.sess;
+				   delete localStorage.username;
+				   delete localStorage.pfp;
+				   throw new Error("Invalid session");
+			   default:
+				   // TODO: Show popup
+				   throw new Error("Failed to fetch clips");
+		   }
+	   }
+	   if (returnGlobal && responseJSON.globalClips && responseJSON.globalClips.length > 0) {
+		   this.#lastSeenGlobalClip = responseJSON.globalClips[responseJSON.globalClips.length - 1]?.id;
+	   }
+	   if (this.loggedIn && returnFollowed && responseJSON.followedClips && responseJSON.followedClips.length > 0) {
+		   this.#lastSeenFollowedClip = responseJSON.followedClips[responseJSON.followedClips.length - 1]?.id;
+	   }
+	   return {
+		   globalClips: responseJSON.globalClips,
+		   followedClips: responseJSON.followedClips,
+		   totalClips: responseJSON.totalClips
+	   };
+   }
+
+   /**
+	 * Gets a clip
+	 * @param {string} clipId The ID of the clip
+	 * @returns {Promise<object>} The clip
+	 */
+	async getClip(clipId) {
+		let response;
+		try {
+			response = await fetch(`${this.#host}/v4/getclip.sjs?id=${clipId}`);
+		} catch (e) {
+			// TODO: Show popup
+			throw new Error("Failed to fetch clip");
+		}
+		let responseJSON;
+		try {
+			responseJSON = await response.json();
+		} catch (e) {
+			// TODO: Show popup
+			throw new Error("Failed to parse clip response");
+		}
+		if (responseJSON.status !== "ok") {
+			switch (responseJSON.errorCode) {
+				case "pnfod":
+					throw new Error("Clip not found");
+				default:
+					// TODO: Show popup
+					throw new Error("Failed to fetch clip");
+			}
+		}
+		return responseJSON.clip;
+	}
+
+   /**
+	 * Creates a new clip. Content and description are required.
+	 * @param {string} content The content (media URL) of the clip
+	 * @param {string} description The description of the clip
+	 * @returns {Promise<object>} The new clip
+	 */
+	async newClip(content, description) {
+		let response;
+		try {
+			response = await fetch(`${this.#host}/v4/newclip.sjs`, {
+				method: "post",
+				headers: {
+					"Content-Type": "application/json"
+				},
+				body: JSON.stringify({
+					session: this.#session,
+					content,
+					description
+				})
+			});
+		} catch (e) {
+			// TODO: Show popup
+			throw new Error("Failed to create clip");
+		}
+		let responseJSON;
+		try {
+			responseJSON = await response.json();
+		} catch (e) {
+			// TODO: Show popup
+			throw new Error("Failed to parse create clip response");
+		}
+		if (responseJSON.status !== "ok") {
+			switch (responseJSON.errorCode) {
+				case "chill":
+					// TODO: Show popup
+					throw new Error("Rate limited");
+				case "banned":
+				case "is":
+					// TODO: Show popup
+					this.#session = undefined;
+					this.#username = undefined;
+					this.#pfp = undefined;
+					delete localStorage.sess;
+					delete localStorage.username;
+					delete localStorage.pfp;
+					throw new Error("Invalid session");
+				default:
+					// TODO: Show popup
+					throw new Error("Failed to create clip");
+			}
+		}
+		return responseJSON.clip;
+	}
+
+	/**
+	 * Posts a new comment on a clip
+	 * @param {string} clipId The ID of the clip
+	 * @param {{ content: string }} comment The comment to post
+	 * @returns {Promise<void>}
+	 */
+	async postClipComment(clipId, { content }) {
+		let response;
+		try {
+			response = await fetch(`${this.#host}/v4/postclipcomment.sjs`, {
+				method: "post",
+				headers: {
+					"Content-Type": "application/json"
+				},
+				body: JSON.stringify({
+					session: this.#session,
+					id: clipId,
+					content
+				})
+			});
+		} catch (e) {
+			// TODO: Show popup
+			throw new Error("Failed to post comment");
+		}
+		let responseJSON;
+		try {
+			responseJSON = await response.json();
+		} catch (e) {
+			// TODO: Show popup
+			throw new Error("Failed to parse post comment response");
+		}
+		if (responseJSON.status !== "ok") {
+			switch (responseJSON.errorCode) {
+				case "chill":
+					// TODO: Show popup
+					throw new Error("Rate limited");
+				case "cnfod":
+					throw new Error("Clip not found");
+				case "banned":
+				case "is":
+					// TODO: Show popup
+					this.#session = undefined;
+					this.#username = undefined;
+					this.#pfp = undefined;
+					delete localStorage.sess;
+					delete localStorage.username;
+					delete localStorage.pfp;
+					throw new Error("Invalid session");
+				default:
+					// TODO: Show popup
+					throw new Error("Failed to post comment");
 			}
 		}
 	}
