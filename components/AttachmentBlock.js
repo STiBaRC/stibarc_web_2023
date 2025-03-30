@@ -23,12 +23,12 @@ class AttachmentBlockComponent extends HTMLElement {
 	#shadowDomHTMLVideoPreview = `
 		<div style="position: relative;">
 			<img id="source" loading="lazy"></img>
-			<stibarc-icon name="play" size="iconLarge" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);"></stibarc-icon>
+			<stibarc-icon name="play" size="iconLarge" color="white" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);"></stibarc-icon>
 		</div>
 	`;
 	#shadowDomHTMLAudioPreview = `
 		<div class="flexcontainer" style="flex-direction: column; justify-content: center; align-items: center; width: 150px; height: 100px; background-color: var(--color1); border-radius: 10px;">
-			<stibarc-icon name="audio" size="iconVeryBig"></stibarc-icon>
+			<stibarc-icon name="audio" size="iconVeryBig" color="white"></stibarc-icon>
 		</div>
 	`;
 	#shadowDomHTMLError = `

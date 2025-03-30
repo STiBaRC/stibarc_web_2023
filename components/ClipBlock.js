@@ -31,7 +31,7 @@ class ClipBlockComponent extends HTMLElement {
 		</style>
 		<a id="link">
 			<img id="img"></img>
-			<stibarc-icon name="play" size="iconLarge" id="playicon"></stibarc-icon>
+			<stibarc-icon name="play" size="iconLarge" id="playicon" color="white"></stibarc-icon>
 		</a>
 	`;
 	clip;

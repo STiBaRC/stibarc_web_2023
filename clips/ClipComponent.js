@@ -37,7 +37,7 @@ class ClipComponent extends HTMLElement {
 				flex-direction: row;
 				width: calc(100% - 10px);
 				word-break: break-word;
-				background: linear-gradient(to bottom, transparent 0%, black 100%);
+				background: linear-gradient(to bottom, transparent 0%, var(--color11) 100%);
 			}
 			
 			#playicon {
@@ -60,7 +60,7 @@ class ClipComponent extends HTMLElement {
 		</style>
 		<div id="clip">
 			<video id="video" loop></video>
-			<stibarc-icon name="play" size="iconVeryBig" id="playicon"></stibarc-icon>
+			<stibarc-icon name="play" size="iconVeryBig" id="playicon" color="white"></stibarc-icon>
 			<div id="bottomui" class="flexcontainer leftalign hidden">
 				<div id="metadata" class="flexcontainer leftalign flexcolumn flexgrow">
 					<div class="flexcontainer leftalign width100">
