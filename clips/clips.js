@@ -192,7 +192,7 @@ async function loadClips(feed) {
 	}
 }
 
-window.addEventListener("load", async function() {
+window.addEventListener("load", async function () {
 	if (new URLSearchParams(location.search).get("id")) {
 		$("#newclip").classList.add("hidden");
 		const clipId = new URLSearchParams(location.search).get("id");
@@ -337,6 +337,7 @@ window.addEventListener("load", async function() {
 			clipAttachmentPreview.click();
 		}
 		$("#uploadclipdescription").value = "";
+		("#uploadclipconfirm").classList.remove("loading");
 		$("#uploadclipdialog").close();
 	}
 
@@ -344,7 +345,7 @@ window.addEventListener("load", async function() {
 		const input = document.createElement("input");
 		input.type = "file";
 		input.accept = "video/*";
-		input.onchange = function() {
+		input.onchange = function () {
 			const file = input.files[0];
 			if (file) {
 				if (clipAttachmentPreview) {
@@ -374,9 +375,12 @@ window.addEventListener("load", async function() {
 	$("#uploadclipconfirm").onclick = async function () {
 		const description = $("#uploadclipdescription").value;
 		if (!clipAttachment || description.trim() === "") return;
+		this.textContent = "";
+		this.classList.add("loading");
 		const content = await api.uploadFile(clipAttachment, "clip");
 		const clip = await api.newClip(content, description);
 		if (clip) {
+			this.classList.remove("loading");
 			location.reload();
 		}
 		clipAttachmentPreview.click();
