@@ -61,7 +61,7 @@ class ClipComponent extends HTMLElement {
 		<div id="clip">
 			<video id="video" loop></video>
 			<stibarc-icon name="play" size="iconVeryBig" id="playicon" color="white"></stibarc-icon>
-			<div id="bottomui" class="flexcontainer leftalign hidden">
+			<div id="bottomui" class="flexcontainer leftalign fadeout">
 				<div id="metadata" class="flexcontainer leftalign flexcolumn flexgrow">
 					<div class="flexcontainer leftalign width100">
 						<a id="userLink" class="flexcontainer">
@@ -167,12 +167,15 @@ class ClipComponent extends HTMLElement {
 
 	play() {
 		this.#playIcon.classList.add("hidden");
-		this.shadow.querySelector("#bottomui").classList.add("hidden");
+		setTimeout(() => {
+			this.shadow.querySelector("#bottomui").classList.add("fadeout");
+			this.shadow.querySelector("#bottomui").classList.remove("show");
+		}, 500);
 		try {
 			this.#video.play();
-		} catch(e) {
+		} catch (e) {
 			this.#playIcon.classList.remove("hidden");
-			this.shadow.querySelector("#bottomui").classList.remove("hidden");
+			this.shadow.querySelector("#bottomui").classList.add("show");
 			// Wait until the video can play
 			function onCanPlay() {
 				this.#video.removeEventListener("canplay", onCanPlay);
@@ -186,7 +189,8 @@ class ClipComponent extends HTMLElement {
 	pause() {
 		this.#playIcon.classList.remove("hidden");
 		this.shadow.querySelector("#sideui").classList.remove("hidden");
-		this.shadow.querySelector("#bottomui").classList.remove("hidden");
+		this.shadow.querySelector("#bottomui").classList.remove("fadeout");
+		this.shadow.querySelector("#bottomui").classList.add("show");
 		this.#video.pause();
 	}
 

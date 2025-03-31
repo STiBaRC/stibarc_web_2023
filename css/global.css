@@ -692,3 +692,14 @@ dialog input, dialog textarea {
 		min-width: 90px;
 	}
 }
+
+.show {
+	visibility: visible;
+	opacity: 1;
+}
+
+.fadeout {
+	visibility: hidden;
+	opacity: 0;
+	transition: visibility 0s .22s, opacity .22s linear;
+}
