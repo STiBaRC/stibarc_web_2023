@@ -337,7 +337,6 @@ window.addEventListener("load", async function () {
 			clipAttachmentPreview.click();
 		}
 		$("#uploadclipdescription").value = "";
-		("#uploadclipconfirm").classList.remove("loading");
 		$("#uploadclipdialog").close();
 	}
 
