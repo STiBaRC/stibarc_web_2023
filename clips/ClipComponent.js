@@ -25,18 +25,21 @@ class ClipComponent extends HTMLElement {
 
 			#sideui {
 				display: flex;
-				gap: 5px;
+				gap: 8px;
+				margin: 0 4px;
 			}
 
 			#bottomui {
 				position: absolute;
+				box-sizing:border-box;
 				bottom: 0px;
 				left: 0px;
-				padding: 5px 5px;
+				padding: 14px 14px;
 				align-items: end;
 				flex-direction: row;
-				width: calc(100% - 10px);
+				width: 100%;
 				word-break: break-word;
+				overflow: hidden;
 				background: linear-gradient(to bottom, transparent 0%, var(--color11) 100%);
 			}
 			
@@ -170,7 +173,7 @@ class ClipComponent extends HTMLElement {
 		setTimeout(() => {
 			this.shadow.querySelector("#bottomui").classList.add("fadeout");
 			this.shadow.querySelector("#bottomui").classList.remove("show");
-		}, 500);
+		}, 700);
 		try {
 			this.#video.play();
 		} catch (e) {
