@@ -121,6 +121,8 @@ class ClipComponent extends HTMLElement {
 		this.#video.src = this.getAttribute("data-content");
 		this.#video.setAttribute("poster", `${this.getAttribute("data-content")}.thumb.webp`);
 
+		this.#video.load();
+
 		this.shadow.querySelector("#pfp").src = this.getAttribute("data-pfp");
 		this.shadow.querySelector("#username").textContent = this.getAttribute("data-username");
 		this.shadow.querySelector("#userLink").href = `/user.html?username=${this.getAttribute("data-username")}`;
@@ -169,24 +171,28 @@ class ClipComponent extends HTMLElement {
 	}
 
 	play() {
-		this.#playIcon.classList.add("hidden");
-		setTimeout(() => {
-			this.shadow.querySelector("#bottomui").classList.add("fadeout");
-			this.shadow.querySelector("#bottomui").classList.remove("show");
-		}, 700);
-		try {
-			this.#video.play();
-		} catch (e) {
-			this.#playIcon.classList.remove("hidden");
-			this.shadow.querySelector("#bottomui").classList.add("show");
-			// Wait until the video can play
-			function onCanPlay() {
-				this.#video.removeEventListener("canplay", onCanPlay);
-				this.#playIcon.classList.add("hidden");
-				this.#video.play();
+		return new Promise(async (resolve) => {
+			this.#playIcon.classList.add("hidden");
+			setTimeout(() => {
+				this.shadow.querySelector("#bottomui").classList.add("fadeout");
+				this.shadow.querySelector("#bottomui").classList.remove("show");
+			}, 700);
+			try {
+				await this.#video.play();
+				resolve();
+			} catch (e) {
+				this.#playIcon.classList.remove("hidden");
+				this.shadow.querySelector("#bottomui").classList.add("show");
+				// Wait until the video can play
+				async function onCanPlay() {
+					this.#video.removeEventListener("canplay", onCanPlay);
+					this.#playIcon.classList.add("hidden");
+					await this.#video.play();
+					resolve();
+				}
+				this.#video.addEventListener("canplay", onCanPlay);
 			}
-			this.#video.addEventListener("canplay", onCanPlay);
-		}
+		});
 	}
 
 	pause() {

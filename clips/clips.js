@@ -23,9 +23,9 @@ function handleGesture(clip, startY, endY, lastState) {
 			const nextClip = clip.previousElementSibling;
 			if (nextClip) {
 				clip.style.setProperty("transform", "translateY(-100vh)");
-				setTimeout(() => {
+				setTimeout(async () => {
 					clip.classList.add("hidden");
-					nextClip.play();
+					await nextClip.play();
 					resolve(false);
 				}, 400);
 				// Check to see if we need to load more clips
@@ -41,12 +41,12 @@ function handleGesture(clip, startY, endY, lastState) {
 			if (previousClip) {
 				previousClip.classList.remove("hidden");
 				previousClip.style.setProperty("transform", "translateY(0px)");
-				previousClip.play();
+				await previousClip.play();
 			}
 			resolve(true);
 		} else {
 			// No swipe detected, it's a tap
-			(lastState) ? clip.pause() : clip.play();
+			(lastState) ? clip.pause() : await clip.play();
 			resolve(true);
 		}
 	});
@@ -216,11 +216,11 @@ window.addEventListener("load", async function () {
 			clipComponent.setAttribute("data-downvotes", clip.downvotes);
 			clipComponent.setAttribute("data-comments", clip.comments.length);
 			clipComponent.setAttribute("data-description", clip.description);
-			clipComponent.onclick = function (e) {
+			clipComponent.onclick = async function (e) {
 				if (e.composedPath()[0].tagName !== "VIDEO") return;
 				e.preventDefault();
 				if (!clipComponent.playing) {
-					clipComponent.play();
+					await clipComponent.play();
 				} else {
 					clipComponent.pause();
 				}
@@ -256,13 +256,13 @@ window.addEventListener("load", async function () {
 				location.reload();
 			}
 
-			$("#closecomments").onclick = function () {
+			$("#closecomments").onclick = async function () {
 				$("#commentsdialog").close();
 				if (api.loggedIn) {
 					$("#newcommentcancel").click();
 				}
 				location.hash = "";
-				clipComponent.play();
+				await clipComponent.play();
 			}
 			clipComponent.commentButtonListener = () => {
 				// Open comments dialog
