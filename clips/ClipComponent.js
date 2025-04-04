@@ -29,6 +29,10 @@ class ClipComponent extends HTMLElement {
 				margin: 0 4px;
 			}
 
+			.iconcontainer {
+				cursor: pointer;
+			}
+
 			#bottomui {
 				position: absolute;
 				box-sizing:border-box;
@@ -44,6 +48,7 @@ class ClipComponent extends HTMLElement {
 			}
 			
 			#playicon {
+				cursor: pointer;
 				position: absolute;
 				top: 50%;
 				left: 50%;
@@ -133,6 +138,10 @@ class ClipComponent extends HTMLElement {
 		this.shadow.querySelector("#date").textContent = new Date(this.getAttribute("data-date")).toLocaleString();
 		this.shadow.querySelector("#description").textContent = this.getAttribute("data-description").substring(0, this.#maxDescriptionLength) + (this.getAttribute("data-description").length > this.#maxDescriptionLength ? "..." : "");
 
+		this.#playIcon.addEventListener("click", async () => {
+			await this.play();
+		});
+
 		this.shadow.querySelector("#upvotec").addEventListener("click", () => {
 			if (!api.loggedIn) return;
 			api.vote({
@@ -181,10 +190,10 @@ class ClipComponent extends HTMLElement {
 				await this.#video.play();
 				resolve();
 			} catch (e) {
-				this.#playIcon.classList.remove("hidden");
-				this.shadow.querySelector("#bottomui").classList.add("show");
 				// Wait until the video can play
 				async function onCanPlay() {
+					this.#playIcon.classList.remove("hidden");
+					this.shadow.querySelector("#bottomui").classList.add("show");
 					this.#video.removeEventListener("canplay", onCanPlay);
 					this.#playIcon.classList.add("hidden");
 					await this.#video.play();
