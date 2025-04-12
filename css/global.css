@@ -608,13 +608,13 @@ p {
 	justify-content: center;
 	align-items: center;
 	font-size: 24px;
-	background-color: var(--color4);
-	color: var(--color11);
-	opacity: 0.5;
+	background-color: var(--color9);
+	color: var(--text);
 	height: 125px;
 	width: 125px;
 	max-width: 100%;
 	margin-left: 6px;
+	border-radius: 6px;
 }
 
 .smallBadge {
