@@ -10,7 +10,7 @@ async function followAction() {
 
 	$("#followbutton").classList.remove("loading");
 	if (response == "followed") {
-		user.followers.push({username: api.username});
+		user.followers.push({ username: api.username });
 	} else {
 		user.followers = user.followers.filter(e => e.username != api.username)
 	}
@@ -59,22 +59,33 @@ window.addEventListener("load", async () => {
 	$("#userBanner").addEventListener("click", () => {
 		window.open(user.fullBanner, "_blank");
 	});
-	$("#name").textContent = `Real name: ${user.name}`;
+	if (user.name) {
+		$("#name").textContent = `Real Name: ${user.name}`;
+	} else {
+		$("#name").classList.add("hidden");
+	}
 	if (user.pronouns) {
 		$("#pronouns").textContent = `(${user.pronouns})`;
 		$("#pronouns").title = `Pronouns (${user.pronouns})`;
 	}
-	$("#email").textContent = `Email: ${user.email}`;
+	if (user.displayEmail) {
+		$("#email").textContent = `Email: ${user.email}`;
+	} else {
+		$("#email").classList.add("hidden");
+	}
 	if (user.displayBirthday) {
 		const UTCDate = new Date(user.birthday);
 		const diff = UTCDate.getTimezoneOffset() * 60000;
 		$("#birthday").textContent = `Birthday: ${new Date(UTCDate.valueOf() + diff).toLocaleDateString()}`;
 	} else {
-		$("#birthday").textContent = "Birthday: Not shown";
+		$("#birthday").classList.add("hidden");
 	}
 	$("#rank").textContent = `Rank: ${user.rank}`;
-	$("#bio").textContent = user.bio;
-	if (user.displayBio) $("#bio").classList.remove("hidden");
+	if (user.bio && user.displayBio) {
+		$("#bio").textContent = user.bio;
+	} else {
+		$("#bio").classList.add("hidden");
+	}
 	$("#followers").textContent = `Followers: ${user.followers.length}`;
 	$("#following").textContent = `Following: ${user.following.length}`;
 	if (api.loggedIn) {
