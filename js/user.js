@@ -59,16 +59,16 @@ window.addEventListener("load", async () => {
 	$("#userBanner").addEventListener("click", () => {
 		window.open(user.fullBanner, "_blank");
 	});
-	if (user.name) {
+	if (user.name && user.displayName) {
 		$("#name").textContent = `Real Name: ${user.name}`;
 	} else {
 		$("#name").classList.add("hidden");
 	}
-	if (user.pronouns) {
+	if (user.pronouns && user.displayPronouns) {
 		$("#pronouns").textContent = `(${user.pronouns})`;
 		$("#pronouns").title = `Pronouns (${user.pronouns})`;
 	}
-	if (user.displayEmail) {
+	if (user.email && user.displayEmail) {
 		$("#email").textContent = `Email: ${user.email}`;
 	} else {
 		$("#email").classList.add("hidden");
@@ -81,7 +81,7 @@ window.addEventListener("load", async () => {
 		$("#birthday").classList.add("hidden");
 	}
 	$("#rank").textContent = `Rank: ${user.rank}`;
-	if (user.bio && user.displayBio) {
+	if (user.displayBio) {
 		$("#bio").textContent = user.bio;
 	} else {
 		$("#bio").classList.add("hidden");
