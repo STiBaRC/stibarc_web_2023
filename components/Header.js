@@ -212,7 +212,7 @@ class HeaderComponent extends HTMLElement {
 					<a class="menuElement" href="/clips/">Clips</a>
 					<a class="menuElement" href="/tv/">TV</a>
 					<div class="separator"></div>
-					<a class="menuElement" id="menueditprofile" href="/editprofile.html">Edit profile</a>
+					<a class="menuElement" id="menueditprofile" href="/editprofile.html">Edit Profile</a>
 					<a class="menuElement" id="menusettings" href="/settings.html">Settings</a>
 					<div class="separator"></div>
 					<a class="menuElement" id="menuprofile"></a>
