@@ -41,7 +41,7 @@ class Dialog extends HTMLElement {
 
         const linkElem = document.createElement("link");
         linkElem.setAttribute("rel", "stylesheet");
-        linkElem.setAttribute("href", "./css/global.css");
+        linkElem.setAttribute("href", "/css/global.css");
 
         shadow.appendChild(linkElem);
         shadow.appendChild(this.dialog);

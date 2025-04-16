@@ -15,10 +15,10 @@ class RegisterModalComponent extends HTMLElement {
 				<span>&nbsp;</span>
 				<input type="password" id="password" placeholder="Password" autocomplete="new-password">
 				<span>&nbsp;</span>
-				<input type="password" id="password2" placeholder="Password again" autocomplete="new-password">
+				<input type="password" id="password2" placeholder="Password Again" autocomplete="new-password">
 				<h3>Optional</h3>
 				<input type="text" id="name" placeholder="Name" autocomplete="given-name">
-				<div>Show name: <input type="checkbox" id="showname"></div>
+				<div>Show Name: <input type="checkbox" id="showname"></div>
 				<span>&nbsp;</span>
 				<input list="commonPronouns" id="pronouns" type="text" placeholder="Pronouns" autocomplete="off" autocapitalize="none" maxlength="40">
 				<datalist id="commonPronouns">
@@ -27,16 +27,16 @@ class RegisterModalComponent extends HTMLElement {
 					<option value="they/them"></option>
 					<option value="it/it"></option>
 				</datalist>
-				<div>Show pronouns: <input type="checkbox" id="showpronouns"></div>
+				<div>Show Pronouns: <input type="checkbox" id="showpronouns"></div>
 				<span>&nbsp;</span>
 				<input type="email" id="email" placeholder="Email" autocomplete="email">
-				<div>Show email: <input type="checkbox" id="showemail"></div>
+				<div>Show Email: <input type="checkbox" id="showemail"></div>
 				<span>&nbsp;</span>
 				<input type="date" id="bday" placeholder="Birthday" autocomplete="bday">
-				<div>Show birthday: <input type="checkbox" id="showbday"></div>
+				<div>Show Birthday: <input type="checkbox" id="showbday"></div>
 				<span>&nbsp;</span>
 				<textarea id="bio" placeholder="Bio"></textarea>
-				<div>Show bio: <input type="checkbox" id="showbio"></div>
+				<div>Show Bio: <input type="checkbox" id="showbio"></div>
 				<span>&nbsp;</span>
 				<span class="flexcontainer">
 					<button id="registerbutton" class="button small primary">Register</button>
