@@ -64,11 +64,58 @@
 			<textarea id="bioinput" class="mediumtextarea" placeholder="Bio"></textarea>
 			<span>Show Bio: <input type="checkbox" id="showbio"></span>
 			<span>&nbsp;</span>
+			<button id="privateaccount" class="button">Make account private</button>
+			<span>&nbsp;</span>
 			<span class="flexcontainer">
 				<button id="editprofilebutton" class="button primary">Submit</button>
 				<button id="cancel" class="button">Cancel</button>
 			</span>
 		</span>
+		<dialog id="goprivatedialog">
+			<div class="flexcontainer flexcolumn">
+				<h2>Account Visibility</h2>
+				<div>
+					<span>Making your account private will:</span>
+					<ul>
+						<li>Retain existing followers</li>
+						<li>Require new followers to be approved</li>
+						<li>Make new posts private by default (you may still make public posts)</li>
+					</ul>
+					<span>You may choose to keep your existing posts' visibility, or make them all private.</span>
+				</div>
+				<span>&nbsp;</span>
+				<span class="flexcontainer">
+					<button id="goprivateall" class="button small primary">Make existing posts private</button>
+					<button id="goprivatekeep" class="button">Keep existing post visibility</button>
+				</span>
+				<span class="flexcontainer marginbottom">
+					<button id="goprivatecancel" class="button">Cancel</button>
+				</span>
+			</div>
+		</dialog>
+		<dialog id="gopublicdialog">
+			<div class="flexcontainer flexcolumn">
+				<h2>Account Visibility</h2>
+				<div>
+					<span>Making your account public will:</span>
+					<ul>
+						<li>Make your account visible to everyone</li>
+						<li>Allow anyone to follow you without approval</li>
+						<li>Make all new posts public by default (you may still make private posts)</li>
+					</ul>
+					<span>Keep in mind that your private posts will easily be visible as anyone can follow your account.</span><br><br>
+					<span>You may choose to keep your existing posts' visibility, or make them all public.</span>
+				</div>
+				<span>&nbsp;</span>
+				<span class="flexcontainer">
+					<button id="gopublicall" class="button small primary">Make existing posts public</button>
+					<button id="gopublickeep" class="button">Keep existing post visibility</button>
+				</span>
+				<span class="flexcontainer marginbottom">
+					<button id="gopubliccancel" class="button">Cancel</button>
+				</span>
+			</div>
+		</dialog>
 	</main>
 	<stibarc-footer></stibarc-footer>
 	<span id="overlay" class="hidden">

@@ -65,7 +65,7 @@ async function newPost() {
 		const fileName = await api.uploadFile(file, "attachment");
 		attachments.push(fileName);
 	}
-	const newPost = await api.newPost(title, { content, attachments: (attachments.length > 0) ? attachments : undefined });
+	const newPost = await api.newPost(title, { content, attachments: (attachments.length > 0) ? attachments : undefined, privatePost: $("#privateinput").checked });
 	$("#newpostbutton").textContent = "Post";
 	$("#newpostbutton").classList.remove("loading", "small");
 	$("#newposttitle").value = "";
@@ -163,6 +163,7 @@ window.addEventListener("load", function () {
 	$("#newpost").onclick = function (e) {
 		if (api.loggedIn) {
 			window.scrollTo(0, 0);
+			$("#privateinput").checked = api.private;
 			$("#newpostformcontainer").classList.remove("hidden");
 			$("#overlay").classList.remove("hidden");
 			document.body.classList.add("overflowhidden");

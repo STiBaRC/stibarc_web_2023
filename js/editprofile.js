@@ -41,6 +41,11 @@ function uploadBannerImage() {
 window.addEventListener("load", async () => {
 	listatehooks.push((state) => {
 		if (state) {
+			if (api.private) {
+				$("#privateaccount").textContent = "Make account public";
+			} else {
+				$("#privateaccount").textContent = "Make account private";
+			}
 			updateInfo();
 		} else {
 			location.href = "/";
@@ -106,6 +111,39 @@ window.addEventListener("load", async () => {
 	});
 	$("#cancel").addEventListener("click", () => {
 		location.href = `user.html?username=${api.username}`;
+	});
+	$("#privateaccount").addEventListener("click", async () => {
+		if (api.private) {
+			$("#gopublicdialog").showModal();
+		} else {
+			$("#goprivatedialog").showModal();
+		}
+	});
+	$("#gopublicall").addEventListener("click", async () => {
+		await api.editProfile({ privateProfile: false, changePostVisibility: true });
+		$("#privateaccount").textContent = "Make account private";
+		$("#gopublicdialog").close();
+	});
+	$("#gopublickeep").addEventListener("click", async () => {
+		await api.editProfile({ privateProfile: false });
+		$("#privateaccount").textContent = "Make account private";
+		$("#gopublicdialog").close();
+	});
+	$("#gopubliccancel").addEventListener("click", () => {
+		$("#gopublicdialog").close();
+	});
+	$("#goprivateall").addEventListener("click", async () => {
+		await api.editProfile({ privateProfile: true, changePostVisibility: true });
+		$("#privateaccount").textContent = "Make account public";
+		$("#goprivatedialog").close();
+	});
+	$("#goprivatekeep").addEventListener("click", async () => {
+		await api.editProfile({ privateProfile: true });
+		$("#privateaccount").textContent = "Make account public";
+		$("#goprivatedialog").close();
+	});
+	$("#goprivatecancel").addEventListener("click", () => {
+		$("#goprivatedialog").close();
 	});
 	setLoggedinState(api.loggedIn);
 });

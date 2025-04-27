@@ -47,6 +47,7 @@
 					<button id="followbutton" class="button small primary"></button>
 				</span>
 			</span>
+			<span id="private" class="leftalign width100 hidden"><i>This user is private</i></span>
 			<span id="name" class="leftalign width100">Real Name: Loading...</span>
 			<span id="bio" class="leftalign width100">Loading...</span>
 			<hr class="width100">
@@ -54,16 +55,27 @@
 			<span id="birthday" class="leftalign width100">Birthday: Loading...</span>
 			<span id="rank" class="leftalign width100">Rank: Loading...</span>
 			<span class="leftalign width100">
-				<span id="followers">Followers: Loading...</span>
+				<a id="followers" href="#">Followers: Loading...</a>
 				<span>&nbsp;&nbsp;</span>
-				<span id="following">Following: Loading...</span>
+				<a id="following" href="#">Following: Loading...</a>
 			</span>
-	
 		</span>
 		<span id="clips" class="flexcontainer hidden"></span>
 		<span id="posts" class="flexcontainer flexcolumn posts">
 			<span id="userPostsLoader" class="loader"></span>
 		</span>
+		<dialog id="followingersmodal">
+			<div class="flexcontainer flexcolumn">
+				<h2 id="followingerstitle">Following / Followers</h2>
+				<h3 id="pendingfollowerstitle" class="hidden">Pending</h3>
+				<div id="pendingfollowerslist" class="width100 hidden"></div>
+				<hr id="followersdivider" class="width100 hidden">
+				<div id="followingerslist" class="width100"></div>
+				<span class="flexcontainer marginbottom">
+					<button id="followingersclose" class="button">Close</button>
+				</span>
+			</div>
+		</dialog>
 	</main>
 	<stibarc-footer></stibarc-footer>
 	<span id="overlay" class="hidden">

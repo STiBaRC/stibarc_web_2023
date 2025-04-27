@@ -5,6 +5,7 @@ class API {
 	#username;
 	#pfp;
 	#banner;
+	#private;
 	#lastSeenGlobalPost;
 	#lastSeenFollowedPost;
 	#lastSeenGlobalClip;
@@ -32,6 +33,7 @@ class API {
 		this.#username = localStorage.username;
 		this.#pfp = localStorage.pfp || `${this.#cdn}/pfp/default.png`;
 		this.#banner = localStorage.banner;
+		this.#private = localStorage.private === "true";
 	}
 
 	get host() {
@@ -56,6 +58,10 @@ class API {
 
 	get banner() {
 		return this.#banner;
+	}
+
+	get private() {
+		return this.#private;
 	}
 
 	get defaultBannerUrl() {
@@ -83,9 +89,11 @@ class API {
 		this.#username = sessInfo.username;
 		this.#pfp = sessInfo.pfp || `${this.#cdn}/pfp/default.png`;
 		this.#banner = sessInfo.banner;
+		this.#private = sessInfo.private;
 		localStorage.username = this.#username;
 		localStorage.pfp = this.#pfp;
 		localStorage.banner = this.#banner;
+		localStorage.private = this.#private;
 	}
 
 	/**
@@ -284,13 +292,19 @@ class API {
 		this.#session = responseJSON.session;
 		this.#username = responseJSON.username;
 		this.#pfp = responseJSON.pfp;
+		this.#banner = responseJSON.banner;
+		this.#private = responseJSON.private;
 		localStorage.sess = this.#session;
 		localStorage.username = this.#username;
 		localStorage.pfp = this.#pfp;
+		localStorage.banner = this.#banner;
+		localStorage.private = this.#private;
 		return {
 			session: this.#session,
 			username: this.#username,
-			pfp: this.#pfp
+			pfp: this.#pfp,
+			banner: this.#banner,
+			private: this.#private
 		};
 	}
 
@@ -328,9 +342,13 @@ class API {
 		delete localStorage.sess;
 		delete localStorage.username;
 		delete localStorage.pfp;
+		delete localStorage.banner;
+		delete localStorage.private;
 		this.#session = undefined;
 		this.#username = undefined;
 		this.#pfp = undefined;
+		this.#banner = undefined;
+		this.#private = undefined;
 	}
 
 	/**
@@ -409,9 +427,13 @@ class API {
 					this.#session = undefined;
 					this.#username = undefined;
 					this.#pfp = undefined;
+					this.#banner = undefined;
+					this.#private = undefined;
 					delete localStorage.sess;
 					delete localStorage.username;
 					delete localStorage.pfp;
+					delete localStorage.banner;
+					delete localStorage.private;
 					throw new Error("Invalid session");
 				default:
 					// TODO: Show popup
@@ -458,9 +480,13 @@ class API {
 					this.#session = undefined;
 					this.#username = undefined;
 					this.#pfp = undefined;
+					this.#banner = undefined;
+					this.#private = undefined;
 					delete localStorage.sess;
 					delete localStorage.username;
 					delete localStorage.pfp;
+					delete localStorage.banner;
+					delete localStorage.private;
 					throw new Error("Invalid session");
 				default:
 					// TODO: Show popup
@@ -478,7 +504,16 @@ class API {
 	async getUser(username) {
 		let response;
 		try {
-			response = await fetch(`${this.#host}/v4/getuser.sjs?username=${username}`);
+			response = await fetch(`${this.#host}/v4/getuser.sjs`, {
+				method: "post",
+				headers: {
+					"Content-Type": "application/json"
+				},
+				body: JSON.stringify({
+					username: username,
+					session: this.#session
+				})
+			});
 		} catch (e) {
 			// TODO: Show popup
 			throw new Error("Failed to fetch user");
@@ -536,9 +571,13 @@ class API {
 					this.#session = undefined;
 					this.#username = undefined;
 					this.#pfp = undefined;
+					this.#banner = undefined;
+					this.#private = undefined;
 					delete localStorage.sess;
 					delete localStorage.username;
 					delete localStorage.pfp;
+					delete localStorage.banner;
+					delete localStorage.private;
 					throw new Error("Invalid session");
 				default:
 					// TODO: Show popup
@@ -565,10 +604,12 @@ class API {
 	 * 	displayPronouns: boolean,
 	 * 	block: boolean,
 	 * 	displayBlock: boolean
+	 * 	private: boolean,
+	 * 	changePostVisibility: boolean
 	 * }} newUserDetails The new details of the user. All fields are optional.
 	 * @returns {Promise<void>}
 	 */
-	async editProfile({ pfp, banner, name, email, birthday, bio, pronouns, displayName, displayEmail, displayBirthday, displayBio, displayPronouns, block, displayBlock }) {
+	async editProfile({ pfp, banner, name, email, birthday, bio, pronouns, displayName, displayEmail, displayBirthday, displayBio, displayPronouns, block, displayBlock, privateProfile, changePostVisibility }) {
 		let response;
 		try {
 			response = await fetch(`${this.#host}/v4/editprofile.sjs`, {
@@ -591,7 +632,9 @@ class API {
 					displayBio,
 					displayPronouns,
 					block,
-					displayBlock
+					displayBlock,
+					private: privateProfile,
+					changePostVisibility
 				})
 			});
 		} catch (e) {
@@ -613,9 +656,13 @@ class API {
 					this.#session = undefined;
 					this.#username = undefined;
 					this.#pfp = undefined;
+					this.#banner = undefined;
+					this.#private = undefined;
 					delete localStorage.sess;
 					delete localStorage.username;
 					delete localStorage.pfp;
+					delete localStorage.banner;
+					delete localStorage.private;
 					throw new Error("Invalid session");
 				default:
 					// TODO: Show popup
@@ -625,6 +672,14 @@ class API {
 		if (pfp !== undefined) {
 			this.#pfp = pfp;
 			localStorage.pfp = this.#pfp;
+		}
+		if (banner !== undefined) {
+			this.#banner = banner;
+			localStorage.banner = this.#banner;
+		}
+		if (privateProfile !== undefined) {
+			this.#private = privateProfile;
+			localStorage.private = this.#private;
 		}
 	}
 
@@ -668,9 +723,13 @@ class API {
 					this.#session = undefined;
 					this.#username = undefined;
 					this.#pfp = undefined;
+					this.#banner = undefined;
+					this.#private = undefined;
 					delete localStorage.sess;
 					delete localStorage.username;
 					delete localStorage.pfp;
+					delete localStorage.banner;
+					delete localStorage.private;
 					throw new Error("Invalid session");
 				default:
 					// TODO: Show popup
@@ -678,6 +737,59 @@ class API {
 			}
 		}
 		return responseJSON.action;
+	}
+
+	/**
+	 * Remove a follower, or approve/reject a follow request
+	 * @param {string} action The action to perform. Can be "remove", "approve", or "reject".
+	 * @param {string} username The username of the user to remove/approve/reject
+	 * @returns {Promise<void>}
+	 */
+	async followerAction(action, username) {
+		let response;
+		try {
+			response = await fetch(`${this.#host}/v4/followeraction.sjs`, {
+				method: "post",
+				headers: {
+					"Content-Type": "application/json"
+				},
+				body: JSON.stringify({
+					session: this.#session,
+					action,
+					username
+				})
+			});
+		} catch (e) {
+			// TODO: Show popup
+			throw new Error("Failed to perform follower action");
+		}
+		let responseJSON;
+		try {
+			responseJSON = await response.json();
+		} catch (e) {
+			// TODO: Show popup
+			throw new Error("Failed to parse follower action response");
+		}
+		if (responseJSON.status !== "ok") {
+			switch (responseJSON.errorCode) {
+				case "is":
+					// TODO: Show popup
+					this.#session = undefined;
+					this.#username = undefined;
+					this.#pfp = undefined;
+					this.#banner = undefined;
+					this.#private = undefined;
+					delete localStorage.sess;
+					delete localStorage.username;
+					delete localStorage.pfp;
+					delete localStorage.banner;
+					delete localStorage.private;
+					throw new Error("Invalid session");
+				default:
+					// TODO: Show popup
+					throw new Error("Failed to perform follower action");
+			}
+		}
 	}
 
 	/**
@@ -728,9 +840,13 @@ class API {
 					this.#session = undefined;
 					this.#username = undefined;
 					this.#pfp = undefined;
+					this.#banner = undefined;
+					this.#private = undefined;
 					delete localStorage.sess;
 					delete localStorage.username;
 					delete localStorage.pfp;
+					delete localStorage.banner;
+					delete localStorage.private;
 					throw new Error("Invalid session");
 				default:
 					// TODO: Show popup
@@ -758,7 +874,16 @@ class API {
 	async getPost(postId) {
 		let response;
 		try {
-			response = await fetch(`${this.#host}/v4/getpost.sjs?id=${postId}`);
+			response = await fetch(`${this.#host}/v4/getpost.sjs`, {
+				method: "post",
+				headers: {
+					"Content-Type": "application/json"
+				},
+				body: JSON.stringify({
+					id: postId,
+					session: this.#session
+				})
+			});
 		} catch (e) {
 			// TODO: Show popup
 			throw new Error("Failed to fetch post");
@@ -827,9 +952,13 @@ class API {
 					this.#session = undefined;
 					this.#username = undefined;
 					this.#pfp = undefined;
+					this.#banner = undefined;
+					this.#private = undefined;
 					delete localStorage.sess;
 					delete localStorage.username;
 					delete localStorage.pfp;
+					delete localStorage.banner;
+					delete localStorage.private;
 					throw new Error("Invalid session");
 				case "pnfod":
 					throw new Error("Post not found");
@@ -858,6 +987,7 @@ class API {
 					"Content-Type": "application/json"
 				},
 				body: JSON.stringify({
+					session: this.#session,
 					query
 				})
 			});
@@ -886,10 +1016,10 @@ class API {
 	/**
 	 * Creates a new post. Title is required. At least content or attachments must be provided, but both can be provided.
 	 * @param {string} title The title of the post
-	 * @param {{ content: string, attachments: string[] }} post The post to create. Must include content or attachments, but both can be provided. Attachments must be an array of attachment URLs.
+	 * @param {{ content: string, attachments: string[], privatePost: boolean }} post The post to create. Must include content or attachments, but both can be provided. Attachments must be an array of attachment URLs.
 	 * @returns {Promise<string>} The ID of the new post
 	 */
-	async newPost(title, { content, attachments }) {
+	async newPost(title, { content, attachments, privatePost }) {
 		let response;
 		try {
 			response = await fetch(`${this.#host}/v4/newpost.sjs`, {
@@ -901,7 +1031,8 @@ class API {
 					session: this.#session,
 					title,
 					content,
-					attachments
+					attachments,
+					private: privatePost
 				})
 			});
 		} catch (e) {
@@ -926,9 +1057,13 @@ class API {
 					this.#session = undefined;
 					this.#username = undefined;
 					this.#pfp = undefined;
+					this.#banner = undefined;
+					this.#private = undefined;
 					delete localStorage.sess;
 					delete localStorage.username;
 					delete localStorage.pfp;
+					delete localStorage.banner;
+					delete localStorage.private;
 					throw new Error("Invalid session");
 				default:
 					// TODO: Show popup
@@ -983,9 +1118,13 @@ class API {
 					this.#session = undefined;
 					this.#username = undefined;
 					this.#pfp = undefined;
+					this.#banner = undefined;
+					this.#private = undefined;
 					delete localStorage.sess;
 					delete localStorage.username;
 					delete localStorage.pfp;
+					delete localStorage.banner;
+					delete localStorage.private;
 					throw new Error("Invalid session");
 				default:
 					// TODO: Show popup
@@ -1004,10 +1143,11 @@ class API {
 	 * 	content: string,
 	 * 	attachments: string[],
 	 * 	deleted: boolean
+	 * 	privatePost: boolean
 	 * }} options The options for editing. The target can be "post" or "comment". The title is required for posts. At least content or attachments must be provided, but both can be provided. Attachments must be an array of attachment URLs.
 	 * @returns {Promise<void>}
 	 */
-	async edit({ postId, commentId, target, title, content, attachments, deleted }) {
+	async edit({ postId, commentId, target, title, content, attachments, deleted, privatePost }) {
 		let response;
 		try {
 			response = await fetch(`${this.#host}/v4/edit.sjs`, {
@@ -1023,7 +1163,8 @@ class API {
 					title,
 					content,
 					attachments,
-					deleted
+					deleted,
+					private: privatePost
 				})
 			});
 		} catch (e) {
@@ -1045,9 +1186,13 @@ class API {
 					this.#session = undefined;
 					this.#username = undefined;
 					this.#pfp = undefined;
+					this.#banner = undefined;
+					this.#private = undefined;
 					delete localStorage.sess;
 					delete localStorage.username;
 					delete localStorage.pfp;
+					delete localStorage.banner;
+					delete localStorage.private;
 					throw new Error("Invalid session");
 			}
 		}
@@ -1065,65 +1210,69 @@ class API {
 	 * }} options The options for fetching posts.
 	 * @returns {Promise<object>} The list of posts, including globalPosts, followedPosts, and totalPosts.
 	 */
-   async getClips({ clipsToReturn = 20, returnTotalClips = true, returnGlobal = true, returnFollowed = true, useLastSeenGlobal = true, useLastSeenFollowed = true }) {
-	   let response;
-	   try {
-		   response = await fetch(`${this.#host}/v4/getclips.sjs`, {
-			   method: "post",
-			   headers: {
-				   "Content-Type": "application/json"
-			   },
-			   body: JSON.stringify({
-				   session: this.#session,
-				   clipsToReturn,
-				   returnTotalClips,
-				   returnGlobal,
-				   returnFollowed: returnFollowed && this.loggedIn,
-				   lastSeenGlobalClip: (useLastSeenGlobal) ? this.#lastSeenGlobalClip : undefined,
-				   lastSeenFollowedClip: (useLastSeenFollowed && returnFollowed && this.loggedIn) ? this.#lastSeenFollowedClip : undefined
-			   })
-		   });
-	   } catch (e) {
-		   // TODO: Show popup
-		   throw new Error("Failed to fetch clips");
-	   }
-	   let responseJSON;
-	   try {
-		   responseJSON = await response.json();
-	   } catch (e) {
-		   // TODO: Show popup
-		   throw new Error("Failed to parse clips response");
-	   }
-	   if (responseJSON.status !== "ok") {
-		   switch (responseJSON.errorCode) {
-			   case "is":
-				   // TODO: Show popup
-				   this.#session = undefined;
-				   this.#username = undefined;
-				   this.#pfp = undefined;
-				   delete localStorage.sess;
-				   delete localStorage.username;
-				   delete localStorage.pfp;
-				   throw new Error("Invalid session");
-			   default:
-				   // TODO: Show popup
-				   throw new Error("Failed to fetch clips");
-		   }
-	   }
-	   if (returnGlobal && responseJSON.globalClips && responseJSON.globalClips.length > 0) {
-		   this.#lastSeenGlobalClip = responseJSON.globalClips[responseJSON.globalClips.length - 1]?.id;
-	   }
-	   if (this.loggedIn && returnFollowed && responseJSON.followedClips && responseJSON.followedClips.length > 0) {
-		   this.#lastSeenFollowedClip = responseJSON.followedClips[responseJSON.followedClips.length - 1]?.id;
-	   }
-	   return {
-		   globalClips: responseJSON.globalClips,
-		   followedClips: responseJSON.followedClips,
-		   totalClips: responseJSON.totalClips
-	   };
-   }
+	async getClips({ clipsToReturn = 20, returnTotalClips = true, returnGlobal = true, returnFollowed = true, useLastSeenGlobal = true, useLastSeenFollowed = true }) {
+		let response;
+		try {
+			response = await fetch(`${this.#host}/v4/getclips.sjs`, {
+				method: "post",
+				headers: {
+					"Content-Type": "application/json"
+				},
+				body: JSON.stringify({
+					session: this.#session,
+					clipsToReturn,
+					returnTotalClips,
+					returnGlobal,
+					returnFollowed: returnFollowed && this.loggedIn,
+					lastSeenGlobalClip: (useLastSeenGlobal) ? this.#lastSeenGlobalClip : undefined,
+					lastSeenFollowedClip: (useLastSeenFollowed && returnFollowed && this.loggedIn) ? this.#lastSeenFollowedClip : undefined
+				})
+			});
+		} catch (e) {
+			// TODO: Show popup
+			throw new Error("Failed to fetch clips");
+		}
+		let responseJSON;
+		try {
+			responseJSON = await response.json();
+		} catch (e) {
+			// TODO: Show popup
+			throw new Error("Failed to parse clips response");
+		}
+		if (responseJSON.status !== "ok") {
+			switch (responseJSON.errorCode) {
+				case "is":
+					// TODO: Show popup
+					this.#session = undefined;
+					this.#username = undefined;
+					this.#pfp = undefined;
+					this.#banner = undefined;
+					this.#private = undefined;
+					delete localStorage.sess;
+					delete localStorage.username;
+					delete localStorage.pfp;
+					delete localStorage.banner;
+					delete localStorage.private;
+					throw new Error("Invalid session");
+				default:
+					// TODO: Show popup
+					throw new Error("Failed to fetch clips");
+			}
+		}
+		if (returnGlobal && responseJSON.globalClips && responseJSON.globalClips.length > 0) {
+			this.#lastSeenGlobalClip = responseJSON.globalClips[responseJSON.globalClips.length - 1]?.id;
+		}
+		if (this.loggedIn && returnFollowed && responseJSON.followedClips && responseJSON.followedClips.length > 0) {
+			this.#lastSeenFollowedClip = responseJSON.followedClips[responseJSON.followedClips.length - 1]?.id;
+		}
+		return {
+			globalClips: responseJSON.globalClips,
+			followedClips: responseJSON.followedClips,
+			totalClips: responseJSON.totalClips
+		};
+	}
 
-   /**
+	/**
 	 * Gets a clip
 	 * @param {string} clipId The ID of the clip
 	 * @returns {Promise<object>} The clip
@@ -1131,7 +1280,16 @@ class API {
 	async getClip(clipId) {
 		let response;
 		try {
-			response = await fetch(`${this.#host}/v4/getclip.sjs?id=${clipId}`);
+			response = await fetch(`${this.#host}/v4/getclip.sjs`, {
+				method: "post",
+				headers: {
+					"Content-Type": "application/json"
+				},
+				body: JSON.stringify({
+					session: this.#session,
+					id: clipId
+				})
+			});
 		} catch (e) {
 			// TODO: Show popup
 			throw new Error("Failed to fetch clip");
@@ -1155,7 +1313,7 @@ class API {
 		return responseJSON.clip;
 	}
 
-   /**
+	/**
 	 * Creates a new clip. Content and description are required.
 	 * @param {string} content The content (media URL) of the clip
 	 * @param {string} description The description of the clip
@@ -1197,9 +1355,13 @@ class API {
 					this.#session = undefined;
 					this.#username = undefined;
 					this.#pfp = undefined;
+					this.#banner = undefined;
+					this.#private = undefined;
 					delete localStorage.sess;
 					delete localStorage.username;
 					delete localStorage.pfp;
+					delete localStorage.banner;
+					delete localStorage.private;
 					throw new Error("Invalid session");
 				default:
 					// TODO: Show popup
@@ -1253,9 +1415,13 @@ class API {
 					this.#session = undefined;
 					this.#username = undefined;
 					this.#pfp = undefined;
+					this.#banner = undefined;
+					this.#private = undefined;
 					delete localStorage.sess;
 					delete localStorage.username;
 					delete localStorage.pfp;
+					delete localStorage.banner;
+					delete localStorage.private;
 					throw new Error("Invalid session");
 				default:
 					// TODO: Show popup

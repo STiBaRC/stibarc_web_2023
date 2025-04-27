@@ -12,6 +12,7 @@ const cid = parseInt(sp.get("cid"));
 window.addEventListener("load", async () => {
 	if (cid) {
 		$("#edittitle").classList.add("hidden");
+		$("#private").classList.add("hidden");
 	}
 	$("#addattachment").onclick = function(e) {
 		const attachmentElements = $("#attachments");
@@ -61,7 +62,7 @@ window.addEventListener("load", async () => {
 		}
 		const to = (target == "post") ? post : comment;
 		const combinedAttachments = [...to.attachments, ...newAttachments];
-		await api.edit({ postId: id, target, commentId: (target === "comment") ? cid : undefined, title: (target == "post") ? title : undefined, content, attachments: combinedAttachments });
+		await api.edit({ postId: id, target, commentId: (target === "comment") ? cid : undefined, title: (target == "post") ? title : undefined, content, attachments: combinedAttachments, privatePost: (target === "post") ? $("#privateinput").checked : undefined });
 		location.href = `/post.html?id=${id}`;
 	});
 	$("#deletebutton").addEventListener("click", async () => {
@@ -92,6 +93,7 @@ window.addEventListener("load", async () => {
 	if (!cid) {
 		$("#edittitle").value = post.title;
 		$("#editbody").value = post.content;
+		$("#privateinput").checked = post.private;
 		if (post.attachments && post.attachments.length > 0 && post.attachments[0] !== null) {
 			for (let i = 0; i < post.attachments.length; i++) {
 				const attachment = new AttachmentBlockComponent(post.attachments[i]);

@@ -246,7 +246,7 @@ window.addEventListener("load", async function () {
 				const content = $("#newcommentbody").value.trim();
 				if (content === "") return;
 				$("#newcommentbody").disabled = true;
-				$("#newcommentbutton").innerText = "";
+				$("#newcommentbutton").textContent = "";
 				$("#newcommentbutton").classList.add("loading", "small");
 				$("#newcommentbutton").disabled = true;
 				$("#newcommentcancel").disabled = true;
