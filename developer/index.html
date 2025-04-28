@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8" />
+	<title>Developer | STiBaRC</title>
+	<link rel="manifest" href="/manifest.json" />
+	<meta name="viewport" content="initial-scale=1, maximum-scale=5, user-scalable=yes, width=device-width">
+	<link rel="icon" type="image/png" href="/img/icon.png">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@300;400&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="/css/themes/default.css" id="theme">
+	<link rel="stylesheet" href="/css/global.css">
+	<link rel="stylesheet" href="/developer/developer.css">
+	<script src="/js/API.js"></script>
+	<script src="/js/global.js"></script>
+	<script type="module" src="/components/Header.js"></script>
+	<script type="module" src="/components/Footer.js"></script>
+	<script type="module" src="/components/Icon.js"></script>
+	<script type="module" src="/developer/DeveloperAppComponent.js"></script>
+	<script src="/developer/developer.js"></script>
+</head>
+
+<body>
+	<stibarc-header></stibarc-header>
+	<main class="flexcontainer flexcolumn">
+		<h2>STiBaRC Developer Portal</h2>
+		<div id="app-list" class="flexcontainer leftalign width100">
+
+		</div>
+	</main>
+	<stibarc-footer></stibarc-footer>
+	<span class="floatingplusbuttoncontainer">
+		<div id="newapp" class="flexcontainer floatingplusbutton" title="Create App">
+			<svg class="icon iconBig"><use href="/img/icon/icons.svg#plus"></use></svg>
+		</div>
+	</span>
+	<dialog id="newappdialog">
+		<div class="flexcontainer flexcolumn">
+			<h2>New Application</h2>
+			<div>
+				<label for="appname">App name:</label><br>
+				<input type="text" id="appname" placeholder="App name" required><br><br>
+				<label for="appiconurl">App icon URL:</label><br>
+				<input type="text" id="appiconurl" placeholder="App icon URL"><br><br>
+				<label for="appdescription">App description:</label><br>
+				<textarea id="appdescription" placeholder="App description"></textarea><br><br>
+				<div class="flexcontainer flexrow">
+					<button id="submitcreateapp" class="button primary" disabled>Create</button>
+					<button id="cancelcreateapp" class="button">Cancel</button>
+				</div>
+			</div>
+		</div>
+	</dialog>
+</body>
+
+</html>

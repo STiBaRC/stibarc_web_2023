@@ -1,0 +1,129 @@
+#appicon {
+	width: 110px;
+	height: auto;
+	border-radius: 10px;
+	margin-bottom: 5px;
+	background-color: var(--color1);
+}
+
+.contentWithSidebar {
+	display: flex;
+}
+
+.sidebar {
+	width: 25%;
+}
+
+.sideContent {
+	width: 80%;
+}
+
+.sidebar h2 {
+	margin: 0.75rem 0 1rem 0;
+}
+
+.sidebarItems {
+	padding: 0;
+	list-style-type: none;
+	box-sizing: border-box;
+	margin-right: 1rem;
+	min-width: 0;
+	max-width: 100%;
+}
+
+.sidebarItems li {
+	position: relative;
+	list-style-type: none;
+	cursor: pointer;
+	padding: 10px 0 10px calc(60% * 0.25);
+	border-radius: 8px;
+	display: flex;
+	align-items: center;
+	min-width: 0;
+	flex-shrink: 0;
+}
+
+.sidebarItems li>span {
+	max-width: calc(100% - 4px);
+	flex-shrink: 0;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+
+.sidebarItems li:before {
+	position: absolute;
+	content: "";
+	left: 0;
+	margin-left: calc(60% * 0.5 * 0.25);
+	background-color: transparent;
+	height: calc(100% - 26px);
+	border-top: 4px inset transparent;
+	border-bottom: 4px inset transparent;
+	width: 4px;
+	border-radius: 8px;
+}
+
+.sidebarItems li.active {
+	background-color: var(--color9);
+}
+
+.sidebarItems li.active:before {
+	background-color: var(--color5)
+}
+
+.sidebarItems li:hover:not(.active) {
+	background-color: var(--color10);
+}
+
+@media only screen and (max-width: 700px) {
+	.sidebar {
+		width: 35%;
+	}
+
+	.sideContent {
+		width: 65%;
+	}
+}
+
+@media only screen and (max-width: 475px) {
+	.sidebar {
+		width: 100%;
+	}
+
+	.sidebarItems {
+		margin-right: 0;
+	}
+
+	.sideContent {
+		width: 100%;
+	}
+
+	.contentWithSidebar {
+		display: block;
+	}
+
+	.sidebarItems li:before {
+		display: none;
+	}
+
+	.sidebarItems li:after {
+		position: absolute;
+		content: "";
+		right: 0;
+		margin-right: 16px;
+		border: solid var(--color8);
+		border-width: 0 3px 3px 0;
+		transform: rotate(-45deg);
+		-webkit-transform: rotate(-45deg);
+		padding: 3px;
+	}
+
+	.sidebarItems li {
+		padding: 10px 0 10px 16px;
+	}
+}
+
+#callbackurls {
+	gap: 0.5rem;
+}

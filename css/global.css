@@ -272,6 +272,8 @@ stibarc-icon {
 .leftalign {
 	display: flex;
 	justify-content: left;
+	align-items: flex-start;
+	align-content: flex-start;
 	flex-grow: 1;
 	flex-basis: 0;
 }

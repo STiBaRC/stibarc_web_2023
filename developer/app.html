@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8" />
+	<title>Developer | STiBaRC</title>
+	<link rel="manifest" href="/manifest.json" />
+	<meta name="viewport" content="initial-scale=1, maximum-scale=5, user-scalable=yes, width=device-width">
+	<link rel="icon" type="image/png" href="/img/icon.png">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@300;400&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="/css/themes/default.css" id="theme">
+	<link rel="stylesheet" href="/css/global.css">
+	<link rel="stylesheet" href="/developer/app.css">
+	<script src="/js/API.js"></script>
+	<script src="/js/global.js"></script>
+	<script type="module" src="/components/Header.js"></script>
+	<script type="module" src="/components/Footer.js"></script>
+	<script src="/components/Icon.js"></script>
+	<script src="/developer/app.js"></script>
+</head>
+
+<body>
+	<stibarc-header></stibarc-header>
+	<main class="flexcontainer flexcolumn">
+		<span class="verticalspacer"></span>
+		<span class="contentWithSidebar block">
+			<span>
+				<button class="button smallBtn hidden" id="backBtn">Back</button>
+			</span>
+			<span class="sidebar" id="sidebarTabs">
+				<h2 id="appnameheader"></h2>
+				<ul class="sidebarItems">
+					<li class="" id="tab-general"><span>App information</span></li>
+					<li class="" id="tab-oauth"><span>OAuth</span></li>
+					<li class="" id="tab-webhooks"><span>Webhooks</span></li>
+				</ul>
+				<div class="flexcontainer">
+					<button id="saveapp" class="button primary">Save</button>
+					<button id="deleteapp" class="button danger">Delete</button>
+				</div>
+			</span>
+			<span class="sideContent" id="sideContentLoading">
+				<span>&nbsp;</span>
+				<span class="loader dark"></span>
+				<span>&nbsp;</span>
+			</span>
+			<span class="hidden sideContent" id="sideContent">
+				<span class="flexcontainer marginbottom">
+					<span class="tabContent width100 hidden" id="tabContent-general">
+						<h2 class="flexcontainer width100 marginbottom">App information</h2>
+						<img id="appicon"><br>
+						<label for="appname">App name:</label><br>
+						<input type="text" id="appname" class="input" placeholder="App name" required><br><br>
+						<label for="appiconurl">App icon:</label><br>
+						<input type="text" id="appiconurl" class="input" placeholder="App icon URL"><br><br>
+						<label for="appdesc">App description:</label><br>
+						<textarea id="appdesc" class="input" placeholder="App description"></textarea><br><br>
+					</span>
+					<span class="tabContent width100 hidden" id="tabContent-oauth">
+						<h2 class="flexcontainer width100 marginbottom">OAuth</h2>
+						Client ID:<br>
+						<span id="clientid"></span><br><br>
+						Client secret:<br>
+						<span id="clientsecret"></span><br><br>
+						Callback URLs:<br>
+						<div id="callbackurls" class="flexcontainer flexcolumn leftalign"></div><br>
+						<button class="button" id="addcallbackurl">Add Callback URL</button><br><br>
+					</span>
+					<span class="tabContent width100 hidden" id="tabContent-webhooks">
+						<h2 class="flexcontainer width100 marginbottom">Webhooks</h2>
+						Coming soon!
+					</span>
+				</span>
+			</span>
+		</span>
+	</main>
+	<stibarc-footer></stibarc-footer>
+	<dialog id="deleteconfirm">
+		<div class="flexcontainer flexcolumn">
+			<h2>Confirm Deletion</h2>
+			<p>Are you sure you want to delete this app? This action cannot be undone.</p>
+			<p>You must type your application's name to confirm deletion.</p>
+			<input type="text" id="confirmdeleteinput" class="input" placeholder="App name" required>
+			<div class="flexcontainer">
+				<button id="confirmdelete" class="button danger" disabled>Delete</button>
+				<button id="canceldelete" class="button primary">Cancel</button>
+			</div>
+		</div>
+	</dialog>
+</body>
+
+</html>
