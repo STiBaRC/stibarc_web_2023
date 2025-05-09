@@ -64,15 +64,15 @@ function reloadCallbackUrls(appDetails) {
 	const entries = document.createDocumentFragment();
 	appDetails.callbackurls.forEach((url, index) => {
 		const container = document.createElement("div");
-		const input = document.createElement("input");
+		const callbackurl = document.createElement("input");
 
-		input.type = "text";
-		input.value = url;
-		input.classList.add("callbackurl");
-		input.placeholder = `Callback URL ${index + 1}`;
-		input.id = `callbackurl-${index}`;
-		input.addEventListener("input", () => {
-			appDetails.callbackurls[index] = input.value;
+		callbackurl.type = "text";
+		callbackurl.value = url;
+		callbackurl.classList.add("callbackurl");
+		callbackurl.placeholder = `Callback URL ${index + 1}`;
+		callbackurl.id = `callbackurl-${index}`;
+		callbackurl.addEventListener("input", () => {
+			appDetails.callbackurls[index] = callbackurl.value;
 		});
 
 		const removeButton = document.createElement("button");
@@ -86,11 +86,80 @@ function reloadCallbackUrls(appDetails) {
 			reloadCallbackUrls(appDetails);
 		});
 
-		container.appendChild(input);
+		container.appendChild(callbackurl);
 		container.appendChild(removeButton);
 		entries.appendChild(container);
 	});
 	$("#callbackurls").appendChild(entries);
+}
+
+function reloadWebhookUrls(appDetails) {
+	$("#webhookurls").replaceChildren();
+	const entries = document.createDocumentFragment();
+	appDetails.webhooks.forEach((webhook, index) => {
+		const container = document.createElement("div");
+		const webhookurl = document.createElement("input");
+		const webhookevent = document.createElement("select");
+		const webhookmethod = document.createElement("select");
+
+		for (const event of [{name:"newpost",humanName:"New post"}, {name:"newclip",humanName:"New clip"}, {name:"newcomment",humanName:"New post comment"}, {name:"newclipcomment",humanName:"New clip comment"}]) {
+			const option = document.createElement("option");
+			option.value = event.name;
+			option.textContent = event.humanName;
+			if (webhook.hook === event.name) {
+				option.selected = true;
+			}
+			webhookevent.appendChild(option);
+		}
+		webhookevent.classList.add("webhookevent");
+		webhookevent.id = `webhookevent-${index}`;
+		webhookevent.addEventListener("input", () => {
+			appDetails.webhooks[index].hook = webhookevent.value;
+		});
+
+		for (const method of ["GET", "POST"]) {
+			const option = document.createElement("option");
+			option.value = method;
+			option.textContent = method;
+			if (webhook.method === method) {
+				option.selected = true;
+			}
+			webhookmethod.appendChild(option);
+		}
+
+		webhookmethod.classList.add("webhookmethod");
+		webhookmethod.id = `webhookmethod-${index}`;
+		webhookmethod.addEventListener("input", () => {
+			appDetails.webhooks[index].method = webhookmethod.value;
+		});
+
+		webhookurl.type = "text";
+		webhookurl.value = webhook.endpoint;
+		webhookurl.classList.add("webhookurl");
+		webhookurl.placeholder = `Webhookurl URL ${index + 1}`;
+		webhookurl.id = `webhookurl-${index}`;
+		webhookurl.addEventListener("input", () => {
+			appDetails.webhooks[index].endpoint = webhookurl.value;
+		});
+
+		const removeButton = document.createElement("button");
+		removeButton.classList.add("button", "smallBtn");
+		removeButton.setAttribute("title", "Remove webhook URL");
+		removeButton.textContent = "X";
+
+		removeButton.addEventListener("click", (e) => {
+			e.preventDefault();
+			appDetails.webhooks.splice(index, 1);
+			reloadWebhookUrls(appDetails);
+		});
+
+		container.appendChild(webhookurl);
+		container.appendChild(webhookevent);
+		container.appendChild(webhookmethod);
+		container.appendChild(removeButton);
+		entries.appendChild(container);
+	});
+	$("#webhookurls").appendChild(entries);
 }
 
 window.addEventListener("load", async () => {
@@ -150,6 +219,12 @@ window.addEventListener("load", async () => {
 		reloadCallbackUrls(appDetails);
 	});
 
+	reloadWebhookUrls(appDetails);
+	$("#addwebhookurl").addEventListener("click", () => {
+		appDetails.webhooks.push({hook: "newpost", method: "GET", endpoint: ""});
+		reloadWebhookUrls(appDetails);
+	});
+
 	$("#sideContentLoading").classList.add("hidden");
 
 	handleViewportChange(mediaQuery);
@@ -179,6 +254,7 @@ window.addEventListener("load", async () => {
 				description: appDetails.description,
 				icon: appDetails.icon,
 				callbackURLs: appDetails.callbackurls,
+				webhooks: appDetails.webhooks,
 				session: api.session
 			})
 		});

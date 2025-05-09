@@ -1,6 +1,6 @@
 #appicon {
 	width: 110px;
-	height: auto;
+	height: 110px;
 	border-radius: 10px;
 	margin-bottom: 5px;
 	background-color: var(--color1);
@@ -124,6 +124,10 @@
 	}
 }
 
-#callbackurls {
+#callbackurls, #webhookurls {
 	gap: 0.5rem;
+}
+
+#callbackurls > div > input, #webhookurls > div > input, #webhookurls > div > select {
+	margin-right: 0.5rem;
 }

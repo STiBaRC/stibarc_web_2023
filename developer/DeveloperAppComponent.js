@@ -16,7 +16,7 @@ class DeveloperAppComponent extends HTMLElement {
 
 			.app-icon {
 				width: 110px;
-				height: auto;
+				height: 110px;
 				border-radius: 10px;
 				margin-bottom: 5px;
 				background-color: var(--color1);
