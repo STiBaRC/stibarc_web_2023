@@ -7,7 +7,7 @@ class DeveloperAppComponent extends HTMLElement {
 			:host {
 				display: block;
 				width: 280px;
-				height: 200px;
+				height: 280px;
 			}
 
 			.block {

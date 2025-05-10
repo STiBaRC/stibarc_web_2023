@@ -188,7 +188,6 @@ class RegisterModalComponent extends HTMLElement {
 	}
 
 	hide() {
-		document.querySelector("#overlay").classList.add("hidden");
 		document.body.classList.remove("overflowhidden");
 		this.shadow.querySelector("dialog").close();
 		this.shadow.querySelector("#errorcontainer").classList.add("hidden");

@@ -1,0 +1,33 @@
+main {
+	height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+p {
+	width: calc(100% - 24px);
+	white-space: pre-wrap;
+	background-color: var(--color10);
+	padding: 12px;
+	margin-left: 12px;
+	margin-right: 12px;
+	border-radius: 15px;
+}
+
+#oauth-container {
+	width: calc(100vw - 40px);
+	max-width: 480px;
+}
+
+#app-icon {
+	width: 110px;
+	height: 110px;
+	border-radius: 10px;
+	margin-bottom: 5px;
+	background-color: var(--color1);
+}
+
+#scope-list {
+	width: calc(100% - 40px);
+}

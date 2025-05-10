@@ -1,3 +1,9 @@
+code {
+	background-color: var(--color3);
+	padding: 5px;
+	border-radius: 5px;
+}
+
 #appicon {
 	width: 110px;
 	height: 110px;
