@@ -22,14 +22,14 @@ async function loggedInOnClick(clientId, redirectUri, scopes, state) {
 		params.set("error", "invalid_request");
 		params.set("error_description", data.error);
 		params.set("state", state);
-		window.location.href = `${redirectUri}?${params.toString()}`;
+		window.location.href = `${redirectUri}#${params.toString()}`;
 	}
 
 	const params = new URLSearchParams();
 	params.set("access_token", data.session);
 	params.set("token_type", "stibarc_session"); // Change to "Bearer" once we support Bearer tokens
 	params.set("state", state);
-	window.location.href = `${redirectUri}?${params.toString()}`;
+	window.location.href = `${redirectUri}#${params.toString()}`;
 }
 
 window.addEventListener("load", async function () {
@@ -64,7 +64,7 @@ window.addEventListener("load", async function () {
 			params.set("error", "invalid_scope");
 			params.set("error_description", `Invalid scope: ${scope}`);
 			params.set("state", state);
-			window.location.href = `${redirectUri}?${params.toString()}`;
+			window.location.href = `${redirectUri}#${params.toString()}`;
 			return;
 		}
 		const scopeElement = document.createElement("li");
@@ -143,7 +143,7 @@ window.addEventListener("load", async function () {
 		params.set("error", "invalid_request");
 		params.set("error_description", "Unsupported response type");
 		params.set("state", state);
-		window.location.href = `${redirectUri}?${params.toString()}`;
+		window.location.href = `${redirectUri}#${params.toString()}`;
 	}
 
 	$("#cancel-button").onclick = function () {
@@ -152,7 +152,7 @@ window.addEventListener("load", async function () {
 		params.set("error", "access_denied");
 		params.set("error_description", "User denied access");
 		params.set("state", state);
-		window.location.href = `${redirectUri}?${params.toString()}`;
+		window.location.href = `${redirectUri}#${params.toString()}`;
 	}
 
 	setLoggedinState(api.loggedIn);
