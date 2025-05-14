@@ -4,6 +4,15 @@
 	cursor: pointer;
 }
 
+#posttextcontent {
+	-webkit-box-orient: vertical;
+	display: -webkit-box;
+	flex-basis: unset;
+	word-wrap: break-word;
+	max-width: 100%;
+	white-space: pre-wrap;
+}
+
 #opennewcommentbutton {
 	margin-bottom: 12px;
 }

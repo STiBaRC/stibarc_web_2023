@@ -1,0 +1,55 @@
+.editBtnOverlay {
+	border: none;
+	font-family: inherit;
+	font-size: inherit;
+	position: absolute;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: rgba(0, 0, 0, 0.45);
+	padding: 5px;
+	border-radius: 6px;
+	cursor: pointer;
+	transition: background-color 0.22s ease-out;
+}
+
+.editBtnOverlay:hover {
+	background-color: rgba(0, 0, 0, 0.6);
+}
+
+.editBtnOverlay.active {
+	background-color: rgba(0, 0, 0, 0.92);
+}
+
+.profileBanner .editBtnOverlay {
+	right: 12px;
+	bottom: 12px;
+}
+
+.editDropdown {
+	display: flex;
+	flex-direction: column;
+	justify-content: left;
+	position: absolute;
+	top: calc(100% - 12px);
+	right: 12px;
+	background-color: var(--color2);
+	color: var(--text);
+	box-shadow: 0 1px 8px 0 rgba(22, 22, 22, 0.2), 0 1px 4px 0 rgba(22, 22, 22, 0.2);
+	padding: 4px 4px;
+	border-radius: 6px;
+	z-index: 10;
+}
+
+.editDropdown span {
+	display: block;
+	width: 5rem;
+	padding: 6px 10px;
+	transition: background-color 0.22s ease-out;
+	cursor: pointer;
+	border-radius: 6px;
+}
+
+.editDropdown span:hover {
+	background-color: var(--color3);
+}

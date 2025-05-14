@@ -1,0 +1,57 @@
+#app-list {
+	margin-top: 1rem;
+	gap: 1rem;
+	justify-content: flex-start;
+	align-items: flex-start;
+	align-content: flex-start;
+}
+
+@media only screen and (max-width: 750px) {
+	#app-list {
+		justify-content: center;
+		align-items: center;
+		align-content: center;
+	}
+}
+
+.floatingplusbuttoncontainer {
+	display: block;
+	bottom: 0;
+	position: sticky;
+	width: 100%;
+}
+
+.floatingplusbutton .icon {
+	stroke-width: 28px;
+	width: 38px;
+	height: 38px;
+}
+
+.floatingplusbutton {
+	position: absolute;
+	bottom: 25px;
+	right: 25px;
+	background-color: var(--color1);
+	box-shadow: 0 1px 8px 0 rgba(22, 22, 22, 0.2), 0 1px 4px 0 rgba(22, 22, 22, 0.2);
+	cursor: pointer;
+	width: 55px;
+	height: 55px;
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	line-height: 0;
+	transition: background-color 0.2s ease-out;
+}
+
+.floatingplusbutton:hover {
+	background-color: var(--color3);
+}
+
+.floatingplusbutton img {
+	max-width: 40px;
+}
+
+.floatingplusbutton span {
+	font-size: 45px;
+	line-height: 51px;
+}

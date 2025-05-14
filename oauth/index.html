@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8" />
+	<title>OAuth | STiBaRC</title>
+	<link rel="manifest" href="/manifest.json" />
+	<meta name="viewport" content="initial-scale=1, maximum-scale=5, user-scalable=yes, width=device-width">
+	<link rel="icon" type="image/png" href="/img/icon.png">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@300;400&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="/css/themes/default.css" id="theme">
+	<link rel="stylesheet" href="/css/global.css">
+	<link rel="stylesheet" href="/oauth/oauth.css">
+	<script src="/js/API.js"></script>
+	<script src="/js/global.js"></script>
+	<script type="module" src="/components/LoginModal.js"></script>
+	<script type="module" src="/components/RegisterModal.js"></script>
+	<script type="module" src="/components/Icon.js"></script>
+	<script src="/oauth/oauth.js"></script>
+</head>
+
+<body>
+	<stibarc-login-modal></stibarc-login-modal>
+	<stibarc-register-modal></stibarc-register-modal>
+	<main>
+		<div class="flexcontainer flexcolumn block" id="oauth-container">
+			<h2>Authorize External App</h2>
+			<img src="/img/icon.png" alt="Application icon" id="app-icon" />
+			<div class="flexcontainer">
+				<h3 id="app-name">Loading...</h3><stibarc-icon name="verified" type="verifiedBadge" id="app-verified" class="hidden"></stibarc-icon>
+			</div>
+			<p id="app-description">Loading...</p>
+			<span>Would like access to:</span>
+			<ul id="scope-list"></ul>
+			<div class="flexcontainer">
+				<button class="button primary" id="authorize-button" disabled>Authorize</button>
+				<button class="button" id="cancel-button">Cancel</button>
+			</div>
+		</div>
+	</main>
+	<dialog id="invalid-redirect-uri">
+		<div class="flexcontainer flexcolumn">
+			<h2>Invalid Redirect URI</h2>
+			<p>The redirect URI provided is not valid. Please check the URL and try again.</p>
+			<div class="flexcontainer">
+				<button class="button primary" id="uri-go-back">Go back</button>
+			</div>
+		</div>
+	</dialog>
+	<dialog id="invalid-client-id">
+		<div class="flexcontainer flexcolumn">
+			<h2>Invalid Client ID</h2>
+			<p>The client ID provided is not valid. Please check the URL and try again.</p>
+			<div class="flexcontainer">
+				<button class="button primary" id="cid-go-back">Go back</button>
+			</div>
+		</div>
+	</dialog>
+</body>
+
+</html>

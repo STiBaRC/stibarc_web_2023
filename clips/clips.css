@@ -1,0 +1,109 @@
+html {
+	overflow: hidden;
+}
+
+body {
+	overflow: hidden;
+}
+
+main {
+	overflow: hidden;
+	width: 100vw;
+	max-width: 100vw;
+	margin: 0;
+}
+
+.feedFilter {
+	padding: 0.75rem 0;
+	z-index: 10;
+}
+
+.floatingbuttoncontainer {
+	position: fixed;
+	top: 66px;
+	margin-bottom: 16px;
+}
+
+.floatingbutton {
+	background-color: var(--color3);
+	margin: 5px;
+	padding: 5px;
+	height: 30px;
+	border-radius: 20px;
+	width: 100px;
+	cursor: pointer;
+}
+
+.floatingbutton:hover {
+	background-color: var(--color9);
+}
+
+.floatingbutton.active {
+	background-color: var(--color6);
+}
+
+.floatingbutton.active:hover {
+	background-color: var(--primaryFocus);
+}
+
+.floatingbuttonShadow {
+	box-shadow: 0 1px 8px 0 rgba(22, 22, 22, 0.2), 0 1px 4px 0 rgba(22, 22, 22, 0.2);
+}
+
+.floatingplusbuttoncontainer {
+	display: block;
+	bottom: 0;
+	position: sticky;
+	width: 100%;
+}
+
+.floatingplusbutton .icon {
+	stroke-width: 28px;
+	width: 38px;
+	height: 38px;
+}
+
+.floatingplusbutton {
+	position: absolute;
+	bottom: 25px;
+	right: 25px;
+	background-color: var(--color1);
+	box-shadow: 0 1px 8px 0 rgba(22, 22, 22, 0.2), 0 1px 4px 0 rgba(22, 22, 22, 0.2);
+	cursor: pointer;
+	width: 55px;
+	height: 55px;
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	line-height: 0;
+	transition: background-color 0.2s ease-out;
+}
+
+.floatingplusbutton:hover {
+	background-color: var(--color3);
+}
+
+.floatingplusbutton img {
+	max-width: 40px;
+}
+
+.floatingplusbutton span {
+	font-size: 45px;
+	line-height: 51px;
+}
+
+.height100 {
+	height: calc(100dvh - 60px);
+}
+
+.feed {
+	position: relative;
+	aspect-ratio: 9 / 16;
+	max-width: 100vw;
+}
+
+stibarc-clip {
+	position: absolute;
+	top: 0;
+	left: 0;
+}

@@ -11,8 +11,28 @@
 	margin-bottom: 14px;
 	user-select: text;
 	box-shadow: 0 1px 8px 0 rgba(22, 22, 22, 0.2), 0 1px 4px 0 rgba(22, 22, 22, 0.2);
+	-webkit-box-orient: vertical;
+	display: -webkit-box;
+	word-wrap: break-word;
+	max-width: 100%;
+	white-space: pre-wrap;
 }
 
 #userPostsLoader {
 	margin: 0.75rem 0;
+}
+
+#clips {
+	width: 100%;
+	height: 200px;
+	overflow-x: auto;
+	gap: 10px;
+	justify-content: flex-start;
+	margin-bottom: 14px;
+	flex-wrap: nowrap;
+	overflow-y: hidden;
+}
+
+.followinger {
+	margin-bottom: 10px;
 }

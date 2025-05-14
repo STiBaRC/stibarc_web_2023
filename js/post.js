@@ -5,39 +5,35 @@ let attachmentBlobURLs = [];
 let newAttachments = [];
 let newAttachmentFiles = [];
 let newAttachmentBlobURLs = [];
+let clicked = false;
 const id = parseInt(new URL(location).searchParams.get("id"));
+
+const upvoteIcon = document.createElement("stibarc-icon");
+const downvoteIcon = document.createElement("stibarc-icon");
+
+upvoteIcon.setAttribute("name", "up_arrow");
+downvoteIcon.setAttribute("name", "down_arrow");
+
+upvoteIcon.classList.add("textOnRight");
+downvoteIcon.classList.add("textOnRight");
+
+const upvoteSpan = document.createElement("span");
+const downvoteSpan = document.createElement("span");
 
 async function newComment() {
 	if (clicked) return;
 	const content = $("#newcommentbody").value;
 	if (content.trim() == "" && newAttachmentFiles.length == 0) return;
 	clicked = true;
+	$("#newcommentbutton").classList.add("loading", "small");
+	$("#newcommentbutton").textContent = "";
 	for (const file of newAttachmentFiles) {
-		const response = await fetch("https://betaapi.stibarc.com/v4/uploadfile.sjs", {
-			method: "post",
-			headers: {
-				"Content-Type": file.type,
-				"X-Session-Key": localStorage.sess,
-				"X-File-Usage": "attachment"
-			},
-			body: await file.arrayBuffer()
-		});
-		const responseJSON = await response.json();
-		newAttachments.push(responseJSON.file);
+		const newFile = await api.uploadFile(file, "attachment");
+		newAttachments.push(newFile);
 	}
-	const response = await fetch("https://betaapi.stibarc.com/v4/postcomment.sjs", {
-		method: "post",
-		headers: {
-			"Content-Type": "application/json"
-		},
-		body: JSON.stringify({
-			session: localStorage.sess,
-			id,
-			content,
-			attachments: (newAttachments.length > 0) ? newAttachments : undefined
-		})
-	});
-	const responseJSON = await response.json();
+	await api.postComment(id, { content, attachments: (newAttachments.length > 0) ? newAttachments : undefined });
+	$("#newcommentbutton").classList.remove("loading", "small");
+	$("#newcommentbutton").textContent = "Comment";
 	$("#opennewcommentbutton").classList.remove("hidden");
 	$("#newcomment").classList.add("hidden");
 	$("#newcommentbody").value = "";
@@ -52,38 +48,29 @@ async function newComment() {
 
 window.addEventListener("load", async function () {
 	$("#upvoteBtn").addEventListener("click", async () => {
-		if (localStorage.sess) {
-			const voteResult = await vote({ id, target: "post", vote: "upvote" });
-			$("#upvoteBtn").innerText = `\u2191 ${voteResult.upvotes}`;
-			$("#downvoteBtn").innerText = `\u2193 ${voteResult.downvotes}`;
+		if (api.loggedIn) {
+			const voteResult = await api.vote({ postId: id, target: "post", vote: "upvote" });
+			upvoteSpan.textContent = voteResult.upvotes;
+			downvoteSpan.textContent = voteResult.downvotes;
 		} else {
-			window.scrollTo(0, 0);
-			$("#loginformcontainer").classList.remove("hidden");
-			$("#overlay").classList.remove("hidden");
-			document.body.classList.add("overflowhidden");
+			$("stibarc-login-modal")[0].show();
 		}
 	});
 	$("#downvoteBtn").addEventListener("click", async () => {
-		if (localStorage.sess) {
-			const voteResult = await vote({ id, target: "post", vote: "downvote" });
-			$("#upvoteBtn").innerText = `\u2191 ${voteResult.upvotes}`;
-			$("#downvoteBtn").innerText = `\u2193 ${voteResult.downvotes}`;
+		if (api.loggedIn) {
+			const voteResult = await api.vote({ postId: id, target: "post", vote: "downvote" });
+			upvoteSpan.textContent = voteResult.upvotes;
+			downvoteSpan.textContent = voteResult.downvotes;
 		} else {
-			window.scrollTo(0, 0);
-			$("#loginformcontainer").classList.remove("hidden");
-			$("#overlay").classList.remove("hidden");
-			document.body.classList.add("overflowhidden");
+			$("stibarc-login-modal")[0].show();
 		}
 	});
 	$("#opennewcommentbutton").addEventListener("click", () => {
-		if (localStorage.sess) {
+		if (api.loggedIn) {
 			$("#opennewcommentbutton").classList.add("hidden");
 			$("#newcomment").classList.remove("hidden");
 		} else {
-			window.scrollTo(0, 0);
-			$("#loginformcontainer").classList.remove("hidden");
-			$("#overlay").classList.remove("hidden");
-			document.body.classList.add("overflowhidden");
+			$("stibarc-login-modal")[0].show();
 		}
 	});
 	$("#newcommentbutton").addEventListener("click", newComment);
@@ -143,71 +130,51 @@ window.addEventListener("load", async function () {
 		fileInput.click();
 	}
 	$("#editBtn").addEventListener("click", () => {
-		location.href = `./edit.html?id=${id}`;
+		location.href = `/edit.html?id=${id}`;
 	});
 
-	setLoggedinState(localStorage.sess);
+	setLoggedinState(api.loggedIn);
 
-	const request = await fetch("https://betaapi.stibarc.com/v4/getpost.sjs", {
-		method: "post",
-		headers: {
-			"Content-Type": "application/json"
-		},
-		body: JSON.stringify({
-			id
-		})
-	});
-	const responseJSON = await request.json();
-	if (responseJSON.status == "error") {
-		switch (responseJSON.errorCode) {
-			case "rni":
-			case "pnfod":
+	let post;
+	try {
+		post = await api.getPost(id);
+	} catch(e) {
+		switch (e.message) {
+			default:
+				location.href = "/500.html";
+				break;
+			case "Post not found":
 				location.href = "/404.html";
 				break;
-			case "ise":
-				location.href = "/500.html";
 		}
-		return;
 	}
-	post = responseJSON.post;
 	document.title = `${post.title} | STiBaRC`;
-	$("#posttitle").innerText = post.title;
-	$("#postuserlink").setAttribute("href", `./user.html?id=${post.poster.username}`);
+	$("#posttitle").textContent = post.title;
+	$("#postuserlink").setAttribute("href", `/user.html?id=${post.poster.username}`);
 	$("#postpfp").setAttribute("src", post.poster.pfp);
-	$("#postusername").innerText = post.poster.username;
+	$("#postusername").textContent = post.poster.username;
 	if (post.poster.verified) $("#postverified").classList.remove("hidden");
 	if (post.poster.pronouns) {
-		$("#pronouns").innerText = `(${post.poster.pronouns})`;
+		$("#pronouns").textContent = `(${post.poster.pronouns})`;
 		$("#pronouns").title = `Pronouns (${post.poster.pronouns})`;
 	}
-	$("#postdate").innerText = new Date(post.date).toLocaleString();
+	$("#postdate").textContent = new Date(post.date).toLocaleString();
 	if (post.edited) {
 		$("#edited").classList.remove("hidden");
 		$("#edited").title = `Edited ${new Date(post.lastEdited).toLocaleString()}`;
 	}
-	if (post.deleted) {
-		$("#deleted").classList.remove("hidden");
-		$("#upvoteBtn").classList.add("hidden");
-		$("#downvoteBtn").classList.add("hidden");
-		$("#editBtn").classList.add("hidden");
-		$("#opennewcommentbutton").classList.add("hidden");
-	}
-	$("#postcontent").innerText = post.content;
-	$("#upvoteBtn").innerText = `\u2191 ${post.upvotes}`;
-	$("#downvoteBtn").innerText = `\u2193 ${post.downvotes}`;
-	if (post.poster.username == localStorage.username) $("#editBtn").classList.remove("hidden");
+	$("#posttextcontent").textContent = post.content;
+	$("#upvoteBtn").textContent = "";
+	$("#downvoteBtn").textContent = "";
+	upvoteSpan.textContent = post.upvotes;
+	downvoteSpan.textContent = post.downvotes;
+	$("#upvoteBtn").append(upvoteIcon, upvoteSpan);
+	$("#downvoteBtn").append(downvoteIcon, downvoteSpan);
+	if (post.poster.username == api.username) $("#editBtn").classList.remove("hidden");
 
 	if (post.attachments && post.attachments.length > 0 && post.attachments[0] !== null) {
 		for (let i = 0; i < post.attachments.length; i++) {
-			const attachment = attachmentblock(post.attachments[i]);
-			attachment.classList.add("postattachment");
-			const parts = post.attachments[i].split(".");
-			const ext = parts[parts.length - 1];
-			if (images.indexOf(ext) != -1) {
-				attachment.addEventListener("click", () => {
-					window.open(post.attachments[i], "_blank");
-				});
-			}
+			const attachment = new AttachmentBlockComponent(post.attachments[i], true);
 			$("#postcontent").append(attachment);
 		}
 	}
@@ -215,21 +182,37 @@ window.addEventListener("load", async function () {
 	const comments = document.createDocumentFragment();
 
 	for (const comment of post.comments) {
-		comments.appendChild(commentBlock(post, comment, true));
+		comments.appendChild(new CommentBlockComponent(post, comment, true));
 	}
 
 	$("#comments").appendChild(comments);
 
+	if (post.deleted) {
+		$("#deleted").classList.remove("hidden");
+		$("#upvoteBtn").classList.add("hidden");
+		$("#downvoteBtn").classList.add("hidden");
+		$("#editBtn").classList.add("hidden");
+		$("#opennewcommentbutton").classList.add("hidden");
+		$(".editBtn").forEach(editBtn => {
+			editBtn.classList.add("hidden");
+		});
+		$(".voteBtn").forEach(editBtn => {
+			editBtn.classList.add("hidden");
+		});
+	}
+
 	listatehooks.push((state) => {
-		if (state) {
-			if (post.poster.username == localStorage.username) $("#editBtn").classList.remove("hidden");
-			$(".editBtn").forEach(editBtn => {
-				if (localStorage.username == editBtn.dataset.username) editBtn.classList.remove("hidden");
-			});
-		} else {
-			$(".editBtn").forEach(editBtn => {
-				editBtn.classList.add("hidden");
-			});
+		if (!post.deleted) {
+			if (state) {
+				if (post.poster.username == api.username) $("#editBtn").classList.remove("hidden");
+				$(".editBtn").forEach(editBtn => {
+					if (api.username == editBtn.dataset.username) editBtn.classList.remove("hidden");
+				});
+			} else {
+				$(".editBtn").forEach(editBtn => {
+					editBtn.classList.add("hidden");
+				});
+			}
 		}
 	});
 });

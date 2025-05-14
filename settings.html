@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8" />
+	<title>Settings | STiBaRC</title>
+	<link rel="manifest" href="/manifest.json" />
+	<meta name="viewport" content="initial-scale=1, maximum-scale=5, user-scalable=yes, width=device-width">
+	<link rel="icon" type="image/png" href="/img/icon.png">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@300;400&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="/css/themes/default.css" id="theme">
+	<link rel="stylesheet" href="/css/global.css">
+	<link rel="stylesheet" href="/css/settings.css">
+	<script src="/js/API.js"></script>
+	<script src="/js/global.js"></script>
+	<script type="module" src="/components/LoginModal.js"></script>
+	<script type="module" src="/components/RegisterModal.js"></script>
+	<script type="module" src="/components/Header.js"></script>
+	<script type="module" src="/components/Footer.js"></script>
+	<script src="/components/Icon.js"></script>
+	<script src="/components/SessionBlock.js"></script>
+	<script src="/js/settings.js"></script>
+</head>
+
+<body>
+	<stibarc-header></stibarc-header>
+	<stibarc-login-modal></stibarc-login-modal>
+	<stibarc-register-modal></stibarc-register-modal>
+	<main class="flexcontainer flexcolumn">
+		<span class="verticalspacer"></span>
+		<span class="contentWithSidebar block">
+			<span>
+				<button class="button smallBtn hidden" id="backBtn">Back</button>
+			</span>
+			<span class="sidebar" id="sidebarTabs">
+				<h2>Settings</h2>
+				<ul class="sidebarItems">
+					<li class="" id="tab-security"><span>Security</span></li>
+					<li class="" id="tab-sessions"><span>Sessions</span></li>
+					<li class="" id="tab-display"><span>Display</span></li>
+					<li class="" id="tab-experiments"><span>Experiments</span></li>
+				</ul>
+			</span>
+			<span class="sideContent" id="sideContentLoading">
+				<span>&nbsp;</span>
+				<span class="loader dark"></span>
+				<span>&nbsp;</span>
+			</span>
+			<span class="hidden sideContent" id="sideContent">
+				<span class="flexcontainer marginbottom">
+					<span class="tabContent hidden" id="tabContent-security">
+						<h2 class="flexcontainer width100 marginbottom">Security</h2>
+						<button id="changepasswordbutton" class="button">Change Password</button>
+						<button id="tfabutton" class="button">Enable 2FA</button>
+					</span>
+					<span class="tabContent hidden" id="tabContent-sessions">
+						<h2 class="flexcontainer width100 marginbottom">Sessions</h2>
+						<div id="sessions"></div>
+					</span>
+					<span class="tabContent hidden" id="tabContent-display">
+						<h2 class="flexcontainer width100 marginbottom">Display</h2>
+						<h3 class="marginbottom">Theme</h3>
+						<select id="changeThemeSelector" class="input">
+							<option value="lightTheme">Default (Light)</option>
+							<option value="darkTheme">Dark Theme</option>
+						</select>
+					</span>
+					<span class="tabContent hidden" id="tabContent-experiments">
+						<h2 class="flexcontainer width100 marginbottom">Experiments</h2>
+						<span class="flexcontainer">😉</span>
+					</span>
+				</span>
+			</span>
+		</span>
+	
+	</main>
+	<stibarc-footer></stibarc-footer>
+	<span id="overlay" class="hidden">
+		<span id="overlaybg"></span>
+		<span id="changepasswordformcontainer" class="hidden flexcontainer flexcolumn formcontainer">
+			<span id="changepasswordform" class="block modal">
+				<div class="flexcontainer flexcolumn">
+					<h2>Change Password</h2>
+					<span id="changepassworderrorcontainer" class="flexcontainer flexcolumn hidden">
+						<span id="changepassworderror" class="red"></span>
+						<span>&nbsp;</span>
+					</span>
+					<input type="password" id="oldpasswordinput" placeholder="Old Password" autocomplete="current-password">
+					<span>&nbsp;</span>
+					<input type="password" id="newpasswordinput" placeholder="New Password" autocomplete="new-password">
+					<span>&nbsp;</span>
+					<input type="password" id="newpasswordinput2" placeholder="New Password Again" autocomplete="new-password">
+					<span>&nbsp;</span>
+					<span>
+						<input type="checkbox" id="logoutothers">
+						<label for="logoutothers">Logout other devices</label>
+					</span>
+					<span>&nbsp;</span>
+					<span class="flexcontainer">
+						<button id="changepasswordsubmitbutton" class="button primary">Change Password</button>
+						<button id="changepasswordcancel" class="button">Cancel</button>
+					</span>
+				</div>
+			</span>
+		</span>
+		<span id="enabletfaformcontainer" class="hidden flexcontainer flexcolumn formcontainer">
+			<span id="enabletfaform" class="block modal">
+				<div class="flexcontainer flexcolumn">
+					<h2>Enable 2FA</h2>
+					<span id="pleaseWait" class="loader dark"></span>
+					<span id="enabletfaerrorcontainer" class="flexcontainer flexcolumn hidden">
+						<span id="enabletfaerror" class="red"></span>
+						<span>&nbsp;</span>
+					</span>
+					<img id="enabletfaqr" src="">
+					<span>&nbsp;</span>
+					<span id="tfakey"></span>
+					<span>&nbsp;</span>
+					<span>Enter the generated verification code below.</span>
+					<span>&nbsp;</span>
+					<input id="enabletfainput" placeholder="000 000" maxlength="7" autocomplete="one-time-code" name="one-time-code" type="text" autocapitalize="none" autocorrect="off" inputmode="numeric" spellcheck="false">
+					<span>&nbsp;</span>
+					<span class="flexcontainer">
+						<button id="enabletfasubmitbutton" class="button primary">Enable 2FA</button>
+						<button id="enabletfacancel" class="button">Cancel</button>
+					</span>
+				</div>
+			</span>
+		</span>
+		<span id="disabletfaformcontainer" class="hidden flexcontainer flexcolumn formcontainer">
+			<span id="disabletfaform" class="block modal">
+				<div class="flexcontainer flexcolumn">
+					<h2>Disable 2FA</h2>
+					<span id="disabletfaerrorcontainer" class="flexcontainer flexcolumn hidden">
+						<span id="disabletfaerror" class="red"></span>
+						<span>&nbsp;</span>
+					</span>
+					<input id="disabletfainput" placeholder="000 000" maxlength="7" autocomplete="one-time-code" name="one-time-code" type="text" autocapitalize="none" autocorrect="off" inputmode="numeric" spellcheck="false">
+					<span>&nbsp;</span>
+					<span class="flexcontainer">
+						<button id="disabletfasubmitbutton" class="button primary">Disable 2FA</button>
+						<button id="disabletfacancel" class="button">Cancel</button>
+					</span>
+				</div>
+			</span>
+		</span>
+	</span>
+</body>
+
+</html>

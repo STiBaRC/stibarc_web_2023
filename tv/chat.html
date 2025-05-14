@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8" />
+	<title>STiBaRC TV Chat</title>
+	<meta name="viewport" content="initial-scale=1, maximum-scale=5, user-scalable=yes, width=device-width">
+	<link rel="icon" type="image/png" href="/img/icon.png">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@300;400&display=swap" rel="stylesheet">
+	<style>
+		:root {
+			--text: black;
+			--background: #98DFF3;
+			--primaryFocus: #3ea1b1;
+			--red: #c32222;
+			--redBg: #f14e4e;
+			--color1: #49B9CA;
+			--color2: #ffffff;
+			--color3: #d7d7d7;
+			--color4: #0e0e0e;
+			--color5: #3ea1b1;
+			--color6: #54cbdd;
+			--color8: #d8d8d8;
+			--color9: #bcbcbc;
+			--color10: #e7e7e7;
+			--color11: #fafafa;
+		}
+		.sysnotif {
+			color: #7F7F7F;
+		}
+	</style>
+	<link rel="stylesheet" href="/css/global.css">
+	<style>
+		body {
+			background-color: white;
+			color: black;
+			display: flex;
+			flex-direction: column;
+			height: 100vh;
+			width: 100vw;
+			margin: 0;
+			padding: 0;
+		}
+		#chatmessages {
+			flex-grow: 1;
+			overflow-y: auto;
+			justify-content: flex-start;
+			align-items: flex-start;
+			align-content: flex-start;
+		}
+		#typing {
+			flex-grow: 0;
+		}
+	</style>
+	<script src="/js/API.js"></script>
+	<script src="/js/global.js"></script>
+	<script src="/components/Icon.js"></script>
+	<script src="/tv/ChatMessage.js"></script>
+	<script src="https://tv.stibarc.com/socket.io/socket.io.min.js"></script>
+	<script src="/tv/chat.js"></script>
+</head>
+
+<body>
+	<div id="chatmessages" class="flexcontainer"></div>
+	<i id="typing" class="hidden width100 sysnotif"></i>
+</body>
+
+</html>

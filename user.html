@@ -4,47 +4,32 @@
 <head>
 	<meta charset="utf-8" />
 	<title>STiBaRC</title>
+	<link rel="manifest" href="/manifest.json" />
 	<meta name="viewport" content="initial-scale=1, maximum-scale=5, user-scalable=yes, width=device-width">
-	<link rel="icon" type="image/png" href="./img/icon.png">
+	<link rel="icon" type="image/png" href="/img/icon.png">
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@300;400&display=swap" rel="stylesheet">
-	<link rel="stylesheet" href="./css/themes/default.css" id="theme">
-	<link rel="stylesheet" href="./css/global.css">
-	<link rel="stylesheet" href="./css/user.css">
-	<script src="./js/global.js"></script>
-	<script src="./js/user.js"></script>
+	<link rel="stylesheet" href="/css/themes/default.css" id="theme">
+	<link rel="stylesheet" href="/css/global.css">
+	<link rel="stylesheet" href="/css/user.css">
+	<script src="/js/API.js"></script>
+	<script src="/js/global.js"></script>
+	<script type="module" src="/components/LoginModal.js"></script>
+	<script type="module" src="/components/RegisterModal.js"></script>
+	<script type="module" src="/components/Header.js"></script>
+	<script type="module" src="/components/Footer.js"></script>
+	<script type="module" src="/components/Icon.js"></script>
+	<script src="/components/AttachmentBlock.js"></script>
+	<script src="/components/PostBlock.js"></script>
+	<script src="/components/ClipBlock.js"></script>
+	<script src="/js/user.js"></script>
 </head>
 
 <body>
-	<header id="headerElement">
-		<span id="mainHeader" class="flexcontainer">
-			<span class="leftalign">
-				<a href="/" class="flexcontainer" id="logo"><img src="img/logo.png"></a>
-			</span>
-			<span class="searchbar flexcontainer hideOnMobile">
-				<input type="search" id="searchbox" placeholder="Search" autocomplete="false">
-			</span>
-			<span class="flexcontainer rightalign">
-				<span id="searchBtn" class="showOnMobileFlex"><img src="./img/icon/search.svg" alt="Search"></span>
-				<img src="https://betacdn.stibarc.com/pfp/default.png" id="mypfp" class="headerpfp">
-			</span>
-		</span>
-		<span id="hiddenHeader" class="hidden">
-			<div class="loggedout headerDropdown">
-				<div class="menuElement" id="menulogin">Login</div>
-				<div class="menuElement" id="menuregister">Register</div>
-			</div>
-			<div class="loggedin headerDropdown hidden">
-				<div class="menuElement" id="menueditprofile">Edit profile</div>
-				<div class="separator"></div>
-				<div class="menuElement" id="menuprofile"></div>
-				<div class="menuElement red" id="menulogout">Logout</div>
-			</div>
-		</span>
-		<span id="searchResults" class="flexcontainer flexcolumn hidden">
-		</span>
-	</header>
+	<stibarc-header></stibarc-header>
+	<stibarc-login-modal></stibarc-login-modal>
+	<stibarc-register-modal></stibarc-register-modal>
 	<main class="flexcontainer flexcolumn">
 		<span class="verticalspacer"></span>
 		<span class="block flexcontainer flexcolumn">
@@ -56,103 +41,45 @@
 						<span id="userPfpLoader" class="flexcontainer"><img id="userpfp" class="pfp"></span>
 						<span id="userusername">Loading...</span>
 					</span>
-					<span id="userverified" title="Verified" class="hidden">&#x2705;</span>
+					<stibarc-icon name="verified" type="verifiedBadge" id="userverified" class="hidden"></stibarc-icon>
 					<span id="pronouns" class="pronouns" title="Pronouns"></span>
 					<span class="flexgrow"></span>
-					<span id="followbutton" class="flexcontainer button small primary"></span>
+					<button id="followbutton" class="button small primary"></button>
 				</span>
 			</span>
-			<span id="name" class="leftalign width100">Real name: Loading...</span>
-			<span id="bio" class="hidden leftalign width100">Loading...</span>
+			<span id="private" class="leftalign width100 hidden"><i>This user is private</i></span>
+			<span id="name" class="leftalign width100">Real Name: Loading...</span>
+			<span id="bio" class="leftalign width100">Loading...</span>
 			<hr class="width100">
 			<span id="email" class="leftalign width100">Email: Loading...</span>
 			<span id="birthday" class="leftalign width100">Birthday: Loading...</span>
 			<span id="rank" class="leftalign width100">Rank: Loading...</span>
 			<span class="leftalign width100">
-				<span id="followers">Followers: Loading...</span>
+				<a id="followers" href="#">Followers: Loading...</a>
 				<span>&nbsp;&nbsp;</span>
-				<span id="following">Following: Loading...</span>
+				<a id="following" href="#">Following: Loading...</a>
 			</span>
-	
 		</span>
+		<span id="clips" class="flexcontainer hidden"></span>
 		<span id="posts" class="flexcontainer flexcolumn posts">
 			<span id="userPostsLoader" class="loader"></span>
 		</span>
+		<dialog id="followingersmodal">
+			<div class="flexcontainer flexcolumn">
+				<h2 id="followingerstitle">Following / Followers</h2>
+				<h3 id="pendingfollowerstitle" class="hidden">Pending</h3>
+				<div id="pendingfollowerslist" class="width100 hidden"></div>
+				<hr id="followersdivider" class="width100 hidden">
+				<div id="followingerslist" class="width100"></div>
+				<span class="flexcontainer marginbottom">
+					<button id="followingersclose" class="button">Close</button>
+				</span>
+			</div>
+		</dialog>
 	</main>
-	<footer class="flexcontainer">
-		<span>
-			&copy; 2023 <a href="https://team.stibarc.com" target="_blank">STiBaRC Team</a>
-		</span>
-	</footer>
+	<stibarc-footer></stibarc-footer>
 	<span id="overlay" class="hidden">
 		<span id="overlaybg"></span>
-		<span id="loginformcontainer" class="hidden flexcontainer flexcolumn formcontainer">
-			<span id="loginform" class="block modal">
-				<div class="flexcontainer flexcolumn">
-					<h2>Login</h2>
-					<span id="loginerrorcontainer" class="flexcontainer flexcolumn hidden">
-						<span id="loginerror" class="red"></span>
-						<span>&nbsp;</span>
-					</span>
-					<input type="text" id="Login-usernameinput" placeholder="Username" autocomplete="username">
-					<span>&nbsp;</span>
-					<input type="password" id="Login-passwordinput" placeholder="Password" autocomplete="current-password">
-					<span>&nbsp;</span>
-					<span id="Login-tfa" class="hidden flexcontainer flexcolumn">
-						<input type="number" id="Login-tfainput" placeholder="2FA Code">
-						<span>&nbsp;</span>
-					</span>
-					<span class="flexcontainer">
-						<a id="loginbutton" class="flexcontainer button primary">Login</a>
-						<a id="logincancel" class="flexcontainer button">Cancel</a>
-					</span>
-					<a id="registerlink" class="flexcontainer button">Register</a>
-				</div>
-			</span>
-		</span>
-		<span id="registerformcontainer" class="hidden flexcontainer flexcolumn formcontainer">
-			<span id="registerform" class="block modal">
-				<div class="flexcontainer flexcolumn">
-					<h2>Register</h2>
-					<span id="registererrorcontainer" class="flexcontainer flexcolumn hidden">
-						<span id="registererror" class="red"></span>
-						<span>&nbsp;</span>
-					</span>
-					<input type="text" id="Reg-usernameinput" placeholder="Username" autocomplete="username">
-					<span>&nbsp;</span>
-					<input type="password" id="Reg-passwordinput" placeholder="Password" autocomplete="new-password">
-					<span>&nbsp;</span>
-					<input type="password" id="Reg-passwordinput2" placeholder="Password again" autocomplete="new-password">
-					<h3>Optional</h3>
-					<input type="text" id="Reg-nameinput" placeholder="Name" autocomplete="given-name">
-					<span>Show name: <input type="checkbox" id="Reg-showname"></span>
-					<span>&nbsp;</span>
-					<input list="Reg-commonPronouns" id="Reg-pronounsinput" type="text" placeholder="Pronouns" autocomplete="off" autocapitalize="none" maxlength="40">
-					<datalist id="Reg-commonPronouns">
-						<option value="she/her"></option>
-						<option value="he/him"></option>
-						<option value="they/them"></option>
-						<option value="it/it"></option>
-					</datalist>
-					<span>Show pronouns: <input type="checkbox" id="Reg-showpronouns"></span>
-					<span>&nbsp;</span>
-					<input type="email" id="Reg-emailinput" placeholder="Email" autocomplete="email">
-					<span>Show email: <input type="checkbox" id="Reg-showemail"></span>
-					<span>&nbsp;</span>
-					<input type="date" id="Reg-bdayinput" placeholder="Birthday" autocomplete="bday">
-					<span>Show birthday: <input type="checkbox" id="Reg-showbday"></span>
-					<span>&nbsp;</span>
-					<textarea id="Reg-bioinput" placeholder="Bio"></textarea>
-					<span>Show bio: <input type="checkbox" id="Reg-showbio"></span>
-					<span>&nbsp;</span>
-					<span class="flexcontainer">
-						<a id="registerbutton" class="flexcontainer button primary">Register</a>
-						<a id="registercancel" class="flexcontainer button">Cancel</a>
-					</span>
-					<a id="loginlink" class="flexcontainer button">Login</a>
-				</div>
-			</span>
-		</span>
 	</span>
 </body>
 

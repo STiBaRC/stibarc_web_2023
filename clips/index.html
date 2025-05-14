@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8" />
+	<title>STiBaRC Clips</title>
+	<link rel="manifest" href="/manifest.json" />
+	<meta name="viewport" content="initial-scale=1, maximum-scale=5, user-scalable=yes, width=device-width">
+	<link rel="icon" type="image/png" href="/img/icon.png">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@300;400&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="/css/themes/default.css" id="theme">
+	<link rel="stylesheet" href="/css/global.css">
+	<link rel="stylesheet" href="/clips/clips.css">
+	<script src="/js/API.js"></script>
+	<script src="/js/global.js"></script>
+	<script type="module" src="/components/LoginModal.js"></script>
+	<script type="module" src="/components/RegisterModal.js"></script>
+	<script type="module" src="/components/Header.js"></script>
+	<script src="/components/Icon.js"></script>
+	<script src="/components/CommentBlock.js"></script>
+	<script src="/components/AttachmentBlock.js"></script>
+	<script type="module" src="/clips/ClipComponent.js"></script>
+	<script src="/clips/clips.js"></script>
+</head>
+
+<body>
+	<stibarc-header logo="clips"></stibarc-header>
+	<stibarc-login-modal></stibarc-login-modal>
+	<stibarc-register-modal></stibarc-register-modal>
+	<main class="flexcontainer flexcolumn">
+		<span id="feedFilter" class="flexcontainer floatingbuttoncontainer feedFilter hidden">
+			<span class="rightalign">
+				<button id="globalBtn" class="button floatingbutton">
+					Global
+				</button>
+			</span>
+			<span class="leftalign">
+				<button id="followedBtn" class="button floatingbutton">
+					Followed
+				</button>
+			</span>
+		</span>
+		<span id="feed" class="height100 feed">
+			<div id="loader" style="width: 100%; height: 100%; display: flex; justify-content: center; align-items: center;">
+				<span class="loader"></span>
+			</div>
+		</span>
+		<span id="followedfeed" class="height100 feed">
+			<div id="followedloader" style="width: 100%; height: 100%; display: flex; justify-content: center; align-items: center;">
+				<span class="loader"></span>
+			</div>
+		</span>
+		<dialog id="newclipdialog">
+			<div class="flexcontainer flexcolumn">
+				<h2>New Clip</h2>
+				<span>Recording is coming soon!</span>
+				<span class="flexcontainer">
+					<button id="newcliprecord" class="button small primary" disabled>Record</button>
+					<button id="newclipupload" class="button">Upload</button>
+				</span>
+				<span class="flexcontainer marginbottom">
+					<button id="newclipcancel" class="button">Cancel</button>
+				</span>
+			</div>
+		</dialog>
+		<dialog id="uploadclipdialog">
+			<div class="flexcontainer flexcolumn">
+				<h2>Upload Clip</h2>
+				<textarea class="bigtextarea" id="uploadclipdescription" placeholder="Clip description"></textarea>
+				<button id="selectclip" class="button small">Select clip</button>
+				<span id="selectedclip" class="flexcontainer"></span>
+				<span class="flexcontainer">
+					<button id="uploadclipconfirm" class="button small primary">Upload</button>
+					<button id="uploadclipcancel" class="button">Cancel</button>
+				</span>
+			</div>
+		</dialog>
+		<dialog id="commentsdialog">
+			<div class="flexcontainer flexcolumn">
+				<h2>Comments</h2>
+				<div id="comments" class="width100">
+				</div>
+				<button id="opennewcommentbutton" class="button hidden">New Comment</button>
+				<div id="commentinput" class="flexcontainer flexcolumn hidden">
+					<h3>New Comment</h3>
+					<textarea id="newcommentbody" placeholder="Comment body"></textarea>
+					<span class="flexcontainer">
+						<button id="newcommentbutton" class="button primary">Comment</button>
+						<button id="newcommentcancel" class="button">Cancel</button>
+					</span>
+				</div>
+				<button id="closecomments" class="button small">Close</button>
+			</div>
+		</dialog>
+	</main>
+	<span id="overlay" class="hidden">
+		<span id="overlaybg"></span>
+	</span>
+	<span class="floatingplusbuttoncontainer">
+		<div id="newclip" class="flexcontainer floatingplusbutton" title="Create Clip">
+			<svg class="icon iconBig"><use href="/img/icon/icons.svg#plus"></use></svg>
+		</div>
+	</span>
+</body>
+
+</html>

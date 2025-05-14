@@ -2,48 +2,50 @@ let attachments = [];
 let attachmentFiles = [];
 let attachmentBlobURLs = [];
 
-async function getPosts() {
+let lastSeenGlobalPost = null;
+let lastSeenFollowedPost = null;
+let hideLoadMoreGlobal = true;
+let hideLoadMoreFollowed = true;
+let clicked = false;
+
+async function getPosts(state) {
 	$("#postsLoader").classList.remove("hidden");
 	$("#followedPostsLoader").classList.remove("hidden");
-	const posts = document.createDocumentFragment();
-	const fposts = document.createDocumentFragment();
-	const request = await fetch("https://betaapi.stibarc.com/v4/getposts.sjs", {
-		method: "POST",
-		headers: {
-			"Content-Type": "application/json"
-		},
-		body: JSON.stringify({
-			returnFollowed: (localStorage.sess != undefined) ? true : undefined,
-			session: localStorage.sess
-		})
-	});
-	const requestJSON = await request.json();
+	const postsFrag = document.createDocumentFragment();
+	const fpostsFrag = document.createDocumentFragment();
+	const posts = await api.getPosts({ useLastSeenGlobal: false, useLastSeenFollowed: false });
+	lastSeenGlobalPost = posts.globalPosts[posts.globalPosts.length - 1].id;
+	if (posts.followedPosts && posts.followedPosts.length > 0) {
+		lastSeenFollowedPost = posts.followedPosts[posts.followedPosts.length - 1].id;
+	}
 	$("#postsLoader").classList.add("hidden");
 	$("#followedPostsLoader").classList.add("hidden");
-	for (let i in requestJSON.globalPosts) {
-		const post = postblock(requestJSON.globalPosts[i]);
-		posts.appendChild(post);
+	$("#loadMoreBtn").classList.remove("hidden");
+	hideLoadMoreGlobal = false;
+	hideLoadMoreFollowed = false;
+	for (let i in posts.globalPosts) {
+		const post = new PostBlockComponent(posts.globalPosts[i]);
+		postsFrag.appendChild(post);
 	}
-	if (requestJSON.followedPosts) {
-		for (let i in requestJSON.followedPosts) {
-			const post = postblock(requestJSON.followedPosts[i]);
-			fposts.appendChild(post);
-			
+	if (posts.followedPosts) {
+		for (let i in posts.followedPosts) {
+			const post = new PostBlockComponent(posts.followedPosts[i]);
+			fpostsFrag.appendChild(post);
 		}
 	}
-	if (requestJSON.globalPosts.length == 0) {
+	if (posts.globalPosts.length == 0) {
 		const span = document.createElement("span");
 		span.setAttribute("class", "posts");
-		span.innerText = "There's nothing here ;(";
+		span.textContent = "There's nothing here ;(";
 		$("#posts").appendChild(span);
 	} else {
-		$("#posts").appendChild(posts);
-		$("#followedposts").appendChild(fposts);
+		$("#posts").appendChild(postsFrag);
+		$("#followedposts").appendChild(fpostsFrag);
 	}
-	if (localStorage.sess != undefined && requestJSON.followedPosts.length == 0) {
+	if (api.loggedIn && posts.followedPosts.length == 0) {
 		const span = document.createElement("span");
 		span.setAttribute("class", "posts");
-		span.innerText = "There's nothing here ;(";
+		span.textContent = "There's nothing here ;(";
 		$("#followedposts").appendChild(span);
 	}
 }
@@ -57,32 +59,15 @@ async function newPost() {
 		return;
 	}
 	clicked = true;
+	$("#newpostbutton").textContent = "";
+	$("#newpostbutton").classList.add("loading", "small");
 	for (const file of attachmentFiles) {
-		const response = await fetch("https://betaapi.stibarc.com/v4/uploadfile.sjs", {
-		method: "post",
-		headers: {
-				"Content-Type": file.type,
-				"X-Session-Key": localStorage.sess,
-				"X-File-Usage": "attachment"
-			},
-			body: await file.arrayBuffer()
-		});
-		const responseJSON = await response.json();
-		attachments.push(responseJSON.file);
+		const fileName = await api.uploadFile(file, "attachment");
+		attachments.push(fileName);
 	}
-	const response = await fetch("https://betaapi.stibarc.com/v4/newpost.sjs", {
-		method: "post",
-		headers: {
-			"Content-Type": "application/json"
-		},
-		body: JSON.stringify({
-			session: localStorage.sess,
-			title,
-			content,
-			attachments: (attachments.length > 0) ? attachments : undefined
-		})
-	});
-	const responseJSON = await response.json();
+	const newPost = await api.newPost(title, { content, attachments: (attachments.length > 0) ? attachments : undefined, privatePost: $("#privateinput").checked });
+	$("#newpostbutton").textContent = "Post";
+	$("#newpostbutton").classList.remove("loading", "small");
 	$("#newposttitle").value = "";
 	$("#newpostbody").value = "";
 	attachments = [];
@@ -91,7 +76,7 @@ async function newPost() {
 		child.click();
 	}
 	attachmentBlobURLs = [];
-	location.href = `./post.html?id=${responseJSON.id}`;
+	location.href = `/post.html?id=${newPost}`;
 }
 
 function setFeed(activeFeed) {
@@ -100,75 +85,110 @@ function setFeed(activeFeed) {
 		$("#followedposts").classList.remove("hidden");
 		$("#globalBtn").classList.remove("active");
 		$("#followedBtn").classList.add("active");
+		$("#loadMoreBtn").classList.remove("hidden");
+		if (hideLoadMoreFollowed) {
+			$("#loadMoreBtn").classList.add("hidden");
+		}
 	} else {
 		$("#posts").classList.remove("hidden");
 		$("#followedposts").classList.add("hidden");
 		$("#followedBtn").classList.remove("active");
 		$("#globalBtn").classList.add("active");
+		$("#loadMoreBtn").classList.remove("hidden");
+		if (hideLoadMoreGlobal) {
+			$("#loadMoreBtn").classList.add("hidden");
+		}
 	}
 	localStorage.activeFeed = activeFeed;
 }
 
-window.addEventListener("load", function() {
+async function loadMore() {
+	if (localStorage.activeFeed == "followed" && !api.loggedIn) return;
+
+	const loader = document.createElement("span");
+	loader.setAttribute("class", "loader");
+	$("#loadMoreBtn").classList.add("hidden");
+	$("main")[0].appendChild(loader);
+
+	let globalFeed = localStorage.activeFeed === "global" || localStorage.activeFeed === undefined || localStorage.activeFeed === "undefined";
+
+	const posts = document.createDocumentFragment();
+	const response = await api.getPosts({
+		useLastSeenGlobal: globalFeed,
+		useLastSeenFollowed: (localStorage.activeFeed === "followed" && localStorage.sess !== undefined && localStorage.sess !== "undefined")
+	});
+	const feedPosts = (globalFeed) ? response.globalPosts : response.followedPosts;
+
+	if (feedPosts.length !== 0) {
+		if (globalFeed) {
+			lastSeenGlobalPost = feedPosts[feedPosts.length - 1].id;
+		} else {
+			lastSeenFollowedPost = feedPosts[feedPosts.length - 1].id;
+		}
+	}
+
+	for (let i in feedPosts) {
+		const post = new PostBlockComponent(feedPosts[i]);
+		posts.appendChild(post);
+	}
+
+	if (globalFeed) {
+		$("#posts").appendChild(posts);
+	} else {
+		$("#followedposts").appendChild(posts);
+	}
+
+	if (globalFeed) {
+		hideLoadMoreGlobal = (feedPosts.length == 0);
+	} else {
+		hideLoadMoreFollowed = (feedPosts.length == 0);
+	}
+
+	loader.remove();
+	if (feedPosts.length !== 0) $("#loadMoreBtn").classList.remove("hidden");
+}
+
+window.addEventListener("load", function () {
 	setFeed(localStorage.activeFeed);
-	$("#globalBtn").onclick = function() {
+	$("#globalBtn").onclick = function () {
 		setFeed("global");
 	}
-	$("#followedBtn").onclick = function() {
+	$("#followedBtn").onclick = function () {
 		setFeed("followed");
 	}
 	$(".floatingbutton").forEach(e => {
 		e.style.transition = "background-color 0.2s ease-out";
 	});
-	$("#newpost").onclick = function(e) {
-		if (localStorage.sess) {
+	$("#loadMoreBtn").onclick = loadMore;
+	$("#newpost").onclick = function (e) {
+		if (api.loggedIn) {
 			window.scrollTo(0, 0);
+			$("#privateinput").checked = api.private;
 			$("#newpostformcontainer").classList.remove("hidden");
 			$("#overlay").classList.remove("hidden");
 			document.body.classList.add("overflowhidden");
 		} else {
-			window.scrollTo(0, 0);
-			$("#loginformcontainer").classList.remove("hidden");
-			$("#overlay").classList.remove("hidden");
-			document.body.classList.add("overflowhidden");
+			$("stibarc-login-modal")[0].show();
 		}
 	}
-	$("#addattachment").onclick = function(e) {
+	$("#addattachment").onclick = function (e) {
 		const attachmentElements = $("#attachments");
 		const fileInput = document.createElement("input");
 		fileInput.setAttribute("type", "file");
 		fileInput.setAttribute("accept", "image/*,audio/*,video/*");
 		fileInput.setAttribute("multiple", "");
-		fileInput.addEventListener("change", async function(e) {
+		fileInput.addEventListener("change", async function (e) {
 			attachmentFiles = [...attachmentFiles, ...fileInput.files];
 			for (const file of fileInput.files) {
 				const objURL = URL.createObjectURL(file);
 				attachmentBlobURLs.push(objURL);
-				let attachmentElement;
-				const source = document.createElement("source");
-				switch (file.type.split("/")[0]) {
-					case "image":
-						attachmentElement = document.createElement("img");
-						attachmentElement.setAttribute("src", objURL);
-						break;
-					case "audio":
-						attachmentElement = document.createElement("audio");
-						source.setAttribute("src", objURL);
-						source.setAttribute("type", file.type);
-						attachmentElement.appendChild(source);
-						break;
-					case "video":
-						attachmentElement = document.createElement("video");
-						source.setAttribute("src", objURL);
-						source.setAttribute("type", file.type);
-						attachmentElement.appendChild(source);
-						break;
-				}
-				attachmentElement.onclick = function(e) {
-					const index = attachments.indexOf(file);
+				let attachmentElement = new AttachmentBlockComponent(objURL, false, file.name);
+				attachmentElement.onclick = function (e) {
+					const index = attachmentFiles.indexOf(file);
 					URL.revokeObjectURL(objURL);
 					attachmentFiles.splice(index, 1);
 					attachmentBlobURLs.splice(index, 1);
+					attachmentElement.preRemove();
 					attachmentElement.remove();
 				}
 				attachmentElement.classList.add("attachmentimage");
@@ -177,7 +197,7 @@ window.addEventListener("load", function() {
 		});
 		fileInput.click();
 	}
-	$("#newpostcancel").onclick = function(e) {
+	$("#newpostcancel").onclick = function (e) {
 		$("#newpostformcontainer").classList.add("hidden");
 		$("#overlay").classList.add("hidden");
 		document.body.classList.remove("overflowhidden");
@@ -190,18 +210,31 @@ window.addEventListener("load", function() {
 		attachmentBlobURLs = [];
 	}
 	$("#newpostbutton").onclick = newPost;
-	
-	listatehooks.push((state) => {
-		$(".post").forEach((e) => {
+
+	listatehooks.push(async (state) => {
+		$("stibarc-post").forEach((e) => {
 			e.remove();
 		});
-		getPosts();
+		await getPosts();
+		if (state) {
+			hideLoadMoreFollowed = false;
+		}
+		$("#loadMoreBtn").classList.remove("hidden");
 	});
 
-	setLoggedinState(localStorage.sess);
+	api.getAnnouncement().then((announcement) => {
+		if (announcement) {
+			$("#announcement").classList.remove("hidden");
+			$("#announcement").textContent = announcement;
+		}
+	});
+
+	if (this.sessionStorage.loadedBefore === "true" || !api.loggedIn) {
+		setLoggedinState(api.loggedIn);
+	}
 });
 
-window.addEventListener("scroll", function() {
+window.addEventListener("scroll", function () {
 	if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
 		document.querySelector("#globalBtn").classList.add("floatingbuttonShadow");
 		document.querySelector("#followedBtn").classList.add("floatingbuttonShadow");
