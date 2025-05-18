@@ -155,7 +155,9 @@ window.addEventListener("load", async function () {
 		window.location.href = `${redirectUri}#${params.toString()}`;
 	}
 
-	setLoggedinState(api.loggedIn);
+	if (this.sessionStorage.loadedBefore === "true" || !api.loggedIn) {
+		setLoggedinState(api.loggedIn);
+	}
 
 	$("#authorize-button").disabled = false;
 });
