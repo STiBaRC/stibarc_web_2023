@@ -586,6 +586,10 @@ p {
 	margin-top: 5px;
 }
 
+.postdate > #postdate {
+	margin-right: 5px;
+}
+
 .attachmentContainer {
 	display: flex;
 	flex-direction: row;

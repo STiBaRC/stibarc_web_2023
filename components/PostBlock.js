@@ -32,7 +32,10 @@ class PostBlockComponent extends HTMLElement {
 				<stibarc-icon id="verified" type="verifiedBadge" name="verified" class="verifiedBadge hidden" title="Verified"></stibarc-icon>
 				<span id="pronouns" class="pronouns"></span>
 			</div>
-			<div id="date" class="postdate leftalign width100"></div>
+			<span class="postdate leftalign width100">
+				<span id="postdate"></span>
+				<stibarc-icon name="lock" title="Private post" id="privateposticon" class="hidden"></stibarc-icon>
+			</span>
 			<hr class="width100">
 			<div id="postcontent" class="postcontent flexcolumn leftalign width100">
 				<span id="posttextcontent"></span>
@@ -70,7 +73,8 @@ class PostBlockComponent extends HTMLElement {
 		if (this.post.poster.verified) this.shadow.querySelector("#verified").classList.remove("hidden");
 		this.shadow.querySelector("#pronouns").setAttribute("title", `Pronouns (${this.post.poster.pronouns})`);
 		if (this.post.poster.pronouns) this.shadow.querySelector("#pronouns").textContent = `(${this.post.poster.pronouns})`;
-		this.shadow.querySelector("#date").textContent = new Date(this.post.date).toLocaleString();
+		this.shadow.querySelector("#postdate").textContent = new Date(this.post.date).toLocaleString();
+		if (this.post.private) this.shadow.querySelector("#privateposticon").classList.remove("hidden");
 		this.shadow.querySelector("#posttextcontent").textContent = this.post.content;
 		this.shadow.querySelector("#upvotes").textContent = this.post.upvotes;
 		this.shadow.querySelector("#downvotes").textContent = this.post.downvotes;
