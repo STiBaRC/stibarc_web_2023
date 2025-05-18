@@ -43,7 +43,10 @@
 				</svg>
 				<span id="pronouns" class="pronouns" title="Pronouns"></span>
 			</span>
-			<span id="postdate" class="postdate leftalign width100">Loading...</span>
+			<span class="postdate leftalign width100">
+				<span id="postdate">Loading...</span>
+				<stibarc-icon name="lock" title="Private post" id="privateposticon" class="hidden"></stibarc-icon>
+			</span>
 			<span id="edited" class="smallBadge hidden">Edited</span>
 			<span id="deleted" class="smallBadge red hidden" title="Post deleted">Deleted</span>
 			<hr class="width100">
@@ -54,10 +57,10 @@
 			<span class="aligncenter leftalign width100 flexwrap">
 				<button id="upvoteBtn" class="button primary" title="Upvote"><svg class="icon hidden">
 						<use href="/img/icon/icons.svg#up_arrow"></use>
-					</svg></button>
+				</svg></button>
 				<button id="downvoteBtn" class="button primary" title="Downvote"><svg class="icon hidden">
 						<use href="/img/icon/icons.svg#down_arrow"></use>
-					</svg></button>
+				</svg></button>
 				<span class="flexgrow"></span>
 				<button id="editBtn" class="flexcontainer hidden editBtn" title="Edit Post">
 					<img src="/img/icon/edit.svg" width="24" height="24">

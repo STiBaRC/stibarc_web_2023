@@ -159,6 +159,7 @@ window.addEventListener("load", async function () {
 		$("#pronouns").title = `Pronouns (${post.poster.pronouns})`;
 	}
 	$("#postdate").textContent = new Date(post.date).toLocaleString();
+	if (post.private) $("#privateposticon").classList.remove("hidden");
 	if (post.edited) {
 		$("#edited").classList.remove("hidden");
 		$("#edited").title = `Edited ${new Date(post.lastEdited).toLocaleString()}`;

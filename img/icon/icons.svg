@@ -48,4 +48,11 @@
      <path style="fill:none;stroke-width:1.4211;stroke-linecap:round;stroke-dasharray:none" d="m 17.23859,4.9417323 0.05962,0.1856325 a 22.468901,22.468901 90 0 1 0,13.7414902 l -0.05962,0.185633" id="path2-6-6" transform="matrix(0.89313585,0,0,0.89313585,5.4779665,1.2840577)" />
     </g>
   </symbol>
+  <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="lock">
+    <g fill="none" stroke-linecap="round">
+      <rect x="5.475" y="9.9813" width="13.05" height="13.05" ry="2.4297" style="paint-order:normal" stroke-width="1.80818"/>
+      <path transform="matrix(1.2374 0 0 1.2374 -4.0856 -4.7125)" d="m16.086 11.646v-4.9283a2.1264 2.1264 45 0 0-2.1264-2.1264h-1.9187a2.1264 2.1264 135 0 0-2.1264 2.1264v4.9283" stroke-width="1.80818" style="paint-order:normal"/>
+      <circle cx="12" cy="17.793" r="2.5976" style="paint-order:normal" stroke-width="1.80818"/>
+    </g>
+  </symbol>
 </svg>
