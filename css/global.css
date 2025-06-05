@@ -81,11 +81,15 @@ select:focus {
 	outline-color: var(--primaryFocus);
 }
 
-.darkTheme input, .darkTheme textarea, select::placeholder {
+.darkTheme input,
+.darkTheme textarea,
+select::placeholder {
 	color-scheme: dark;
 }
 
-input::placeholder, textarea::placeholder, select::placeholder  {
+input::placeholder,
+textarea::placeholder,
+select::placeholder {
 	color: var(--color9);
 }
 
@@ -142,6 +146,7 @@ main.flexcontainer {
 	fill: var(--color1);
 	stroke: none;
 }
+
 .icon,
 stibarc-icon {
 	display: flex;
@@ -515,6 +520,26 @@ p {
 	margin-left: 3px;
 }
 
+.button.iconOnly {
+	background-color: transparent;
+	width: 25px;
+	min-width: 40px;
+	margin: 0;
+	cursor: pointer;
+	padding: 2px;
+	margin-right: 6px;
+	border-radius: 50%;
+	transition: background-color .25s ease-in-out;
+}
+
+.button.iconOnly>img {
+	width: 25px;
+}
+
+.button.iconOnly:hover {
+	background-color: var(--color5);
+}
+
 .buttons {
 	margin-top: 1rem;
 }
@@ -586,7 +611,7 @@ p {
 	margin-top: 5px;
 }
 
-.postdate > #postdate {
+.postdate>#postdate {
 	margin-right: 5px;
 }
 
@@ -672,7 +697,8 @@ dialog {
 	}
 }
 
-dialog input, dialog textarea {
+dialog input,
+dialog textarea {
 	margin-bottom: 0.25rem;
 }
 
@@ -686,7 +712,7 @@ dialog input, dialog textarea {
 
 @media only screen and (max-width: 750px) {
 	.hideOnMobile {
-		display: none;
+		display: none !important;
 	}
 
 	.showOnMobileFlex {

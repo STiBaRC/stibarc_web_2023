@@ -13,12 +13,29 @@ class HeaderComponent extends HTMLElement {
 				transition: box-shadow 0.25s ease-in-out;
 			}
 
-			header .searchbar input {
-				outline: 3px solid transparent;
+			.searchbar {
+				display: flex;
 			}
 
-			.searchbar input:focus {
-				outline-color: var(--color1);
+			#mobileSearchContainer {
+				background-color: var(--color1);
+				box-sizing: border-box;
+				position: absolute;
+				width: 100%;
+				display: block;
+				height: 100%;
+				vertical-align: middle;
+			}
+
+			.mobileSearchbar {
+				display: flex;
+				align-items: center;
+				padding: 0 1rem;
+				height: 100%;
+			}
+
+			header .searchbar input {
+				outline: 3px solid transparent;
 			}
 
 			header .searchbar input:focus {
@@ -26,7 +43,16 @@ class HeaderComponent extends HTMLElement {
 				outline: 3px solid rgba(255, 255, 255, .18);
 			}
 
+			.mobileSearchbar:focus-within #mobileSearchBtn:not(#mobileSearchBtn:focus) {
+				box-shadow: 0 3px 0 0 var(--color5), 0 -3px 0 0 var(--color5), 3px 0 0 0 var(--color5); /* Border right */
+			}
+
+			.mobileSearchbar input:focus {
+				outline: 3px solid var(--color5)!important;
+			}
+
 			.searchbar input {
+				border: none;
 				font-family: inherit;
 				font-size: 14px;
 				box-sizing: border-box;
@@ -44,7 +70,32 @@ class HeaderComponent extends HTMLElement {
 				outline: 2px solid var(--color5);
 			}
 
+			.mobileSearchbar input {
+				width: 100%;
+				min-width: 200px;
+				border-radius: 8px 0 0 8px;
+				background-color: var(--color2);
+				padding: 0.75rem 0.5rem 0.75rem 0.8rem;
+				background-image: none;
+			}
+
+			#mobileSearchBtn {
+				border: none;
+				cursor: pointer;
+				display: flex;
+				align-items: center;
+				border-radius: 0 8px 8px 0;
+				padding: 0.55rem 0.55rem;
+				background: none;
+				background-color: var(--color2);
+			}
+
+			#mobileSearchBtn:focus {
+				background-color: var(--color8);
+			}
+
 			#mainHeader {
+				position: reletave;
 				height: 60px;
 				width: 100%;
 				overflow-x: auto;
@@ -62,23 +113,6 @@ class HeaderComponent extends HTMLElement {
 			#logo img {
 				height: 40px;
 				text-indent: -10000px;
-			}
-
-			#searchBtn {
-				width: 25px;
-				cursor: pointer;
-				padding: 5px;
-				margin-right: 6px;
-				border-radius: 50%;
-				transition: background-color .25s ease-in-out;
-			}
-
-			#searchBtn>img {
-				width: 25px;
-			}
-
-			#searchBtn:hover {
-				background-color: var(--color5);
 			}
 			
 			#hiddenHeader {
@@ -192,9 +226,16 @@ class HeaderComponent extends HTMLElement {
 				<span class="searchbar flexcontainer hideOnMobile">
 					<input type="search" id="searchbox" placeholder="Search" autocomplete="false">
 				</span>
+				<span id="mobileSearchContainer" class="hidden">
+					<span class="searchbar mobileSearchbar">
+						<button id="backBtn" class="button iconOnly"><img src="/img/icon/back.svg" alt="Back" width="25px"></button>
+						<input id="mobileSearchbox" type="search" placeholder="Search" autocomplete="false">
+						<button id="mobileSearchBtn"><img src="/img/icon/search.svg" width="25px"></button>
+					</span>
+				</span>
 				<span class="flexcontainer rightalign">
-					<span id="searchBtn" class="showOnMobileFlex"><img src="/img/icon/search.svg" alt="Search"></span>
-					<img src="https://betacdn.stibarc.com/pfp/default.png" id="mypfp" class="headerpfp">
+					<button id="searchBtn" class="button iconOnly showOnMobileFlex"><img src="/img/icon/search.svg" alt="Search"></button>
+					<img src="https://cdn.stibarc.com/pfp/default.png" id="mypfp" class="headerpfp">
 				</span>
 			</span>
 			<span id="hiddenHeader" class="hidden">
@@ -234,7 +275,6 @@ class HeaderComponent extends HTMLElement {
 		const headerElement = this.shadow.querySelector("#headerElement");
 		const hiddenHeader = this.shadow.querySelector("#hiddenHeader");
 		const mypfp = this.shadow.querySelector("#mypfp");
-		const searchbox = this.shadow.querySelector("#searchbox");
 		const menuprofile = this.shadow.querySelector("#menuprofile");
 		const logoImg = this.shadow.querySelector("#logoimg");
 		const logo = this.getAttribute("logo");
@@ -278,12 +318,34 @@ class HeaderComponent extends HTMLElement {
 		});
 
 		this.shadow.querySelector("#searchBtn").addEventListener("click", () => {
-			location.href = "/search.html";
+			this.shadow.querySelector("#mobileSearchContainer").classList.remove("hidden");
+			this.shadow.querySelector("#mobileSearchbox").focus();
 		});
 
 		this.shadow.querySelector("#searchbox").addEventListener("keypress", (e) => {
+			const searchbox = this.shadow.querySelector("#searchbox");
 			const query = encodeURIComponent(searchbox.value);
 			if (e.key == "Enter" && query.trim() != "") {
+				location.href = `/search.html?q=${query}`;
+			}
+		});
+
+		this.shadow.querySelector("#mobileSearchbox").addEventListener("keypress", (e) => {
+			const searchbox = this.shadow.querySelector("#mobileSearchbox");
+			const query = encodeURIComponent(searchbox.value);
+			if (e.key == "Enter" && query.trim() != "") {
+				location.href = `/search.html?q=${query}`;
+			}
+		});
+
+		this.shadow.querySelector("#backBtn").addEventListener("click", () => {
+			this.shadow.querySelector("#mobileSearchContainer").classList.add("hidden");
+		});
+
+		this.shadow.querySelector("#mobileSearchBtn").addEventListener("click", () => {
+			const searchbox = this.shadow.querySelector("#mobileSearchbox");
+			const query = encodeURIComponent(searchbox.value);
+			if (query.trim() != "") {
 				location.href = `/search.html?q=${query}`;
 			}
 		});
