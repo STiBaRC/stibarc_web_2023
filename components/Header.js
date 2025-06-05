@@ -25,6 +25,7 @@ class HeaderComponent extends HTMLElement {
 				display: block;
 				height: 100%;
 				vertical-align: middle;
+				overflow: hidden;
 			}
 
 			.mobileSearchbar {
@@ -89,7 +90,7 @@ class HeaderComponent extends HTMLElement {
 				border-radius: 0 8px 8px 0;
 				border: 3px solid var(--color1);
 				border-left: 0;
-				padding: 0.52rem 0.55rem;
+				padding: 0.52rem 0.75rem;
 				background: none;
 				background-color: var(--color2);
 			}
