@@ -8,3 +8,11 @@
 	flex-wrap: nowrap;
 	overflow-y: hidden;
 }
+
+#query {
+	margin-bottom: 0;
+}
+
+#resultsCount {
+	margin-top: 0.5rem;
+}

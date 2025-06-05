@@ -1,15 +1,4 @@
 window.addEventListener("load", async () => {
-	
-	$("#searchboxMobile").addEventListener("change", (e) => {
-		$("#searchbox").value = $("#searchboxMobile").value;
-	});
-
-	$("#searchboxMobile").addEventListener("keypress", (e) => {
-		const query = encodeURIComponent($("#searchboxMobile").value);
-		if (e.key == "Enter" && query.trim() != "") {
-			location.href = `/search.html?q=${query}`;
-		}
-	});
 
 	setLoggedinState(api.loggedIn);
 
@@ -23,12 +12,16 @@ window.addEventListener("load", async () => {
 	}
 
 	$("stibarc-header")[0].setSearchBox(query);
-	$("#searchboxMobile").value = query;
-	$("#loader").style.display = "flex";
+	$("#query").textContent = `${query}`;
+	$("#loader").classList.remove("hidden");
 
 	const results = await api.search(query);
 
-	$("#loader").style.display = "none";
+	$("#loader").classList.add("hidden");
+	$("#query").classList.remove("hidden");
+	const resultsCount = results.users.length + results.clips.length + results.posts.length;
+	$("#resultsCount").textContent = `${resultsCount} Results`;
+	$("#resultsCount").classList.remove("hidden");
 
 	const users = document.createDocumentFragment();
 	const clips = document.createDocumentFragment();
@@ -55,6 +48,6 @@ window.addEventListener("load", async () => {
 	$("#posts").appendChild(posts);
 
 	if (results.users.length == 0 && results.clips.length == 0 && results.posts.length == 0) {
-		$("#noResults").style.display = "block";
+		$("#noResults").classList.remove("hidden");
 	}
 });

@@ -523,7 +523,8 @@ p {
 .button.iconOnly {
 	background-color: transparent;
 	width: 25px;
-	min-width: 40px;
+	min-width: 35px;
+	min-height: 35px;
 	margin: 0;
 	cursor: pointer;
 	padding: 2px;

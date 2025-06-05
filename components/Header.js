@@ -30,7 +30,7 @@ class HeaderComponent extends HTMLElement {
 			.mobileSearchbar {
 				display: flex;
 				align-items: center;
-				padding: 0 1rem;
+				padding: 0 20px;
 				height: 100%;
 			}
 
@@ -44,7 +44,8 @@ class HeaderComponent extends HTMLElement {
 			}
 
 			.mobileSearchbar:focus-within #mobileSearchBtn:not(#mobileSearchBtn:focus) {
-				box-shadow: 0 3px 0 0 var(--color5), 0 -3px 0 0 var(--color5), 3px 0 0 0 var(--color5); /* Border right */
+				border: 3px solid var(--color5);
+				border-left: 0;
 			}
 
 			.mobileSearchbar input:focus {
@@ -72,7 +73,7 @@ class HeaderComponent extends HTMLElement {
 
 			.mobileSearchbar input {
 				width: 100%;
-				min-width: 200px;
+				min-width: 50px;
 				border-radius: 8px 0 0 8px;
 				background-color: var(--color2);
 				padding: 0.75rem 0.5rem 0.75rem 0.8rem;
@@ -80,12 +81,15 @@ class HeaderComponent extends HTMLElement {
 			}
 
 			#mobileSearchBtn {
+				line-height: 0;
 				border: none;
 				cursor: pointer;
 				display: flex;
 				align-items: center;
 				border-radius: 0 8px 8px 0;
-				padding: 0.55rem 0.55rem;
+				border: 3px solid var(--color1);
+				border-left: 0;
+				padding: 0.52rem 0.55rem;
 				background: none;
 				background-color: var(--color2);
 			}
@@ -407,6 +411,7 @@ class HeaderComponent extends HTMLElement {
 
 	setSearchBox(value) {
 		this.shadow.querySelector("#searchbox").value = value;
+		this.shadow.querySelector("#mobileSearchbox").value = value;
 	}
 }
 
