@@ -35,32 +35,13 @@ class HeaderComponent extends HTMLElement {
 				height: 100%;
 			}
 
-			header .searchbar input {
-				outline: 3px solid transparent;
-			}
-
-			header .searchbar input:focus {
-				border: none;
-				outline: 3px solid rgba(255, 255, 255, .18);
-			}
-
-			.mobileSearchbar:focus-within #mobileSearchBtn:not(#mobileSearchBtn:focus) {
-				border: 3px solid var(--color5);
-				border-left: 0;
-			}
-
-			.mobileSearchbar input:focus {
-				outline: 3px solid var(--color5)!important;
-			}
-
 			.searchbar input {
-				border: none;
 				font-family: inherit;
-				font-size: 14px;
+				font-size: 16px;
 				box-sizing: border-box;
 				width: 75%;
 				min-width: 200px;
-				border-radius: 20px;
+				border-radius: 23px;
 				color: var(--text);
 				background-color: var(--color2);
 				padding: 0.55rem 0.75rem 0.55rem 37px;
@@ -69,16 +50,36 @@ class HeaderComponent extends HTMLElement {
 				background-repeat: no-repeat;
 				background-position-y: center;
 				background-position-x: 9px;
-				outline: 2px solid var(--color5);
+				outline: none;
+				border: 3px solid var(--color1);
 			}
 
 			.mobileSearchbar input {
 				width: 100%;
 				min-width: 50px;
-				border-radius: 8px 0 0 8px;
+				border-radius: 11px 0 0 11px;
 				background-color: var(--color2);
 				padding: 0.75rem 0.5rem 0.75rem 0.8rem;
 				background-image: none;
+			}
+
+			.searchbar input:focus {
+				border: 3px solid var(--color5);
+			}
+
+			.mobileSearchbar:focus-within #mobileSearchBtn:not(#mobileSearchBtn:focus) {
+				border: 3px solid var(--color5);
+				border-left: none;
+			}
+
+			.mobileSearchbar input {
+				border: 3px solid var(--color1);
+				border-right: none;
+			}
+
+			.mobileSearchbar input:focus {
+				border: 3px solid var(--color5);
+				border-right: none;
 			}
 
 			#mobileSearchBtn {
@@ -87,10 +88,10 @@ class HeaderComponent extends HTMLElement {
 				cursor: pointer;
 				display: flex;
 				align-items: center;
-				border-radius: 0 8px 8px 0;
+				border-radius: 0 11px 11px 0;
 				border: 3px solid var(--color1);
 				border-left: 0;
-				padding: 0.52rem 0.75rem;
+				padding: 0.59rem 0.75rem;
 				background: none;
 				background-color: var(--color2);
 			}
