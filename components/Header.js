@@ -13,73 +13,70 @@ class HeaderComponent extends HTMLElement {
 				transition: box-shadow 0.25s ease-in-out;
 			}
 
-			.searchbar {
-				display: flex;
-			}
-
 			#mobileSearchContainer {
 				background-color: var(--color1);
 				box-sizing: border-box;
 				position: absolute;
 				width: 100%;
-				display: block;
-				height: 100%;
+				display: flex;
+				align-items: center;
+				padding: 0 20px;
 				vertical-align: middle;
 				overflow: hidden;
 			}
 
-			.mobileSearchbar {
-				display: flex;
+			.searchbar {
+				cursor: text;
+				display: inline-flex;
+				flex-wrap: no-wrap;
 				align-items: center;
-				padding: 0 20px;
-				height: 100%;
+				background-color: var(--color2);
+				padding: 0.55rem 0.75rem 0.55rem .75rem;
+				border-radius: 25px;
+				box-sizing: border-box;
+				font-size: 16px;
+				border: 3px solid var(--color1);	
+			}
+
+			.searchbar img {
+				display: inline-block;
+				margin: 0 0.25rem;
+			}
+
+			.mobileSearchbar {
+				border-radius: 11px 0 0 11px;
+				padding: 0.68rem 0.5rem 0.68rem 0.8rem;
+				border-right: none;
 			}
 
 			.searchbar input {
 				font-family: inherit;
 				font-size: 16px;
+				border-radius: 0;
 				box-sizing: border-box;
-				width: 75%;
-				min-width: 200px;
-				border-radius: 23px;
+				background-color: var(--color2);
 				color: var(--text);
-				background-color: var(--color2);
-				padding: 0.55rem 0.75rem 0.55rem 37px;
-				background-image: url(/img/icon/search.svg);
-				background-size: 24px 24px;
-				background-repeat: no-repeat;
-				background-position-y: center;
-				background-position-x: 9px;
+				padding: 1px;
 				outline: none;
-				border: 3px solid var(--color1);
-			}
-
-			.mobileSearchbar input {
 				width: 100%;
-				min-width: 50px;
-				border-radius: 11px 0 0 11px;
-				background-color: var(--color2);
-				padding: 0.75rem 0.5rem 0.75rem 0.8rem;
-				background-image: none;
+			}
+			
+			.searchbar input:focus {
+				outline: none;
+				border: none;
 			}
 
-			.searchbar input:focus {
+			.searchbar:focus-within {
 				border: 3px solid var(--color5);
 			}
+			
+			.mobileSearchbar:focus-within {
+				border-right: none;
+			}
 
-			.mobileSearchbar:focus-within #mobileSearchBtn:not(#mobileSearchBtn:focus) {
+			#mobileSearchContainer:focus-within #mobileSearchBtn:not(#mobileSearchBtn:focus) {
 				border: 3px solid var(--color5);
 				border-left: none;
-			}
-
-			.mobileSearchbar input {
-				border: 3px solid var(--color1);
-				border-right: none;
-			}
-
-			.mobileSearchbar input:focus {
-				border: 3px solid var(--color5);
-				border-right: none;
 			}
 
 			#mobileSearchBtn {
@@ -229,16 +226,17 @@ class HeaderComponent extends HTMLElement {
 				<span class="leftalign">
 					<a href="/" class="flexcontainer" id="logo"><img id="logoimg" src="/img/logo.webp"></a>
 				</span>
-				<span class="searchbar flexcontainer hideOnMobile">
-					<input type="search" id="searchbox" placeholder="Search" autocomplete="false">
-				</span>
-				<span id="mobileSearchContainer" class="hidden">
-					<span class="searchbar mobileSearchbar">
-						<button id="backBtn" class="button iconOnly"><img src="/img/icon/back.svg" alt="Back" width="25px"></button>
+				<label class="searchbar flexcontainer hideOnMobile">
+					<img src="/img/icon/search.svg" width="25px">
+					<input type="search" name="q" id="searchbox" placeholder="Search" autocomplete="false">
+				</label>
+				<div id="mobileSearchContainer" class="hidden">
+					<button id="backBtn" class="button iconOnly"><img src="/img/icon/back.svg" alt="Back" width="25px"></button>
+					<label class="searchbar mobileSearchbar">
 						<input id="mobileSearchbox" type="search" placeholder="Search" autocomplete="false">
-						<button id="mobileSearchBtn"><img src="/img/icon/search.svg" width="25px"></button>
-					</span>
-				</span>
+					</label>
+					<button id="mobileSearchBtn"><img src="/img/icon/search.svg" width="25px"></button>
+				</div>
 				<span class="flexcontainer rightalign">
 					<button id="searchBtn" class="button iconOnly showOnMobileFlex"><img src="/img/icon/search.svg" alt="Search"></button>
 					<img src="https://cdn.stibarc.com/pfp/default.png" id="mypfp" class="headerpfp">
