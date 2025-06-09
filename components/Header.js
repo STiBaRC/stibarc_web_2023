@@ -31,11 +31,11 @@ class HeaderComponent extends HTMLElement {
 				flex-wrap: no-wrap;
 				align-items: center;
 				background-color: var(--color2);
-				padding: 0.55rem 0.75rem 0.55rem .75rem;
+				padding: 0.4rem 0.75rem 0.4rem .75rem;
 				border-radius: 25px;
 				box-sizing: border-box;
 				font-size: 16px;
-				border: 3px solid var(--color1);	
+				border: 3px solid var(--color1);
 			}
 
 			.searchbar img {
@@ -47,6 +47,7 @@ class HeaderComponent extends HTMLElement {
 				border-radius: 11px 0 0 11px;
 				padding: 0.68rem 0.5rem 0.68rem 0.8rem;
 				border-right: none;
+				width: 100%;
 			}
 
 			.searchbar input {
