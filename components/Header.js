@@ -38,14 +38,13 @@ class HeaderComponent extends HTMLElement {
 				border: 3px solid var(--color1);
 			}
 
-			.searchbar img {
-				display: inline-block;
+			.searchbar stibarc-icon {
 				margin: 0 0.25rem;
 			}
 
 			.mobileSearchbar {
 				border-radius: 11px 0 0 11px;
-				padding: 0.68rem 0.5rem 0.68rem 0.8rem;
+				padding: 0.68rem 0.75rem 0.68rem 0.8rem;
 				border-right: none;
 				width: 100%;
 			}
@@ -89,7 +88,7 @@ class HeaderComponent extends HTMLElement {
 				border-radius: 0 11px 11px 0;
 				border: 3px solid var(--color1);
 				border-left: 0;
-				padding: 0.59rem 0.75rem;
+				padding: 0.58rem 0.75rem;
 				background: none;
 				background-color: var(--color2);
 			}
