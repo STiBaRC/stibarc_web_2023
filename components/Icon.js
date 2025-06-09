@@ -11,14 +11,14 @@ class IconComponent extends HTMLElement {
 			height: 16px;
 			fill: transparent;
 			stroke: var(--text);
-			stroke-width: 8px;
+			stroke-width: 10px;
 			stroke-linecap: round;
 			stroke-linejoin: round;
-		}	
+		}
 		
 		.iconLarge {
-			width: 24px;
-			height: 24px;
+			width: 25px;
+			height: 25px;
 		}
 		
 		.iconBig {
@@ -48,6 +48,9 @@ class IconComponent extends HTMLElement {
 		svgIcon.classList.add("icon", this.getAttribute("size"), this.getAttribute("type"));
 		if (this.getAttribute("color")) {
 			svgIcon.style.stroke = this.getAttribute("color");
+		}
+		if (this.getAttribute("stroke")) {
+			svgIcon.style.strokeWidth = this.getAttribute("stroke");
 		}
 		const useBlock = document.createElementNS("http://www.w3.org/2000/svg", "use");
 		useBlock.setAttribute("href", `/img/icon/icons.svg#${iconName}`);

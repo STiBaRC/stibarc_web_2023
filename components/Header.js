@@ -228,7 +228,7 @@ class HeaderComponent extends HTMLElement {
 					<a href="/" class="flexcontainer" id="logo"><img id="logoimg" src="/img/logo.webp"></a>
 				</span>
 				<label class="searchbar flexcontainer hideOnMobile">
-					<img src="/img/icon/search.svg" width="25px">
+					<stibarc-icon name="search" type="iconLarge" stroke="2rem"></stibarc-icon>
 					<input type="search" name="q" id="searchbox" placeholder="Search" autocomplete="false">
 				</label>
 				<div id="mobileSearchContainer" class="hidden">
@@ -236,10 +236,10 @@ class HeaderComponent extends HTMLElement {
 					<label class="searchbar mobileSearchbar">
 						<input id="mobileSearchbox" type="search" placeholder="Search" autocomplete="false">
 					</label>
-					<button id="mobileSearchBtn"><img src="/img/icon/search.svg" width="25px"></button>
+					<button id="mobileSearchBtn"><stibarc-icon name="search" type="iconLarge" stroke="2rem"></stibarc-icon></button>
 				</div>
 				<span class="flexcontainer rightalign">
-					<button id="searchBtn" class="button iconOnly showOnMobileFlex"><img src="/img/icon/search.svg" alt="Search"></button>
+					<button id="searchBtn" class="button iconOnly showOnMobileFlex"><stibarc-icon name="search" type="iconLarge" stroke="2rem"></stibarc-icon></button>
 					<img src="https://cdn.stibarc.com/pfp/default.png" id="mypfp" class="headerpfp">
 				</span>
 			</span>
