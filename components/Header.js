@@ -227,18 +227,18 @@ class HeaderComponent extends HTMLElement {
 					<a href="/" class="flexcontainer" id="logo"><img id="logoimg" src="/img/logo.webp"></a>
 				</span>
 				<label class="searchbar flexcontainer hideOnMobile">
-					<stibarc-icon name="search" type="iconLarge" stroke="2rem"></stibarc-icon>
+					<stibarc-icon name="search" type="iconLarge" stroke="2.25rem"></stibarc-icon>
 					<input type="search" name="q" id="searchbox" placeholder="Search" autocomplete="false">
 				</label>
 				<div id="mobileSearchContainer" class="hidden">
-					<button id="backBtn" class="button iconOnly"><img src="/img/icon/back.svg" alt="Back" width="25px"></button>
+					<button id="backBtn" class="button iconOnly"><stibarc-icon name="back" type="iconLarge" filled="true"></stibarc-icon></button>
 					<label class="searchbar mobileSearchbar">
 						<input id="mobileSearchbox" type="search" placeholder="Search" autocomplete="false">
 					</label>
-					<button id="mobileSearchBtn"><stibarc-icon name="search" type="iconLarge" stroke="2rem"></stibarc-icon></button>
+					<button id="mobileSearchBtn"><stibarc-icon name="search" type="iconLarge" stroke="2.25rem"></stibarc-icon></button>
 				</div>
 				<span class="flexcontainer rightalign">
-					<button id="searchBtn" class="button iconOnly showOnMobileFlex"><stibarc-icon name="search" type="iconLarge" stroke="2rem"></stibarc-icon></button>
+					<button id="searchBtn" class="button iconOnly showOnMobileFlex"><stibarc-icon name="search" type="iconLarge" stroke="2.25rem"></stibarc-icon></button>
 					<img src="https://cdn.stibarc.com/pfp/default.png" id="mypfp" class="headerpfp">
 				</span>
 			</span>

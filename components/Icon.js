@@ -15,6 +15,11 @@ class IconComponent extends HTMLElement {
 			stroke-linecap: round;
 			stroke-linejoin: round;
 		}
+
+		.filled {
+			fill: var(--text);
+			stroke: transparent;
+		}
 		
 		.iconLarge {
 			width: 25px;
@@ -33,7 +38,7 @@ class IconComponent extends HTMLElement {
 
 		.verifiedBadge {
 			margin: 0 2px 0 3px;
-			fill: #49B9CA;
+			fill: var(--color1);
 			stroke: none;
 		}
 	</style>`;
@@ -46,12 +51,12 @@ class IconComponent extends HTMLElement {
 
 		const svgIcon = document.createElementNS("http://www.w3.org/2000/svg", "svg");
 		svgIcon.classList.add("icon", this.getAttribute("size"), this.getAttribute("type"));
-		if (this.getAttribute("color")) {
+		if (this.getAttribute("color"))
 			svgIcon.style.stroke = this.getAttribute("color");
-		}
-		if (this.getAttribute("stroke")) {
+		if (this.getAttribute("stroke")) 
 			svgIcon.style.strokeWidth = this.getAttribute("stroke");
-		}
+		if (this.getAttribute("filled"))
+			svgIcon.classList.add("filled");
 		const useBlock = document.createElementNS("http://www.w3.org/2000/svg", "use");
 		useBlock.setAttribute("href", `/img/icon/icons.svg#${iconName}`);
 		svgIcon.append(useBlock);
