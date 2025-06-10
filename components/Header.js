@@ -19,7 +19,9 @@ class HeaderComponent extends HTMLElement {
 				position: absolute;
 				width: 100%;
 				display: flex;
-				align-items: center;
+				flex-wrap: nowrap;
+				justify-content: center;
+				align-items: stretch;
 				padding: 0 20px;
 				vertical-align: middle;
 				overflow: hidden;
@@ -27,7 +29,7 @@ class HeaderComponent extends HTMLElement {
 
 			.searchbar {
 				cursor: text;
-				display: inline-flex;
+				display: flex;
 				flex-wrap: no-wrap;
 				align-items: center;
 				background-color: var(--color2);
@@ -43,8 +45,9 @@ class HeaderComponent extends HTMLElement {
 			}
 
 			.mobileSearchbar {
+				display: flex;
 				border-radius: 11px 0 0 11px;
-				padding: 0.68rem 0.75rem 0.68rem 0.8rem;
+				padding: 0.68rem 0.5rem 0.68rem 0.8rem;
 				border-right: none;
 				width: 100%;
 			}
