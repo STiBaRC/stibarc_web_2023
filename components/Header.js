@@ -4,6 +4,7 @@ class HeaderComponent extends HTMLElement {
 		<style>
 			@import url("/css/global.css");
 			header {
+				box-sizing: border-box;
 				position: sticky;
 				top: 0px;
 				background-color: var(--color1);
@@ -223,6 +224,22 @@ class HeaderComponent extends HTMLElement {
 					height: 25px;
 				}
 			}
+
+			#searchResultsContainer {
+				box-sizing: border-box;
+				position: fixed;
+				margin: 4px auto 0 auto;
+				padding: 0 1rem;
+				width: 100%;
+				z-index: 10;
+			}
+
+			#searchResults {
+				background-color: var(--color1);
+				border-radius: 8px;
+				padding: 8px;
+				box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+			}
 		</style>
 		<header id="headerElement">
 			<span id="mainHeader" class="flexcontainer">
@@ -233,7 +250,7 @@ class HeaderComponent extends HTMLElement {
 					<stibarc-icon name="search" type="iconLarge" stroke="2.25rem"></stibarc-icon>
 					<input type="search" name="q" id="searchbox" placeholder="Search" autocomplete="false">
 				</label>
-				<div id="mobileSearchContainer" class="hidden">
+				<div id="mobileSearchContainer" class="">
 					<button id="backBtn" class="button iconOnly"><stibarc-icon name="back" type="iconLarge" filled="true"></stibarc-icon></button>
 					<label class="searchbar mobileSearchbar">
 						<input id="mobileSearchbox" type="search" placeholder="Search" autocomplete="false">
@@ -267,9 +284,12 @@ class HeaderComponent extends HTMLElement {
 					<button class="menuElement red" id="menulogout">Logout</button>
 				</div>
 			</span>
-			<span id="searchResults" class="flexcontainer flexcolumn hidden">
-			</span>
+			<div id="searchResultsContainer">
+				<div id="searchResults">
+				</div>
+			</div>
 		</header>
+		
 	`;
 
 	constructor() {
@@ -343,6 +363,41 @@ class HeaderComponent extends HTMLElement {
 			if (e.key == "Enter" && query.trim() != "") {
 				location.href = `/search.html?q=${query}`;
 			}
+		});
+
+		let timeout = null;
+		this.shadow.querySelector("#mobileSearchbox").addEventListener("input", async (e) => {
+			clearTimeout(timeout);
+
+			const searchbox = this.shadow.querySelector("#mobileSearchbox");
+			const query = searchbox.value;
+			if(query.trim() == "") {
+				this.shadow.querySelector("#searchResultsContainer").classList.add("hidden");
+				this.shadow.querySelector("#searchResults").replaceChildren();
+			}
+			timeout = setTimeout(async () => {
+				if (query.length < 2)
+					return;
+				console.log(`Sending request for ${query}`);
+				const results = await api.search(query);
+				let resultsHTML = document.createDocumentFragment();
+				for (const postData of results.posts) {
+					const post = document.createElement("div");
+					const link = document.createElement("a");
+					link.setAttribute("href", `/post.html?id=${postData.id}`);
+					link.textContent = postData.title;
+					post.appendChild(link);
+					resultsHTML.append(post);
+				}
+				this.shadow.querySelector("#searchResults").replaceChildren();
+				this.shadow.querySelector("#searchResults").appendChild(resultsHTML);
+				if (results.users.length == 0 && results.clips.length == 0 && results.posts.length == 0) {
+					const noResults = document.createElement("h3");
+					noResults.textContent = "No Results!";
+					this.shadow.querySelector("#searchResults").appendChild(noResults);
+				}
+				this.shadow.querySelector("#searchResultsContainer").classList.remove("hidden");
+			}, 150);
 		});
 
 		this.shadow.querySelector("#backBtn").addEventListener("click", () => {
