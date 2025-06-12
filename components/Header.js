@@ -235,10 +235,24 @@ class HeaderComponent extends HTMLElement {
 			}
 
 			#searchResults {
-				background-color: var(--color1);
+				background-color: var(--color2);
 				border-radius: 8px;
 				padding: 8px;
 				box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+			}
+
+			#searchResults a {
+				-webkit-box-orient: vertical;
+				display: -webkit-box;
+				flex-basis: unset;
+				-webkit-line-clamp: 1;
+				line-clamp: 1;
+				word-wrap: break-word;
+				max-width: 100%;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: pre-wrap;
+				margin-bottom: 4px;
 			}
 		</style>
 		<header id="headerElement">
@@ -284,7 +298,7 @@ class HeaderComponent extends HTMLElement {
 					<button class="menuElement red" id="menulogout">Logout</button>
 				</div>
 			</span>
-			<div id="searchResultsContainer">
+			<div id="searchResultsContainer" class="hidden">
 				<div id="searchResults">
 				</div>
 			</div>
@@ -369,35 +383,41 @@ class HeaderComponent extends HTMLElement {
 		this.shadow.querySelector("#mobileSearchbox").addEventListener("input", async (e) => {
 			clearTimeout(timeout);
 
-			const searchbox = this.shadow.querySelector("#mobileSearchbox");
-			const query = searchbox.value;
-			if(query.trim() == "") {
+			let searchbox = this.shadow.querySelector("#mobileSearchbox");
+			let query = searchbox.value;
+			if (query.trim() == "" || query.length < 2) {
 				this.shadow.querySelector("#searchResultsContainer").classList.add("hidden");
 				this.shadow.querySelector("#searchResults").replaceChildren();
+				return;
 			}
 			timeout = setTimeout(async () => {
-				if (query.length < 2)
-					return;
 				console.log(`Sending request for ${query}`);
 				const results = await api.search(query);
-				let resultsHTML = document.createDocumentFragment();
-				for (const postData of results.posts) {
-					const post = document.createElement("div");
-					const link = document.createElement("a");
-					link.setAttribute("href", `/post.html?id=${postData.id}`);
-					link.textContent = postData.title;
-					post.appendChild(link);
-					resultsHTML.append(post);
+				if (this.shadow.querySelector("#mobileSearchbox").value.trim() !== "" ||
+					this.shadow.querySelector("#mobileSearchbox").value.length > 2) {
+					let resultsHTML = document.createDocumentFragment();
+					for (const postData of results.posts) {
+						const post = document.createElement("div");
+						const link = document.createElement("a");
+						link.setAttribute("href", `/post.html?id=${postData.id}`);
+						link.textContent = postData.title;
+						post.appendChild(link);
+						resultsHTML.append(post);
+					}
+					this.shadow.querySelector("#searchResults").replaceChildren();
+					this.shadow.querySelector("#searchResults").appendChild(resultsHTML);
+					if (results.users.length == 0 && results.clips.length == 0 && results.posts.length == 0) {
+						const noResults = document.createElement("h3");
+						noResults.textContent = "No Results!";
+						this.shadow.querySelector("#searchResults").appendChild(noResults);
+					}
+					this.shadow.querySelector("#searchResultsContainer").classList.remove("hidden");
+				} else {
+					this.shadow.querySelector("#searchResultsContainer").classList.add("hidden");
+					this.shadow.querySelector("#searchResults").replaceChildren();
+					return;
 				}
-				this.shadow.querySelector("#searchResults").replaceChildren();
-				this.shadow.querySelector("#searchResults").appendChild(resultsHTML);
-				if (results.users.length == 0 && results.clips.length == 0 && results.posts.length == 0) {
-					const noResults = document.createElement("h3");
-					noResults.textContent = "No Results!";
-					this.shadow.querySelector("#searchResults").appendChild(noResults);
-				}
-				this.shadow.querySelector("#searchResultsContainer").classList.remove("hidden");
-			}, 150);
+			}, 125);
 		});
 
 		this.shadow.querySelector("#backBtn").addEventListener("click", () => {
