@@ -39,14 +39,16 @@
 					<span id="removeBanner" class="red" title="Remove Banner">Remove</span>
 				</span>
 			</span>
-			<span id="userPfpLoader" class="flexcontainer loading"><img id="userpfp" src="" class="pfpnm pointer"></span>
+			<span id="userPfpLoader" class="flexcontainer loading"><img id="userpfp" src=""
+					class="pfpnm pointer"></span>
 			<span>&nbsp;</span>
 			<span id="userusername"></span>
 			<span>&nbsp;</span>
 			<input type="text" id="nameinput" placeholder="Name" autocomplete="given-name">
 			<span>Show Name: <input type="checkbox" id="showname"></span>
 			<span>&nbsp;</span>
-			<input list="commonPronouns" id="pronounsinput" type="text" placeholder="Pronouns" autocomplete="off" autocapitalize="none" maxlength="40">
+			<input list="commonPronouns" id="pronounsinput" type="text" placeholder="Pronouns" autocomplete="off"
+				autocapitalize="none" maxlength="40">
 			<datalist id="commonPronouns">
 				<option value="she/her"></option>
 				<option value="he/him"></option>
@@ -84,17 +86,15 @@
 					<span>You may choose to keep your existing posts' visibility, or make them all private.</span>
 				</div>
 				<span>&nbsp;</span>
-				<span class="flexcontainer">
-					<button id="goprivateall" class="button small primary">Make existing posts private</button>
-					<button id="goprivatekeep" class="button">Keep existing post visibility</button>
-				</span>
-				<span class="flexcontainer marginbottom">
-					<button id="goprivatecancel" class="button">Cancel</button>
-				</span>
+			</div>
+			<div class="flexcontainer confirmationbtns marginbottom">
+				<button id="goprivateall" class="button primary">Make existing posts private</button>
+				<button id="goprivatekeep" class="button">Keep existing post visibility</button>
+				<button id="goprivatecancel" class="button">Cancel</button>
 			</div>
 		</dialog>
 		<dialog id="gopublicdialog">
-			<div class="flexcontainer flexcolumn">
+			<div class="flexcontainer confirmationbtns marginbottom">
 				<h2>Account Visibility</h2>
 				<div>
 					<span>Making your account public will:</span>
@@ -103,17 +103,16 @@
 						<li>Allow anyone to follow you without approval</li>
 						<li>Make all new posts public by default (you may still make private posts)</li>
 					</ul>
-					<span>Keep in mind that your private posts will easily be visible as anyone can follow your account.</span><br><br>
+					<span>Keep in mind that your private posts will easily be visible as anyone can follow your
+						account.</span><br><br>
 					<span>You may choose to keep your existing posts' visibility, or make them all public.</span>
 				</div>
 				<span>&nbsp;</span>
-				<span class="flexcontainer">
-					<button id="gopublicall" class="button small primary">Make existing posts public</button>
-					<button id="gopublickeep" class="button">Keep existing post visibility</button>
-				</span>
-				<span class="flexcontainer marginbottom">
-					<button id="gopubliccancel" class="button">Cancel</button>
-				</span>
+			</div>
+			<div class="flexcontainer marginbottom">
+				<button id="gopublicall" class="button small primary">Make existing posts public</button>
+				<button id="gopublickeep" class="button">Keep existing post visibility</button>
+				<button id="gopubliccancel" class="button">Cancel</button>
 			</div>
 		</dialog>
 	</main>

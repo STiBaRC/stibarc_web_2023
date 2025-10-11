@@ -19,13 +19,11 @@ class LoginModalComponent extends HTMLElement {
 					<input type="number" id="tfainput" placeholder="2FA Code">
 					<span>&nbsp;</span>
 				</span>
-				<span class="flexcontainer">
-					<button id="loginbutton" class="button small primary">Login</button>
-					<button id="logincancel" class="button">Cancel</button>
-				</span>
-				<span class="flexcontainer marginbottom">
-					<button id="registerlink" class="button">Register</button>
-				</span>
+			</div>
+			<div class="flexcontainer confirmationbtns marginbottom">
+				<button id="loginbutton" class="button small primary">Login</button>
+				<button id="registerlink" class="button">Register</button>
+				<button id="logincancel" class="button">Cancel</button>
 			</div>
 		</dialog>
 	`;

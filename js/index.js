@@ -224,7 +224,7 @@ window.addEventListener("load", function () {
 
 	api.getAnnouncement().then((announcement) => {
 		if (announcement) {
-			$("#announcement").classList.remove("hidden");
+			$("#announcementpanel").classList.remove("hidden");
 			$("#announcement").textContent = announcement;
 		}
 	});

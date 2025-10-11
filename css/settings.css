@@ -33,6 +33,7 @@
 	align-items: center;
 	min-width: 0;
 	flex-shrink: 0;
+	transition: background-color 0.2s ease-out;
 }
 
 .sidebarItems li>span {
