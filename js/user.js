@@ -182,6 +182,7 @@ function constructFollowingers(listname) {
 }
 
 window.addEventListener("load", async () => {
+	await waitForGlobalInit();
 	document.title = `${username} | STiBaRC`;
 	$("#userusername").textContent = username;
 

@@ -1,4 +1,5 @@
 class API {
+	#config;
 	#host;
 	#cdn;
 	#session;
@@ -11,24 +12,7 @@ class API {
 	#lastSeenGlobalClip;
 	#lastSeenFollowedClip;
 
-	constructor(environment) {
-		switch (environment) {
-			default:
-			case "development":
-				// this.#host = "https://api-dev.stibarc.com";
-				// this.#cdn = "https://cdn-dev.stibarc.com";
-				this.#host = "https://betaapi.stibarc.com";
-				this.#cdn = "https://betacdn.stibarc.com";
-				break;
-			case "staging":
-				this.#host = "https://api-staging.stibarc.com";
-				this.#cdn = "https://cdn-staging.stibarc.com";
-				break;
-			case "production":
-				this.#host = "https://api.stibarc.com";
-				this.#cdn = "https://cdn.stibarc.com";
-				break;
-		}
+	constructor() {
 		this.#session = localStorage.sess;
 		this.#username = localStorage.username;
 		this.#pfp = localStorage.pfp || `${this.#cdn}/pfp/default.png`;
@@ -85,6 +69,16 @@ class API {
 	 * @returns {Promise<void>}
 	 */
 	async init() {
+		this.#config = await (await fetch("/config/config.json")).json();
+		this.#host = this.#config.apiHost;
+		this.#cdn = this.#config.cdn;
+	}
+
+	/**
+	 * Reload session info
+	 */
+	async reloadSessInfo() {
+		if (!this.loggedIn) return;
 		const sessInfo = await this.getPrivateData();
 		this.#username = sessInfo.username;
 		this.#pfp = sessInfo.pfp || `${this.#cdn}/pfp/default.png`;

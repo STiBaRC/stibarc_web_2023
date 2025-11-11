@@ -1,4 +1,5 @@
 window.addEventListener("load", async () => {
+	await waitForGlobalInit();
 
 	setLoggedinState(api.loggedIn);
 
