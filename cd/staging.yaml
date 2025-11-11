@@ -62,24 +62,32 @@ spec:
           limits:
             memory: "512Mi"
             cpu: "500m"
-          livenessProbe:
-            httpGet:
-              path: /
-              port: 80
-            initialDelaySeconds: 30
-            periodSeconds: 10
-            timeoutSeconds: 5
-            failureThreshold: 3
-            successThreshold: 1
-          readinessProbe:
-            httpGet:
-              path: /
-              port: 80
-            initialDelaySeconds: 15
-            periodSeconds: 5
-            timeoutSeconds: 3
-            failureThreshold: 3
-            successThreshold: 1
+        livenessProbe:
+          httpGet:
+            httpHeaders:
+            - name: Host
+              value: podmetadata
+            path: /liveness.txt
+            port: 80
+          failureThreshold: 3
+          periodSeconds: 10
+        startupProbe:
+          httpGet:
+            httpHeaders:
+            - name: Host
+              value: podmetadata
+            path: /liveness.txt
+            port: 80
+          failureThreshold: 30
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            httpHeaders:
+            - name: Host
+              value: podmetadata
+            path: /readiness.txt
+            port: 80
+          periodSeconds: 10
       restartPolicy: Always
       imagePullSecrets:
       - name: regcred
