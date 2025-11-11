@@ -10,6 +10,7 @@ const id = parseInt(sp.get("id"));
 const cid = parseInt(sp.get("cid"));
 
 window.addEventListener("load", async () => {
+	await waitForGlobalInit();
 	if (cid) {
 		$("#edittitle").classList.add("hidden");
 		$("#private").classList.add("hidden");

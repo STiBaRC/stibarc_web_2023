@@ -47,6 +47,7 @@ async function newComment() {
 }
 
 window.addEventListener("load", async function () {
+	await waitForGlobalInit();
 	$("#upvoteBtn").addEventListener("click", async () => {
 		if (api.loggedIn) {
 			const voteResult = await api.vote({ postId: id, target: "post", vote: "upvote" });
