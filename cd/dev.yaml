@@ -90,7 +90,7 @@ spec:
           periodSeconds: 10
       restartPolicy: Always
       imagePullSecrets:
-      - name: regcred
+      - name: regcred-int
       volumes:
       - name: stibarc-web-dev-config-storage
         persistentVolumeClaim:
