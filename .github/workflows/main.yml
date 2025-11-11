@@ -14,3 +14,4 @@ jobs:
       image_name: stibarc-web
       dev_deployment_name: stibarc-web-dev
       dev_deployment_yaml: cd/dev.yaml
+      dockerfile: cd/Dockerfile
