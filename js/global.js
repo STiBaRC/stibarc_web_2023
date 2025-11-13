@@ -118,7 +118,7 @@ if (
 	if ($("#mypfp")) {
 		$("#mypfp").setAttribute(
 			"src",
-			api.pfp || "https://betacdn.stibarc.com/pfp/default.png"
+			api.pfp || `${api.cdn}/pfp/default.png`
 		);
 		$("#menuprofile").textContent = api.username;
 		$("#menuprofile").href = `/user.html?username=${api.username}`;
