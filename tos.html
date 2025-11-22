@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8" />
+	<title>Terms of Service | STiBaRC</title>
+	<link rel="manifest" href="/manifest.json" />
+	<meta name="viewport" content="initial-scale=1, maximum-scale=5, user-scalable=yes, width=device-width">
+	<link rel="icon" type="image/png" href="/img/icon.png">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@300;400&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="/css/themes/default.css" id="theme">
+	<link rel="stylesheet" href="/css/global.css">
+	<link rel="stylesheet" href="/css/index.css">
+	<script src="/js/API.js"></script>
+	<script src="/js/global.js"></script>
+	<script type="module" src="/components/LoginModal.js"></script>
+	<script type="module" src="/components/RegisterModal.js"></script>
+	<script type="module" src="/components/Header.js"></script>
+	<script type="module" src="/components/Footer.js"></script>
+	<script>
+		window.addEventListener("load", async function () {
+			await waitForGlobalInit();
+			if (this.sessionStorage.loadedBefore === "true" || !api.loggedIn) {
+				setLoggedinState(api.loggedIn);
+			}
+		});
+	</script>
+	<style>
+		main {
+			width: 100%;
+			padding: 12px;
+			border-radius: 15px;
+			margin-top: 14px;
+			background-color: var(--color2);
+			box-shadow: 0 1px 8px 0 rgba(22, 22, 22, 0.2), 0 1px 4px 0 rgba(22, 22, 22, 0.2);
+		}
+	</style>
+</head>
+
+<body>
+	<stibarc-header></stibarc-header>
+	<stibarc-login-modal></stibarc-login-modal>
+	<stibarc-register-modal></stibarc-register-modal>
+	<main>
+		<h2>Terms of Service</h2><i>Last updated 11/26/2019</i><br /><br />
+        * Follow the content policy (see below)<br />
+        * Be 13 years of age or older<br />
+        * Don't be stupid<br />
+        <h2>STiBaRC Content Policy</h2>
+        The following types of content are prohibited:<br />
+        * Content that is illegal in the state of Ohio or in your jurisdiction<br />
+        * Pornography or nudity<br />
+        * Any content that may be interpreted as sexualization of minors<br />
+        * Content that encourages, glorifies, or incites violence against or abuse of people or animals<br />
+        * Threats or harassment<br />
+        * Other people's personal information without their permission<br />
+        * Impersonation for a deceptive purpose<br />
+        * Facilitation of transfer of weapons or controlled substances<br />
+        * Spam<br />
+        * Excessive profanity<br />
+        * Hate speech<br />
+        * Offensive content in any way<br />
+        Additionally, the following actions are prohibited:<br />
+        * Actions that are illegal in the state of Ohio or in your jurisdiction<br />
+        * Intentionally preventing users from using STiBaRC normally<br />
+        * Creating additional account(s) for the purpose of evading bans or other restrictions<br /><br />
+        STiBaRC and it's owner, Joshua Herron (aka herronjo), are not legally responsible for any content posted to this site. The user who submitted the content will be held liable for any legal consequences their content may have.
+        <br /><br />
+        STiBaRC (the organization), moderators, and the owner (Joshua Herron, aka herronjo), collectively referred to as <i>they</i>, reserve the right to remove or modify posts or content as needed, whether or not they violate any of the content policies defined above.<br />
+        They also reserve the right to ban or commandeer any user account as they see fit, as long as a reason is provided.<br />
+        Bots also apply to the content policies and additional terms above.<br />
+        <h2>Contact Us</h2>
+        Questions and concerns regarding privacy may be directed to support@stibarc.com<br>
+	</main>
+	<stibarc-footer></stibarc-footer>
+</body>
+
+</html>

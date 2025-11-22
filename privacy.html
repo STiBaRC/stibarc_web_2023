@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8" />
+	<title>Privacy Policy | STiBaRC</title>
+	<link rel="manifest" href="/manifest.json" />
+	<meta name="viewport" content="initial-scale=1, maximum-scale=5, user-scalable=yes, width=device-width">
+	<link rel="icon" type="image/png" href="/img/icon.png">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@300;400&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="/css/themes/default.css" id="theme">
+	<link rel="stylesheet" href="/css/global.css">
+	<link rel="stylesheet" href="/css/index.css">
+	<script src="/js/API.js"></script>
+	<script src="/js/global.js"></script>
+	<script type="module" src="/components/LoginModal.js"></script>
+	<script type="module" src="/components/RegisterModal.js"></script>
+	<script type="module" src="/components/Header.js"></script>
+	<script type="module" src="/components/Footer.js"></script>
+	<script>
+		window.addEventListener("load", async function () {
+			await waitForGlobalInit();
+			if (this.sessionStorage.loadedBefore === "true" || !api.loggedIn) {
+				setLoggedinState(api.loggedIn);
+			}
+		});
+	</script>
+	<style>
+		main {
+			width: 100%;
+			padding: 12px;
+			border-radius: 15px;
+			margin-top: 14px;
+			background-color: var(--color2);
+			box-shadow: 0 1px 8px 0 rgba(22, 22, 22, 0.2), 0 1px 4px 0 rgba(22, 22, 22, 0.2);
+		}
+	</style>
+</head>
+
+<body>
+	<stibarc-header></stibarc-header>
+	<stibarc-login-modal></stibarc-login-modal>
+	<stibarc-register-modal></stibarc-register-modal>
+	<main>
+		<h2>Privacy Policy</h2>
+		<i>Last updated 03/25/2019</i><br><br>
+        <h2>Definitions</h2>
+        STiBaRC is a service that can be accessed using the STiBaRC website (https://stibarc.com), official STiBaRC apps for computers and mobile devices, and third-party software via the STiBaRC API. This service, and any other services we create that are branded as STiBaRC services (such as STiBaRC Messenger), will be referred to as "the service." STiBaRC is also the name of the organization that maintains the service, which will be referred to as "we" or "us." "The website" refers to https://stibarc.com and any of its subdomains (such as https://messenger.stibarc.com). "You" refers to a user of the service. "Official STiBaRC software" refers to the website and official STiBaRC apps. "Third-party STiBaRC software" refers to software created by a third party that can be used to access the service.<br>
+        <br>
+        <h2>Use of Information</h2>
+        We have access to the information that you input using official STiBaRC software, and information that is sent to the service as a result of your use of third-party STiBaRC software. Information that is not public will not be sold, rented, or given to anyone.<br>
+        We may contact you using the email address you provide on your profile to notify you of events that require you to take an action, such as data leaks. We will not send you emails automatically.<br>
+        We do not use your personal information to make automated decisions.<br>
+        <br>
+        <h2>Children Under 13</h2>
+        The service is not directed to children under 13 years of age. You must be at least 13 years of age to create an account or otherwise submit information to the service.<br>
+        <br>
+        <h2>Account Creation</h2>
+        You must create an account in order to access all features of the service. Creating an account using official STiBaRC software is done by submitting a registration form. Third-party STiBaRC software may use a similar registration form to allow you to create an account. You may provide your name, email address, and birthday when creating an account, but none of these are required to be provided. You can choose to display these items on your profile or keep them private from other users.<br>
+        <br>
+        <h2>Data We Collect</h2>
+        When you create an account, we collect your username, password, name (if provided), email address (if provided), birthday (if provided), and preferences regarding whether this information should be displayed on your profile. You can create posts and comments, which will be stored with your username and the time they were created. If you edit your profile to add a "bio" it will be collected. If you donate to STiBaRC, the fact that you did so will be stored as part of your profile. You can create conversations and messages on STiBaRC Messenger, which are stored and associated with your and the recipient's usernames. Your IP address is collected as part of standard server logs.<br>
+        <br>
+        <h2>Security</h2>
+        All user data is stored separate from the website, on a database not accessible to the outside world. All access to the database is logged and is reviewed frequently.<br>
+        If an intrusion is found, all affected users will be notified appropriately and quickly.<br>
+        Information not publicly displayed is not accessible to anyone, even through the API, except to the associated user and us.<br>
+        Your password is never stored in plain text. As soon as it is sent to the server, it is quickly hashed and removed from memory before any other process begins handling the information.<br>
+        <br>
+        <h2>Cookies</h2>
+        We may use cookies on the website and other official STiBaRC software. A cookie is a piece of data stored on your device that allows the website to identify a repeat visitor to the site and improve your access. Use of cookies is not linked to personally identifiable information.<br>
+        Cookies may also be used by third parties (see "Tracking"). We do not have access to these cookies.<br>
+        <br>
+        <h2>Links</h2>
+        Official STiBaRC software and user-created content submitted to the service may contain links to third-party websites. We are not responsible for the content or privacy practices of third-party websites.<br>
+        <br>
+        <h2>Content Removal (Notice for Minors)</h2>
+        You can submit content to the service to be shown publicly. If you wish for your content to be removed from the service, you can contact us by email (see "Contact Us").<br>
+        <br>
+        <h2>Tracking</h2>
+        We do not acknowledge your DNT settings, because we do not track you.<br>
+        Third-party software may be linked in official STiBaRC software. They may collect information, and may or may not acknowledge your DNT settings, according to their privacy policy. This third-party software is listed here:<br>
+        The website uses PayPal to offer the user the option to donate money. The PayPal Privacy Policy can be viewed at https://www.paypal.com/us/webapps/mpp/ua/privacy-full<br>
+        <br>
+        <h2>Sharing</h2>
+        Personal data we collect is not shared with third parties.<br>
+        Third parties described in "Tracking" may collect data themselves.<br>
+        <br>
+        <h2>Choices and Changes</h2>
+        If you chose to show any personal information when you created your account, and wish to hide it, you can stop showing your name, email address, or birthday individually by choosing "Edit profile" on official STiBaRC software.<br>
+        You can view the personal information you provided on this same page.<br>
+        If you wish to receive more detailed information about your personal data, you can submit a request by email (see "Contact Us").<br>
+        <br>
+        <h2>Changes to This Privacy Policy</h2>
+        Users will be notified of changes to this privacy policy through posts on STiBaRC itself, the official STiBaRC Twitter (@STiBaRC and @STiBaRC_Team), and potentially email if the change is important to how user data privacy is handled.<br>
+        <br>
+        <h2>Contact Us</h2>
+        Questions and concerns regarding privacy may be directed to support@stibarc.com<br>
+	</main>
+	<stibarc-footer></stibarc-footer>
+</body>
+
+</html>
