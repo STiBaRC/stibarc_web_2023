@@ -4,6 +4,10 @@
 		"uid": "secureweb",
 		"gid": "secureweb"
 	},
+	"server": {
+		"idleThreads": 32,
+		"maxThreads": 32768
+	},
 	"defaultSite": {
 		"type": "local",
 		"location": "/var/www/web/",
