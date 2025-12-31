@@ -88,12 +88,15 @@
 }
 
 .announcement {
-	background-color: var(--color5);
+	background-color: var(--color11);
 	min-height: 7vh;
 	box-shadow: 0 1px 8px 0 rgba(22, 22, 22, 0.2), 0 1px 4px 0 rgba(22, 22, 22, 0.2);
+	padding: 12px;
+	margin-top: 1rem;
+	border-radius: 12px;
 }
 
 .notification-icon {
-	max-width: 5vh;
-	margin-right: 0.5vh;
+	width: 45px;
+	padding-bottom: 12px;
 }
