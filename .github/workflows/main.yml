@@ -1,20 +1,17 @@
+name: CI
+
 on:
   push:
     branches:
-      - dev
+      - main
+  workflow_dispatch:
+
 jobs:
-  deploy_to_dev:
-    name: Deploy to dev environment
-    if: ${{ github.ref == 'refs/heads/dev' }}
-    runs-on: stibarc-beta-dev
-    steps:
-      - name: Delete old repository folder
-        run: rm -rf stibarc_web_2023
-      - name: Checkout repository
-        run: git clone --branch dev git@github.com:STiBaRC/stibarc_web_2023.git
-      - name: Delete old web folder
-        run: rm -rf /var/www
-      - name: Make new web folder
-        run: mkdir /var/www
-      - name: Copy files to web folder
-        run: cp -r stibarc_web_2023/* /var/www
+  build_and_deploy:
+    name: Build and Deploy
+    uses: STiBaRC/build-and-deploy/.github/workflows/build-and-deploy.yaml@main
+    with:
+      image_name: stibarc-web
+      dev_deployment_name: stibarc-web-dev
+      dev_deployment_yaml: cd/dev.yaml
+      dockerfile: cd/Dockerfile

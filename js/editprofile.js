@@ -39,6 +39,7 @@ function uploadBannerImage() {
 }
 
 window.addEventListener("load", async () => {
+	await waitForGlobalInit();
 	listatehooks.push((state) => {
 		if (state) {
 			if (api.private) {

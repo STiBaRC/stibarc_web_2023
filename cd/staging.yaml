@@ -1,0 +1,140 @@
+# Config persistent storage
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: stibarc-web-staging-config-storage
+spec:
+  capacity:
+    storage: 512Mi
+  accessModes:
+    - ReadWriteMany
+  mountOptions:
+    - nfsvers=4.1
+  nfs:
+    path: /srv/kubernetes/stibarc-web-staging-config
+    server: 10.0.0.8
+  persistentVolumeReclaimPolicy: Retain
+
+---
+# Config persistent volume claim
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: stibarc-web-staging-config-storage-claim
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 512Mi
+  volumeName: stibarc-web-staging-config-storage
+
+---
+# Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: stibarc-web-staging
+  labels:
+    app.kubernetes.io/name: stibarc-web-staging
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: stibarc-web-staging
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: stibarc-web-staging
+    spec:
+      containers:
+      - name: stibarc-web-staging
+        image: registryint.stibarc.com/stibarc-web:staging
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - mountPath: /var/www/web/config
+          name: stibarc-web-staging-config-storage
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+          limits:
+            memory: "2048Mi"
+            cpu: "1000m"
+        livenessProbe:
+          httpGet:
+            httpHeaders:
+            - name: Host
+              value: podmetadata
+            path: /liveness.txt
+            port: 80
+          failureThreshold: 3
+          periodSeconds: 10
+        startupProbe:
+          httpGet:
+            httpHeaders:
+            - name: Host
+              value: podmetadata
+            path: /liveness.txt
+            port: 80
+          failureThreshold: 30
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            httpHeaders:
+            - name: Host
+              value: podmetadata
+            path: /readiness.txt
+            port: 80
+          periodSeconds: 10
+      restartPolicy: Always
+      imagePullSecrets:
+      - name: regcred-int
+      volumes:
+      - name: stibarc-web-staging-config-storage
+        persistentVolumeClaim:
+          claimName: stibarc-web-staging-config-storage-claim
+
+---
+# Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: stibarc-web-staging
+spec:
+  selector:
+    app.kubernetes.io/name: stibarc-web-staging
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80
+
+---
+# Ingress
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: stibarc-web-staging
+spec:
+  rules:
+  - host: staging.stibarc.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: stibarc-web-staging
+            port:
+              number: 80
+  - host: cdn-staging.stibarc.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: stibarc-web-staging
+            port:
+              number: 80

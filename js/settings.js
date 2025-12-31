@@ -82,6 +82,7 @@ function handleViewportChange(e) {
 }
 
 window.addEventListener("load", async () => {
+	await waitForGlobalInit();
 	listatehooks.push((state) => {
 		if (state) {
 			if (isMobile && !location.hash) {

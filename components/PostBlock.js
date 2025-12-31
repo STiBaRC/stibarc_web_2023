@@ -22,7 +22,7 @@ class PostBlockComponent extends HTMLElement {
 		</style>
 		<div class="post flexcontainer flexcolumn">
 			<div class="width100">
-				<a id="titleLink" class="posttitle leftalign width100"></a
+				<a id="titleLink" class="posttitle leftalign width100"></a>
 			</div>
 			<div class="flexcontainer leftalign width100">
 				<a id="userLink" class="flexcontainer">

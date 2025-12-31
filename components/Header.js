@@ -273,7 +273,7 @@ class HeaderComponent extends HTMLElement {
 				</div>
 				<span class="flexcontainer rightalign">
 					<button id="searchBtn" class="button iconOnly showOnMobileFlex"><stibarc-icon name="search" type="iconLarge" stroke="2.25rem"></stibarc-icon></button>
-					<img src="https://cdn.stibarc.com/pfp/default.png" id="mypfp" class="headerpfp">
+					<img id="mypfp" class="headerpfp" loading="lazy">
 				</span>
 			</span>
 			<span id="hiddenHeader" class="hidden">
@@ -465,14 +465,14 @@ class HeaderComponent extends HTMLElement {
 			if (state) {
 				mypfp.setAttribute(
 					"src",
-					api.pfp || "https://betacdn.stibarc.com/pfp/default.png"
+					api.pfp || `${api.cdn}/pfp/default.png`
 				);
 				menuprofile.textContent = api.username;
 				menuprofile.setAttribute("href", `/user.html?username=${api.username}`);
 			} else {
 				mypfp.setAttribute(
 					"src",
-					"https://betacdn.stibarc.com/pfp/default.png"
+					`${api.cdn}/pfp/default.png`
 				);
 				menuprofile.setAttribute("href", "");
 			}
