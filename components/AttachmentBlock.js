@@ -78,11 +78,11 @@ class AttachmentBlockComponent extends HTMLElement {
 	}
 
 	async connectedCallback() {
-		const images = ["png", "jpg", "gif", "webp", "svg"];
-		const videos = ["mov", "mp4", "webm"];
-		const audios = ["spx", "m3a", "m4a", "wma", "wav", "mp3"];
+		const images = ["png", "jpg", "gif", "webp", "svg", "jpeg", "jfif", "bmp", "tiff", "ico", "heic", "heif", "avif", "apng", "jxl", "pjpeg", "pjp", "svgz"];
+		const videos = ["mov", "mp4", "webm", "mkv", "avi", "flv", "wmv", "m4v", "3gp", "3g2", "ogv", "mpeg", "mpg", "mpe", "mts", "m2ts", "ts"];
+		const audios = ["spx", "m3a", "m4a", "wma", "wav", "mp3", "aac", "oga", "ogg", "flac", "opus"];
 		const parts = (this.#localFileName !== null) ? this.#localFileName.split(".") : this.#attachment.split(".");
-		const ext = parts[parts.length - 1];
+		const ext = parts[parts.length - 1]?.toLowerCase();
 		let type;
 
 		if (images.indexOf(ext) != -1) {

@@ -6,20 +6,7 @@
 	variables
 */
 
-let environment;
-switch (window.location.hostname) {
-	case "stibarc.com":
-		environment = "production";
-		break;
-	case "staging.stibarc.com":
-		environment = "staging";
-		break;
-	default:
-	case "dev.stibarc.com":
-		environment = "development";
-		break;
-}
-let api = new API(environment);
+let api = new API();
 const listatehooks = [];
 const clickhooks = [];
 const maxTitleLength = 250;
@@ -53,7 +40,7 @@ function refreshTheme() {
 	document.documentElement.className = themeName;
 }
 
-darkThemeMq.addListener((e) => {
+darkThemeMq.addEventListener("change", (e) => {
 	// reset theme, set to browser theme
 	localStorage.removeItem("theme");
 	updateThemeSelector();
@@ -92,7 +79,7 @@ async function reloadSessInfo() {
 	if (loadingSessInfo) return;
 	loadingSessInfo = true;
 	try {
-		await api.init();
+		await api.reloadSessInfo();
 		loadingSessInfo = false;
 		sessionStorage.loadedBefore = true;
 		setLoggedinState(true);
@@ -101,6 +88,23 @@ async function reloadSessInfo() {
 		sessionStorage.loadedBefore = true;
 		setLoggedinState(false);
 	}
+}
+
+let globalInitialized = false;
+function waitForGlobalInit() {
+	return new Promise((resolve) => {
+		if (globalInitialized) {
+			resolve();
+			return;
+		}
+		const channel = new BroadcastChannel("globalInit");
+		channel.onmessage = (e) => {
+			if (e.data === "initialized") {
+				resolve();
+				channel.close();
+			}
+		};
+	});
 }
 
 refreshTheme();
@@ -114,14 +118,15 @@ if (
 	if ($("#mypfp")) {
 		$("#mypfp").setAttribute(
 			"src",
-			api.pfp || "https://betacdn.stibarc.com/pfp/default.png"
+			api.pfp || `${api.cdn}/pfp/default.png`
 		);
 		$("#menuprofile").textContent = api.username;
 		$("#menuprofile").href = `/user.html?username=${api.username}`;
 	}
 }
 
-window.addEventListener("load", function () {
+window.addEventListener("load", async function () {
+	await api.init();
 	if (
 		api.loggedIn &&
 		(sessionStorage.loadedBefore === undefined ||
@@ -135,4 +140,7 @@ window.addEventListener("load", function () {
 			func(event);
 		}
 	});
+	globalInitialized = true;
+	const channel = new BroadcastChannel("globalInit");
+	channel.postMessage("initialized");
 });

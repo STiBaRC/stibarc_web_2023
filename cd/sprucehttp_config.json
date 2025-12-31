@@ -1,0 +1,30 @@
+{
+	"security": {
+		"deescalate": true,
+		"uid": "secureweb",
+		"gid": "secureweb"
+	},
+	"server": {
+		"idleThreads": 32,
+		"maxThreads": 32768
+	},
+	"defaultSite": {
+		"type": "local",
+		"location": "/var/www/web/",
+		"indexList": ["index.htm", "index.html"],
+		"upgradeInsecure": true,
+		"directoryListing": false,
+		"maxBodySize": 10485760,
+		"sjs": false,
+		"headers": {},
+		"trustProxy": true,
+		"compress": true,
+		"mimesToCompress": ["text/html", "text/css", "text/javascript", "application/javascript", "application/json", "application/xml", "image/svg+xml", "image/x-icon", "image/vnd.microsoft.icon", "image/bmp"]
+	},
+	"sites": {
+		"podmetadata": {
+			"type": "local",
+			"location": "/var/www/probes/"
+		}
+	}
+}

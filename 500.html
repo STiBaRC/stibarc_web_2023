@@ -19,8 +19,11 @@
 	<script type="module" src="/components/Header.js"></script>
 	<script type="module" src="/components/Footer.js"></script>
 	<script>
-		window.addEventListener("load", function() {
-			if (sessionStorage.loadedBefore !== undefined) setLoggedinState(api.loggedIn);
+		window.addEventListener("load", async function () {
+			await waitForGlobalInit();
+			if (this.sessionStorage.loadedBefore === "true" || !api.loggedIn) {
+				setLoggedinState(api.loggedIn);
+			}
 		});
 	</script>
 </head>

@@ -148,7 +148,8 @@ async function loadMore() {
 	if (feedPosts.length !== 0) $("#loadMoreBtn").classList.remove("hidden");
 }
 
-window.addEventListener("load", function () {
+window.addEventListener("load", async function () {
+	await waitForGlobalInit();
 	setFeed(localStorage.activeFeed);
 	$("#globalBtn").onclick = function () {
 		setFeed("global");

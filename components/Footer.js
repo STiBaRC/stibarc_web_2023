@@ -11,7 +11,7 @@ class FooterComponent extends HTMLElement {
 		</style>
 		<footer class="flexcontainer">
 			<span>
-				&copy; <span id="year"></span> <a href="https://team.stibarc.com" target="_blank">STiBaRC Team</a>
+				&copy; <span id="year"></span> <a href="https://team.stibarc.com" target="_blank">STiBaRC Team</a> | <a href="/privacy.html" target="_blank">Privacy</a> | <a href="/tos.html" target="_blank">Terms</a>
 			</span>
 		</footer>
 	`;
