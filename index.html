@@ -31,7 +31,10 @@
 	<stibarc-login-modal></stibarc-login-modal>
 	<stibarc-register-modal></stibarc-register-modal>
 	<main class="flexcontainer flexcolumn">
-		<div id="announcement" class="flexcontainer hidden"></div>
+		<div class="flexcontainer flexcolumn announcement hidden" id="announcementpanel">
+			<img src="/img/icon/alert_icon.svg" class="notification-icon" alt="Alert icon" />
+			<div id="announcement"></div>
+		</div>
 		<span class="flexcontainer feedFilter">
 			<span class="rightalign">
 				<button id="globalBtn" class="button floatingbutton">
@@ -56,7 +59,9 @@
 	<stibarc-footer></stibarc-footer>
 	<span class="floatingplusbuttoncontainer">
 		<div id="newpost" class="flexcontainer floatingplusbutton" title="Create Post">
-			<svg class="icon iconBig"><use href="/img/icon/icons.svg#plus"></use></svg>
+			<svg class="icon iconBig">
+				<use href="/img/icon/icons.svg#plus"></use>
+			</svg>
 		</div>
 	</span>
 	<span id="overlay" class="hidden">

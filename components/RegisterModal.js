@@ -38,13 +38,11 @@ class RegisterModalComponent extends HTMLElement {
 				<textarea id="bio" placeholder="Bio"></textarea>
 				<div>Show Bio: <input type="checkbox" id="showbio"></div>
 				<span>&nbsp;</span>
-				<span class="flexcontainer">
+				<div class="flexcontainer confirmationbtns marginbottom">
 					<button id="registerbutton" class="button small primary">Register</button>
-					<button id="registercancel" class="button">Cancel</button>
-				</span>
-				<span class="flexcontainer marginbottom">
 					<button id="loginlink" class="button">Login</button>
-				</span>
+					<button id="registercancel" class="button">Cancel</button>
+				</div>
 			</div>
 		</dialog>
 	`;

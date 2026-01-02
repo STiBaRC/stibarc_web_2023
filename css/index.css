@@ -1,4 +1,5 @@
-#postsLoader, #followedPostsLoader {
+#postsLoader,
+#followedPostsLoader {
 	margin-bottom: 1rem;
 }
 
@@ -86,21 +87,19 @@
 	z-index: 10;
 }
 
-#announcement {
-	box-sizing: border-box;
-	border-radius: 15px;
-	width: 100%;
-	background-color: var(--color1);
-	padding: 12px;
-	margin-top: 14px;
-	margin-bottom: 14px;
-	user-select: text;
+.announcement {
+	background-color: var(--color11);
 	box-shadow: 0 1px 8px 0 rgba(22, 22, 22, 0.2), 0 1px 4px 0 rgba(22, 22, 22, 0.2);
+	padding: 12px;
+	margin-top: 1rem;
+	border-radius: 12px;
+	width: 100%;
+	box-sizing: border-box;
+}
 
-	flex-basis: unset;
-	word-wrap: break-word;
-	max-width: 100%;
-	white-space: pre-wrap;
-
-	text-align: center;
+.notification-icon {
+	display: block;
+	margin: 0 auto;
+	width: 45px;
+	padding-bottom: 12px;
 }
