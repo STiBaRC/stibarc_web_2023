@@ -58,6 +58,8 @@ window.addEventListener("load", async () => {
 		}
 		clicked = true;
 		for (const file of newAttachmentFiles) {
+			$("#editbutton").textContent = "";
+			$("#editbutton").classList.add("loading");
 			const uploadedFile = await api.uploadFile(file, "attachment");
 			newAttachments.push(uploadedFile);
 		}
