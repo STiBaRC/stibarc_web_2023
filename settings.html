@@ -37,9 +37,9 @@
 			<span class="sidebar" id="sidebarTabs">
 				<h2>Settings</h2>
 				<ul class="sidebarItems">
+					<li class="" id="tab-display"><span>Display</span></li>
 					<li class="" id="tab-security"><span>Security</span></li>
 					<li class="" id="tab-sessions"><span>Sessions</span></li>
-					<li class="" id="tab-display"><span>Display</span></li>
 					<li class="" id="tab-experiments"><span>Experiments</span></li>
 				</ul>
 			</span>
@@ -50,6 +50,14 @@
 			</span>
 			<span class="hidden sideContent" id="sideContent">
 				<span class="flexcontainer marginbottom">
+					<span class="tabContent hidden" id="tabContent-display">
+						<h2 class="flexcontainer width100 marginbottom">Display</h2>
+						<h3 class="marginbottom">Theme</h3>
+						<select id="changeThemeSelector" class="input">
+							<option value="lightTheme">Default (Light)</option>
+							<option value="darkTheme">Dark Theme</option>
+						</select>
+					</span>
 					<span class="tabContent hidden" id="tabContent-security">
 						<h2 class="flexcontainer width100 marginbottom">Security</h2>
 						<button id="changepasswordbutton" class="button">Change Password</button>
@@ -59,14 +67,6 @@
 						<h2 class="flexcontainer width100 marginbottom">Sessions</h2>
 						<div id="sessions"></div>
 					</span>
-					<span class="tabContent hidden" id="tabContent-display">
-						<h2 class="flexcontainer width100 marginbottom">Display</h2>
-						<h3 class="marginbottom">Theme</h3>
-						<select id="changeThemeSelector" class="input">
-							<option value="lightTheme">Default (Light)</option>
-							<option value="darkTheme">Dark Theme</option>
-						</select>
-					</span>
 					<span class="tabContent hidden" id="tabContent-experiments">
 						<h2 class="flexcontainer width100 marginbottom">Experiments</h2>
 						<span class="flexcontainer">😉</span>
@@ -74,7 +74,7 @@
 				</span>
 			</span>
 		</span>
-	
+
 	</main>
 	<stibarc-footer></stibarc-footer>
 	<span id="overlay" class="hidden">
@@ -87,11 +87,13 @@
 						<span id="changepassworderror" class="red"></span>
 						<span>&nbsp;</span>
 					</span>
-					<input type="password" id="oldpasswordinput" placeholder="Old Password" autocomplete="current-password">
+					<input type="password" id="oldpasswordinput" placeholder="Old Password"
+						autocomplete="current-password">
 					<span>&nbsp;</span>
 					<input type="password" id="newpasswordinput" placeholder="New Password" autocomplete="new-password">
 					<span>&nbsp;</span>
-					<input type="password" id="newpasswordinput2" placeholder="New Password Again" autocomplete="new-password">
+					<input type="password" id="newpasswordinput2" placeholder="New Password Again"
+						autocomplete="new-password">
 					<span>&nbsp;</span>
 					<span>
 						<input type="checkbox" id="logoutothers">
@@ -120,7 +122,9 @@
 					<span>&nbsp;</span>
 					<span>Enter the generated verification code below.</span>
 					<span>&nbsp;</span>
-					<input id="enabletfainput" placeholder="000 000" maxlength="7" autocomplete="one-time-code" name="one-time-code" type="text" autocapitalize="none" autocorrect="off" inputmode="numeric" spellcheck="false">
+					<input id="enabletfainput" placeholder="000 000" maxlength="7" autocomplete="one-time-code"
+						name="one-time-code" type="text" autocapitalize="none" autocorrect="off" inputmode="numeric"
+						spellcheck="false">
 					<span>&nbsp;</span>
 					<span class="flexcontainer">
 						<button id="enabletfasubmitbutton" class="button primary">Enable 2FA</button>
@@ -137,7 +141,9 @@
 						<span id="disabletfaerror" class="red"></span>
 						<span>&nbsp;</span>
 					</span>
-					<input id="disabletfainput" placeholder="000 000" maxlength="7" autocomplete="one-time-code" name="one-time-code" type="text" autocapitalize="none" autocorrect="off" inputmode="numeric" spellcheck="false">
+					<input id="disabletfainput" placeholder="000 000" maxlength="7" autocomplete="one-time-code"
+						name="one-time-code" type="text" autocapitalize="none" autocorrect="off" inputmode="numeric"
+						spellcheck="false">
 					<span>&nbsp;</span>
 					<span class="flexcontainer">
 						<button id="disabletfasubmitbutton" class="button primary">Disable 2FA</button>

@@ -1,4 +1,4 @@
-let selectedTab = location.hash.slice(1) || "security";
+let selectedTab = location.hash.slice(1) || "display";
 let loggedIn;
 let isMobile;
 let tfaEnabled = false;
