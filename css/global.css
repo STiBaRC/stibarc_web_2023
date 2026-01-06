@@ -274,7 +274,7 @@ stibarc-icon {
 	border-top: 3px solid var(--text);
 }
 
-.loading.small.red::before {
+.loading.small.danger::before {
 	border-top: 3px solid var(--red);
 }
 
@@ -476,7 +476,7 @@ button.button {
 }
 
 .button.danger:hover {
-	background-color: var(--color4);
+	background-color: var(--redBg);
 }
 
 .button:disabled,

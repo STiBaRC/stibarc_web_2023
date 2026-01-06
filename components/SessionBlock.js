@@ -31,10 +31,6 @@ class SessionBlockComponent extends HTMLElement {
 				margin-right: 0;
 			}
 
-			#delete:hover, #delete:focus {
-				
-			}
-
 			#loginIP {
 				word-wrap: break-word;
 				font-family: monospace;
