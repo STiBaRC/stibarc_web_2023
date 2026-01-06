@@ -12,34 +12,51 @@ class SessionBlockComponent extends HTMLElement {
 				margin-bottom: 10px;
 			}
 
-			.topFlex {
+			.sessionBlock p {
+				margin: 8px 0;
+			}
+			
+			.bottomFlex {
 				display: flex;
 				align-items: center;
-				justify-content: space-between;
+				flex-wrap: no-wrap;
 			}
 
-			#loginDate {
-
+			#currentSess {
+				font-weight: bold;
 			}
 
 			#delete {
-				margin-left: 8px;
-				transition: color 0.15s ease-in-out;
+				margin-right: 8px;
+				color: var(--red);
+				transition: background-color 0.15s ease-in-out;
 			}
 
 			#delete:hover, #delete:focus {
-				color: var(--red);
+				background-color: var(--color4);
+			}
+
+			#loginIP {
+				word-wrap: break-word;
+				font-family: monospace;
+				font-weight: 600;
 			}
 
 			#permissions {
-				padding-top: 12px;
+				padding-top: 8px;
+				box-sizing: border-box;
+				display: flex;
+    			flex-wrap: wrap;
 			}
 			
 			#application {
-				padding-top: 12px;
-				justify-content: flex-start;
+				display: inline-flex;
 				align-items: center;
-				align-content: flex-start;
+			}
+
+			.verifiedBadge {
+				display: inline-flex;
+				align-items: center;
 			}
 
 			.badge {
@@ -47,15 +64,32 @@ class SessionBlockComponent extends HTMLElement {
 				border-radius: 25px;
 				padding: 2px 8px;
 				margin-right: 4px;
+				margin-bottom: 4px;
 			}
 
 		</style>
 		<div class="sessionBlock" id="session">
-			<div class="topFlex"><span id="loginDate"></span><button class="button smallBtn light" id="delete" title="Revoke Session">X</button></div>
-			<div id="userAgent"></div>
-			<div id="loginIP"></div>
-			<div id="permissions"></div>
-			<div id="application" class="flexcontainer width100"></div>
+			<p id="currentSess" class="hidden">Your current session</p>
+			<p>
+				<span>Login IP: </span>
+				<span id="loginIP"></span>
+			</p>
+			<p id="loginDate"></p>
+			<p>
+				<span>User Agent: </span>
+				<span id="userAgent"></span>
+			</p>
+			<p>
+				<span>Permissions: </span>
+				<span id="permissions"></span>
+			</p>
+			<div class="bottomFlex">
+				<div class="flexgrow">
+					<span>Applications: </span>
+					<span id="application"></span>
+				</div>
+				<button class="button light small" id="delete" title="Revoke Session">Revoke</button>
+			</div>		
 		</div>
 	`;
 	session;
@@ -74,9 +108,9 @@ class SessionBlockComponent extends HTMLElement {
 		this.shadow.querySelector("#session").title = this.session.id;
 		const dateString = new Date(this.session.loginDate).toLocaleString();
 		this.shadow.querySelector("#loginDate").textContent = `Login Date: ${dateString}`;
-		this.shadow.querySelector("#userAgent").textContent = `User Agent: ${this.session.userAgent}`;
-		this.shadow.querySelector("#loginIP").textContent = `IP: ${this.session.loginIP}`;
-		this.shadow.querySelector("#application").textContent = `Application: ${this.session.application.name}`;
+		this.shadow.querySelector("#userAgent").textContent = `${this.session.userAgent}`;
+		this.shadow.querySelector("#loginIP").textContent = `${this.session.loginIP}`;
+		this.shadow.querySelector("#application").textContent = `${this.session.application.name}`;
 		if (this.session.application.verified) {
 			const icon = new IconComponent();
 			icon.setAttribute("name", "verified");
@@ -92,13 +126,16 @@ class SessionBlockComponent extends HTMLElement {
 			permissionTag.textContent = permission;
 			permissionTags.appendChild(permissionTag);
 		}
+		this.shadow.querySelector("#currentSess").classList.remove("hidden");
 		if (this.session.id !== api.session) {
+			this.shadow.querySelector("#currentSess").classList.add("hidden");
 			this.shadow.querySelector("#delete").addEventListener("click", async () => {
+				this.shadow.querySelector("#delete").textContent = "";
+				this.shadow.querySelector("#delete").classList.add("loading");
 				await api.logoutSession(this.session.id);
 				this.remove();
 			});
 		}
-		this.shadow.querySelector("#permissions").textContent = "Permissions: ";
 		this.shadow.querySelector("#permissions").appendChild(permissionTags);
 	}
 }

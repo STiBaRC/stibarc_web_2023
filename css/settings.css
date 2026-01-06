@@ -4,10 +4,12 @@
 
 .sidebar {
 	width: 25%;
+	box-sizing: border-box;
 }
 
 .sideContent {
 	width: 80%;
+	box-sizing: border-box;
 }
 
 .sidebar h2 {
@@ -69,7 +71,7 @@
 	background-color: var(--color10);
 }
 
-@media only screen and (max-width: 700px) {
+@media only screen and (max-width: 720px) {
 	.sidebar {
 		width: 35%;
 	}
@@ -79,7 +81,7 @@
 	}
 }
 
-@media only screen and (max-width: 475px) {
+@media only screen and (max-width: 500px) {
 	.sidebar {
 		width: 100%;
 	}
@@ -115,4 +117,11 @@
 	.sidebarItems li {
 		padding: 10px 0 10px 16px;
 	}
+}
+
+.tabContent {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	box-sizing: border-box;
 }
