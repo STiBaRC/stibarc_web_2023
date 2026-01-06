@@ -415,29 +415,6 @@ hr,
 	box-shadow: 0 1px 8px 0 rgba(22, 22, 22, 0.4), 0 1px 4px 0 rgba(22, 22, 22, 0.4);
 } */
 
-.editBtn {
-	border: none;
-	font-family: inherit;
-	font-size: inherit;
-	padding: 5px;
-	margin: 5px;
-	border-radius: 6px;
-	cursor: pointer;
-	background-color: transparent;
-	transition: background-color 0.2s ease-out;
-}
-
-.editBtn img {
-	width: 24px;
-	height: 24px;
-	filter: invert();
-	opacity: 0.7;
-}
-
-.editBtn:hover {
-	background-color: var(--color10);
-}
-
 .button {
 	display: inline-flex;
 	align-items: center;
@@ -496,6 +473,10 @@ button.button {
 
 .button.danger {
 	color: var(--red) !important;
+}
+
+.button.danger:hover {
+	background-color: var(--color4);
 }
 
 .button:disabled,

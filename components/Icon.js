@@ -55,7 +55,7 @@ class IconComponent extends HTMLElement {
 			svgIcon.style.stroke = this.getAttribute("color");
 		if (this.getAttribute("stroke")) 
 			svgIcon.style.strokeWidth = this.getAttribute("stroke");
-		if (this.getAttribute("filled"))
+		if (this.getAttribute("filled") == "true")
 			svgIcon.classList.add("filled");
 		const useBlock = document.createElementNS("http://www.w3.org/2000/svg", "use");
 		useBlock.setAttribute("href", `/img/icon/icons.svg#${iconName}`);

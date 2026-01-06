@@ -44,8 +44,8 @@ class CommentBlockComponent extends HTMLElement {
 					<span id="downvotes"></span>
 				</button>
 				<span class="flexgrow"></span>
-				<button id="edit" class="flexcontainer editBtn hidden" title="Edit Comment">
-					<stibarc-icon name="edit" size="24" inverted-light=true></stibarc-icon>
+				<button id="edit" class="flexcontainer hidden button iconOnly" title="Edit Comment">
+					<stibarc-icon name="edit" type="iconLarge" filled="true"></stibarc-icon>
 				</button>
 			</span>
 			<span id="actions-not-post" class="aligncenter leftalign width100 flexwrap hidden">

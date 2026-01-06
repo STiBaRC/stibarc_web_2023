@@ -29,11 +29,10 @@ class SessionBlockComponent extends HTMLElement {
 			#delete {
 				margin-left: 8px;
 				margin-right: 0;
-				transition: background-color 0.15s ease-in-out;
 			}
 
 			#delete:hover, #delete:focus {
-				background-color: var(--color4);
+				
 			}
 
 			#loginIP {
@@ -88,8 +87,8 @@ class SessionBlockComponent extends HTMLElement {
 					<span>Applications: </span>
 					<span id="application"></span>
 				</div>
-				<button class="button light red small" id="delete" title="Revoke Session">Revoke</button>
-			</div>		
+				<button class="button light danger small" id="delete" title="Revoke Session">Revoke</button>
+			</div>
 		</div>
 	`;
 	session;
