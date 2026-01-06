@@ -63,7 +63,11 @@ window.addEventListener("load", async () => {
 		}
 		const to = (target == "post") ? post : comment;
 		const combinedAttachments = [...to.attachments, ...newAttachments];
+		$("#editbutton").textContent = "";
+		$("#editbutton").classList.add("loading");
 		await api.edit({ postId: id, target, commentId: (target === "comment") ? cid : undefined, title: (target == "post") ? title : undefined, content, attachments: combinedAttachments, privatePost: (target === "post") ? $("#privateinput").checked : undefined });
+		$("#editbutton").textContent = "Submit";
+		$("#editbutton").classList.remove("loading");
 		location.href = `/post.html?id=${id}`;
 	});
 	$("#deletebutton").addEventListener("click", async () => {
@@ -72,7 +76,11 @@ window.addEventListener("load", async () => {
 		}
 		if (clicked) return;
 		clicked = true;
+		$("#deletebutton").textContent = "";
+		$("#deletebutton").classList.add("loading");
 		await api.edit({ postId: id, target, commentId: (target === "comment") ? cid : undefined, deleted: true });
+		$("#deletebutton").textContent = "Delete";
+		$("#deletebutton").classList.remove("loading");
 		location.href = (target == "post") ? "/" : `post.html?id=${id}`;
 	});
 
