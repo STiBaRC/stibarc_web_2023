@@ -28,7 +28,6 @@ class SessionBlockComponent extends HTMLElement {
 
 			#delete {
 				margin-right: 8px;
-				color: var(--red);
 				transition: background-color 0.15s ease-in-out;
 			}
 
@@ -88,7 +87,7 @@ class SessionBlockComponent extends HTMLElement {
 					<span>Applications: </span>
 					<span id="application"></span>
 				</div>
-				<button class="button light small" id="delete" title="Revoke Session">Revoke</button>
+				<button class="button light red small" id="delete" title="Revoke Session">Revoke</button>
 			</div>		
 		</div>
 	`;

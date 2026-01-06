@@ -274,6 +274,10 @@ stibarc-icon {
 	border-top: 3px solid var(--text);
 }
 
+.loading.small.red::before {
+	border-top: 3px solid var(--red);
+}
+
 .leftalign {
 	display: flex;
 	justify-content: left;
