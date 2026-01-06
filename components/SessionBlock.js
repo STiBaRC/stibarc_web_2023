@@ -27,7 +27,8 @@ class SessionBlockComponent extends HTMLElement {
 			}
 
 			#delete {
-				margin-right: 8px;
+				margin-left: 8px;
+				margin-right: 0;
 				transition: background-color 0.15s ease-in-out;
 			}
 
