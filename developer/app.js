@@ -163,6 +163,8 @@ function reloadWebhookUrls(appDetails) {
 }
 
 window.addEventListener("load", async () => {
+	await waitForGlobalInit();
+
 	$(".sidebarItems li").forEach(item => {
 		item.addEventListener("click", () => {
 			switchTab(item);
@@ -228,7 +230,7 @@ window.addEventListener("load", async () => {
 	$("#sideContentLoading").classList.add("hidden");
 
 	handleViewportChange(mediaQuery);
-	mediaQuery.addListener(handleViewportChange);
+	mediaQuery.addEventListener("change", handleViewportChange);
 
 	$("#backBtn").addEventListener("click", () => {
 		$("#backBtn").classList.add("hidden");

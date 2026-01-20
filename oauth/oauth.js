@@ -33,6 +33,8 @@ async function loggedInOnClick(clientId, redirectUri, scopes, state) {
 }
 
 window.addEventListener("load", async function () {
+	await waitForGlobalInit();
+
 	$("#authorize-button").disabled = true;
 
 	const searchParams = new URLSearchParams(window.location.search);

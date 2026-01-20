@@ -13,6 +13,8 @@ async function getApps() {
 }
 
 window.addEventListener("load", async function () {
+	await waitForGlobalInit();
+
 	if (!api.loggedIn) {
 		location.href = "/";
 	}
