@@ -17,6 +17,8 @@
 	<script src="/js/global.js"></script>
 	<script type="module" src="/components/Header.js"></script>
 	<script type="module" src="/components/Footer.js"></script>
+	<script type="module" src="/components/LoginModal.js"></script>
+	<script type="module" src="/components/RegisterModal.js"></script>
 	<script type="module" src="/components/Icon.js"></script>
 	<script type="module" src="/developer/DeveloperAppComponent.js"></script>
 	<script src="/developer/developer.js"></script>
@@ -24,15 +26,18 @@
 
 <body>
 	<stibarc-header></stibarc-header>
+	<stibarc-login-modal></stibarc-login-modal>
+	<stibarc-register-modal></stibarc-register-modal>
 	<main class="flexcontainer flexcolumn">
 		<h2>STiBaRC Developer Portal</h2>
+		<div><button class="button primary loggedout" onclick='document.querySelector("stibarc-login-modal").show();'>Login</button></div>
 		<div id="app-list" class="flexcontainer leftalign width100">
 
 		</div>
 	</main>
 	<stibarc-footer></stibarc-footer>
 	<span class="floatingplusbuttoncontainer">
-		<div id="newapp" class="flexcontainer floatingplusbutton" title="Create App">
+		<div id="newapp" class="loggedin flexcontainer floatingplusbutton" title="Create App">
 			<svg class="icon iconBig"><use href="/img/icon/icons.svg#plus"></use></svg>
 		</div>
 	</span>

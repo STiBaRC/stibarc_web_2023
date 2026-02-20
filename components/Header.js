@@ -370,9 +370,9 @@ class HeaderComponent extends HTMLElement {
 			setLoggedinState(false);
 		});
 
-		listatehooks.push((state) => {
+		listatehooks.push((loggedIn) => {
 			Array.from(this.shadow.querySelectorAll(".loggedin")).forEach((element) => {
-				if (state) {
+				if (loggedIn) {
 					element.classList.remove("hidden");
 				} else {
 					element.classList.add("hidden");
@@ -380,14 +380,14 @@ class HeaderComponent extends HTMLElement {
 			});
 			Array.from(this.shadow.querySelectorAll(".loggedout")).forEach(
 				(element) => {
-					if (state) {
+					if (loggedIn) {
 						element.classList.add("hidden");
 					} else {
 						element.classList.remove("hidden");
 					}
 				}
 			);
-			if (state) {
+			if (loggedIn) {
 				mypfp.setAttribute(
 					"src",
 					api.pfp || `${api.cdn}/pfp/default.png`
