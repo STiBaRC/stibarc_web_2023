@@ -13,9 +13,7 @@ async function getApps() {
 }
 
 window.addEventListener("load", async function () {
-	if (!api.loggedIn) {
-		location.href = "/";
-	}
+	await waitForGlobalInit();
 
 	$("#newapp").addEventListener("click", function () {
 		$("#newappdialog").showModal();
