@@ -28,12 +28,22 @@
 	<stibarc-header></stibarc-header>
 	<stibarc-login-modal></stibarc-login-modal>
 	<stibarc-register-modal></stibarc-register-modal>
-	<main class="flexcontainer flexcolumn">
-		<h2>STiBaRC Developer Portal</h2>
-		<div><button class="button primary loggedout" onclick='document.querySelector("stibarc-login-modal").show();'>Login</button></div>
-		<div id="app-list" class="flexcontainer leftalign width100">
+	<main>
 
+		<div class="post margintop flexcontainer flexcolumn">
+		
+			<h2>STiBaRC Developer Portal</h2>
+			<div><button class="button primary hidden loggedout" onclick='document.querySelector("stibarc-login-modal").show();'>Login</button></div>
+		
 		</div>
+		<div class="flexcontainer flexcolumn">
+			
+			<div><h2>My Applications</h2></div>
+			<div id="app-list" class="flexcontainer leftalign width100 loading">
+
+			</div>
+		</div>
+
 	</main>
 	<stibarc-footer></stibarc-footer>
 	<span class="floatingplusbuttoncontainer">

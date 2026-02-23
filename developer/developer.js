@@ -64,8 +64,16 @@ window.addEventListener("load", async function () {
 	});
 
 	const apps = await getApps();
+	$("#app-list").classList.remove("loading");
 
+	if(apps.length === 0) {
+		const noApps = document.createElement("div");
+		noApps.innerText = "Get started by creating your first app";
+		$("#app-list").appendChild(noApps);
+	}
+	
 	const appList = document.createDocumentFragment();
+
 	apps.forEach((app) => {
 		const appItem = document.createElement("stibarc-developer-app");
 		appItem.setAttribute("name", app.name);
