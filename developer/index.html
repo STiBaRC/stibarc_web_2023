@@ -30,15 +30,18 @@
 	<stibarc-register-modal></stibarc-register-modal>
 	<main>
 
-		<div class="post margintop flexcontainer flexcolumn">
-		
-			<h2>STiBaRC Developer Portal</h2>
-			<div><button class="button primary hidden loggedout" onclick='document.querySelector("stibarc-login-modal").show();'>Login</button></div>
-		
+		<div class="hero post margintop flexcontainer flexcolumn">
+			<div class="herocontent">
+				<h2>STiBaRC Developer Portal</h2>
+				<div><button class="button primary hidden loggedout" onclick='document.querySelector("stibarc-login-modal").show();'>Login</button></div>
+			</div>
+			<img class="heroimg" src="/img/engineerbo.png">
 		</div>
 		<div class="flexcontainer flexcolumn">
 			
-			<div><h2>My Applications</h2></div>
+			<div class="flexcontainer leftalign width100 pagetitle">
+				<h2>My Applications</h2>
+			</div>
 			<div id="app-list" class="flexcontainer leftalign width100 loading">
 
 			</div>

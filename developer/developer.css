@@ -17,6 +17,12 @@ label {
 		align-items: center;
 		align-content: center;
 	}
+
+	.pagetitle {
+		justify-content: center;
+		align-items: center;
+		align-content: center;
+	}
 }
 
 .floatingplusbuttoncontainer {
@@ -59,4 +65,20 @@ label {
 .floatingplusbutton span {
 	font-size: 45px;
 	line-height: 51px;
+}
+
+.hero {
+	position: relative;
+	overflow: hidden;
+}
+
+.heroimg {
+	z-index: 0;
+	position: absolute;
+	right: 0;
+	opacity: .25;
+}
+
+.herocontent {
+	z-index: 1;
 }
