@@ -1,4 +1,4 @@
 {
-	"apiHost": "https://api.stibarc.com",
-	"cdn": "https://cdn.stibarc.com"
+	"apiHost": "https://api-dev.stibarc.com",
+	"cdn": "https://cdn-dev.stibarc.com"
 }
