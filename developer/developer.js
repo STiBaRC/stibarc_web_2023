@@ -63,29 +63,36 @@ window.addEventListener("load", async function () {
 		location.href = `/developer/app.html?id=${responseJSON.clientId}`;
 	});
 
-	const apps = await getApps();
-	$("#app-list").classList.remove("loading");
+	listatehooks.push(async (state) => {
+		if (state) {
 
-	if(apps.length === 0) {
-		const noApps = document.createElement("div");
-		noApps.innerText = "Get started by creating your first app";
-		$("#app-list").appendChild(noApps);
-	}
-	
-	const appList = document.createDocumentFragment();
+			const apps = await getApps();
+			$("#app-list").classList.remove("loading");
 
-	apps.forEach((app) => {
-		const appItem = document.createElement("stibarc-developer-app");
-		appItem.setAttribute("name", app.name);
-		appItem.setAttribute("id", app.id);
-		appItem.setAttribute("description", app.description);
-		appItem.setAttribute("icon", app.icon);
-		appItem.setAttribute("verified", app.verified);
-		appItem.setAttribute("firstparty", app.firstparty);
-		appList.appendChild(appItem);
+			if (apps.length === 0) {
+				const noApps = document.createElement("div");
+				noApps.innerText = "Get started by creating your first app";
+				$("#app-list").appendChild(noApps);
+			}
+
+			const appList = document.createDocumentFragment();
+
+			apps.forEach((app) => {
+				const appItem = document.createElement("stibarc-developer-app");
+				appItem.setAttribute("name", app.name);
+				appItem.setAttribute("id", app.id);
+				appItem.setAttribute("description", app.description);
+				appItem.setAttribute("icon", app.icon);
+				appItem.setAttribute("verified", app.verified);
+				appItem.setAttribute("firstparty", app.firstparty);
+				appList.appendChild(appItem);
+			});
+
+			$("#app-list").appendChild(appList);
+		}
 	});
 
-	$("#app-list").appendChild(appList);
 
-	setLoggedinState(api.loggedIn);
-});
+		setLoggedinState(api.loggedIn);
+
+	});

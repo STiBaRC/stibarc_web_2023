@@ -30,28 +30,32 @@
 	<stibarc-register-modal></stibarc-register-modal>
 	<main>
 
-		<div class="hero post margintop flexcontainer flexcolumn">
+		<div class="hero margintop flexcontainer flexcolumn">
 			<div class="herocontent">
 				<h2>STiBaRC Developer Portal</h2>
-				<div><button class="button primary hidden loggedout" onclick='document.querySelector("stibarc-login-modal").show();'>Login</button></div>
+				<div class="flexcontainer flexcolumn loggedout">
+					<button class="button primary"
+						onclick='document.querySelector("stibarc-login-modal").show();'>Login</button>
+				</div>
 			</div>
 			<img class="heroimg" src="/img/engineerbo.png">
 		</div>
-		<div class="flexcontainer flexcolumn">
-			
-			<div class="flexcontainer leftalign width100 pagetitle">
+		<div class="loggedin">
+			<div class="flexcontainer leftalign width100 pagetitle marginbottom">
 				<h2>My Applications</h2>
 			</div>
 			<div id="app-list" class="flexcontainer leftalign width100 loading">
-
 			</div>
+
 		</div>
 
 	</main>
 	<stibarc-footer></stibarc-footer>
 	<span class="floatingplusbuttoncontainer">
 		<div id="newapp" class="loggedin flexcontainer floatingplusbutton" title="Create App">
-			<svg class="icon iconBig"><use href="/img/icon/icons.svg#plus"></use></svg>
+			<svg class="icon iconBig">
+				<use href="/img/icon/icons.svg#plus"></use>
+			</svg>
 		</div>
 	</span>
 	<dialog id="newappdialog">
