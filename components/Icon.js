@@ -20,6 +20,11 @@ class IconComponent extends HTMLElement {
 			fill: var(--text);
 			stroke: transparent;
 		}
+
+		.iconNormal {
+			width: 20px;
+			height: 20px;
+		}
 		
 		.iconLarge {
 			width: 25px;
@@ -51,6 +56,7 @@ class IconComponent extends HTMLElement {
 
 		const svgIcon = document.createElementNS("http://www.w3.org/2000/svg", "svg");
 		svgIcon.classList.add("icon", this.getAttribute("size"), this.getAttribute("type"));
+		svgIcon.classList.add(this.getAttribute("type"));
 		if (this.getAttribute("color"))
 			svgIcon.style.stroke = this.getAttribute("color");
 		if (this.getAttribute("stroke")) 

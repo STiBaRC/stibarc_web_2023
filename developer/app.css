@@ -1,7 +1,23 @@
+#backLink {
+	display: inline-block;
+	margin: 8px 0;
+}
+
+#appnameheader {
+	display: block;
+}
+
+label {
+	padding-top: 1rem;
+}
+
 code {
+	display: inline-block;
+	margin-top: 4px;
 	background-color: var(--color3);
 	padding: 5px;
 	border-radius: 5px;
+	word-wrap: break-word;
 }
 
 #appicon {
@@ -12,16 +28,35 @@ code {
 	background-color: var(--color1);
 }
 
+#smallAppIcon {
+	width: 27px;
+	height: 27px;
+	border-radius: 5px;
+	margin-right: 8px;
+	background-color: var(--color1);
+}
+
 .contentWithSidebar {
 	display: flex;
 }
 
 .sidebar {
+	/* display: flex;
+	flex-direction: column; */
 	width: 25%;
+	box-sizing: border-box;
 }
+
+/* .sidebarBottom {
+	display: flex;
+    align-content: flex-end;
+    flex-grow: 1;
+    align-items: flex-end;
+} */
 
 .sideContent {
 	width: 80%;
+	box-sizing: border-box;
 }
 
 .sidebar h2 {
@@ -47,6 +82,7 @@ code {
 	align-items: center;
 	min-width: 0;
 	flex-shrink: 0;
+	transition: background-color 0.2s ease-out;
 }
 
 .sidebarItems li>span {
@@ -80,6 +116,19 @@ code {
 
 .sidebarItems li:hover:not(.active) {
 	background-color: var(--color10);
+}
+
+.tabContent {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	box-sizing: border-box;
+}
+
+#webhookurls input,
+#callbackurls input {
+	display: inline-block;
+	margin-bottom: 10px;
 }
 
 @media only screen and (max-width: 700px) {
@@ -130,10 +179,13 @@ code {
 	}
 }
 
-#callbackurls, #webhookurls {
+#callbackurls,
+#webhookurls {
 	gap: 0.5rem;
 }
 
-#callbackurls > div > input, #webhookurls > div > input, #webhookurls > div > select {
+#callbackurls>div>input,
+#webhookurls>div>input,
+#webhookurls>div>select {
 	margin-right: 0.5rem;
 }

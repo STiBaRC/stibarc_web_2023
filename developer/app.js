@@ -192,7 +192,9 @@ window.addEventListener("load", async () => {
 
 	document.title = `${appDetails.name} | Developer | STiBaRC`;
 	$("#appnameheader").textContent = appDetails.name;
+	$("#deleteappname").textContent = appDetails.name;
 	$("#appicon").src = appDetails.icon;
+	$("#smallAppIcon").src = appDetails.icon;
 	$("#appname").value = appDetails.name;
 	$("#appiconurl").value = appDetails.icon;
 	$("#appdesc").textContent = appDetails.description;

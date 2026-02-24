@@ -92,7 +92,6 @@ window.addEventListener("load", async function () {
 		}
 	});
 
-
-		setLoggedinState(api.loggedIn);
-
-	});
+	setLoggedinState(api.loggedIn);
+	
+});

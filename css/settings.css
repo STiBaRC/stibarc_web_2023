@@ -71,6 +71,13 @@
 	background-color: var(--color10);
 }
 
+.tabContent {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	box-sizing: border-box;
+}
+
 @media only screen and (max-width: 720px) {
 	.sidebar {
 		width: 35%;
@@ -117,11 +124,4 @@
 	.sidebarItems li {
 		padding: 10px 0 10px 16px;
 	}
-}
-
-.tabContent {
-	display: flex;
-	flex-direction: column;
-	width: 100%;
-	box-sizing: border-box;
 }
