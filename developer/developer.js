@@ -1,17 +1,3 @@
-async function getApps() {
-	const apps = await fetch(`${api.host}/v4/developer/getapps.sjs`, {
-		method: "post",
-		headers: {
-			"Content-Type": "application/json"
-		},
-		body: JSON.stringify({
-			session: api.session
-		})
-	});
-	const appsJSON = await apps.json();
-	return appsJSON.applications;
-}
-
 window.addEventListener("load", async function () {
 	await waitForGlobalInit();
 
@@ -66,8 +52,9 @@ window.addEventListener("load", async function () {
 	listatehooks.push(async (state) => {
 		if (state) {
 
-			const apps = await getApps();
+			const apps = await api.getApps();
 			$("#app-list").classList.remove("loading");
+			console.log(apps)
 
 			if (apps.length === 0) {
 				const noApps = document.createElement("div");
@@ -93,5 +80,5 @@ window.addEventListener("load", async function () {
 	});
 
 	setLoggedinState(api.loggedIn);
-	
+
 });

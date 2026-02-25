@@ -1423,4 +1423,41 @@ class API {
 			}
 		}
 	}
+
+	/**
+	 * Gets applications
+	 * @returns {Promise<object>} List of applications
+	 */
+	async getApps() {
+		let response;
+		try {
+			response = await fetch(`${this.#host}/v4/developer/getapps.sjs`, {
+				method: "post",
+				headers: {
+					"Content-Type": "application/json"
+				},
+				body: JSON.stringify({
+					session: this.#session
+				})
+			});
+		} catch (e) {
+			// TODO: Show popup
+			throw new Error("Failed to fetch apps");
+		}
+		let responseJSON;
+		try {
+			responseJSON = await response.json();
+		} catch (e) {
+			// TODO: Show popup
+			throw new Error("Failed to parse apps response");
+		}
+		if (responseJSON.status !== "ok") {
+			switch (responseJSON.errorCode) {
+				default:
+					// TODO: Show popup
+					throw new Error("Failed to fetch apps");
+			}
+		}
+		return responseJSON.applications;
+	}
 }
