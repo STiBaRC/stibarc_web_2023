@@ -303,6 +303,23 @@ class API {
 	}
 
 	/**
+	 * Deletes session storage
+	 * 
+	 */
+	deleteSession() {
+		delete localStorage.sess;
+		delete localStorage.username;
+		delete localStorage.pfp;
+		delete localStorage.banner;
+		delete localStorage.private;
+		this.#session = undefined;
+		this.#username = undefined;
+		this.#pfp = undefined;
+		this.#banner = undefined;
+		this.#private = undefined;
+	}
+
+	/**
 	 * Logs out the user
 	 * @returns {Promise<void>}
 	 */
@@ -333,16 +350,7 @@ class API {
 			// TODO: Show popup
 			throw new Error("Failed to logout");
 		}
-		delete localStorage.sess;
-		delete localStorage.username;
-		delete localStorage.pfp;
-		delete localStorage.banner;
-		delete localStorage.private;
-		this.#session = undefined;
-		this.#username = undefined;
-		this.#pfp = undefined;
-		this.#banner = undefined;
-		this.#private = undefined;
+		this.deleteSession();
 	}
 
 	/**
@@ -418,16 +426,7 @@ class API {
 					throw new Error("Invalid old password");
 				case "is":
 					// TODO: Show popup
-					this.#session = undefined;
-					this.#username = undefined;
-					this.#pfp = undefined;
-					this.#banner = undefined;
-					this.#private = undefined;
-					delete localStorage.sess;
-					delete localStorage.username;
-					delete localStorage.pfp;
-					delete localStorage.banner;
-					delete localStorage.private;
+					this.deleteSession();
 					throw new Error("Invalid session");
 				default:
 					// TODO: Show popup
@@ -471,16 +470,7 @@ class API {
 			switch (responseJSON.errorCode) {
 				case "is":
 					// TODO: Show popup
-					this.#session = undefined;
-					this.#username = undefined;
-					this.#pfp = undefined;
-					this.#banner = undefined;
-					this.#private = undefined;
-					delete localStorage.sess;
-					delete localStorage.username;
-					delete localStorage.pfp;
-					delete localStorage.banner;
-					delete localStorage.private;
+					this.deleteSession();
 					throw new Error("Invalid session");
 				default:
 					// TODO: Show popup
@@ -562,16 +552,7 @@ class API {
 			switch (responseJSON.errorCode) {
 				case "is":
 					// TODO: Show popup
-					this.#session = undefined;
-					this.#username = undefined;
-					this.#pfp = undefined;
-					this.#banner = undefined;
-					this.#private = undefined;
-					delete localStorage.sess;
-					delete localStorage.username;
-					delete localStorage.pfp;
-					delete localStorage.banner;
-					delete localStorage.private;
+					this.deleteSession();
 					throw new Error("Invalid session");
 				default:
 					// TODO: Show popup
@@ -647,16 +628,7 @@ class API {
 				case "banned":
 				case "is":
 					// TODO: Show popup
-					this.#session = undefined;
-					this.#username = undefined;
-					this.#pfp = undefined;
-					this.#banner = undefined;
-					this.#private = undefined;
-					delete localStorage.sess;
-					delete localStorage.username;
-					delete localStorage.pfp;
-					delete localStorage.banner;
-					delete localStorage.private;
+					this.deleteSession();
 					throw new Error("Invalid session");
 				default:
 					// TODO: Show popup
@@ -714,16 +686,7 @@ class API {
 				case "banned":
 				case "is":
 					// TODO: Show popup
-					this.#session = undefined;
-					this.#username = undefined;
-					this.#pfp = undefined;
-					this.#banner = undefined;
-					this.#private = undefined;
-					delete localStorage.sess;
-					delete localStorage.username;
-					delete localStorage.pfp;
-					delete localStorage.banner;
-					delete localStorage.private;
+					this.deleteSession();
 					throw new Error("Invalid session");
 				default:
 					// TODO: Show popup
@@ -768,16 +731,7 @@ class API {
 			switch (responseJSON.errorCode) {
 				case "is":
 					// TODO: Show popup
-					this.#session = undefined;
-					this.#username = undefined;
-					this.#pfp = undefined;
-					this.#banner = undefined;
-					this.#private = undefined;
-					delete localStorage.sess;
-					delete localStorage.username;
-					delete localStorage.pfp;
-					delete localStorage.banner;
-					delete localStorage.private;
+					this.deleteSession();
 					throw new Error("Invalid session");
 				default:
 					// TODO: Show popup
@@ -831,16 +785,7 @@ class API {
 			switch (responseJSON.errorCode) {
 				case "is":
 					// TODO: Show popup
-					this.#session = undefined;
-					this.#username = undefined;
-					this.#pfp = undefined;
-					this.#banner = undefined;
-					this.#private = undefined;
-					delete localStorage.sess;
-					delete localStorage.username;
-					delete localStorage.pfp;
-					delete localStorage.banner;
-					delete localStorage.private;
+					this.deleteSession();
 					throw new Error("Invalid session");
 				default:
 					// TODO: Show popup
@@ -943,16 +888,7 @@ class API {
 				case "banned":
 				case "is":
 					// TODO: Show popup
-					this.#session = undefined;
-					this.#username = undefined;
-					this.#pfp = undefined;
-					this.#banner = undefined;
-					this.#private = undefined;
-					delete localStorage.sess;
-					delete localStorage.username;
-					delete localStorage.pfp;
-					delete localStorage.banner;
-					delete localStorage.private;
+					this.deleteSession();
 					throw new Error("Invalid session");
 				case "pnfod":
 					throw new Error("Post not found");
@@ -1048,16 +984,7 @@ class API {
 				case "banned":
 				case "is":
 					// TODO: Show popup
-					this.#session = undefined;
-					this.#username = undefined;
-					this.#pfp = undefined;
-					this.#banner = undefined;
-					this.#private = undefined;
-					delete localStorage.sess;
-					delete localStorage.username;
-					delete localStorage.pfp;
-					delete localStorage.banner;
-					delete localStorage.private;
+					this.deleteSession();
 					throw new Error("Invalid session");
 				default:
 					// TODO: Show popup
@@ -1109,16 +1036,7 @@ class API {
 				case "banned":
 				case "is":
 					// TODO: Show popup
-					this.#session = undefined;
-					this.#username = undefined;
-					this.#pfp = undefined;
-					this.#banner = undefined;
-					this.#private = undefined;
-					delete localStorage.sess;
-					delete localStorage.username;
-					delete localStorage.pfp;
-					delete localStorage.banner;
-					delete localStorage.private;
+					this.this.deleteSession();
 					throw new Error("Invalid session");
 				default:
 					// TODO: Show popup
@@ -1177,16 +1095,7 @@ class API {
 				case "banned":
 				case "is":
 					// TODO: Show popup
-					this.#session = undefined;
-					this.#username = undefined;
-					this.#pfp = undefined;
-					this.#banner = undefined;
-					this.#private = undefined;
-					delete localStorage.sess;
-					delete localStorage.username;
-					delete localStorage.pfp;
-					delete localStorage.banner;
-					delete localStorage.private;
+					this.deleteSession();
 					throw new Error("Invalid session");
 			}
 		}
@@ -1237,16 +1146,7 @@ class API {
 			switch (responseJSON.errorCode) {
 				case "is":
 					// TODO: Show popup
-					this.#session = undefined;
-					this.#username = undefined;
-					this.#pfp = undefined;
-					this.#banner = undefined;
-					this.#private = undefined;
-					delete localStorage.sess;
-					delete localStorage.username;
-					delete localStorage.pfp;
-					delete localStorage.banner;
-					delete localStorage.private;
+					this.deleteSession();
 					throw new Error("Invalid session");
 				default:
 					// TODO: Show popup
@@ -1346,16 +1246,7 @@ class API {
 				case "banned":
 				case "is":
 					// TODO: Show popup
-					this.#session = undefined;
-					this.#username = undefined;
-					this.#pfp = undefined;
-					this.#banner = undefined;
-					this.#private = undefined;
-					delete localStorage.sess;
-					delete localStorage.username;
-					delete localStorage.pfp;
-					delete localStorage.banner;
-					delete localStorage.private;
+					this.deleteSession();
 					throw new Error("Invalid session");
 				default:
 					// TODO: Show popup
@@ -1406,16 +1297,7 @@ class API {
 				case "banned":
 				case "is":
 					// TODO: Show popup
-					this.#session = undefined;
-					this.#username = undefined;
-					this.#pfp = undefined;
-					this.#banner = undefined;
-					this.#private = undefined;
-					delete localStorage.sess;
-					delete localStorage.username;
-					delete localStorage.pfp;
-					delete localStorage.banner;
-					delete localStorage.private;
+					this.deleteSession();
 					throw new Error("Invalid session");
 				default:
 					// TODO: Show popup
@@ -1453,6 +1335,10 @@ class API {
 		}
 		if (responseJSON.status !== "ok") {
 			switch (responseJSON.errorCode) {
+				case "is":
+					// TODO: Show popup
+					this.deleteSession();
+					throw new Error("Invalid session");
 				default:
 					// TODO: Show popup
 					throw new Error("Failed to fetch apps");
