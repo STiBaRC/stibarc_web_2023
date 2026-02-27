@@ -10,6 +10,8 @@ class SessionBlockComponent extends HTMLElement {
 				padding: 12px;
 				border-radius: 8px;
 				margin-bottom: 10px;
+				max-width: 100%;
+				box-sizing: border-box;
 			}
 
 			.sessionBlock p {
@@ -18,7 +20,7 @@ class SessionBlockComponent extends HTMLElement {
 			
 			.bottomFlex {
 				display: flex;
-				align-items: center;
+				align-items: end;
 				flex-wrap: no-wrap;
 			}
 
@@ -29,6 +31,7 @@ class SessionBlockComponent extends HTMLElement {
 			#delete {
 				margin-left: 8px;
 				margin-right: 0;
+				margin-bottom: 0;
 			}
 
 			#loginIP {
