@@ -541,7 +541,7 @@ p {
 }
 
 .width100 {
-	width: 100%;
+	width: 100%!important;
 }
 
 #overlay {

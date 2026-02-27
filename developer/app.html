@@ -39,9 +39,9 @@
 				<span class="sidebar" id="sidebarTabs">
 					<a href="/developer/" class="backLink"><stibarc-icon name="back" type="iconNormal" filled="true"></stibarc-icon>My
 						Applications</a>
-					<div class="flexcontainer leftalign">
+					<div class="appHeader leftalign">
 						<img id="smallAppIcon" src="/img/engineerbo.png" title="App icon">
-						<h2 id="appnameheader" title="App name">Loading...</h2>
+						<h3 id="appnameheader" title="App name">Loading...</h3>
 					</div>
 					<ul class="sidebarItems">
 						<li class="" id="tab-general"><span>App information</span></li>
@@ -64,11 +64,11 @@
 							<h2 class="flexcontainer width100 marginbottom">App information</h2>
 							<img id="appicon" src="/img/engineerbo.png" title="App icon">
 							<label for="appname">App name</label>
-							<input type="text" id="appname" class="input" placeholder="App name" required>
+							<input type="text" id="appname" class="input width100" placeholder="App name" required>
 							<label for="appiconurl">App icon URL</label>
-							<input type="text" id="appiconurl" class="input" placeholder="App icon URL">
+							<input type="text" id="appiconurl" class="input width100" placeholder="App icon URL">
 							<label for="appdesc">App description</label>
-							<textarea id="appdesc" class="input" placeholder="App description"></textarea>
+							<textarea id="appdesc" class="input width100" placeholder="App description"></textarea>
 						</span>
 						<span class="tabContent width100 hidden" id="tabContent-oauth">
 							<h2 class="flexcontainer width100 marginbottom">OAuth</h2>
@@ -78,13 +78,13 @@
 							<i>Not used yet, will be used for "code" OAuth grant when implemented.</i>
 							<code id="clientsecret"></code>
 							<label>Callback URLs</label>
-							<div id="callbackurls" class="flexcontainer flexcolumn leftalign"></div>
+							<div id="callbackurls"></div>
 							<button class="button" id="addcallbackurl">Add Callback URL</button>
 						</span>
 						<span class="tabContent width100 hidden" id="tabContent-webhooks">
 							<h2 class="flexcontainer width100 marginbottom">Webhooks</h2>
 							<label>Webhook URLs</label>
-							<div id="webhookurls" class="flexcontainer flexcolumn leftalign"></div>
+							<div id="webhookurls"></div>
 							<button class="button" id="addwebhookurl">Add Webhook URL</button>
 						</span>
 					</span>

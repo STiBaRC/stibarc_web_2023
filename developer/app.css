@@ -1,10 +1,11 @@
-#backLink {
-	display: inline-block;
-	margin: 8px 0;
+.backLink {
+	display: inline-flex;
+	align-content: center;
+	align-items: center;
 }
 
-#appnameheader {
-	display: block;
+.backLink stibarc-icon {
+	margin-right: 1px;
 }
 
 label {
@@ -18,6 +19,8 @@ code {
 	padding: 5px;
 	border-radius: 5px;
 	word-wrap: break-word;
+	max-width: 100%;
+	box-sizing: border-box;
 }
 
 #appicon {
@@ -28,9 +31,23 @@ code {
 	background-color: var(--color1);
 }
 
+#appnameheader {
+	display: inline-block;
+	margin: 0;
+}
+
+.appHeader {
+	margin: 1.25rem 0 1.5rem 0;
+	display: flex;
+	flex-wrap: nowrap;
+	align-content: center;
+	align-items: center;
+}
+
 #smallAppIcon {
-	width: 27px;
-	height: 27px;
+	display: inline-block;
+	width: 26px;
+	height: 26px;
 	border-radius: 5px;
 	margin-right: 8px;
 	background-color: var(--color1);
@@ -45,29 +62,19 @@ code {
 	flex-direction: column; */
 	width: 25%;
 	box-sizing: border-box;
+	padding: 0.5rem 1rem 0.25rem 0;
+	;
 }
-
-/* .sidebarBottom {
-	display: flex;
-    align-content: flex-end;
-    flex-grow: 1;
-    align-items: flex-end;
-} */
 
 .sideContent {
 	width: 80%;
 	box-sizing: border-box;
 }
 
-.sidebar h2 {
-	margin: 0.75rem 0 1rem 0;
-}
-
 .sidebarItems {
 	padding: 0;
 	list-style-type: none;
 	box-sizing: border-box;
-	margin-right: 1rem;
 	min-width: 0;
 	max-width: 100%;
 }
@@ -120,15 +127,43 @@ code {
 
 .tabContent {
 	display: flex;
+	flex-wrap: wrap;
 	flex-direction: column;
 	width: 100%;
 	box-sizing: border-box;
+	align-items: baseline;
+	padding-right: 12px;
+}
+
+#webhookurls,
+#callbackurls {
+	width: 100%;
+}
+
+#webhookurls div,
+#callbackurls div {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	margin-bottom: 0.5rem;
 }
 
 #webhookurls input,
 #callbackurls input {
-	display: inline-block;
-	margin-bottom: 10px;
+	display: flex;
+	align-items: center;
+	flex-grow: 1;
+	margin-bottom: 6px;
+}
+
+#webhookurls select,
+#callbackurls select {
+	margin-bottom: 6px;
+	flex-grow: 1;
+}
+
+#webhooturls button {
+	flex-shrink: 0;
 }
 
 @media only screen and (max-width: 700px) {
@@ -181,11 +216,11 @@ code {
 
 #callbackurls,
 #webhookurls {
-	gap: 0.5rem;
+	gap: 0.75rem;
 }
 
 #callbackurls>div>input,
 #webhookurls>div>input,
 #webhookurls>div>select {
-	margin-right: 0.5rem;
+	margin-right: 12px;
 }
