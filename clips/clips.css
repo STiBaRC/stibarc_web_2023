@@ -1,9 +1,7 @@
-html {
+html, body {
 	overflow: hidden;
-}
-
-body {
 	overflow: hidden;
+	overflow-x: clip;
 }
 
 main {
@@ -106,4 +104,8 @@ stibarc-clip {
 	position: absolute;
 	top: 0;
 	left: 0;
+	inset: 0;
+	touch-action: pan-y;
+    -webkit-user-select: none;
+    user-select: none;
 }
