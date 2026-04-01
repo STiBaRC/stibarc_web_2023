@@ -223,7 +223,7 @@ window.addEventListener("load", async function () {
 	}
 
 	// Enforce token response for public clients, and code response for confidential clients
-	if (appDetails.application.applicationtype === "public" && (!responseTypes.includes("token") || !responseTypes.includes("id_token") || responseTypes.includes("code"))) {
+	if (appDetails.application.applicationtype === "public" && (!(responseTypes.includes("token") || responseTypes.includes("id_token")) || responseTypes.includes("code"))) {
 		const params = {
 			error: "invalid_request",
 			error_description: "Public clients must use token response type",
