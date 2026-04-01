@@ -120,10 +120,13 @@ class AttachmentBlockComponent extends HTMLElement {
 		this.shadow = this.attachShadow({ mode: "closed" });
 		this.shadow.innerHTML = this.#shadowDomHTML;
 
-		if (type == "error") return;
+		if (type === "error") return;
 
 		const source = this.shadow.querySelector("#source");
-		source.setAttribute("src", this.#attachment);
+		// Audio preview doesn't have a source element
+		if ((type === "audio" && this.#isPost) || type !== "audio") {
+			source.setAttribute("src", this.#attachment);
+		}
 
 		let element;
 		switch (type) {

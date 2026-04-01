@@ -1,0 +1,29 @@
+table {
+	width: 100%;
+	border-collapse: collapse;
+}
+
+th, tr, td {
+	border: 1px solid var(--text);
+	color: var(--text);
+}
+
+th {
+	background-color: var(--color5);
+}
+
+tr {
+	background-color: var(--color2);
+}
+
+tr:nth-child(even) {
+	background-color: var(--color3);
+}
+
+tr > td:first-child {
+	text-align: center;
+}
+
+tr > td:nth-child(2), tr > td:nth-child(3) {
+	text-align: right;
+}

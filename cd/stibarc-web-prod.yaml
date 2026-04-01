@@ -38,7 +38,7 @@ metadata:
   labels:
     app.kubernetes.io/name: stibarc-web-prod
 spec:
-  replicas: 4
+  replicas: 1
   selector:
     matchLabels:
       app.kubernetes.io/name: stibarc-web-prod
@@ -49,7 +49,8 @@ spec:
     spec:
       containers:
       - name: stibarc-web-prod
-        image: registryint.stibarc.com/stibarc-web:latest
+        image: registryint.stibarc.com/stibarc-web:april
+        imagePullPolicy: Always
         ports:
         - containerPort: 80
         volumeMounts:
@@ -133,16 +134,6 @@ spec:
             port:
               number: 80
   - host: www.stibarc.com
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: stibarc-web-prod
-            port:
-              number: 80
-  - host: cdn.stibarc.com
     http:
       paths:
       - path: /

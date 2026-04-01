@@ -82,11 +82,9 @@ async function reloadSessInfo() {
 		await api.reloadSessInfo();
 		loadingSessInfo = false;
 		sessionStorage.loadedBefore = true;
-		setLoggedinState(true);
 	} catch(e) {
 		loadingSessInfo = false;
 		sessionStorage.loadedBefore = true;
-		setLoggedinState(false);
 	}
 }
 
@@ -133,7 +131,7 @@ window.addEventListener("load", async function () {
 			api.username === undefined ||
 			api.pfp === undefined)
 	) {
-		reloadSessInfo();
+		await reloadSessInfo();
 	}
 	document.addEventListener("click", function (event) {
 		for (const func of clickhooks) {

@@ -11,6 +11,7 @@ class API {
 	#lastSeenFollowedPost;
 	#lastSeenGlobalClip;
 	#lastSeenFollowedClip;
+	#logins;
 
 	constructor() {
 		this.#session = localStorage.sess;
@@ -18,6 +19,26 @@ class API {
 		this.#pfp = localStorage.pfp || `${this.#cdn}/pfp/default.png`;
 		this.#banner = localStorage.banner;
 		this.#private = localStorage.private === "true";
+		this.#logins = [];
+		if (localStorage.logins) {
+			try {
+				this.#logins = JSON.parse(localStorage.logins);
+			} catch (e) {
+				this.#logins = [];
+			}
+		} else {
+			// Logins not initialized, add current session if it exists
+			if (this.loggedIn) {
+				this.#logins.push({
+					session: this.#session,
+					username: this.#username,
+					pfp: this.#pfp,
+					banner: this.#banner,
+					private: this.#private
+				});
+				localStorage.logins = JSON.stringify(this.#logins);
+			}
+		}
 	}
 
 	get host() {
@@ -49,11 +70,19 @@ class API {
 	}
 
 	get defaultBannerUrl() {
-		return `${api.cdn}/banner/default.png.thumb.webp`;
+		return `${this.#cdn}/banner/default.png.thumb.webp`;
 	}
 
 	get loggedIn() {
 		return this.#session !== undefined;
+	}
+
+	get authCreds() {
+		return this.#config.authCreds;
+	}
+
+	get oauthWallOfShame() {
+		return this.#config.oauthWallOfShame;
 	}
 
 	/**
@@ -70,6 +99,8 @@ class API {
 	 */
 	async init() {
 		this.#config = await (await fetch("/config/config.json")).json();
+		// Special case to use the current origin for the STiBaRC OAuth redirect URI
+		this.#config.authCreds.stibarc.authorize = `${window.location.origin}/oauth/authorize`;
 		this.#host = this.#config.apiHost;
 		this.#cdn = this.#config.cdn;
 	}
@@ -226,13 +257,28 @@ class API {
 		this.#session = responseJSON.session;
 		this.#username = username;
 		this.#pfp = `${this.#cdn}/pfp/default.png`;
+		this.#banner = this.defaultBannerUrl;
+		this.#private = false;
 		localStorage.sess = this.#session;
 		localStorage.username = this.#username;
 		localStorage.pfp = this.#pfp;
+		localStorage.banner = this.#banner;
+		localStorage.private = this.#private;
+		// Add to logins
+		this.#logins.push({
+			session: this.#session,
+			username: this.#username,
+			pfp: this.#pfp,
+			banner: this.#banner,
+			private: this.#private
+		});
+		localStorage.logins = JSON.stringify(this.#logins);
 		return {
 			session: this.#session,
 			username: this.#username,
-			pfp: this.#pfp
+			pfp: this.#pfp,
+			banner: this.#banner,
+			private: this.#private
 		};
 	}
 
@@ -244,6 +290,10 @@ class API {
 	 * @returns {Promise<object>} The session key, username, and profile picture
 	 */
 	async login(username, password, totpCode) {
+		// Check if the user is already logged in with the same username
+		if (this.#logins.some(login => login.username === username)) {
+			throw new Error("Already logged in with this username");
+		}
 		let response;
 		try {
 			response = await fetch(`${this.#host}/v4/login.sjs`, {
@@ -293,6 +343,17 @@ class API {
 		localStorage.pfp = this.#pfp;
 		localStorage.banner = this.#banner;
 		localStorage.private = this.#private;
+
+		// Add to logins
+		this.#logins.push({
+			session: this.#session,
+			username: this.#username,
+			pfp: this.#pfp,
+			banner: this.#banner,
+			private: this.#private
+		});
+		localStorage.logins = JSON.stringify(this.#logins);
+
 		return {
 			session: this.#session,
 			username: this.#username,
@@ -307,6 +368,10 @@ class API {
 	 * 
 	 */
 	deleteSession() {
+		// Remove from logins, if it exists
+		this.#logins = this.#logins.filter(login => login.session !== this.#session);
+		localStorage.logins = JSON.stringify(this.#logins);
+
 		delete localStorage.sess;
 		delete localStorage.username;
 		delete localStorage.pfp;
@@ -321,9 +386,11 @@ class API {
 
 	/**
 	 * Logs out the user
+	 * @param {string} session The session to log out. If not provided, logs out the current session.
+	 * @param {boolean} deleteSession Whether to delete the session after logging out. Defaults to true.
 	 * @returns {Promise<void>}
 	 */
-	async logout() {
+	async logout(session = this.#session, deleteSession = true) {
 		let response;
 		try {
 			response = await fetch(`${this.#host}/v4/logout.sjs`, {
@@ -332,7 +399,7 @@ class API {
 					"Content-Type": "application/json"
 				},
 				body: JSON.stringify({
-					session: this.#session
+					session: session
 				})
 			});
 		} catch (e) {
@@ -350,7 +417,13 @@ class API {
 			// TODO: Show popup
 			throw new Error("Failed to logout");
 		}
-		this.deleteSession();
+		if (deleteSession) {
+			this.deleteSession();
+		} else {
+			// Remove from logins, if it exists
+			this.#logins = this.#logins.filter(login => login.session !== session);
+			localStorage.logins = JSON.stringify(this.#logins);
+		}
 	}
 
 	/**
@@ -385,6 +458,32 @@ class API {
 			// TODO: Show popup
 			throw new Error("Failed to logout");
 		}
+		// Remove from logins, if it exists
+		this.#logins = this.#logins.filter(login => login.session !== session);
+		localStorage.logins = JSON.stringify(this.#logins);
+	}
+
+	/**
+	 * Switches to a different session. Used for the session switcher in settings. Will not switch if the session is invalid.
+	 * @param {string} username The username of the session to switch to
+	 */
+	async switchUser(username) {
+		const login = this.#logins.find(login => login.username === username);
+		if (!login) {
+			return;
+		}
+		this.#session = login.session;
+		this.#username = login.username;
+		this.#pfp = login.pfp;
+		this.#banner = login.banner;
+		this.#private = login.private;
+		localStorage.sess = this.#session;
+		localStorage.username = this.#username;
+		localStorage.pfp = this.#pfp;
+		localStorage.banner = this.#banner;
+		localStorage.private = this.#private;
+		await reloadSessInfo(); // This is the one from global.js, not the one in this class
+		setLoggedinState(true);
 	}
 
 	/**
@@ -1304,6 +1403,53 @@ class API {
 					throw new Error("Failed to post comment");
 			}
 		}
+	}
+
+	/**
+	 * Gets linked accounts
+	 * @param {string} username The username of the user to get linked accounts for
+	 * @param {boolean} showHidden Whether to show hidden accounts
+	 * @returns {Promise<object[]>} List of linked accounts
+	 */
+	async getLinkedAccounts(username, showHidden = false) {
+		let response;
+		try {
+			response = await fetch(`${this.#host}/v4/accountlinking/getlinkedaccounts.sjs`, {
+				method: "post",
+				headers: {
+					"Content-Type": "application/json"
+				},
+				body: JSON.stringify({
+					session: this.#session,
+					username,
+					showHidden
+				})
+			});
+		} catch (e) {
+			// TODO: Show popup
+			throw new Error("Failed to fetch linked accounts");
+		}
+		let responseJSON;
+		try {
+			responseJSON = await response.json();
+		} catch (e) {
+			throw new Error("Failed to parse linked accounts response");
+		}
+		if (responseJSON.status !== "ok") {
+			switch (responseJSON.errorCode) {
+				case "unf":
+					throw new Error("User not found");
+				case "banned":
+				case "is":
+					// TODO: Show popup
+					this.deleteSession();
+					throw new Error("Invalid session");
+				default:
+					// TODO: Show popup
+					throw new Error("Failed to fetch linked accounts");
+			}
+		}
+		return responseJSON.linkedAccounts;
 	}
 
 	/**

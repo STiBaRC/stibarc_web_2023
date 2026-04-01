@@ -1,0 +1,11 @@
+main {
+	height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+#callback-container {
+	width: calc(100vw - 40px);
+	max-width: 480px;
+}

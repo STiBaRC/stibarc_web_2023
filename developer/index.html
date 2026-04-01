@@ -19,6 +19,7 @@
 	<script type="module" src="/components/Footer.js"></script>
 	<script type="module" src="/components/LoginModal.js"></script>
 	<script type="module" src="/components/RegisterModal.js"></script>
+	<script type="module" src="/components/SwitchAccountModal.js"></script>
 	<script type="module" src="/components/Icon.js"></script>
 	<script type="module" src="/developer/DeveloperAppComponent.js"></script>
 	<script src="/developer/developer.js"></script>
@@ -28,6 +29,7 @@
 	<stibarc-header></stibarc-header>
 	<stibarc-login-modal></stibarc-login-modal>
 	<stibarc-register-modal></stibarc-register-modal>
+	<stibarc-switchaccount-modal></stibarc-switchaccount-modal>
 	<main>
 
 		<div class="flexcontainer flexcolumn">
@@ -72,6 +74,11 @@
 				<input type="text" id="appiconurl" placeholder="App icon URL"><br><br>
 				<label for="appdescription">App description:</label><br>
 				<textarea id="appdescription" placeholder="App description"></textarea><br><br>
+				<label for="apptype">App OAuth type:</label><br>
+				<input type="radio" id="apptypepublic" name="apptype" value="public" checked>
+				<label for="apptypepublic">Public</label><br>
+				<input type="radio" id="apptypeconfidential" name="apptype" value="confidential">
+				<label for="apptypeconfidential">Confidential</label><br><br>
 				<div class="flexcontainer flexrow">
 					<button id="submitcreateapp" class="button primary" disabled>Create</button>
 					<button id="cancelcreateapp" class="button">Cancel</button>

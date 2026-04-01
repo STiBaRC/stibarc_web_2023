@@ -12,18 +12,20 @@
 	<link href="https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@300;400&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="/css/themes/default.css" id="theme">
 	<link rel="stylesheet" href="/css/global.css">
-	<link rel="stylesheet" href="/oauth/oauth.css">
+	<link rel="stylesheet" href="/oauth/authorize/oauth.css">
 	<script src="/js/API.js"></script>
 	<script src="/js/global.js"></script>
 	<script type="module" src="/components/LoginModal.js"></script>
 	<script type="module" src="/components/RegisterModal.js"></script>
+	<script type="module" src="/components/SwitchAccountModal.js"></script>
 	<script type="module" src="/components/Icon.js"></script>
-	<script src="/oauth/oauth.js"></script>
+	<script src="/oauth/authorize/oauth.js"></script>
 </head>
 
 <body>
 	<stibarc-login-modal></stibarc-login-modal>
 	<stibarc-register-modal></stibarc-register-modal>
+	<stibarc-switchaccount-modal></stibarc-switchaccount-modal>
 	<main>
 		<div class="flexcontainer flexcolumn block" id="oauth-container">
 			<h2>Authorize External App</h2>
@@ -34,6 +36,13 @@
 			<p id="app-description">Loading...</p>
 			<span>Would like access to:</span>
 			<ul id="scope-list"></ul>
+			<div id="user-info" class="flexcontainer flexcolumn hidden">
+				<span class="flexcontainer flexrow">
+					You are logged in as <img id="pfp" class="small-pfp" src="" alt="User icon" /> <strong id="user-name">Loading...</strong>.
+				</span>
+				<a href="#" id="switch-account-link">Switch account</a>
+			</div>
+			<span>&nbsp;</span>
 			<div class="flexcontainer">
 				<button class="button primary" id="authorize-button" disabled>Authorize</button>
 				<button class="button" id="cancel-button">Cancel</button>

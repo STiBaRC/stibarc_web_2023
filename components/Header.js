@@ -264,6 +264,7 @@ class HeaderComponent extends HTMLElement {
 					<a class="menuElement" id="menusettings" href="/settings.html">Settings</a>
 					<div class="separator"></div>
 					<a class="menuElement" id="menuprofile"></a>
+					<button class="menuElement" id="switchaccount">Switch Account</button>
 					<button class="menuElement red" id="menulogout">Logout</button>
 				</div>
 			</span>
@@ -365,9 +366,24 @@ class HeaderComponent extends HTMLElement {
 			document.querySelector("stibarc-register-modal").show();
 		});
 
+		this.shadow.querySelector("#switchaccount").addEventListener("click", () => {
+			document.querySelector("stibarc-switchaccount-modal").show();
+		});
+
+		if (this.getAttribute("disable-profile-switching") !== null) {
+			this.shadow.querySelector("#switchaccount").style.display = "none";
+		}
+
 		this.shadow.querySelector("#menulogout").addEventListener("click", async () => {
 			await api.logout();
-			setLoggedinState(false);
+			// Switch to the first remaining session if there are multiple sessions
+			const logins = localStorage.logins ? JSON.parse(localStorage.logins) : [];
+			if (logins.length > 0) {
+				await api.switchUser(logins[0].username);
+				setLoggedinState(true);
+			} else {
+				setLoggedinState(false);
+			}
 		});
 
 		listatehooks.push((loggedIn) => {

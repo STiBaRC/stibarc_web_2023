@@ -25,7 +25,7 @@
 </head>
 
 <body>
-	<stibarc-header></stibarc-header>
+	<stibarc-header disable-profile-switching></stibarc-header>
 	<stibarc-login-modal></stibarc-login-modal>
 	<stibarc-register-modal></stibarc-register-modal>
 	<main>
@@ -75,8 +75,17 @@
 							<label>Client ID</label>
 							<code id="clientid"></code>
 							<label>Client secret</label>
-							<i>Not used yet, will be used for "code" OAuth grant when implemented.</i>
+							<i>Used for "code" OAuth grant.</i>
 							<code id="clientsecret"></code>
+							<label>Client type</label>
+							<span>
+								<input id="clienttypepublic" type="radio" name="clienttype" value="public">
+								<label for="clienttypepublic"> Public - must use implicit grant</label>
+							</span>
+							<span>
+								<input id="clienttypeconfidential" type="radio" name="clienttype" value="confidential">
+								<label for="clienttypeconfidential"> Confidential - must use code grant</label>
+							</span>
 							<label>Callback URLs</label>
 							<div id="callbackurls"></div>
 							<button class="button" id="addcallbackurl">Add Callback URL</button>

@@ -1,0 +1,21 @@
+{
+	"client_id": "https://april.stibarc.com/config/bluesky-client-metadata.json",
+	"application_type": "web",
+	"grant_types": ["authorization_code", "refresh_token"],
+	"scope": "atproto rpc:app.bsky.actor.getProfile?aud=did:web:api.bsky.app#bsky_appview",
+	"response_types": ["code"],
+	"redirect_uris": [
+		"https://stibarc.com/oauth/callback?provider=bluesky",
+		"https://www.stibarc.com/oauth/callback?provider=bluesky",
+		"https://april.stibarc.com/oauth/callback?provider=bluesky"
+	],
+	"dpop_bound_access_tokens": true,
+	"client_name": "STiBaRC Account Linking",
+	"client_uri": "https://april.stibarc.com",
+	"logo_uri": "https://april.stibarc.com/img/icon.png",
+	"tos_uri": "https://april.stibarc.com/tos.html",
+	"policy_uri": "https://april.stibarc.com/privacy.html",
+	"token_endpoint_auth_method": "private_key_jwt",
+	"token_endpoint_auth_signing_alg": "ES265",
+	"jwks_uri": "https://stibarc-api-batch-dev.prod01.cloud.stibarc.com/jwks.json"
+}
