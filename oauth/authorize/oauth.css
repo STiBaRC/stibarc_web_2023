@@ -31,3 +31,13 @@ p {
 #scope-list {
 	width: calc(100% - 40px);
 }
+
+.small-pfp {
+	background-color: var(--color1);
+	width: 25px;
+	height: 25px;
+	border-radius: 50%;
+	margin-left: 7px;
+	margin-right: 7px;
+	text-indent: -10000px;
+}

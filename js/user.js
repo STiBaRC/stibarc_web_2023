@@ -201,6 +201,131 @@ window.addEventListener("load", async () => {
 		}
 		return;
 	}
+
+	// Get and populate the account linking information
+	api.getLinkedAccounts(username).then(linkedAccounts => {
+		if (linkedAccounts.length > 0) {
+			// Populate entries
+			const container = document.createDocumentFragment();
+			linkedAccounts.forEach(account => {
+				const accountLink = document.createElement("span");
+				accountLink.classList.add("flexcontainer", "flexrow", "width100", "leftalign");
+				accountLink.style.marginBottom = "5px";
+
+				const serviceNameSpan = document.createElement("span");
+				serviceNameSpan.style.fontWeight = "bold";
+				let serviceName = api.authCreds[account.servicename]?.name;
+				if (account.protocol === "oauth2_mastodon") {
+					serviceName = `Mastodon - ${account.servicename}`; // For Mastodon, the servicename is the instance URL, so show that instead of looking up a name
+				}
+				serviceNameSpan.textContent = serviceName || account.servicename;
+
+				const border = document.createElement("span");
+				border.textContent = " | ";
+				border.style.margin = "0 5px";
+
+				const accountName = document.createElement("span");
+				accountName.style.fontStyle = "italic";
+				accountName.textContent = account.externalusername;
+
+				if (account.externaluserlink !== null) {
+					const link = document.createElement("a");
+					link.href = account.externaluserlink;
+					link.textContent = account.externalusername;
+					link.target = "_blank";
+					accountName.textContent = "";
+					accountName.appendChild(link);
+				}
+
+				accountLink.appendChild(serviceNameSpan);
+				accountLink.appendChild(border);
+				accountLink.appendChild(accountName);
+
+				if (account.externalextra?.verified || (account.servicename === "bluesky" && account.externalextra?.verification?.verifiedStatus === "valid")) {
+					const icon = document.createElement("stibarc-icon");
+					icon.setAttribute("name", "verified");
+					icon.setAttribute("type", "verifiedBadge");
+					icon.setAttribute("title", "Verified Account");
+					icon.classList.add("verifiedBadge");
+					accountName.appendChild(icon);
+				}
+
+				container.appendChild(accountLink);
+
+				// Service-specific extra stuff
+				if (account.servicename === "peeringdb") {
+					// Show all networks associated with the account (if any)
+					for (const network of account.externalextra.networks) {
+						// Add separator bar
+						const blogBorder = document.createElement("span");
+						blogBorder.textContent = " | ";
+						blogBorder.style.margin = "0 5px";
+						accountLink.appendChild(blogBorder);
+						// Add network link
+						const networkLink = document.createElement("a");
+						networkLink.href = `https://bgp.tools/as/${network.asn}`;
+						networkLink.textContent = `AS${network.asn} (${network.name})`;
+						networkLink.target = "_blank";
+						accountLink.appendChild(networkLink);
+					}
+				}
+				if (account.servicename === "tumblr") {
+					// Add all blogs associated with the account (if any)
+					for (const blog of account.externalextra) {
+						// Add separator bar
+						const blogBorder = document.createElement("span");
+						blogBorder.textContent = " | ";
+						blogBorder.style.margin = "0 5px";
+						accountLink.appendChild(blogBorder);
+						// Add blog link
+						const blogLink = document.createElement("a");
+						blogLink.href = blog.blog_url;
+						blogLink.textContent = blog.blog_title;
+						blogLink.target = "_blank";
+						accountLink.appendChild(blogLink);
+					}
+				}
+				if (account.servicename === "stackexchange") {
+					// List all associated accounts on different SE sites
+					for (const site of account.externalextra) {
+						// Add separator bar
+						const siteBorder = document.createElement("span");
+						siteBorder.textContent = " | ";
+						siteBorder.style.margin = "0 5px";
+						accountLink.appendChild(siteBorder);
+
+						// Site names are HTML-encoded, so decode them before displaying
+						// Yet another example of StackOverflow's bads
+						const parser = new DOMParser();
+						const decodedSiteName = parser.parseFromString(site.site_name, "text/html").documentElement.textContent;
+
+						// Add site link
+						const siteLink = document.createElement("a");
+						siteLink.href = site.user_link;
+						siteLink.textContent = decodedSiteName;
+						siteLink.target = "_blank";
+						accountLink.appendChild(siteLink);
+					}
+				}
+			});
+			$("#linkedaccountslist").appendChild(container);
+
+			// Show the linked accounts link
+			$("#linkedaccountsnsbsp").classList.remove("hidden");
+			$("#linkedaccounts").classList.remove("hidden");
+
+			// Add event listener to open the linked accounts modal
+			$("#linkedaccounts").addEventListener("click", () => {
+				$("#linkedaccountsmodal").showModal();
+			});
+
+			// Add event listener to close the linked accounts modal
+			$("#linkedaccountsclose").addEventListener("click", () => {
+				$("#linkedaccountsmodal").close();
+			});
+		}
+	});
+
 	if (user.verified) $("#userverified").classList.remove("hidden");
 	$("#userpfp").setAttribute("src", user.pfp);
 	$("#userpfp").classList.add("pointer");

@@ -3,7 +3,7 @@
 
 <head>
 	<meta charset="utf-8" />
-	<title>404 | STiBaRC</title>
+	<title>Account Linking Leaderboard | STiBaRC</title>
 	<link rel="manifest" href="/manifest.json" />
 	<meta name="viewport" content="initial-scale=1, maximum-scale=5, user-scalable=yes, width=device-width">
 	<link rel="icon" type="image/png" href="/img/icon.png">
@@ -12,21 +12,15 @@
 	<link href="https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@300;400&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="/css/themes/default.css" id="theme">
 	<link rel="stylesheet" href="/css/global.css">
+	<link rel="stylesheet" href="/accountlinking/leaderboard.css">
 	<script src="/js/API.js"></script>
 	<script src="/js/global.js"></script>
+	<script type="module" src="/components/Header.js"></script>
+	<script type="module" src="/components/Footer.js"></script>
 	<script type="module" src="/components/LoginModal.js"></script>
 	<script type="module" src="/components/RegisterModal.js"></script>
 	<script type="module" src="/components/SwitchAccountModal.js"></script>
-	<script type="module" src="/components/Header.js"></script>
-	<script type="module" src="/components/Footer.js"></script>
-	<script>
-		window.addEventListener("load", async function () {
-			await waitForGlobalInit();
-			if (this.sessionStorage.loadedBefore === "true" || !api.loggedIn) {
-				setLoggedinState(api.loggedIn);
-			}
-		});
-	</script>
+	<script src="/accountlinking/leaderboard.js"></script>
 </head>
 
 <body>
@@ -34,17 +28,21 @@
 	<stibarc-login-modal></stibarc-login-modal>
 	<stibarc-register-modal></stibarc-register-modal>
 	<stibarc-switchaccount-modal></stibarc-switchaccount-modal>
-	<main class="flexcontainer flexcolumn">
-		<span class="verticalspacer"></span>
-		<span class="block flexcontainer flexcolumn">
-			<span>Uh oh! He tried his best, but Jim🅱o just couldn't find the resource you were looking for... :-(</span>
-			<img src="/img/jimbo_sad.png" alt="Jim🅱o frowning" style="max-width: 15vh; margin: 20px 0;">
-		</span>
+	<main>
+		<h2>Account Linking Leaderboard</h2>
+		<table id="leaderboard">
+			<thead>
+				<tr>
+					<th>User</th>
+					<th>Score</th>
+					<th>Linked Accounts</th>
+				</tr>
+			</thead>
+			<tbody>
+			</tbody>
+		</table>
 	</main>
 	<stibarc-footer></stibarc-footer>
-	<span id="overlay" class="hidden">
-		<span id="overlaybg"></span>
-	</span>
 </body>
 
 </html>

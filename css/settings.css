@@ -83,6 +83,14 @@
 	justify-content: center;
 }
 
+#linkedServices {
+	display: block;
+}
+
+#linkedServicesMobile {
+	display: none;
+}
+
 @media only screen and (max-width: 700px) {
 	.sidebar {
 		width: 35%;
@@ -90,6 +98,14 @@
 
 	.sideContent {
 		width: 65%;
+	}
+
+	#linkedServices {
+		display: none;
+	}
+
+	#linkedServicesMobile {
+		display: flex;
 	}
 }
 

@@ -17,6 +17,7 @@
 	<script src="/js/global.js"></script>
 	<script type="module" src="/components/LoginModal.js"></script>
 	<script type="module" src="/components/RegisterModal.js"></script>
+	<script type="module" src="/components/SwitchAccountModal.js"></script>
 	<script type="module" src="/components/Header.js"></script>
 	<script type="module" src="/components/Footer.js"></script>
 	<script type="module" src="/components/Icon.js"></script>
@@ -30,6 +31,7 @@
 	<stibarc-header></stibarc-header>
 	<stibarc-login-modal></stibarc-login-modal>
 	<stibarc-register-modal></stibarc-register-modal>
+	<stibarc-switchaccount-modal></stibarc-switchaccount-modal>
 	<main class="flexcontainer flexcolumn">
 		<span class="verticalspacer"></span>
 		<span class="block flexcontainer flexcolumn">
@@ -58,6 +60,8 @@
 				<a id="followers" href="#">Followers: Loading...</a>
 				<span>&nbsp;&nbsp;</span>
 				<a id="following" href="#">Following: Loading...</a>
+				<span id="linkedaccountsnsbsp" class="hidden">&nbsp;&nbsp;</span>
+				<a id="linkedaccounts" class="hidden" href="#">Linked Accounts</a>
 			</span>
 		</span>
 		<span id="clips" class="flexcontainer hidden"></span>
@@ -73,6 +77,15 @@
 				<div id="followingerslist" class="width100"></div>
 				<span class="flexcontainer marginbottom">
 					<button id="followingersclose" class="button">Close</button>
+				</span>
+			</div>
+		</dialog>
+		<dialog id="linkedaccountsmodal">
+			<div class="flexcontainer flexcolumn">
+				<h2>Linked Accounts</h2>
+				<div id="linkedaccountslist" class="width100 flexcontainer flexcolumn"></div>
+				<span class="flexcontainer marginbottom">
+					<button id="linkedaccountsclose" class="button">Close</button>
 				</span>
 			</div>
 		</dialog>

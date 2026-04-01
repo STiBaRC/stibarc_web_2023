@@ -193,6 +193,7 @@ async function loadClips(feed) {
 }
 
 window.addEventListener("load", async function () {
+	await waitForGlobalInit();
 	if (new URLSearchParams(location.search).get("id")) {
 		$("#newclip").classList.add("hidden");
 		const clipId = new URLSearchParams(location.search).get("id");

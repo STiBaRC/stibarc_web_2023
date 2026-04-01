@@ -201,6 +201,11 @@ window.addEventListener("load", async () => {
 	$("#clientid").textContent = appDetails.id;
 	$("#clientsecret").textContent = appDetails.secret;
 	$("#confirmdeleteinput").setAttribute("placeholder", appDetails.name);
+	if (appDetails.applicationtype === "public") {
+		$("#clienttypepublic").checked = true;
+	} else if (appDetails.applicationtype === "confidential") {
+		$("#clienttypeconfidential").checked = true;
+	}
 
 	$("#appname").addEventListener("input", () => {
 		appDetails.name = $("#appname").value;
@@ -217,7 +222,6 @@ window.addEventListener("load", async () => {
 	});
 
 	reloadCallbackUrls(appDetails);
-
 	$("#addcallbackurl").addEventListener("click", () => {
 		appDetails.callbackurls.push("");
 		reloadCallbackUrls(appDetails);
@@ -259,6 +263,7 @@ window.addEventListener("load", async () => {
 				icon: appDetails.icon,
 				callbackURLs: appDetails.callbackurls,
 				webhooks: appDetails.webhooks,
+				applicationType: document.querySelector('input[name="clienttype"]:checked').value,
 				session: api.session
 			})
 		});

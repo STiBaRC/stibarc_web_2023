@@ -1,4 +1,262 @@
 {
-	"apiHost": "https://api-dev.stibarc.com",
-	"cdn": "https://cdn-dev.stibarc.com"
+	"apiHost": "https://api-april.prod01.cloud.stibarc.com",
+	"cdn": "https://cdn-april.prod01.cloud.stibarc.com",
+	"oauthWallOfShame": {
+		"Apple": "Makes you go through a convoluted process of generating your client secret that involves using a private key and a JWT, which has to be rotated every six months. Did not implement.",
+		"Discogs and Plurk": "For the love of god, please support OAuth 2.0... OAuth 1.0a was the bane of my existence, there's a reason 2.0 exists.",
+		"LinkedIn and Microsoft": "Does not allow URL paramters in the redirect URL, requiring me to make a custom endpoint.",
+		"Reddit": "Used to allow you to freely create OAuth applications, changed the policy the day before I was going to do it. Now it requires you to contact support if your use case cannot be created in their \"Devvit\" platform, where your request will be swiftly and automatically rejected with no explanation, regardless of if your use case is legitimate.",
+		"StackOverflow": "Too lazy to include the api_site_parameter value for associated accounts, requiring me to fetch and cache the list of all StackExchange sites on a daily basis and look them up from there by site_url. A completely unnecessary and avoidable step if they'd just include that one extra return value in the associated accounts response.",
+		"TikTok": "Uses client_key instead of client_id in authorize URL. Uses commas to separate scopes instead of spaces. Does not allow URL paramters in the redirect URL, requiring me to make a custom endpoint.",
+		"Twitter": "Previously worked during testing, but changed to a pay-per-use plan during development that made it cost $0.01 per API call to identify the logged in user. Their platform is not worth even a single penny, so it was removed from the list. Would have deducted points from the leaderboard if you had it linked. Does not allow URL paramters in the redirect URL, requiring me to make a custom endpoint."
+	},
+	"authCreds": {
+		"amazon": {
+			"name": "Amazon",
+			"clientId": "amzn1.application-oa2-client.0c54d81466fc4b2fb2a9d0f330cae49d",
+			"authorize": "https://www.amazon.com/ap/oa",
+			"scope": "profile",
+			"redirectUrl": "/oauth/callback?provider=amazon",
+			"protocol": "oauth2",
+			"pkceSupported": true
+		},
+		"battlenet": {
+			"name": "Battle.net",
+			"clientId": "806494ad65444ac2aade2b738ec071cf",
+			"authorize": "https://oauth.battle.net/authorize",
+			"scope": "openid",
+			"redirectUrl": "/oauth/callback?provider=battlenet",
+			"protocol": "oauth2",
+			"pkceSupported": true
+		},
+		"bluesky": {
+			"name": "Bluesky",
+			"clientId": "https://april.stibarc.com/config/bluesky-client-metadata.json",
+			"scope": "atproto rpc:app.bsky.actor.getProfile?aud=did:web:api.bsky.app#bsky_appview",
+			"redirectUrl": "/oauth/callback?provider=bluesky",
+			"protocol": "oauth2_bsky",
+			"pkceSupported": true
+		},
+		"deviantart": {
+			"name": "DeviantArt",
+			"clientId": "57478",
+			"authorize": "https://www.deviantart.com/oauth2/authorize",
+			"scope": "user",
+			"redirectUrl": "/oauth/callback?provider=deviantart",
+			"protocol": "oauth2",
+			"pkceSupported": true
+		},
+		"discogs": {
+			"name": "Discogs",
+			"clientId": "PsOZKpRQNukQcXkwCQyF",
+			"authorize": "https://www.discogs.com/oauth/authorize",
+			"redirectUrl": "/oauth/callback?provider=discogs",
+			"protocol": "oauth1"
+		},
+		"discord": {
+			"name": "Discord",
+			"clientId": "1441905915640156160",
+			"authorize": "https://discord.com/oauth2/authorize",
+			"scope": "identify",
+			"redirectUrl": "/oauth/callback?provider=discord",
+			"protocol": "oauth2",
+			"pkceSupported": true
+		},
+		"facebook": {
+			"name": "Facebook",
+			"clientId": "854634470445139",
+			"authorize": "https://www.facebook.com/v24.0/dialog/oauth",
+			"scope": "public_profile",
+			"redirectUrl": "/oauth/callback?provider=facebook",
+			"protocol": "oauth2",
+			"pkceSupported": true
+		},
+		"github": {
+			"name": "GitHub",
+			"clientId": "Ov23li32ixlYr0rdzRbe",
+			"authorize": "https://github.com/login/oauth/authorize",
+			"scope": "read:user",
+			"redirectUrl": "/oauth/callback?provider=github",
+			"protocol": "oauth2",
+			"pkceSupported": true
+		},
+		"gitlab": {
+			"name": "GitLab",
+			"clientId": "289ad9aba2b9c218f195e0cd5ab546c5de4546ee07394f8ec74b753c4daf4b82",
+			"authorize": "https://gitlab.com/oauth/authorize",
+			"scope": "read_user openid profile",
+			"redirectUrl": "/oauth/callback?provider=gitlab",
+			"protocol": "oauth2",
+			"pkceSupported": true
+		},
+		"google": {
+			"name": "Google",
+			"clientId": "520436959838-mdgu91r7e5v2dv58o7ol9vqiv36739lj.apps.googleusercontent.com",
+			"authorize": "https://accounts.google.com/o/oauth2/v2/auth",
+			"scope": "openid profile",
+			"redirectUrl": "/oauth/callback?provider=google",
+			"protocol": "oauth2",
+			"pkceSupported": true,
+			"extraParams": {
+				"access_type": "offline",
+				"prompt": "consent"
+			}
+		},
+		"linkedin": {
+			"name": "LinkedIn",
+			"clientId": "78qat4nm4fdqyk",
+			"authorize": "https://www.linkedin.com/oauth/v2/authorization",
+			"scope": "openid profile",
+			"redirectUrl": "/oauth/linkedin_callback",
+			"protocol": "oauth2"
+		},
+		"mastodon": {
+			"name": "Mastodon",
+			"protocol": "oauth2_mastodon",
+			"pkceSupported": true
+		},
+		"microsoft": {
+			"name": "Microsoft",
+			"clientId": "345a3cd3-a545-4ad2-ad5e-ef50d11afe71",
+			"authorize": "https://login.microsoftonline.com/common/oauth2/v2.0/authorize",
+			"scope": "openid profile user.read offline_access",
+			"redirectUrl": "/oauth/microsoft_callback",
+			"protocol": "oauth2",
+			"pkceSupported": true
+		},
+		"musicbrainz": {
+			"name": "MusicBrainz",
+			"clientId": "jOWZ0YZEKlYSPCiHPLBB9V2qGuFwY_jF",
+			"authorize": "https://musicbrainz.org/oauth2/authorize",
+			"scope": "profile",
+			"redirectUrl": "/oauth/callback?provider=musicbrainz",
+			"protocol": "oauth2",
+			"pkceSupported": true,
+			"extraParams": {
+				"access_type": "offline"
+			}
+		},
+		"openstreetmap": {
+			"name": "OpenStreetMap",
+			"clientId": "IS_vDqbSSqDqNmCXtwjamAZG6IhhDRnh-1I5K_UciG8",
+			"authorize": "https://www.openstreetmap.org/oauth2/authorize",
+			"scope": "openid",
+			"redirectUrl": "/oauth/callback?provider=openstreetmap",
+			"protocol": "oauth2",
+			"pkceSupported": true
+		},
+		"orcid": {
+			"name": "ORCiD",
+			"clientId": "APP-NJXBZLH2WLTUD8J5",
+			"authorize": "https://orcid.org/oauth/authorize",
+			"scope": "openid",
+			"redirectUrl": "/oauth/callback?provider=orcid",
+			"protocol": "oauth2",
+			"pkceSupported": true
+		},
+		"peeringdb": {
+			"name": "PeeringDB",
+			"clientId": "8U3W8xlpNvbSHKC6HFBAyc90uNnaAdYzyoQbtWpa",
+			"authorize": "https://auth.peeringdb.com/oauth2/authorize/",
+			"scope": "openid profile networks",
+			"redirectUrl": "/oauth/callback?provider=peeringdb",
+			"protocol": "oauth2",
+			"pkceSupported": true
+		},
+		"plurk": {
+			"name": "Plurk",
+			"clientId": " nZbpQ4Jex8H9",
+			"authorize": "https://www.plurk.com/OAuth/authorize",
+			"redirectUrl": "/oauth/callback?provider=plurk",
+			"protocol": "oauth1"
+		},
+		"roblox": {
+			"name": "ROBLOX",
+			"clientId": "7012168733930011726",
+			"authorize": "https://apis.roblox.com/oauth/v1/authorize",
+			"scope": "openid profile",
+			"redirectUrl": "/oauth/callback?provider=roblox",
+			"protocol": "oauth2",
+			"pkceSupported": true
+		},
+		"stackexchange": {
+			"name": "StackExchange",
+			"clientId": "35634",
+			"authorize": "https://stackoverflow.com/oauth",
+			"scope": "private_info no_expiry",
+			"redirectUrl": "/oauth/callback?provider=stackexchange",
+			"protocol": "oauth2",
+			"pkceSupported": true
+		},
+		"stibarc": {
+			"name": "STiBaRC",
+			"clientId": "6e3928b4c58084d6c70a94c94f92edcc",
+			"authorize": "https://april.stibarc.com/oauth/authorize",
+			"scope": "openid profile",
+			"redirectUrl": "/oauth/callback?provider=stibarc",
+			"protocol": "oauth2",
+			"pkceSupported": false
+		},
+		"tiktok": {
+			"name": "TikTok",
+			"clientId": "sbawrve4yj0q2376dc",
+			"authorize": "https://www.tiktok.com/v2/auth/authorize",
+			"scope": "user.info.basic,user.info.profile",
+			"redirectUrl": "/oauth/tiktok_callback",
+			"protocol": "oauth2",
+			"pkceSupported": true,
+			"extraParams": {
+				"client_key": "sbawrve4yj0q2376dc",
+				"disable_auto_auth": "1"
+			}
+		},
+		"tumblr": {
+			"name": "Tumblr",
+			"clientId": "QltWMpztDrG4H6r283y7eu9cc4a09rpjSZrzvcJ6v5YOhSfaZZ",
+			"authorize": "https://www.tumblr.com/oauth2/authorize",
+			"scope": "basic offline_access",
+			"redirectUrl": "/oauth/callback?provider=tumblr",
+			"protocol": "oauth2",
+			"pkceSupported": true
+		},
+		"twitch": {
+			"name": "Twitch",
+			"clientId": "v9vtov1r1qdpt1hcu6kid9j8utrah1",
+			"authorize": "https://id.twitch.tv/oauth2/authorize",
+			"scope": "openid",
+			"redirectUrl": "/oauth/callback?provider=twitch",
+			"protocol": "oauth2",
+			"pkceSupported": true,
+			"extraParams": {
+				"claims": "{\"id_token\": {\"preferred_username\"}}"
+			}
+		},
+		"wordpress": {
+			"name": "Wordpress",
+			"clientId": "128655",
+			"authorize": "https://public-api.wordpress.com/oauth2/authenticate",
+			"scope": "auth",
+			"redirectUrl": "/oauth/callback?provider=wordpress",
+			"protocol": "oauth2",
+			"pkceSupported": true
+		},
+		"worldcubeassociation": {
+			"name": "World Cube Association",
+			"clientId": "HSNAC8MmnxudMp47F9DtWREA20Toh2RWJAnUhBCVtBY",
+			"authorize": "https://www.worldcubeassociation.org/oauth/authorize",
+			"scope": "openid profile public",
+			"redirectUrl": "/oauth/callback?provider=worldcubeassociation",
+			"protocol": "oauth2",
+			"pkceSupported": true
+		},
+		"yahoo": {
+			"name": "Yahoo!",
+			"clientId": "dj0yJmk9dWxqeEVuSGFIU2dNJmQ9WVdrOVZsbGtWRmw0VVhjbWNHbzlNQT09JnM9Y29uc3VtZXJzZWNyZXQmc3Y9MCZ4PWE2",
+			"authorize": "https://api.login.yahoo.com/oauth2/request_auth",
+			"scope": "openid profile",
+			"redirectUrl": "/oauth/callback?provider=yahoo",
+			"protocol": "oauth2",
+			"pkceSupported": true
+		}
+	}
 }

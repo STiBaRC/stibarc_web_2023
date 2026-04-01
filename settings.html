@@ -17,10 +17,12 @@
 	<script src="/js/global.js"></script>
 	<script type="module" src="/components/LoginModal.js"></script>
 	<script type="module" src="/components/RegisterModal.js"></script>
+	<script type="module" src="/components/SwitchAccountModal.js"></script>
 	<script type="module" src="/components/Header.js"></script>
 	<script type="module" src="/components/Footer.js"></script>
 	<script src="/components/Icon.js"></script>
 	<script src="/components/SessionBlock.js"></script>
+	<script src="/components/AccountLinkingBlock.js"></script>
 	<script src="/js/settings.js"></script>
 </head>
 
@@ -28,6 +30,7 @@
 	<stibarc-header></stibarc-header>
 	<stibarc-login-modal></stibarc-login-modal>
 	<stibarc-register-modal></stibarc-register-modal>
+	<stibarc-switchaccount-modal></stibarc-switchaccount-modal>
 	<main class="flexcontainer flexcolumn">
 		<span class="verticalspacer"></span>
 		<span class="contentWithSidebar block">
@@ -40,6 +43,7 @@
 					<li class="" id="tab-display"><span>Display</span></li>
 					<li class="" id="tab-security"><span>Security</span></li>
 					<li class="" id="tab-sessions"><span>Sessions</span></li>
+					<li class="" id="tab-account-linking"><span>Account Linking</span></li>
 					<li class="" id="tab-experiments"><span>Experiments</span></li>
 				</ul>
 			</span>
@@ -66,6 +70,27 @@
 					<span class="tabContent hidden" id="tabContent-sessions">
 						<h2 class="flexcontainer width100 marginbottom">Sessions</h2>
 						<div id="sessions"></div>
+					</span>
+					<span class="tabContent hidden width100" id="tabContent-account-linking">
+						<h2 class="flexcontainer width100 marginbottom">Account Linking</h2>
+						<div class="width100">
+							<a href="/accountlinking/leaderboard.html">View the Account Linking Leaderboard</a>
+							<details>
+								<summary>Add a new service</summary>
+								<div id="newServices">
+
+								</div>
+							</details>
+							<details>
+								<summary>Wall of Shame</summary>
+								<div id="oauthwallofshame">
+
+								</div>
+							</details>
+							<h3>Linked Services</h3>
+							<div id="linkedServices"></div>
+							<div id="linkedServicesMobile" class="flexcontainer flexcolumn width100"></div>
+						</div>
 					</span>
 					<span class="tabContent hidden" id="tabContent-experiments">
 						<h2 class="flexcontainer width100 marginbottom">Experiments</h2>
@@ -148,6 +173,38 @@
 					<span class="flexcontainer">
 						<button id="disabletfasubmitbutton" class="button primary">Disable 2FA</button>
 						<button id="disabletfacancel" class="button">Cancel</button>
+					</span>
+				</div>
+			</span>
+		</span>
+		<span id="mastodoninstanceformcontainer" class="hidden flexcontainer flexcolumn formcontainer">
+			<span id="mastodoninstanceform" class="block modal">
+				<div class="flexcontainer flexcolumn">
+					<h2>Link Your Mastodon Account</h2>
+					<p>
+						In order to link your Mastodon account, we need to know which instance you belong to.
+					</p>
+					<input id="mastodoninstance" placeholder="mastodon.social" type="text" autocapitalize="none" autocorrect="off" spellcheck="false">
+					<span>&nbsp;</span>
+					<span class="flexcontainer">
+						<button id="mastodoninstancesubmitbutton" class="button primary" disabled>Link Account</button>
+						<button id="mastodoninstancecancel" class="button">Cancel</button>
+					</span>
+				</div>
+			</span>
+		</span>
+		<span id="blueskyformcontainer" class="hidden flexcontainer flexcolumn formcontainer">
+			<span id="blueskyform" class="block modal">
+				<div class="flexcontainer flexcolumn">
+					<h2>Link Your Bluesky Account</h2>
+					<p>
+						In order to link your Bluesky account, we need to know your Bluesky handle.
+					</p>
+					<input id="blueskyusername" placeholder="username.bsky.social" type="text" autocapitalize="none" autocorrect="off" spellcheck="false">
+					<span>&nbsp;</span>
+					<span class="flexcontainer">
+						<button id="blueskysubmitbutton" class="button primary" disabled>Link Account</button>
+						<button id="blueskycancel" class="button">Cancel</button>
 					</span>
 				</div>
 			</span>

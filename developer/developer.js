@@ -11,6 +11,9 @@ window.addEventListener("load", async function () {
 		$("#appiconurl").value = "";
 		$("#appdescription").value = "";
 		$("#appdescription").textContent = "";
+		$("input[name='apptype']").forEach(input => input.checked = false);
+		$("#apptypepublic").checked = true;
+		$("#submitcreateapp").setAttribute("disabled", "true");
 	});
 
 	$("#appname").addEventListener("input", function (e) {
@@ -40,7 +43,8 @@ window.addEventListener("load", async function () {
 				name: appName,
 				icon: appIconURL,
 				description: appDescription,
-				session: api.session
+				session: api.session,
+				applicationType: document.querySelector('input[name="apptype"]:checked').value
 			})
 		});
 
@@ -54,7 +58,7 @@ window.addEventListener("load", async function () {
 
 			const apps = await api.getApps();
 			$("#app-list").classList.remove("loading");
-			console.log(apps)
+			$("#app-list").textContent = "";
 
 			if (apps.length === 0) {
 				const noApps = document.createElement("div");
