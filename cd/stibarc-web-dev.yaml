@@ -16,6 +16,24 @@ spec:
   persistentVolumeReclaimPolicy: Retain
 
 ---
+# Well-known persistent storage
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: stibarc-web-dev-well-known-storage
+spec:
+  capacity:
+    storage: 8Mi
+  accessModes:
+    - ReadWriteMany
+  mountOptions:
+    - nfsvers=4.1
+  nfs:
+    path: /srv/kubernetes/stibarc-web-dev-well-known
+    server: 10.0.0.8
+  persistentVolumeReclaimPolicy: Retain
+
+---
 # Config persistent volume claim
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -28,6 +46,20 @@ spec:
     requests:
       storage: 512Mi
   volumeName: stibarc-web-dev-config-storage
+
+---
+# Well-known persistent volume claim
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: stibarc-web-dev-well-known-storage-claim
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 8Mi
+  volumeName: stibarc-web-dev-well-known-storage
 
 ---
 # Deployment
@@ -55,6 +87,8 @@ spec:
         volumeMounts:
         - mountPath: /var/www/web/config
           name: stibarc-web-dev-config-storage
+        - mountPath: /var/www/web/.well-known
+          name: stibarc-web-dev-well-known-storage
         resources:
           requests:
             memory: "256Mi"
@@ -95,6 +129,9 @@ spec:
       - name: stibarc-web-dev-config-storage
         persistentVolumeClaim:
           claimName: stibarc-web-dev-config-storage-claim
+      - name: stibarc-web-dev-well-known-storage
+        persistentVolumeClaim:
+          claimName: stibarc-web-dev-well-known-storage-claim
 
 ---
 # Service

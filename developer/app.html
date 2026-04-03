@@ -86,6 +86,11 @@
 								<input id="clienttypeconfidential" type="radio" name="clienttype" value="confidential">
 								<label for="clienttypeconfidential"> Confidential - must use code grant</label>
 							</span>
+							<label>JWT Signing Algorithm</label>
+							<select id="jwtsigningalg" class="input width100">
+								<option value="ES256">ES256</option>
+								<option value="RS256">RS256</option>
+							</select>
 							<label>Callback URLs</label>
 							<div id="callbackurls"></div>
 							<button class="button" id="addcallbackurl">Add Callback URL</button>
