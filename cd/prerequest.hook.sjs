@@ -12,7 +12,8 @@ const sjs = require("sprucehttp_sjs");
 			"Allow": "GET, HEAD, OPTIONS",
 			"Access-Control-Allow-Origin": "*",
 			"Access-Control-Allow-Methods": "GET, HEAD, OPTIONS",
-			"Access-Control-Allow-Headers": "*"
+			"Access-Control-Allow-Headers": "*",
+			"Content-Type": "application/json"
 		};
 		await sjs.updateConfig(siteConfig);
 	}
