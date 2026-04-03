@@ -7,7 +7,10 @@ window.addEventListener("load", async function () {
 		for (const entry of data.leaderboard) {
 			const tr = document.createElement("tr");
 			const usernameTd = document.createElement("td");
-			usernameTd.textContent = entry.username;
+			const usernameLink = document.createElement("a");
+			usernameLink.href = `/user.html?username=${encodeURIComponent(entry.username)}`;
+			usernameLink.textContent = entry.username;
+			usernameTd.appendChild(usernameLink);
 			tr.appendChild(usernameTd);
 			const scoreTd = document.createElement("td");
 			scoreTd.textContent = entry.score;
