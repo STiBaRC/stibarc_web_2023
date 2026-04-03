@@ -5,10 +5,19 @@
 	"authCreds": {
 		"stibarc": {
 			"name": "STiBaRC",
+			"clientId": "4e7323afdfa120edfd457146b972bdd4",
+			"authorize": "https://stibarc.com/oauth/authorize",
+			"scope": "openid profile",
+			"redirectUrl": "/oauth/callback?provider=stibarc",
+			"protocol": "oauth2",
+			"pkceSupported": false
+		},
+		"stibarc_dev": {
+			"name": "STiBaRC (Dev)",
 			"clientId": "6e3928b4c58084d6c70a94c94f92edcc",
 			"authorize": "https://dev.stibarc.com/oauth/authorize",
 			"scope": "openid profile",
-			"redirectUrl": "/oauth/callback?provider=stibarc",
+			"redirectUrl": "/oauth/callback?provider=stibarc_dev",
 			"protocol": "oauth2",
 			"pkceSupported": false
 		}
