@@ -99,8 +99,10 @@ class API {
 	 */
 	async init() {
 		this.#config = await (await fetch("/config/config.json")).json();
-		// Special case to use the current origin for the STiBaRC OAuth redirect URI
-		this.#config.authCreds.stibarc.authorize = `${window.location.origin}/oauth/authorize`;
+		if (this.#config.authCreds.stibarc) {
+			// Special case to use the current origin for the STiBaRC OAuth redirect URI
+			this.#config.authCreds.stibarc.authorize = `${window.location.origin}/oauth/authorize`;
+		}
 		this.#host = this.#config.apiHost;
 		this.#cdn = this.#config.cdn;
 	}
