@@ -435,6 +435,7 @@ hr,
 	max-height: 100vh;
 	max-width: 100%;
 	cursor: pointer;
+	text-decoration: none;
 	transition: background-color 0.2s ease-out;
 }
 

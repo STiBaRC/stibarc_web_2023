@@ -69,9 +69,9 @@ class ClipComponent extends HTMLElement {
 		<div id="clip">
 			<video id="video" loop></video>
 			<stibarc-icon name="play" size="iconVeryBig" id="playicon" color="white"></stibarc-icon>
-			<div id="bottomui" class="flexcontainer leftalign fadeout">
-				<div id="metadata" class="flexcontainer leftalign flexcolumn flexgrow">
-					<div class="flexcontainer leftalign width100">
+			<div id="bottomui" class="leftalign fadeout">
+				<div id="metadata" class="leftalign flexcolumn flexgrow">
+					<div class="leftalign width100">
 						<a id="userLink" class="flexcontainer">
 							<img id="pfp" class="pfp" width="55px"></img>
 							<span id="username"></span>
@@ -79,7 +79,7 @@ class ClipComponent extends HTMLElement {
 						<stibarc-icon id="verified" type="verifiedBadge" name="verified" class="verifiedBadge hidden" title="Verified"></stibarc-icon>
 						<span id="pronouns" class="pronouns"></span>
 					</div>
-					<div class="flexcontainer leftalign width100" style="flex-direction: column;">
+					<div class="leftalign width100" style="flex-direction: column;">
 						<span id="date" class="leftalign width100"></span>
 						<span id="description" class="leftalign width100"></span>
 					</div>
