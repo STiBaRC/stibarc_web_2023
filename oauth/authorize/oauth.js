@@ -88,18 +88,6 @@ window.addEventListener("load", async function () {
 	let implicitGrant = false;
 	if (responseTypes.includes("token")) implicitGrant = true;
 
-	// Check response_type
-	if (searchParams.get("response_type") === null) {
-		const params = {
-			error: "invalid_request",
-			error_description: "Missing response_type",
-			state: state
-		};
-		let hashParams = params;
-		let queryParams = params;
-		window.location.href = buildRedirectUri(redirectUri, hashParams, queryParams);
-	}
-
 	if (scopes.includes("all")) scopes = ["post", "comment", "vote", "editprofile", "viewprivate", "readcontent"];
 	if (scopes.includes("authorize")) scopes = ["authorize"];
 
@@ -115,31 +103,6 @@ window.addEventListener("load", async function () {
 		profile: "Access your basic profile information (username, icon, etc.)",
 		email: "Access your email address"
 	};
-
-	const fragment = document.createDocumentFragment();
-	for (const scope of scopes) {
-		const scopeDetails = validScopes[scope];
-		if (scopeDetails === undefined) {
-			// Invalid scope
-			const params = {
-				error: "invalid_scope",
-				error_description: `Invalid scope: ${scope}`,
-				state: state
-			};
-			let hashParams = {};
-			let queryParams = params;
-			if (implicitGrant) {
-				hashParams = params;
-				queryParams = {};
-			}
-			window.location.href = buildRedirectUri(redirectUri, hashParams, queryParams);
-			return;
-		}
-		const scopeElement = document.createElement("li");
-		scopeElement.textContent = scopeDetails;
-		fragment.appendChild(scopeElement);
-	}
-	$("#scope-list").appendChild(fragment);
 
 	let currentListener = null;
 	listatehooks.push((listate) => {
@@ -182,6 +145,43 @@ window.addEventListener("load", async function () {
 	}
 
 	const appDetails = await appDetailsReq.json();
+
+	const fragment = document.createDocumentFragment();
+	for (const scope of scopes) {
+		const scopeDetails = validScopes[scope];
+		if (scopeDetails === undefined) {
+			// Invalid scope
+			const params = {
+				error: "invalid_scope",
+				error_description: `Invalid scope: ${scope}`,
+				state: state
+			};
+			let hashParams = {};
+			let queryParams = params;
+			if (implicitGrant) {
+				hashParams = params;
+				queryParams = {};
+			}
+			window.location.href = buildRedirectUri(redirectUri, hashParams, queryParams);
+			return;
+		}
+		const scopeElement = document.createElement("li");
+		scopeElement.textContent = scopeDetails;
+		fragment.appendChild(scopeElement);
+	}
+	$("#scope-list").appendChild(fragment);
+
+	// Check response_type
+	if (searchParams.get("response_type") === null) {
+		const params = {
+			error: "invalid_request",
+			error_description: "Missing response_type",
+			state: state
+		};
+		let hashParams = params;
+		let queryParams = params;
+		window.location.href = buildRedirectUri(redirectUri, hashParams, queryParams);
+	}
 
 	if (redirectUri === null) {
 		// No redirect URI provided, use the first one from the list
