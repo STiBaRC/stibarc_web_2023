@@ -89,7 +89,7 @@ window.addEventListener("load", async function () {
 	if (responseTypes.includes("token")) implicitGrant = true;
 
 	// Check response_type
-	if (responseTypes.length === 0) {
+	if (searchParams.get("response_type") === null) {
 		const params = {
 			error: "invalid_request",
 			error_description: "Missing response_type",
