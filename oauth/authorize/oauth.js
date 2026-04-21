@@ -80,13 +80,25 @@ window.addEventListener("load", async function () {
 	$("#authorize-button").disabled = true;
 
 	const searchParams = new URLSearchParams(window.location.search);
-	const responseTypes = searchParams.get("response_type").split(" ");
+	const responseTypes = (searchParams.get("response_type") ?? "").split(" ");
 	const clientId = searchParams.get("client_id");
 	let redirectUri = searchParams.get("redirect_uri");
 	const state = searchParams.get("state");
 	let scopes = (searchParams.get("scope") ?? "").split(" ");
 	let implicitGrant = false;
 	if (responseTypes.includes("token")) implicitGrant = true;
+
+	// Check response_type
+	if (responseTypes.length === 0) {
+		const params = {
+			error: "invalid_request",
+			error_description: "Missing response_type",
+			state: state
+		};
+		let hashParams = params;
+		let queryParams = params;
+		window.location.href = buildRedirectUri(redirectUri, hashParams, queryParams);
+	}
 
 	if (scopes.includes("all")) scopes = ["post", "comment", "vote", "editprofile", "viewprivate", "readcontent"];
 	if (scopes.includes("authorize")) scopes = ["authorize"];
