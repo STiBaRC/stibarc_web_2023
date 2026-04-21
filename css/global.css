@@ -339,6 +339,9 @@ stibarc-icon {
 	opacity: 0.75;
 	overflow-x: auto;
 	max-width: 100%;
+	display: inline-flex;
+	align-items: center;
+	vertical-align: middle;
 }
 
 .pfpnm {
@@ -435,6 +438,7 @@ hr,
 	max-height: 100vh;
 	max-width: 100%;
 	cursor: pointer;
+	text-decoration: none;
 	transition: background-color 0.2s ease-out;
 }
 
