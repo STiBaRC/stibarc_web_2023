@@ -146,6 +146,11 @@ window.addEventListener("load", async function () {
 
 	const appDetails = await appDetailsReq.json();
 
+	if (redirectUri === null) {
+		// No redirect URI provided, use the first one from the list
+		redirectUri = appDetails.application.callbackurls[0];
+	}
+
 	const fragment = document.createDocumentFragment();
 	for (const scope of scopes) {
 		const scopeDetails = validScopes[scope];
@@ -181,11 +186,6 @@ window.addEventListener("load", async function () {
 		let hashParams = params;
 		let queryParams = params;
 		window.location.href = buildRedirectUri(redirectUri, hashParams, queryParams);
-	}
-
-	if (redirectUri === null) {
-		// No redirect URI provided, use the first one from the list
-		redirectUri = appDetails.application.callbackurls[0];
 	}
 
 	$("#app-icon").src = appDetails.application.icon;
