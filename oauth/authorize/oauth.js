@@ -18,7 +18,7 @@ function buildRedirectUri(redirectUri, hashParams, queryParams) {
 	return redirect.toString();
 }
 
-async function loggedInOnClick(clientId, responseTypes, redirectUri, scopes, state) {
+async function loggedInOnClick(clientId, responseTypes, redirectUri, scopes, state, nonce) {
 	let implicitGrant = false;
 	if (responseTypes.includes("token")) implicitGrant = true;
 
@@ -32,7 +32,8 @@ async function loggedInOnClick(clientId, responseTypes, redirectUri, scopes, sta
 			response_type: responseTypes.join(" "),
 			client_id: clientId,
 			redirect_uri: redirectUri,
-			scope: scopes.join(" ")
+			scope: scopes.join(" "),
+			nonce: nonce ? nonce : crypto.randomUUID()
 		}).toString()
 	});
 	const data = await response.json();
@@ -84,6 +85,7 @@ window.addEventListener("load", async function () {
 	const clientId = searchParams.get("client_id");
 	let redirectUri = searchParams.get("redirect_uri");
 	const state = searchParams.get("state");
+	const nonce = searchParams.get("nonce");
 	let scopes = (searchParams.get("scope") ?? "").split(" ");
 	let implicitGrant = false;
 	if (responseTypes.includes("token")) implicitGrant = true;
@@ -119,7 +121,7 @@ window.addEventListener("load", async function () {
 				$("#authorize-button").removeEventListener("click", currentListener);
 			} catch(e) {}
 			currentListener = async () => {
-				await loggedInOnClick(clientId, responseTypes, redirectUri, scopes, state);
+				await loggedInOnClick(clientId, responseTypes, redirectUri, scopes, state, nonce);
 			};
 			$("#authorize-button").addEventListener("click", currentListener);
 			$("#pfp").src = api.pfp;
