@@ -83,7 +83,7 @@ class SessionBlockComponent extends HTMLElement {
 			</p>
 			<div class="bottomFlex">
 				<div class="flexgrow">
-					<span>Applications: </span>
+					<span>Application: </span>
 					<span id="application"></span>
 				</div>
 				<button class="button light danger small" id="delete" title="Revoke Session">Revoke</button>
