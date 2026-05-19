@@ -189,8 +189,12 @@ function constructFollowingers(listname) {
 
 window.addEventListener("load", async () => {
 	await waitForGlobalInit();
-	document.title = `${username} | STiBaRC`;
-	$("#userusername").textContent = username;
+
+	let displayUsername = username;
+	if (displayUsername.length > maxUsernameLength) displayUsername = `${displayUsername.substring(0, maxUsernameLength)}`;
+
+	document.title = `${displayUsername} | STiBaRC`;
+	$("#userusername").textContent = displayUsername;
 
 	setLoggedinState(api.loggedIn);
 
