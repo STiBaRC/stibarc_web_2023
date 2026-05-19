@@ -1,7 +1,9 @@
 let tfaEnabled = false;
 
 async function updateInfo() {
-	$("#userusername").textContent = api.username;
+	let displayUsername = api.username;
+	if (displayUsername > maxUsernameLength) displayUsername = `${displayUsername.substring(0, maxUsernameLength)}...`;
+	$("#userusername").textContent = displayUsername;
 	const user = await api.getPrivateData();
 	$("#userpfp").setAttribute("src", user.pfp);
 	$("#userPfpLoader").classList.remove("loading");
@@ -108,10 +110,10 @@ window.addEventListener("load", async () => {
 			bio: $("#bioinput").value,
 			displayBio: $("#showbio").checked
 		});
-		location.href = `user.html?username=${api.username}`;
+		location.href = `user.html?username=${encodeURIComponent(api.username)}`;
 	});
 	$("#cancel").addEventListener("click", () => {
-		location.href = `user.html?username=${api.username}`;
+		location.href = `user.html?username=${encodeURIComponent(api.username)}`;
 	});
 	$("#privateaccount").addEventListener("click", async () => {
 		if (api.private) {

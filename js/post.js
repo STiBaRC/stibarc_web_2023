@@ -149,11 +149,15 @@ window.addEventListener("load", async function () {
 				break;
 		}
 	}
+
+	let displayUsername = post.poster.username;
+	if (displayUsername > maxUsernameLength) displayUsername = `${displayUsername.substring(0, maxUsernameLength)}...`;
+
 	document.title = `${post.title} | STiBaRC`;
 	$("#posttitle").textContent = post.title;
-	$("#postuserlink").setAttribute("href", `/user.html?id=${post.poster.username}`);
+	$("#postuserlink").setAttribute("href", `/user.html?id=${encodeURIComponent(post.poster.username)}`);
 	$("#postpfp").setAttribute("src", post.poster.pfp);
-	$("#postusername").textContent = post.poster.username;
+	$("#postusername").textContent = displayUsername;
 	if (post.poster.verified) $("#postverified").classList.remove("hidden");
 	if (post.poster.pronouns) {
 		$("#pronouns").textContent = `(${post.poster.pronouns})`;

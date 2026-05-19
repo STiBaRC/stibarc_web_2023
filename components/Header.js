@@ -408,8 +408,10 @@ class HeaderComponent extends HTMLElement {
 					"src",
 					api.pfp || `${api.cdn}/pfp/default.png`
 				);
-				menuprofile.textContent = api.username;
-				menuprofile.setAttribute("href", `/user.html?username=${api.username}`);
+				let displayUsername = api.username;
+				if (displayUsername > maxUsernameLength) displayUsername = `${displayUsername.substring(0, maxUsernameLength)}...`;
+				menuprofile.textContent = displayUsername;
+				menuprofile.setAttribute("href", `/user.html?username=${encodeURIComponent(api.username)}`);
 			} else {
 				mypfp.setAttribute(
 					"src",

@@ -19,10 +19,12 @@ window.addEventListener("load", function() {
 		const evt = document.createElement("i");
 		evt.classList.add("width100", "sysnotif");
 		evt.setAttribute("title", new Date().toLocaleString());
+		let displayUsername = data.username;
+		if (displayUsername > maxUsernameLength) displayUsername = `${displayUsername.substring(0, maxUsernameLength)}...`;
 		if (data.event === "join") {
-			evt.textContent = `${data.username} joined the chat.`;
+			evt.textContent = `${displayUsername} joined the chat.`;
 		} else if (data.event === "leave") {
-			evt.textContent = `${data.username} left the chat.`;
+			evt.textContent = `${displayUsername} left the chat.`;
 		}
 		$("#chatmessages").append(evt);
 		$("#chatmessages").scrollTop = $("#chatmessages").scrollHeight;
@@ -46,7 +48,9 @@ window.addEventListener("load", function() {
 					const evt = document.createElement("i");
 					evt.classList.add("width100", "sysnotif");
 					evt.setAttribute("title", new Date(msg.time).toLocaleString());
-					evt.textContent = `${msg.username} joined the chat.`;
+					let displayUsername = msg.username;
+					if (displayUsername > maxUsernameLength) displayUsername = `${displayUsername.substring(0, maxUsernameLength)}...`;
+					evt.textContent = `${displayUsername} joined the chat.`;
 					$("#chatmessages").append(evt);
 					break;
 				}
@@ -56,7 +60,9 @@ window.addEventListener("load", function() {
 					const evt = document.createElement("i");
 					evt.classList.add("width100", "sysnotif");
 					evt.setAttribute("title", new Date(msg.time).toLocaleString());
-					evt.textContent = `${msg.username} left the chat.`;
+					let displayUsername = msg.username;
+					if (displayUsername > maxUsernameLength) displayUsername = `${displayUsername.substring(0, maxUsernameLength)}...`;
+					evt.textContent = `${displayUsername} left the chat.`;
 					$("#chatmessages").append(evt);
 					break;
 				}

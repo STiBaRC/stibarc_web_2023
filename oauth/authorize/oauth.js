@@ -117,6 +117,9 @@ window.addEventListener("load", async function () {
 			$("#authorize-button").addEventListener("click", currentListener);
 			$("#user-info").classList.add("hidden");
 		} else {
+			let displayUsername = api.username;
+			if (displayUsername > maxUsernameLength) displayUsername = `${displayUsername.substring(0, maxUsernameLength)}...`;
+
 			try {
 				$("#authorize-button").removeEventListener("click", currentListener);
 			} catch(e) {}
@@ -125,7 +128,7 @@ window.addEventListener("load", async function () {
 			};
 			$("#authorize-button").addEventListener("click", currentListener);
 			$("#pfp").src = api.pfp;
-			$("#user-name").textContent = api.username ?? "Loading...";
+			$("#user-name").textContent = displayUsername ?? "Loading...";
 			$("#user-info").classList.remove("hidden");
 		}
 	});

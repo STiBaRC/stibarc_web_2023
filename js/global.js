@@ -10,6 +10,7 @@ let api = new API();
 const listatehooks = [];
 const clickhooks = [];
 const maxTitleLength = 250;
+const maxUsernameLength = 100;
 let loadingSessInfo = false;
 
 /*
@@ -118,8 +119,10 @@ if (
 			"src",
 			api.pfp || `${api.cdn}/pfp/default.png`
 		);
-		$("#menuprofile").textContent = api.username;
-		$("#menuprofile").href = `/user.html?username=${api.username}`;
+		let displayUsername = api.username;
+		if (displayUsername > maxUsernameLength) displayUsername = `${displayUsername.substring(0, maxUsernameLength)}...`;
+		$("#menuprofile").textContent = displayUsername;
+		$("#menuprofile").href = `/user.html?username=${encodeURIComponent(api.username)}`;
 	}
 }
 

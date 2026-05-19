@@ -71,9 +71,12 @@ class SwitchAccountModalComponent extends HTMLElement {
 		const fragment = document.createDocumentFragment();
 		let logins = localStorage.logins ? JSON.parse(localStorage.logins) : [];
 		for (const login of logins) {
+			let displayUsername = login.username;
+			if (displayUsername > maxUsernameLength) displayUsername = `${displayUsername.substring(0, maxUsernameLength)}...`;
+
 			const clone = this.#template.content.cloneNode(true);
 			clone.querySelector("#pfp").src = login.pfp || `${api.cdn}/pfp/default.png`;
-			clone.querySelector("#username").textContent = login.username;
+			clone.querySelector("#username").textContent = displayUsername;
 			const switchButton = clone.querySelector("#switch");
 			switchButton.addEventListener("click", async () => {
 				switchButton.disabled = true;

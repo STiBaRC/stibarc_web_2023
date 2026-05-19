@@ -26,9 +26,12 @@ class UserBlockComponent extends HTMLElement {
 		this.shadow = this.attachShadow({ mode: "closed" });
 		this.shadow.innerHTML = this.#shadowDomHTML;
 
-		this.shadow.querySelector("#userLink").setAttribute("href", `/user.html?username=${this.user.username}`);
+		let displayUsername = this.user.username;
+		if (displayUsername > maxUsernameLength) displayUsername = `${displayUsername.substring(0, maxUsernameLength)}...`;
+
+		this.shadow.querySelector("#userLink").setAttribute("href", `/user.html?username=${encodeURIComponent(this.user.username)}`);
 		this.shadow.querySelector("#pfp").setAttribute("src", this.user.pfp);
-		this.shadow.querySelector("#username").textContent = this.user.username;
+		this.shadow.querySelector("#username").textContent = displayUsername;
 		if (this.user.verified) this.shadow.querySelector("#verified").classList.remove("hidden");
 		this.shadow.querySelector("#pronouns").setAttribute("title", `Pronouns (${this.user.pronouns})`);
 		if (this.user.pronouns) this.shadow.querySelector("#pronouns").textContent = `(${this.user.pronouns})`;

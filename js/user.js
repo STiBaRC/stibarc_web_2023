@@ -10,7 +10,7 @@ async function followAction() {
 
 	$("#followbutton").classList.remove("loading");
 	if (response === "followed") {
-		user.followers.push({ username: api.username });
+		user.followers.push({ username: api.username, pfp: api.pfp });
 		$("#followbutton").textContent = "Unfollow";
 	} else if (response === "requested") {
 		$("#followbutton").textContent = "Pending";
@@ -38,16 +38,19 @@ function constructFollowingers(listname) {
 		const img = document.createElement("img");
 		const name = document.createElement("a");
 
+		let displayUsername = list[i].username;
+		if (displayUsername > maxUsernameLength) displayUsername = `${displayUsername.substring(0, maxUsernameLength)}...`;
+
 		img.setAttribute("src", list[i].pfp);
 		img.setAttribute("alt", list[i].username);
 		img.setAttribute("title", list[i].username);
 		img.classList.add("pfp");
-		name.textContent = list[i].username;
-		name.setAttribute("href", `/user.html?username=${list[i].username}`);
+		name.textContent = displayUsername;
+		name.setAttribute("href", `/user.html?username=${encodeURIComponent(list[i].username)}`);
 
 		leftcontainer.classList.add("pointer", "flexcontainer", "leftalign");
 		leftcontainer.addEventListener("click", () => {
-			window.open(`/user.html?username=${list[i].username}`, "_self");
+			window.open(`/user.html?username=${encodeURIComponent(list[i].username)}`, "_self");
 		});
 		leftcontainer.appendChild(img);
 		leftcontainer.appendChild(name);
@@ -93,6 +96,9 @@ function constructFollowingers(listname) {
 			const pendingList = user.pendingFollowers;
 			const pending = document.createDocumentFragment();
 			for (let i in pendingList) {
+				let displayUsername = pendingList[i].username;
+				if (displayUsername > maxUsernameLength) displayUsername = `${displayUsername.substring(0, maxUsernameLength)}...`;
+
 				const followinger = document.createElement("div");
 				followinger.classList.add("followinger", "flexcontainer");
 				const leftcontainer = document.createElement("span");
@@ -103,12 +109,12 @@ function constructFollowingers(listname) {
 				img.setAttribute("alt", pendingList[i].username);
 				img.setAttribute("title", pendingList[i].username);
 				img.classList.add("pfp");
-				name.textContent = pendingList[i].username;
-				name.setAttribute("href", `/user.html?username=${pendingList[i].username}`);
+				name.textContent = displayUsername;
+				name.setAttribute("href", `/user.html?username=${encodeURIComponent(pendingList[i].username)}`);
 
 				leftcontainer.classList.add("pointer", "flexcontainer", "leftalign");
 				leftcontainer.addEventListener("click", () => {
-					window.open(`/user.html?username=${pendingList[i].username}`, "_self");
+					window.open(`/user.html?username=${encodeURIComponent(pendingList[i].username)}`, "_self");
 				});
 				leftcontainer.appendChild(img);
 				leftcontainer.appendChild(name);

@@ -73,9 +73,12 @@ class CommentBlockComponent extends HTMLElement {
 		this.shadow = this.attachShadow({ mode: "closed" });
 		this.shadow.innerHTML = this.#shadowDomHTML;
 
-		this.shadow.querySelector("#userLink").setAttribute("href", `/user.html?username=${this.comment.poster.username}`);
+		let displayUsername = this.comment.poster.username;
+		if (displayUsername > maxUsernameLength) displayUsername = `${displayUsername.substring(0, maxUsernameLength)}...`;
+
+		this.shadow.querySelector("#userLink").setAttribute("href", `/user.html?username=${encodeURIComponent(this.comment.poster.username)}`);
 		this.shadow.querySelector("#pfp").setAttribute("src", this.comment.poster.pfp);
-		this.shadow.querySelector("#username").textContent = this.comment.poster.username;
+		this.shadow.querySelector("#username").textContent = displayUsername;
 		if (this.comment.poster.verified) this.shadow.querySelector("#verified").classList.remove("hidden");
 		this.shadow.querySelector("#pronouns").setAttribute("title", `Pronouns (${this.comment.poster.pronouns})`);
 		if (this.comment.poster.pronouns) this.shadow.querySelector("#pronouns").textContent = `(${this.comment.poster.pronouns})`;

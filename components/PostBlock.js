@@ -63,13 +63,15 @@ class PostBlockComponent extends HTMLElement {
 		this.shadow.innerHTML = this.#shadowDomHTML;
 
 		let title = this.post.title;
-		if (this.post.title.length > maxTitleLength) title = `${this.post.title.substring(0, maxTitleLength)}...`;
+		if (this.post.title.length > maxTitleLength) title = `${title.substring(0, maxTitleLength)}...`;
+		let displayUsername = this.post.poster.username;
+		if (displayUsername > maxUsernameLength) displayUsername = `${displayUsername.substring(0, maxUsernameLength)}...`;
 
 		this.shadow.querySelector("#titleLink").setAttribute("href", `/post.html?id=${this.post.id}`);
 		this.shadow.querySelector("#titleLink").textContent = title;
-		this.shadow.querySelector("#userLink").setAttribute("href", `/user.html?username=${this.post.poster.username}`);
+		this.shadow.querySelector("#userLink").setAttribute("href", `/user.html?username=${encodeURIComponent(this.post.poster.username)}`);
 		this.shadow.querySelector("#pfp").setAttribute("src", this.post.poster.pfp);
-		this.shadow.querySelector("#username").textContent = this.post.poster.username;
+		this.shadow.querySelector("#username").textContent = displayUsername;
 		if (this.post.poster.verified) this.shadow.querySelector("#verified").classList.remove("hidden");
 		this.shadow.querySelector("#pronouns").setAttribute("title", `Pronouns (${this.post.poster.pronouns})`);
 		if (this.post.poster.pronouns) this.shadow.querySelector("#pronouns").textContent = `(${this.post.poster.pronouns})`;

@@ -60,8 +60,11 @@ class AccountLinkingBlockComponent extends HTMLElement {
 			serviceNameText = this.#linkedAccount.servicename; // For Mastodon, the servicename is the instance URL, so show that instead of looking up a name
 		}
 
+		let displayUsername = this.#linkedAccount.externalusername;
+		if (displayUsername > maxUsernameLength) displayUsername = `${displayUsername.substring(0, maxUsernameLength)}...`;
+
 		serviceName.textContent = serviceNameText;
-		accountName.textContent = this.#linkedAccount.externalusername;
+		accountName.textContent = displayUsername;
 		showHideButton.textContent = this.#linkedAccount.displayonprofile ? "Hide" : "Show";
 		showHideButton.title = this.#linkedAccount.displayonprofile ? "Hide on profile" : "Show on profile";
 

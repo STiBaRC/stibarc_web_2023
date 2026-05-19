@@ -128,9 +128,12 @@ class ClipComponent extends HTMLElement {
 
 		this.#video.load();
 
+		let displayUsername = this.getAttribute("data-username");
+		if (displayUsername > maxUsernameLength) displayUsername = `${displayUsername.substring(0, maxUsernameLength)}...`;
+
 		this.shadow.querySelector("#pfp").src = this.getAttribute("data-pfp");
-		this.shadow.querySelector("#username").textContent = this.getAttribute("data-username");
-		this.shadow.querySelector("#userLink").href = `/user.html?username=${this.getAttribute("data-username")}`;
+		this.shadow.querySelector("#username").textContent = displayUsername;
+		this.shadow.querySelector("#userLink").href = `/user.html?username=${encodeURIComponent(this.getAttribute("data-username"))}`;
 		if (this.getAttribute("data-verified") == "true") this.shadow.querySelector("#verified").classList.remove("hidden");
 		this.shadow.querySelector("#pronouns").setAttribute("title", `Pronouns (${this.getAttribute("data-pronouns")})`);
 		if (this.getAttribute("data-pronouns")) this.shadow.querySelector("#pronouns").textContent = `(${this.getAttribute("data-pronouns")})`;
