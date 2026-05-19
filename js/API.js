@@ -680,7 +680,7 @@ class API {
 	 * 	displayPronouns: boolean,
 	 * 	block: boolean,
 	 * 	displayBlock: boolean
-	 * 	private: boolean,
+	 * 	privateProfile: boolean,
 	 * 	changePostVisibility: boolean
 	 * }} newUserDetails The new details of the user. All fields are optional.
 	 * @returns {Promise<void>}
