@@ -195,6 +195,7 @@ window.addEventListener("load", async () => {
 
 	document.title = `${displayUsername} | STiBaRC`;
 	$("#userusername").textContent = displayUsername;
+	$("#userusername").title = username;
 
 	setLoggedinState(api.loggedIn);
 

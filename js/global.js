@@ -10,7 +10,7 @@ let api = new API();
 const listatehooks = [];
 const clickhooks = [];
 const maxTitleLength = 250;
-const maxUsernameLength = 25;
+const maxUsernameLength = 30;
 let loadingSessInfo = false;
 
 /*
