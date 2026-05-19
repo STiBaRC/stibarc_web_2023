@@ -163,9 +163,6 @@ class CommentBlockComponent extends HTMLElement {
 			for (let i = 0; i < this.comment.attachments.length; i++) {
 				let attachment = new AttachmentBlockComponent(this.comment.attachments[i], true);
 				attachment.classList.add("postattachment");
-				attachment.addEventListener("click", () => {
-					window.open(this.comment.attachments[i], "_blank");
-				});
 				this.shadow.querySelector("#content").append(attachment);
 			}
 		}
