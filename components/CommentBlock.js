@@ -74,7 +74,7 @@ class CommentBlockComponent extends HTMLElement {
 		this.shadow.innerHTML = this.#shadowDomHTML;
 
 		let displayUsername = this.comment.poster.username;
-		if (displayUsername > maxUsernameLength) displayUsername = `${displayUsername.substring(0, maxUsernameLength)}...`;
+		if (displayUsername.length > maxUsernameLength) displayUsername = `${displayUsername.substring(0, maxUsernameLength)}...`;
 
 		this.shadow.querySelector("#userLink").setAttribute("href", `/user.html?username=${encodeURIComponent(this.comment.poster.username)}`);
 		this.shadow.querySelector("#pfp").setAttribute("src", this.comment.poster.pfp);

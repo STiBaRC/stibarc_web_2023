@@ -129,7 +129,7 @@ class ClipComponent extends HTMLElement {
 		this.#video.load();
 
 		let displayUsername = this.getAttribute("data-username");
-		if (displayUsername > maxUsernameLength) displayUsername = `${displayUsername.substring(0, maxUsernameLength)}...`;
+		if (displayUsername.length > maxUsernameLength) displayUsername = `${displayUsername.substring(0, maxUsernameLength)}...`;
 
 		this.shadow.querySelector("#pfp").src = this.getAttribute("data-pfp");
 		this.shadow.querySelector("#username").textContent = displayUsername;

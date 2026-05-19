@@ -72,7 +72,7 @@ class SwitchAccountModalComponent extends HTMLElement {
 		let logins = localStorage.logins ? JSON.parse(localStorage.logins) : [];
 		for (const login of logins) {
 			let displayUsername = login.username;
-			if (displayUsername > maxUsernameLength) displayUsername = `${displayUsername.substring(0, maxUsernameLength)}...`;
+			if (displayUsername.length > maxUsernameLength) displayUsername = `${displayUsername.substring(0, maxUsernameLength)}...`;
 
 			const clone = this.#template.content.cloneNode(true);
 			clone.querySelector("#pfp").src = login.pfp || `${api.cdn}/pfp/default.png`;

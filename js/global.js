@@ -120,7 +120,7 @@ if (
 			api.pfp || `${api.cdn}/pfp/default.png`
 		);
 		let displayUsername = api.username;
-		if (displayUsername > maxUsernameLength) displayUsername = `${displayUsername.substring(0, maxUsernameLength)}...`;
+		if (displayUsername.length > maxUsernameLength) displayUsername = `${displayUsername.substring(0, maxUsernameLength)}...`;
 		$("#menuprofile").textContent = displayUsername;
 		$("#menuprofile").href = `/user.html?username=${encodeURIComponent(api.username)}`;
 	}

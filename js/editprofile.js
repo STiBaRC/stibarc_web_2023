@@ -2,7 +2,7 @@ let tfaEnabled = false;
 
 async function updateInfo() {
 	let displayUsername = api.username;
-	if (displayUsername > maxUsernameLength) displayUsername = `${displayUsername.substring(0, maxUsernameLength)}...`;
+	if (displayUsername.length > maxUsernameLength) displayUsername = `${displayUsername.substring(0, maxUsernameLength)}...`;
 	$("#userusername").textContent = displayUsername;
 	const user = await api.getPrivateData();
 	$("#userpfp").setAttribute("src", user.pfp);

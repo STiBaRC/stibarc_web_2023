@@ -409,7 +409,7 @@ class HeaderComponent extends HTMLElement {
 					api.pfp || `${api.cdn}/pfp/default.png`
 				);
 				let displayUsername = api.username;
-				if (displayUsername > maxUsernameLength) displayUsername = `${displayUsername.substring(0, maxUsernameLength)}...`;
+				if (displayUsername.length > maxUsernameLength) displayUsername = `${displayUsername.substring(0, maxUsernameLength)}...`;
 				menuprofile.textContent = displayUsername;
 				menuprofile.setAttribute("href", `/user.html?username=${encodeURIComponent(api.username)}`);
 			} else {

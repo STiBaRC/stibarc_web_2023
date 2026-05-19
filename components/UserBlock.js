@@ -27,7 +27,7 @@ class UserBlockComponent extends HTMLElement {
 		this.shadow.innerHTML = this.#shadowDomHTML;
 
 		let displayUsername = this.user.username;
-		if (displayUsername > maxUsernameLength) displayUsername = `${displayUsername.substring(0, maxUsernameLength)}...`;
+		if (displayUsername.length > maxUsernameLength) displayUsername = `${displayUsername.substring(0, maxUsernameLength)}...`;
 
 		this.shadow.querySelector("#userLink").setAttribute("href", `/user.html?username=${encodeURIComponent(this.user.username)}`);
 		this.shadow.querySelector("#pfp").setAttribute("src", this.user.pfp);

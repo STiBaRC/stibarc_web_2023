@@ -118,7 +118,7 @@ window.addEventListener("load", async function () {
 			$("#user-info").classList.add("hidden");
 		} else {
 			let displayUsername = api.username;
-			if (displayUsername > maxUsernameLength) displayUsername = `${displayUsername.substring(0, maxUsernameLength)}...`;
+			if (displayUsername.length > maxUsernameLength) displayUsername = `${displayUsername.substring(0, maxUsernameLength)}...`;
 
 			try {
 				$("#authorize-button").removeEventListener("click", currentListener);

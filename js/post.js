@@ -151,7 +151,7 @@ window.addEventListener("load", async function () {
 	}
 
 	let displayUsername = post.poster.username;
-	if (displayUsername > maxUsernameLength) displayUsername = `${displayUsername.substring(0, maxUsernameLength)}...`;
+	if (displayUsername.length > maxUsernameLength) displayUsername = `${displayUsername.substring(0, maxUsernameLength)}...`;
 
 	document.title = `${post.title} | STiBaRC`;
 	$("#posttitle").textContent = post.title;

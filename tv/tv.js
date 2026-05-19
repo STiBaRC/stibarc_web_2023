@@ -41,7 +41,7 @@ window.addEventListener("load", async function() {
 		evt.classList.add("width100", "sysnotif");
 		evt.setAttribute("title", new Date().toLocaleString());
 		let displayUsername = data.username;
-		if (displayUsername > maxUsernameLength) displayUsername = `${displayUsername.substring(0, maxUsernameLength)}...`;
+		if (displayUsername.length > maxUsernameLength) displayUsername = `${displayUsername.substring(0, maxUsernameLength)}...`;
 		if (data.event === "join") {
 			evt.textContent = `${displayUsername} joined the chat.`;
 		} else if (data.event === "leave") {
@@ -78,7 +78,7 @@ window.addEventListener("load", async function() {
 					evt.classList.add("width100", "sysnotif");
 					evt.setAttribute("title", new Date(msg.time).toLocaleString());
 					let displayUsername = msg.username;
-					if (displayUsername > maxUsernameLength) displayUsername = `${displayUsername.substring(0, maxUsernameLength)}...`;
+					if (displayUsername.length > maxUsernameLength) displayUsername = `${displayUsername.substring(0, maxUsernameLength)}...`;
 					evt.textContent = `${displayUsername} joined the chat.`;
 					$("#chatmessages").append(evt);
 					break;
@@ -89,7 +89,7 @@ window.addEventListener("load", async function() {
 					evt.classList.add("width100", "sysnotif");
 					evt.setAttribute("title", new Date(msg.time).toLocaleString());
 					let displayUsername = msg.username;
-					if (displayUsername > maxUsernameLength) displayUsername = `${displayUsername.substring(0, maxUsernameLength)}...`;
+					if (displayUsername.length > maxUsernameLength) displayUsername = `${displayUsername.substring(0, maxUsernameLength)}...`;
 					evt.textContent = `${displayUsername} left the chat.`;
 					$("#chatmessages").append(evt);
 					break;

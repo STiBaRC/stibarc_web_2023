@@ -6,7 +6,7 @@ window.addEventListener("load", async function () {
 		const tbody = document.querySelector("#leaderboard tbody");
 		for (const entry of data.leaderboard) {
 			let displayUsername = entry.username;
-			if (displayUsername > maxUsernameLength) displayUsername = `${displayUsername.substring(0, maxUsernameLength)}...`;
+			if (displayUsername.length > maxUsernameLength) displayUsername = `${displayUsername.substring(0, maxUsernameLength)}...`;
 
 			const tr = document.createElement("tr");
 			const usernameTd = document.createElement("td");

@@ -65,7 +65,7 @@ class PostBlockComponent extends HTMLElement {
 		let title = this.post.title;
 		if (this.post.title.length > maxTitleLength) title = `${title.substring(0, maxTitleLength)}...`;
 		let displayUsername = this.post.poster.username;
-		if (displayUsername > maxUsernameLength) displayUsername = `${displayUsername.substring(0, maxUsernameLength)}...`;
+		if (displayUsername.length > maxUsernameLength) displayUsername = `${displayUsername.substring(0, maxUsernameLength)}...`;
 
 		this.shadow.querySelector("#titleLink").setAttribute("href", `/post.html?id=${this.post.id}`);
 		this.shadow.querySelector("#titleLink").textContent = title;

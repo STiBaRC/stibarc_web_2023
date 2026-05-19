@@ -61,7 +61,7 @@ class AccountLinkingBlockComponent extends HTMLElement {
 		}
 
 		let displayUsername = this.#linkedAccount.externalusername;
-		if (displayUsername > maxUsernameLength) displayUsername = `${displayUsername.substring(0, maxUsernameLength)}...`;
+		if (displayUsername.length > maxUsernameLength) displayUsername = `${displayUsername.substring(0, maxUsernameLength)}...`;
 
 		serviceName.textContent = serviceNameText;
 		accountName.textContent = displayUsername;

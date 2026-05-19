@@ -39,7 +39,7 @@ function constructFollowingers(listname) {
 		const name = document.createElement("a");
 
 		let displayUsername = list[i].username;
-		if (displayUsername > maxUsernameLength) displayUsername = `${displayUsername.substring(0, maxUsernameLength)}...`;
+		if (displayUsername.length > maxUsernameLength) displayUsername = `${displayUsername.substring(0, maxUsernameLength)}...`;
 
 		img.setAttribute("src", list[i].pfp);
 		img.setAttribute("alt", list[i].username);
@@ -97,7 +97,7 @@ function constructFollowingers(listname) {
 			const pending = document.createDocumentFragment();
 			for (let i in pendingList) {
 				let displayUsername = pendingList[i].username;
-				if (displayUsername > maxUsernameLength) displayUsername = `${displayUsername.substring(0, maxUsernameLength)}...`;
+				if (displayUsername.length > maxUsernameLength) displayUsername = `${displayUsername.substring(0, maxUsernameLength)}...`;
 
 				const followinger = document.createElement("div");
 				followinger.classList.add("followinger", "flexcontainer");
