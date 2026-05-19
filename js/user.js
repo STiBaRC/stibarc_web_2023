@@ -191,7 +191,7 @@ window.addEventListener("load", async () => {
 	await waitForGlobalInit();
 
 	let displayUsername = username;
-	if (displayUsername.length > maxUsernameLength) displayUsername = `${displayUsername.substring(0, maxUsernameLength)}`;
+	if (displayUsername.length > maxUsernameLength) displayUsername = `${displayUsername.substring(0, maxUsernameLength)}...`;
 
 	document.title = `${displayUsername} | STiBaRC`;
 	$("#userusername").textContent = displayUsername;
