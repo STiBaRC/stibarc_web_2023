@@ -3,12 +3,12 @@
 	"cdn": "https://cdn-dev.stibarc.com",
 	"oauthWallOfShame": {},
 	"authCreds": {
-		"stibarc": {
+		"stibarc_prod": {
 			"name": "STiBaRC",
 			"clientId": "4e7323afdfa120edfd457146b972bdd4",
 			"authorize": "https://stibarc.com/oauth/authorize",
 			"scope": "openid profile",
-			"redirectUrl": "/oauth/callback?provider=stibarc",
+			"redirectUrl": "/oauth/callback?provider=stibarc_prod",
 			"protocol": "oauth2",
 			"pkceSupported": false
 		},

@@ -43,6 +43,7 @@
 					<li class="" id="tab-display"><span>Display</span></li>
 					<li class="" id="tab-security"><span>Security</span></li>
 					<li class="" id="tab-sessions"><span>Sessions</span></li>
+					<li class="" id="tab-feeds"><span>Feeds</span></li>
 					<li class="" id="tab-account-linking"><span>Account Linking</span></li>
 					<li class="" id="tab-experiments"><span>Experiments</span></li>
 				</ul>
@@ -70,6 +71,28 @@
 					<span class="tabContent hidden" id="tabContent-sessions">
 						<h2 class="flexcontainer width100 marginbottom">Sessions</h2>
 						<div id="sessions"></div>
+					</span>
+					<span class="tabContent hidden width100" id="tabContent-feeds">
+						<h2 class="flexcontainer width100 marginbottom">Feeds</h2>
+						<div class="width100">
+							<h3>Generate a feed URL</h3>
+							Feed type: <select id="feedtype">
+								<option value="atom">Atom</option>
+								<option value="json">JSON Feed</option>
+								<option value="rss2">RSS 2.0</option>
+								<option value="rss1">RSS 1.0</option>
+							</select><br><br>
+							<div id="feedloggedin" class="hidden">
+								Feed: <select id="feedselect">
+									<option value="global">Global</option>
+									<option value="followed">Followed</option>
+								</select><br><br>
+								Include session?: <input type="checkbox" id="feedincludesession" checked><br>
+								<i>Including your session will include private posts from users you're following. Do not share this URL with others.</i>
+							</div>
+							<hr>
+							Feed URL: <code id="feedurl"></code>
+						</div>
 					</span>
 					<span class="tabContent hidden width100" id="tabContent-account-linking">
 						<h2 class="flexcontainer width100 marginbottom">Account Linking</h2>

@@ -206,6 +206,7 @@ window.addEventListener("load", async () => {
 			$("#tab-sessions").classList.remove("hidden");
 			$("#tab-account-linking").classList.remove("hidden");
 			$("#tab-experiments").classList.remove("hidden");
+			$("#feedloggedin").classList.remove("hidden");
 			updateInfo();
 		} else {
 			switchTab($("#tab-display"));
@@ -215,6 +216,7 @@ window.addEventListener("load", async () => {
 			$("#tab-sessions").classList.add("hidden");
 			$("#tab-account-linking").classList.add("hidden");
 			$("#tab-experiments").classList.add("hidden");
+			$("#feedloggedin").classList.add("hidden");
 		}
 	});
 
@@ -654,5 +656,60 @@ window.addEventListener("load", async () => {
 		$("#oauthwallofshame").appendChild(entry);
 	}
 
+	/* Feed generation */
+	let feedType = $("#feedtype").value;
+	let feed = $("#feedselect").value;
+	let includeSession = $("#feedincludesession").checked;
+	$("#feedurl").innerText = generateFeedUrl(feedType, feed, includeSession);
+	$("#feedtype").addEventListener("change", (e) => {
+		feedType = $("#feedtype").value;
+		feed = $("#feedselect").value;
+		includeSession = $("#feedincludesession").checked;
+		$("#feedurl").innerText = generateFeedUrl(feedType, feed, includeSession);
+	});
+	$("#feedselect").addEventListener("change", (e) => {
+		feedType = $("#feedtype").value;
+		feed = $("#feedselect").value;
+		includeSession = $("#feedincludesession").checked;
+		$("#feedurl").innerText = generateFeedUrl(feedType, feed, includeSession);
+	});
+	$("#feedincludesession").addEventListener("change", (e) => {
+		if (e.target.checked) {
+			// Enable disabled options
+			for (const option of $("#feedselect").children) {
+				option.removeAttribute("disabled");
+			}
+		} else {
+			// Disable non-global feed options (only followed right now)
+			for (const option of $("#feedselect").children) {
+				if (option.value === "global") continue;
+				option.setAttribute("disabled", "true");
+			}
+			$("#feedselect").value = "global";
+		}
+		feedType = $("#feedtype").value;
+		feed = $("#feedselect").value;
+		includeSession = $("#feedincludesession").checked;
+		$("#feedurl").innerText = generateFeedUrl(feedType, feed, includeSession);
+	});
+
 	setLoggedinState(api.loggedIn);
 });
+
+/**
+ * Generate a feed URL
+ * @param {"atom"|"json"|"rss2"|"rss1"} feedType Type of feed this is
+ * @param {"global"|"followed"} feed Which feed to generate a URL for
+ * @param {boolean} includeSession Whether to include the session in the URL
+ * @returns {string} 
+ */
+function generateFeedUrl(feedType, feed, includeSession) {
+	const url = new URL(`${api.host}/feed/${feedType}`);
+	if (includeSession && api.loggedIn) {
+		const params = new URLSearchParams();
+		params.set("feed", feed);
+		params.set("session", api.session);
+		url.search = `?${params.toString()}`;
+	}
+	return url.toString();
+}
