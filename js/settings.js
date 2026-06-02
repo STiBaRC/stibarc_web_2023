@@ -660,7 +660,14 @@ window.addEventListener("load", async () => {
 	let feedType = $("#feedtype").value;
 	let feed = $("#feedselect").value;
 	let includeSession = $("#feedincludesession").checked;
-	$("#feedurl").innerText = generateFeedUrl(feedType, feed, includeSession);
+
+	listatehooks.push(() => {
+		feedType = $("#feedtype").value;
+		feed = $("#feedselect").value;
+		includeSession = $("#feedincludesession").checked;
+		$("#feedurl").innerText = generateFeedUrl(feedType, feed, includeSession);
+	});
+
 	$("#feedtype").addEventListener("change", (e) => {
 		feedType = $("#feedtype").value;
 		feed = $("#feedselect").value;
