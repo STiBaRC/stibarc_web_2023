@@ -686,6 +686,10 @@ dialog {
 	border: none;
 }
 
+#accountlist {
+	gap: 10px;
+}
+
 @media only screen and (max-width: 750px) {
 	dialog {
 		width: calc(100vw - 40px);
