@@ -206,6 +206,7 @@ window.addEventListener("load", async () => {
 	} else if (appDetails.applicationtype === "confidential") {
 		$("#clienttypeconfidential").checked = true;
 	}
+	$("#sessionsexpire").checked = !appDetails.session_noexpire;
 	$("#jwtsigningalg").value = appDetails.signingalg;
 
 	$("#appname").addEventListener("input", () => {
@@ -265,6 +266,7 @@ window.addEventListener("load", async () => {
 				callbackURLs: appDetails.callbackurls,
 				webhooks: appDetails.webhooks,
 				applicationType: document.querySelector('input[name="clienttype"]:checked').value,
+				sessionNoExpire: !($("#sessionsexpire").checked),
 				signingAlg: $("#jwtsigningalg").value,
 				session: api.session
 			})
