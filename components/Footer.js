@@ -9,7 +9,7 @@ class FooterComponent extends HTMLElement {
 			}
 			
 			footer ul {
-				// padding-left: 8px;
+				display: inline-block;
 			}
 
 			.logo {
@@ -19,8 +19,8 @@ class FooterComponent extends HTMLElement {
 			}
 
 			.footerTop {
-				display: flex;
 				padding: 16px;
+				display: flex;
 			}
 
 			.footerBottom {
@@ -46,7 +46,6 @@ class FooterComponent extends HTMLElement {
 				</ul>
 			</div>
 			<div class="footerBottom">
-				<img class="logo" src="/img/wordmark.svg" height="25px">
 				<div class="flexcontainer">
 					<img class="logo" src="/img/stibarc_head.svg" height="24px">
 					&copy;&nbsp;<span id="year"></span>&nbsp;
