@@ -13,7 +13,7 @@ class FooterComponent extends HTMLElement {
 			}
 
 			.logo {
-				margin-right: 5px;
+				margin-right: 4px;
 				margin-top: 2px;
 				margin-bottom: 2px;
 			}
@@ -48,7 +48,7 @@ class FooterComponent extends HTMLElement {
 			<div class="footerBottom">
 				<img class="logo" src="/img/wordmark.svg" height="25px">
 				<div class="flexcontainer">
-					<!-- <img class="logo" src="/img/stibarc_head.svg" height="24px"> -->
+					<img class="logo" src="/img/stibarc_head.svg" height="24px">
 					&copy;&nbsp;<span id="year"></span>&nbsp;
 					<a href="https://team.stibarc.com" target="_blank">STiBaRC Team</a>&nbsp;&nbsp;
 				</div>
