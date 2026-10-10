@@ -112,7 +112,7 @@ select::placeholder {
 
 main {
 	/* 100vh - header height - footer height - footer padding top - footer padding bottom - footer margin top*/
-	min-height: calc(100vh - 60px - 20px - 16px - 16px - 40px);
+	min-height: calc(100vh - 60px - 20px - 16px - 16px);
 	width: calc(100vw - 40px);
 	max-width: 95vw;
 	margin: 0 auto;
@@ -177,6 +177,10 @@ stibarc-icon {
 
 .flexgrow {
 	flex-grow: 1;
+}
+
+.flexspacebetween {
+	justify-content: space-between;
 }
 
 .margintop {
