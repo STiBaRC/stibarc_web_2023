@@ -38,7 +38,7 @@ function handleGesture(clip, startY, endY, lastState) {
 			// Unhide previous clip
 			clip.restartVideo();
 			const previousClip = clip.nextElementSibling;
-			if (previousClip) {
+			if (previousClip && previousClip.tagName.toUpperCase() === "STIBARC-CLIP") {
 				previousClip.classList.remove("hidden");
 				previousClip.style.setProperty("transform", "translateY(0px)");
 				await previousClip.play();
