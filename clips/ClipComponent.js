@@ -67,13 +67,13 @@ class ClipComponent extends HTMLElement {
 			}
 		</style>
 		<div id="clip">
-			<video id="video" loop></video>
+			<video id="video" loop loading="lazy"></video>
 			<stibarc-icon name="play" size="iconVeryBig" id="playicon" color="white"></stibarc-icon>
 			<div id="bottomui" class="leftalign fadeout">
 				<div id="metadata" class="leftalign flexcolumn flexgrow">
 					<div class="leftalign width100">
 						<a id="userLink" class="flexcontainer">
-							<img id="pfp" class="pfp" width="55px"></img>
+							<img id="pfp" class="pfp" width="55px" loading="lazy"></img>
 							<span id="username"></span>
 						</a>
 						<stibarc-icon id="verified" type="verifiedBadge" name="verified" class="verifiedBadge hidden" title="Verified"></stibarc-icon>

@@ -11,7 +11,7 @@ class AttachmentBlockComponent extends HTMLElement {
 		<img id="source" loading="lazy"></img>
 	`;
 	#shadowDomHTMLVideo = `
-		<video controls>
+		<video loading="lazy" controls>
 			<source id="source"></source>
 		</video>
 	`;

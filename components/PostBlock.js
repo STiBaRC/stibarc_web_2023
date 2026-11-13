@@ -26,7 +26,7 @@ class PostBlockComponent extends HTMLElement {
 			</div>
 			<div class="flexcontainer leftalign width100">
 				<a id="userLink" class="flexcontainer">
-					<img id="pfp" class="pfp" width="55px"></img>
+					<img id="pfp" class="pfp" width="55px" loading="lazy"></img>
 					<span id="username"></span>
 				</a>
 				<stibarc-icon id="verified" type="verifiedBadge" name="verified" class="verifiedBadge hidden" title="Verified"></stibarc-icon>
