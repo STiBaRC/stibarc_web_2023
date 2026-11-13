@@ -27,6 +27,11 @@ class ClipComponent extends HTMLElement {
 				display: flex;
 				gap: 8px;
 				margin: 0 4px;
+				pointer-events: auto;
+			}
+
+			#userLink {
+				pointer-events: auto;
 			}
 
 			.iconcontainer {
@@ -45,6 +50,7 @@ class ClipComponent extends HTMLElement {
 				word-break: break-word;
 				overflow: hidden;
 				background: linear-gradient(to bottom, transparent 0%, var(--color11) 100%);
+				pointer-events: none;
 			}
 			
 			#playicon {
