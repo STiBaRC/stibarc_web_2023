@@ -80,7 +80,7 @@ class SwitchAccountModalComponent extends HTMLElement {
 			const switchButton = clone.querySelector("#switch");
 			switchButton.addEventListener("click", async () => {
 				switchButton.disabled = true;
-				switchButton.classList.add("loading");
+				switchButton.classList.add("loading", "small");
 				await api.switchUser(login.username);
 				this.hide();
 			});

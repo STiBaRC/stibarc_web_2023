@@ -124,6 +124,8 @@ window.addEventListener("load", async function () {
 				$("#authorize-button").removeEventListener("click", currentListener);
 			} catch(e) {}
 			currentListener = async () => {
+				$("#authorize-button").disabled = true;
+				$("#authorize-button").classList.add("loading", "small");
 				await loggedInOnClick(clientId, responseTypes, redirectUri, scopes, state, nonce);
 			};
 			$("#authorize-button").addEventListener("click", currentListener);
